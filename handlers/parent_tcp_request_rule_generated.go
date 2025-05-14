@@ -23,31 +23,37 @@ import (
 type (
 	CreateTCPRequestRuleBackendHandlerImpl  CreateTCPRequestRuleHandlerImpl
 	CreateTCPRequestRuleFrontendHandlerImpl CreateTCPRequestRuleHandlerImpl
+	CreateTCPRequestRuleDefaultsHandlerImpl CreateTCPRequestRuleHandlerImpl
 )
 
 type (
 	GetTCPRequestRuleBackendHandlerImpl  GetTCPRequestRuleHandlerImpl
 	GetTCPRequestRuleFrontendHandlerImpl GetTCPRequestRuleHandlerImpl
+	GetTCPRequestRuleDefaultsHandlerImpl GetTCPRequestRuleHandlerImpl
 )
 
 type (
 	GetAllTCPRequestRuleBackendHandlerImpl  GetAllTCPRequestRuleHandlerImpl
 	GetAllTCPRequestRuleFrontendHandlerImpl GetAllTCPRequestRuleHandlerImpl
+	GetAllTCPRequestRuleDefaultsHandlerImpl GetAllTCPRequestRuleHandlerImpl
 )
 
 type (
 	DeleteTCPRequestRuleBackendHandlerImpl  DeleteTCPRequestRuleHandlerImpl
 	DeleteTCPRequestRuleFrontendHandlerImpl DeleteTCPRequestRuleHandlerImpl
+	DeleteTCPRequestRuleDefaultsHandlerImpl DeleteTCPRequestRuleHandlerImpl
 )
 
 type (
 	ReplaceTCPRequestRuleBackendHandlerImpl  ReplaceTCPRequestRuleHandlerImpl
 	ReplaceTCPRequestRuleFrontendHandlerImpl ReplaceTCPRequestRuleHandlerImpl
+	ReplaceTCPRequestRuleDefaultsHandlerImpl ReplaceTCPRequestRuleHandlerImpl
 )
 
 type (
 	ReplaceAllTCPRequestRuleBackendHandlerImpl  ReplaceAllTCPRequestRuleHandlerImpl
 	ReplaceAllTCPRequestRuleFrontendHandlerImpl ReplaceAllTCPRequestRuleHandlerImpl
+	ReplaceAllTCPRequestRuleDefaultsHandlerImpl ReplaceAllTCPRequestRuleHandlerImpl
 )
 
 func (h *CreateTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
@@ -61,6 +67,12 @@ func (h *CreateTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
+func (h *CreateTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := CreateTCPRequestRuleHandlerImpl(*h)
+	pg := tcp_request_rule.CreateTCPRequestRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *GetTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	g := GetTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -70,6 +82,12 @@ func (h *GetTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.Ge
 	g := GetTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.GetTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *GetTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := GetTCPRequestRuleHandlerImpl(*h)
+	pg := tcp_request_rule.GetTCPRequestRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
 func (h *GetAllTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
@@ -83,6 +101,12 @@ func (h *GetAllTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
+func (h *GetAllTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := GetAllTCPRequestRuleHandlerImpl(*h)
+	pg := tcp_request_rule.GetAllTCPRequestRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *DeleteTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	g := DeleteTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -92,6 +116,12 @@ func (h *DeleteTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule
 	g := DeleteTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.DeleteTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *DeleteTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := DeleteTCPRequestRuleHandlerImpl(*h)
+	pg := tcp_request_rule.DeleteTCPRequestRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
 func (h *ReplaceTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
@@ -105,6 +135,12 @@ func (h *ReplaceTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rul
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
+func (h *ReplaceTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := ReplaceTCPRequestRuleHandlerImpl(*h)
+	pg := tcp_request_rule.ReplaceTCPRequestRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *ReplaceAllTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	g := ReplaceAllTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -114,4 +150,10 @@ func (h *ReplaceAllTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_
 	g := ReplaceAllTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *ReplaceAllTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := ReplaceAllTCPRequestRuleHandlerImpl(*h)
+	pg := tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }

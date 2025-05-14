@@ -6638,6 +6638,646 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults/{parent_name}/acls": {
+      "get": {
+        "description": "Returns all ACL lines that are configured in specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Return an array of all ACL lines",
+        "operationId": "getAllAclDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "type": "string",
+            "description": "ACL name",
+            "name": "acl_name",
+            "in": "query"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acls"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of ACLs with the list given in parameter",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Replace an ACL list",
+        "operationId": "replaceAllAclDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acls"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All ACL lines replaced",
+            "schema": {
+              "$ref": "#/definitions/acls"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acls"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/acls/{index}": {
+      "get": {
+        "description": "Returns one ACL line configuration by it's index in the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Return one ACL line",
+        "operationId": "getAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a ACL line configuration by it's index in the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Replace a ACL line",
+        "operationId": "replaceAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ACL line replaced",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new ACL line of the specified type in the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Add a new ACL line",
+        "operationId": "createAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL line created",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a ACL line configuration by it's index from the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Delete a ACL line",
+        "operationId": "deleteAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "ACL line deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules": {
+      "get": {
+        "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return an array of all HTTP After Response Rules",
+        "operationId": "getAllHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP After Response Rules with the list given in parameter",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Replace an HTTP After Response Rules list",
+        "operationId": "replaceAllHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TTP After Response Rules lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return one HTTP After Response Rule",
+        "operationId": "getHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Replace a HTTP After Response Rule",
+        "operationId": "replaceHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP After Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP After Response Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Add a new HTTP After Response Rule",
+        "operationId": "createHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP After Response Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Delete a HTTP After Response Rule",
+        "operationId": "deleteHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP After Response Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults/{parent_name}/http_checks": {
       "get": {
         "description": "Returns all HTTP checks that are configured in specified parent.",
@@ -7262,6 +7902,640 @@ func init() {
           },
           "204": {
             "description": "HTTP Error Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_request_rules": {
+      "get": {
+        "description": "Returns all HTTP Request Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Return an array of all HTTP Request Rules",
+        "operationId": "getAllHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP Request Rules with the list given in parameter",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Replace an HTTP Request Rule list",
+        "operationId": "replaceAllHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All HTTP Request Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_request_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Return one HTTP Request Rule",
+        "operationId": "getHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Replace a HTTP Request Rule",
+        "operationId": "replaceHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP Request Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP Request Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Add a new HTTP Request Rule",
+        "operationId": "createHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Request Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP Request Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Delete a HTTP Request Rule",
+        "operationId": "deleteHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP Request Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_response_rules": {
+      "get": {
+        "description": "Returns all HTTP Response Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Return an array of all HTTP Response Rules",
+        "operationId": "getAllHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP Response Rules with the list given in parameter",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Replace an HTTP Response Rule list",
+        "operationId": "replaceAllHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All HTTP Response Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_response_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Return one HTTP Response Rule",
+        "operationId": "getHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Replace a HTTP Response Rule",
+        "operationId": "replaceHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP Response Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Add a new HTTP Response Rule",
+        "operationId": "createHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP Response Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Delete a HTTP Response Rule",
+        "operationId": "deleteHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP Response Rule deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -8213,6 +9487,640 @@ func init() {
           },
           "204": {
             "description": "TCP check deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules": {
+      "get": {
+        "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Return an array of all TCP Request Rules",
+        "operationId": "getAllTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of TCP Request Rules with the list given in parameter",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Replace an TCP Request Rule list",
+        "operationId": "replaceAllTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TCP Request Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules/{index}": {
+      "get": {
+        "description": "Returns one TCP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Return one TCP Request Rule",
+        "operationId": "getTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Replace a TCP Request Rule",
+        "operationId": "replaceTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP Request Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP Request Rule of the specified type in the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Add a new TCP Request Rule",
+        "operationId": "createTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP Request Rule created",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP Request Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Delete a TCP Request Rule",
+        "operationId": "deleteTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP Request Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules": {
+      "get": {
+        "description": "Returns all TCP Response Rules that are configured in specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Return an array of all TCP Response Rules",
+        "operationId": "getAllTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of TCP Response Rules with the list given in parameter",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Replace a TCP Response Rule list",
+        "operationId": "replaceAllTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TCP Response Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules/{index}": {
+      "get": {
+        "description": "Returns one TCP Response Rule configuration by it's index in the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Return one TCP Response Rule",
+        "operationId": "getTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Response Rule configuration by it's Index in the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Replace a TCP Response Rule",
+        "operationId": "replaceTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP Response Rule of the specified type in the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Add a new TCP Response Rule",
+        "operationId": "createTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP Response Rule configuration by it's index from the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Delete a TCP Response Rule",
+        "operationId": "deleteTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP Response Rule deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -26680,6 +28588,14 @@ func init() {
         {
           "type": "object",
           "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            },
+            "http_after_response_rule_list": {
+              "x-go-name": "HTTPAfterResponseRuleList",
+              "$ref": "#/definitions/http_after_response_rules"
+            },
             "http_check_list": {
               "x-go-name": "HTTPCheckList",
               "$ref": "#/definitions/http_checks"
@@ -26687,6 +28603,14 @@ func init() {
             "http_error_rule_list": {
               "x-go-name": "HTTPErrorRuleList",
               "$ref": "#/definitions/http_error_rules"
+            },
+            "http_request_rule_list": {
+              "x-go-name": "HTTPRequestRuleList",
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "http_response_rule_list": {
+              "x-go-name": "HTTPResponseRuleList",
+              "$ref": "#/definitions/http_response_rules"
             },
             "log_target_list": {
               "x-go-name": "LogTargetList",
@@ -26699,6 +28623,14 @@ func init() {
             "tcp_check_rule_list": {
               "x-go-name": "TCPCheckRuleList",
               "$ref": "#/definitions/tcp_checks"
+            },
+            "tcp_request_rule_list": {
+              "x-go-name": "TCPRequestRuleList",
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "tcp_response_rule_list": {
+              "x-go-name": "TCPResponseRuleList",
+              "$ref": "#/definitions/tcp_response_rules"
             }
           }
         }
@@ -50806,6 +52738,1040 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults/{parent_name}/acls": {
+      "get": {
+        "description": "Returns all ACL lines that are configured in specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Return an array of all ACL lines",
+        "operationId": "getAllAclDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "ACL name",
+            "name": "acl_name",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acls"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of ACLs with the list given in parameter",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Replace an ACL list",
+        "operationId": "replaceAllAclDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acls"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All ACL lines replaced",
+            "schema": {
+              "$ref": "#/definitions/acls"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acls"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/acls/{index}": {
+      "get": {
+        "description": "Returns one ACL line configuration by it's index in the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Return one ACL line",
+        "operationId": "getAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a ACL line configuration by it's index in the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Replace a ACL line",
+        "operationId": "replaceAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ACL line replaced",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new ACL line of the specified type in the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Add a new ACL line",
+        "operationId": "createAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL line created",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a ACL line configuration by it's index from the specified parent.",
+        "tags": [
+          "ACL"
+        ],
+        "summary": "Delete a ACL line",
+        "operationId": "deleteAclDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL line Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "ACL line deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules": {
+      "get": {
+        "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return an array of all HTTP After Response Rules",
+        "operationId": "getAllHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP After Response Rules with the list given in parameter",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Replace an HTTP After Response Rules list",
+        "operationId": "replaceAllHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TTP After Response Rules lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return one HTTP After Response Rule",
+        "operationId": "getHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Replace a HTTP After Response Rule",
+        "operationId": "replaceHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP After Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP After Response Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Add a new HTTP After Response Rule",
+        "operationId": "createHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP After Response Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Delete a HTTP After Response Rule",
+        "operationId": "deleteHTTPAfterResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP After Response Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults/{parent_name}/http_checks": {
       "get": {
         "description": "Returns all HTTP checks that are configured in specified parent.",
@@ -51806,6 +54772,1034 @@ func init() {
           },
           "204": {
             "description": "HTTP Error Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_request_rules": {
+      "get": {
+        "description": "Returns all HTTP Request Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Return an array of all HTTP Request Rules",
+        "operationId": "getAllHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP Request Rules with the list given in parameter",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Replace an HTTP Request Rule list",
+        "operationId": "replaceAllHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All HTTP Request Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_request_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Return one HTTP Request Rule",
+        "operationId": "getHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Replace a HTTP Request Rule",
+        "operationId": "replaceHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP Request Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP Request Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Add a new HTTP Request Rule",
+        "operationId": "createHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Request Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP Request Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPRequestRule"
+        ],
+        "summary": "Delete a HTTP Request Rule",
+        "operationId": "deleteHTTPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP Request Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_response_rules": {
+      "get": {
+        "description": "Returns all HTTP Response Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Return an array of all HTTP Response Rules",
+        "operationId": "getAllHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP Response Rules with the list given in parameter",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Replace an HTTP Response Rule list",
+        "operationId": "replaceAllHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All HTTP Response Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/http_response_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Return one HTTP Response Rule",
+        "operationId": "getHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Replace a HTTP Response Rule",
+        "operationId": "replaceHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP Response Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Add a new HTTP Response Rule",
+        "operationId": "createHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP Response Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPResponseRule"
+        ],
+        "summary": "Delete a HTTP Response Rule",
+        "operationId": "deleteHTTPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP Response Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -53348,6 +57342,1034 @@ func init() {
           },
           "204": {
             "description": "TCP check deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules": {
+      "get": {
+        "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Return an array of all TCP Request Rules",
+        "operationId": "getAllTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of TCP Request Rules with the list given in parameter",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Replace an TCP Request Rule list",
+        "operationId": "replaceAllTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TCP Request Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules/{index}": {
+      "get": {
+        "description": "Returns one TCP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Return one TCP Request Rule",
+        "operationId": "getTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Request Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Replace a TCP Request Rule",
+        "operationId": "replaceTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP Request Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP Request Rule of the specified type in the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Add a new TCP Request Rule",
+        "operationId": "createTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP Request Rule created",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP Request Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "TCPRequestRule"
+        ],
+        "summary": "Delete a TCP Request Rule",
+        "operationId": "deleteTCPRequestRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Request Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP Request Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules": {
+      "get": {
+        "description": "Returns all TCP Response Rules that are configured in specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Return an array of all TCP Response Rules",
+        "operationId": "getAllTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of TCP Response Rules with the list given in parameter",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Replace a TCP Response Rule list",
+        "operationId": "replaceAllTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TCP Response Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules/{index}": {
+      "get": {
+        "description": "Returns one TCP Response Rule configuration by it's index in the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Return one TCP Response Rule",
+        "operationId": "getTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Response Rule configuration by it's Index in the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Replace a TCP Response Rule",
+        "operationId": "replaceTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP Response Rule of the specified type in the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Add a new TCP Response Rule",
+        "operationId": "createTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP Response Rule configuration by it's index from the specified backend.",
+        "tags": [
+          "TCPResponseRule"
+        ],
+        "summary": "Delete a TCP Response Rule",
+        "operationId": "deleteTCPResponseRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP Response Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -82098,6 +87120,14 @@ func init() {
         {
           "type": "object",
           "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            },
+            "http_after_response_rule_list": {
+              "x-go-name": "HTTPAfterResponseRuleList",
+              "$ref": "#/definitions/http_after_response_rules"
+            },
             "http_check_list": {
               "x-go-name": "HTTPCheckList",
               "$ref": "#/definitions/http_checks"
@@ -82105,6 +87135,14 @@ func init() {
             "http_error_rule_list": {
               "x-go-name": "HTTPErrorRuleList",
               "$ref": "#/definitions/http_error_rules"
+            },
+            "http_request_rule_list": {
+              "x-go-name": "HTTPRequestRuleList",
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "http_response_rule_list": {
+              "x-go-name": "HTTPResponseRuleList",
+              "$ref": "#/definitions/http_response_rules"
             },
             "log_target_list": {
               "x-go-name": "LogTargetList",
@@ -82117,6 +87155,14 @@ func init() {
             "tcp_check_rule_list": {
               "x-go-name": "TCPCheckRuleList",
               "$ref": "#/definitions/tcp_checks"
+            },
+            "tcp_request_rule_list": {
+              "x-go-name": "TCPRequestRuleList",
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "tcp_response_rule_list": {
+              "x-go-name": "TCPResponseRuleList",
+              "$ref": "#/definitions/tcp_response_rules"
             }
           }
         }

@@ -30,7 +30,6 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
-
 	jsoniter "github.com/json-iterator/go"
 )
 

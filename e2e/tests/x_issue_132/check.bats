@@ -21,7 +21,7 @@ load '../../libs/haproxy_config_setup'
 load '../../libs/version'
 
 @test "x_issue_132: https://github.com/haproxytech/dataplaneapi/issues/132" {
-    PARENT_NAME="bug_132"
+    PARENT_NAME="bug_132_bck"
     resource_post "/services/haproxy/configuration/backends/$PARENT_NAME/servers" "data/add_server.json" "force_reload=true"
     assert_equal "$SC" 201
 }

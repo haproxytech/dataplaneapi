@@ -87,7 +87,7 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 		return tcp_response_rule.NewCreateTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateTCPResponseRule(params.Index, params.ParentName, params.Data, t, v)
+	err = configuration.CreateTCPResponseRule(params.Index, string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewCreateTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
@@ -135,7 +135,7 @@ func (h *DeleteTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 		return tcp_response_rule.NewDeleteTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteTCPResponseRule(params.Index, params.ParentName, t, v)
+	err = configuration.DeleteTCPResponseRule(params.Index, string(parentType), params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewDeleteTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
@@ -167,7 +167,7 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentTy
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewGetTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	_, rule, err := configuration.GetTCPResponseRule(params.Index, params.ParentName, t)
+	_, rule, err := configuration.GetTCPResponseRule(params.Index, string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewGetTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
@@ -188,7 +188,7 @@ func (h *GetAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 		return tcp_response_rule.NewGetAllTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rules, err := configuration.GetTCPResponseRules(params.ParentName, t)
+	_, rules, err := configuration.GetTCPResponseRules(string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -226,7 +226,7 @@ func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnPare
 		return tcp_response_rule.NewReplaceTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditTCPResponseRule(params.Index, params.ParentName, params.Data, t, v)
+	err = configuration.EditTCPResponseRule(params.Index, string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewReplaceTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
@@ -272,7 +272,7 @@ func (h *ReplaceAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnP
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewReplaceAllTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceTCPResponseRules(params.ParentName, params.Data, t, v)
+	err = configuration.ReplaceTCPResponseRules(string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewReplaceAllTCPResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)

@@ -23,31 +23,37 @@ import (
 type (
 	CreateHTTPAfterResponseRuleBackendHandlerImpl  CreateHTTPAfterResponseRuleHandlerImpl
 	CreateHTTPAfterResponseRuleFrontendHandlerImpl CreateHTTPAfterResponseRuleHandlerImpl
+	CreateHTTPAfterResponseRuleDefaultsHandlerImpl CreateHTTPAfterResponseRuleHandlerImpl
 )
 
 type (
 	GetHTTPAfterResponseRuleBackendHandlerImpl  GetHTTPAfterResponseRuleHandlerImpl
 	GetHTTPAfterResponseRuleFrontendHandlerImpl GetHTTPAfterResponseRuleHandlerImpl
+	GetHTTPAfterResponseRuleDefaultsHandlerImpl GetHTTPAfterResponseRuleHandlerImpl
 )
 
 type (
 	GetAllHTTPAfterResponseRuleBackendHandlerImpl  GetAllHTTPAfterResponseRuleHandlerImpl
 	GetAllHTTPAfterResponseRuleFrontendHandlerImpl GetAllHTTPAfterResponseRuleHandlerImpl
+	GetAllHTTPAfterResponseRuleDefaultsHandlerImpl GetAllHTTPAfterResponseRuleHandlerImpl
 )
 
 type (
 	DeleteHTTPAfterResponseRuleBackendHandlerImpl  DeleteHTTPAfterResponseRuleHandlerImpl
 	DeleteHTTPAfterResponseRuleFrontendHandlerImpl DeleteHTTPAfterResponseRuleHandlerImpl
+	DeleteHTTPAfterResponseRuleDefaultsHandlerImpl DeleteHTTPAfterResponseRuleHandlerImpl
 )
 
 type (
 	ReplaceHTTPAfterResponseRuleBackendHandlerImpl  ReplaceHTTPAfterResponseRuleHandlerImpl
 	ReplaceHTTPAfterResponseRuleFrontendHandlerImpl ReplaceHTTPAfterResponseRuleHandlerImpl
+	ReplaceHTTPAfterResponseRuleDefaultsHandlerImpl ReplaceHTTPAfterResponseRuleHandlerImpl
 )
 
 type (
 	ReplaceAllHTTPAfterResponseRuleBackendHandlerImpl  ReplaceAllHTTPAfterResponseRuleHandlerImpl
 	ReplaceAllHTTPAfterResponseRuleFrontendHandlerImpl ReplaceAllHTTPAfterResponseRuleHandlerImpl
+	ReplaceAllHTTPAfterResponseRuleDefaultsHandlerImpl ReplaceAllHTTPAfterResponseRuleHandlerImpl
 )
 
 func (h *CreateHTTPAfterResponseRuleBackendHandlerImpl) Handle(params http_after_response_rule.CreateHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
@@ -61,6 +67,12 @@ func (h *CreateHTTPAfterResponseRuleFrontendHandlerImpl) Handle(params http_afte
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
+func (h *CreateHTTPAfterResponseRuleDefaultsHandlerImpl) Handle(params http_after_response_rule.CreateHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := CreateHTTPAfterResponseRuleHandlerImpl(*h)
+	pg := http_after_response_rule.CreateHTTPAfterResponseRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *GetHTTPAfterResponseRuleBackendHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 	g := GetHTTPAfterResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -70,6 +82,12 @@ func (h *GetHTTPAfterResponseRuleFrontendHandlerImpl) Handle(params http_after_r
 	g := GetHTTPAfterResponseRuleHandlerImpl(*h)
 	pg := http_after_response_rule.GetHTTPAfterResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *GetHTTPAfterResponseRuleDefaultsHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := GetHTTPAfterResponseRuleHandlerImpl(*h)
+	pg := http_after_response_rule.GetHTTPAfterResponseRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
 func (h *GetAllHTTPAfterResponseRuleBackendHandlerImpl) Handle(params http_after_response_rule.GetAllHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
@@ -83,6 +101,12 @@ func (h *GetAllHTTPAfterResponseRuleFrontendHandlerImpl) Handle(params http_afte
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
+func (h *GetAllHTTPAfterResponseRuleDefaultsHandlerImpl) Handle(params http_after_response_rule.GetAllHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := GetAllHTTPAfterResponseRuleHandlerImpl(*h)
+	pg := http_after_response_rule.GetAllHTTPAfterResponseRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *DeleteHTTPAfterResponseRuleBackendHandlerImpl) Handle(params http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 	g := DeleteHTTPAfterResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -92,6 +116,12 @@ func (h *DeleteHTTPAfterResponseRuleFrontendHandlerImpl) Handle(params http_afte
 	g := DeleteHTTPAfterResponseRuleHandlerImpl(*h)
 	pg := http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *DeleteHTTPAfterResponseRuleDefaultsHandlerImpl) Handle(params http_after_response_rule.DeleteHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := DeleteHTTPAfterResponseRuleHandlerImpl(*h)
+	pg := http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
 func (h *ReplaceHTTPAfterResponseRuleBackendHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
@@ -105,6 +135,12 @@ func (h *ReplaceHTTPAfterResponseRuleFrontendHandlerImpl) Handle(params http_aft
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
+func (h *ReplaceHTTPAfterResponseRuleDefaultsHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := ReplaceHTTPAfterResponseRuleHandlerImpl(*h)
+	pg := http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *ReplaceAllHTTPAfterResponseRuleBackendHandlerImpl) Handle(params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 	g := ReplaceAllHTTPAfterResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -114,4 +150,10 @@ func (h *ReplaceAllHTTPAfterResponseRuleFrontendHandlerImpl) Handle(params http_
 	g := ReplaceAllHTTPAfterResponseRuleHandlerImpl(*h)
 	pg := http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *ReplaceAllHTTPAfterResponseRuleDefaultsHandlerImpl) Handle(params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+	g := ReplaceAllHTTPAfterResponseRuleHandlerImpl(*h)
+	pg := http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }

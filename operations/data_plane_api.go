@@ -189,6 +189,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ACLCreateACLBackendHandler: acl.CreateACLBackendHandlerFunc(func(params acl.CreateACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.CreateACLBackend has not yet been implemented")
 		}),
+		ACLCreateACLDefaultsHandler: acl.CreateACLDefaultsHandlerFunc(func(params acl.CreateACLDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.CreateACLDefaults has not yet been implemented")
+		}),
 		ACLCreateACLFCGIAppHandler: acl.CreateACLFCGIAppHandlerFunc(func(params acl.CreateACLFCGIAppParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.CreateACLFCGIApp has not yet been implemented")
 		}),
@@ -258,6 +261,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPAfterResponseRuleCreateHTTPAfterResponseRuleBackendHandler: http_after_response_rule.CreateHTTPAfterResponseRuleBackendHandlerFunc(func(params http_after_response_rule.CreateHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.CreateHTTPAfterResponseRuleBackend has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleCreateHTTPAfterResponseRuleDefaultsHandler: http_after_response_rule.CreateHTTPAfterResponseRuleDefaultsHandlerFunc(func(params http_after_response_rule.CreateHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.CreateHTTPAfterResponseRuleDefaults has not yet been implemented")
+		}),
 		HTTPAfterResponseRuleCreateHTTPAfterResponseRuleFrontendHandler: http_after_response_rule.CreateHTTPAfterResponseRuleFrontendHandlerFunc(func(params http_after_response_rule.CreateHTTPAfterResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.CreateHTTPAfterResponseRuleFrontend has not yet been implemented")
 		}),
@@ -282,11 +288,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleCreateHTTPRequestRuleBackendHandler: http_request_rule.CreateHTTPRequestRuleBackendHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.CreateHTTPRequestRuleBackend has not yet been implemented")
 		}),
+		HTTPRequestRuleCreateHTTPRequestRuleDefaultsHandler: http_request_rule.CreateHTTPRequestRuleDefaultsHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.CreateHTTPRequestRuleDefaults has not yet been implemented")
+		}),
 		HTTPRequestRuleCreateHTTPRequestRuleFrontendHandler: http_request_rule.CreateHTTPRequestRuleFrontendHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.CreateHTTPRequestRuleFrontend has not yet been implemented")
 		}),
 		HTTPResponseRuleCreateHTTPResponseRuleBackendHandler: http_response_rule.CreateHTTPResponseRuleBackendHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.CreateHTTPResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPResponseRuleCreateHTTPResponseRuleDefaultsHandler: http_response_rule.CreateHTTPResponseRuleDefaultsHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.CreateHTTPResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler: http_response_rule.CreateHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.CreateHTTPResponseRuleFrontend has not yet been implemented")
@@ -405,11 +417,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPRequestRuleCreateTCPRequestRuleBackendHandler: tcp_request_rule.CreateTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRuleBackend has not yet been implemented")
 		}),
+		TCPRequestRuleCreateTCPRequestRuleDefaultsHandler: tcp_request_rule.CreateTCPRequestRuleDefaultsHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRuleDefaults has not yet been implemented")
+		}),
 		TCPRequestRuleCreateTCPRequestRuleFrontendHandler: tcp_request_rule.CreateTCPRequestRuleFrontendHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRuleFrontend has not yet been implemented")
 		}),
 		TCPResponseRuleCreateTCPResponseRuleBackendHandler: tcp_response_rule.CreateTCPResponseRuleBackendHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.CreateTCPResponseRuleBackend has not yet been implemented")
+		}),
+		TCPResponseRuleCreateTCPResponseRuleDefaultsHandler: tcp_response_rule.CreateTCPResponseRuleDefaultsHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.CreateTCPResponseRuleDefaults has not yet been implemented")
 		}),
 		TableCreateTableHandler: table.CreateTableHandlerFunc(func(params table.CreateTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.CreateTable has not yet been implemented")
@@ -431,6 +449,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLDeleteACLBackendHandler: acl.DeleteACLBackendHandlerFunc(func(params acl.DeleteACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.DeleteACLBackend has not yet been implemented")
+		}),
+		ACLDeleteACLDefaultsHandler: acl.DeleteACLDefaultsHandlerFunc(func(params acl.DeleteACLDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.DeleteACLDefaults has not yet been implemented")
 		}),
 		ACLDeleteACLFCGIAppHandler: acl.DeleteACLFCGIAppHandlerFunc(func(params acl.DeleteACLFCGIAppParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.DeleteACLFCGIApp has not yet been implemented")
@@ -507,6 +528,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleBackendHandler: http_after_response_rule.DeleteHTTPAfterResponseRuleBackendHandlerFunc(func(params http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.DeleteHTTPAfterResponseRuleBackend has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleDefaultsHandler: http_after_response_rule.DeleteHTTPAfterResponseRuleDefaultsHandlerFunc(func(params http_after_response_rule.DeleteHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.DeleteHTTPAfterResponseRuleDefaults has not yet been implemented")
+		}),
 		HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleFrontendHandler: http_after_response_rule.DeleteHTTPAfterResponseRuleFrontendHandlerFunc(func(params http_after_response_rule.DeleteHTTPAfterResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.DeleteHTTPAfterResponseRuleFrontend has not yet been implemented")
 		}),
@@ -531,11 +555,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleDeleteHTTPRequestRuleBackendHandler: http_request_rule.DeleteHTTPRequestRuleBackendHandlerFunc(func(params http_request_rule.DeleteHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.DeleteHTTPRequestRuleBackend has not yet been implemented")
 		}),
+		HTTPRequestRuleDeleteHTTPRequestRuleDefaultsHandler: http_request_rule.DeleteHTTPRequestRuleDefaultsHandlerFunc(func(params http_request_rule.DeleteHTTPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.DeleteHTTPRequestRuleDefaults has not yet been implemented")
+		}),
 		HTTPRequestRuleDeleteHTTPRequestRuleFrontendHandler: http_request_rule.DeleteHTTPRequestRuleFrontendHandlerFunc(func(params http_request_rule.DeleteHTTPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.DeleteHTTPRequestRuleFrontend has not yet been implemented")
 		}),
 		HTTPResponseRuleDeleteHTTPResponseRuleBackendHandler: http_response_rule.DeleteHTTPResponseRuleBackendHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.DeleteHTTPResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPResponseRuleDeleteHTTPResponseRuleDefaultsHandler: http_response_rule.DeleteHTTPResponseRuleDefaultsHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.DeleteHTTPResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler: http_response_rule.DeleteHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.DeleteHTTPResponseRuleFrontend has not yet been implemented")
@@ -663,11 +693,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPRequestRuleDeleteTCPRequestRuleBackendHandler: tcp_request_rule.DeleteTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRuleBackend has not yet been implemented")
 		}),
+		TCPRequestRuleDeleteTCPRequestRuleDefaultsHandler: tcp_request_rule.DeleteTCPRequestRuleDefaultsHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRuleDefaults has not yet been implemented")
+		}),
 		TCPRequestRuleDeleteTCPRequestRuleFrontendHandler: tcp_request_rule.DeleteTCPRequestRuleFrontendHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRuleFrontend has not yet been implemented")
 		}),
 		TCPResponseRuleDeleteTCPResponseRuleBackendHandler: tcp_response_rule.DeleteTCPResponseRuleBackendHandlerFunc(func(params tcp_response_rule.DeleteTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.DeleteTCPResponseRuleBackend has not yet been implemented")
+		}),
+		TCPResponseRuleDeleteTCPResponseRuleDefaultsHandler: tcp_response_rule.DeleteTCPResponseRuleDefaultsHandlerFunc(func(params tcp_response_rule.DeleteTCPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.DeleteTCPResponseRuleDefaults has not yet been implemented")
 		}),
 		TableDeleteTableHandler: table.DeleteTableHandlerFunc(func(params table.DeleteTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.DeleteTable has not yet been implemented")
@@ -711,6 +747,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ACLGetACLBackendHandler: acl.GetACLBackendHandlerFunc(func(params acl.GetACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetACLBackend has not yet been implemented")
 		}),
+		ACLGetACLDefaultsHandler: acl.GetACLDefaultsHandlerFunc(func(params acl.GetACLDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.GetACLDefaults has not yet been implemented")
+		}),
 		ACLGetACLFCGIAppHandler: acl.GetACLFCGIAppHandlerFunc(func(params acl.GetACLFCGIAppParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetACLFCGIApp has not yet been implemented")
 		}),
@@ -719,6 +758,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLGetAllACLBackendHandler: acl.GetAllACLBackendHandlerFunc(func(params acl.GetAllACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetAllACLBackend has not yet been implemented")
+		}),
+		ACLGetAllACLDefaultsHandler: acl.GetAllACLDefaultsHandlerFunc(func(params acl.GetAllACLDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.GetAllACLDefaults has not yet been implemented")
 		}),
 		ACLGetAllACLFCGIAppHandler: acl.GetAllACLFCGIAppHandlerFunc(func(params acl.GetAllACLFCGIAppParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetAllACLFCGIApp has not yet been implemented")
@@ -759,6 +801,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleBackendHandler: http_after_response_rule.GetAllHTTPAfterResponseRuleBackendHandlerFunc(func(params http_after_response_rule.GetAllHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.GetAllHTTPAfterResponseRuleBackend has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleDefaultsHandler: http_after_response_rule.GetAllHTTPAfterResponseRuleDefaultsHandlerFunc(func(params http_after_response_rule.GetAllHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.GetAllHTTPAfterResponseRuleDefaults has not yet been implemented")
+		}),
 		HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleFrontendHandler: http_after_response_rule.GetAllHTTPAfterResponseRuleFrontendHandlerFunc(func(params http_after_response_rule.GetAllHTTPAfterResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.GetAllHTTPAfterResponseRuleFrontend has not yet been implemented")
 		}),
@@ -780,11 +825,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleGetAllHTTPRequestRuleBackendHandler: http_request_rule.GetAllHTTPRequestRuleBackendHandlerFunc(func(params http_request_rule.GetAllHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.GetAllHTTPRequestRuleBackend has not yet been implemented")
 		}),
+		HTTPRequestRuleGetAllHTTPRequestRuleDefaultsHandler: http_request_rule.GetAllHTTPRequestRuleDefaultsHandlerFunc(func(params http_request_rule.GetAllHTTPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.GetAllHTTPRequestRuleDefaults has not yet been implemented")
+		}),
 		HTTPRequestRuleGetAllHTTPRequestRuleFrontendHandler: http_request_rule.GetAllHTTPRequestRuleFrontendHandlerFunc(func(params http_request_rule.GetAllHTTPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.GetAllHTTPRequestRuleFrontend has not yet been implemented")
 		}),
 		HTTPResponseRuleGetAllHTTPResponseRuleBackendHandler: http_response_rule.GetAllHTTPResponseRuleBackendHandlerFunc(func(params http_response_rule.GetAllHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.GetAllHTTPResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPResponseRuleGetAllHTTPResponseRuleDefaultsHandler: http_response_rule.GetAllHTTPResponseRuleDefaultsHandlerFunc(func(params http_response_rule.GetAllHTTPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.GetAllHTTPResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPResponseRuleGetAllHTTPResponseRuleFrontendHandler: http_response_rule.GetAllHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.GetAllHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.GetAllHTTPResponseRuleFrontend has not yet been implemented")
@@ -870,11 +921,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPRequestRuleGetAllTCPRequestRuleBackendHandler: tcp_request_rule.GetAllTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.GetAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetAllTCPRequestRuleBackend has not yet been implemented")
 		}),
+		TCPRequestRuleGetAllTCPRequestRuleDefaultsHandler: tcp_request_rule.GetAllTCPRequestRuleDefaultsHandlerFunc(func(params tcp_request_rule.GetAllTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.GetAllTCPRequestRuleDefaults has not yet been implemented")
+		}),
 		TCPRequestRuleGetAllTCPRequestRuleFrontendHandler: tcp_request_rule.GetAllTCPRequestRuleFrontendHandlerFunc(func(params tcp_request_rule.GetAllTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetAllTCPRequestRuleFrontend has not yet been implemented")
 		}),
 		TCPResponseRuleGetAllTCPResponseRuleBackendHandler: tcp_response_rule.GetAllTCPResponseRuleBackendHandlerFunc(func(params tcp_response_rule.GetAllTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.GetAllTCPResponseRuleBackend has not yet been implemented")
+		}),
+		TCPResponseRuleGetAllTCPResponseRuleDefaultsHandler: tcp_response_rule.GetAllTCPResponseRuleDefaultsHandlerFunc(func(params tcp_response_rule.GetAllTCPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.GetAllTCPResponseRuleDefaults has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.GetBackend has not yet been implemented")
@@ -993,6 +1050,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPAfterResponseRuleGetHTTPAfterResponseRuleBackendHandler: http_after_response_rule.GetHTTPAfterResponseRuleBackendHandlerFunc(func(params http_after_response_rule.GetHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.GetHTTPAfterResponseRuleBackend has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleGetHTTPAfterResponseRuleDefaultsHandler: http_after_response_rule.GetHTTPAfterResponseRuleDefaultsHandlerFunc(func(params http_after_response_rule.GetHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.GetHTTPAfterResponseRuleDefaults has not yet been implemented")
+		}),
 		HTTPAfterResponseRuleGetHTTPAfterResponseRuleFrontendHandler: http_after_response_rule.GetHTTPAfterResponseRuleFrontendHandlerFunc(func(params http_after_response_rule.GetHTTPAfterResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.GetHTTPAfterResponseRuleFrontend has not yet been implemented")
 		}),
@@ -1020,11 +1080,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleGetHTTPRequestRuleBackendHandler: http_request_rule.GetHTTPRequestRuleBackendHandlerFunc(func(params http_request_rule.GetHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.GetHTTPRequestRuleBackend has not yet been implemented")
 		}),
+		HTTPRequestRuleGetHTTPRequestRuleDefaultsHandler: http_request_rule.GetHTTPRequestRuleDefaultsHandlerFunc(func(params http_request_rule.GetHTTPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.GetHTTPRequestRuleDefaults has not yet been implemented")
+		}),
 		HTTPRequestRuleGetHTTPRequestRuleFrontendHandler: http_request_rule.GetHTTPRequestRuleFrontendHandlerFunc(func(params http_request_rule.GetHTTPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.GetHTTPRequestRuleFrontend has not yet been implemented")
 		}),
 		HTTPResponseRuleGetHTTPResponseRuleBackendHandler: http_response_rule.GetHTTPResponseRuleBackendHandlerFunc(func(params http_response_rule.GetHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.GetHTTPResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPResponseRuleGetHTTPResponseRuleDefaultsHandler: http_response_rule.GetHTTPResponseRuleDefaultsHandlerFunc(func(params http_response_rule.GetHTTPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.GetHTTPResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPResponseRuleGetHTTPResponseRuleFrontendHandler: http_response_rule.GetHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.GetHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.GetHTTPResponseRuleFrontend has not yet been implemented")
@@ -1251,11 +1317,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPRequestRuleGetTCPRequestRuleBackendHandler: tcp_request_rule.GetTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRuleBackend has not yet been implemented")
 		}),
+		TCPRequestRuleGetTCPRequestRuleDefaultsHandler: tcp_request_rule.GetTCPRequestRuleDefaultsHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRuleDefaults has not yet been implemented")
+		}),
 		TCPRequestRuleGetTCPRequestRuleFrontendHandler: tcp_request_rule.GetTCPRequestRuleFrontendHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRuleFrontend has not yet been implemented")
 		}),
 		TCPResponseRuleGetTCPResponseRuleBackendHandler: tcp_response_rule.GetTCPResponseRuleBackendHandlerFunc(func(params tcp_response_rule.GetTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.GetTCPResponseRuleBackend has not yet been implemented")
+		}),
+		TCPResponseRuleGetTCPResponseRuleDefaultsHandler: tcp_response_rule.GetTCPResponseRuleDefaultsHandlerFunc(func(params tcp_response_rule.GetTCPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.GetTCPResponseRuleDefaults has not yet been implemented")
 		}),
 		TableGetTableHandler: table.GetTableHandlerFunc(func(params table.GetTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.GetTable has not yet been implemented")
@@ -1299,6 +1371,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ACLReplaceACLBackendHandler: acl.ReplaceACLBackendHandlerFunc(func(params acl.ReplaceACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.ReplaceACLBackend has not yet been implemented")
 		}),
+		ACLReplaceACLDefaultsHandler: acl.ReplaceACLDefaultsHandlerFunc(func(params acl.ReplaceACLDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.ReplaceACLDefaults has not yet been implemented")
+		}),
 		ACLReplaceACLFCGIAppHandler: acl.ReplaceACLFCGIAppHandlerFunc(func(params acl.ReplaceACLFCGIAppParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.ReplaceACLFCGIApp has not yet been implemented")
 		}),
@@ -1307,6 +1382,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLReplaceAllACLBackendHandler: acl.ReplaceAllACLBackendHandlerFunc(func(params acl.ReplaceAllACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.ReplaceAllACLBackend has not yet been implemented")
+		}),
+		ACLReplaceAllACLDefaultsHandler: acl.ReplaceAllACLDefaultsHandlerFunc(func(params acl.ReplaceAllACLDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.ReplaceAllACLDefaults has not yet been implemented")
 		}),
 		ACLReplaceAllACLFCGIAppHandler: acl.ReplaceAllACLFCGIAppHandlerFunc(func(params acl.ReplaceAllACLFCGIAppParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.ReplaceAllACLFCGIApp has not yet been implemented")
@@ -1322,6 +1400,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleBackendHandler: http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendHandlerFunc(func(params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleDefaultsHandler: http_after_response_rule.ReplaceAllHTTPAfterResponseRuleDefaultsHandlerFunc(func(params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.ReplaceAllHTTPAfterResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleFrontendHandler: http_after_response_rule.ReplaceAllHTTPAfterResponseRuleFrontendHandlerFunc(func(params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.ReplaceAllHTTPAfterResponseRuleFrontend has not yet been implemented")
@@ -1344,11 +1425,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleReplaceAllHTTPRequestRuleBackendHandler: http_request_rule.ReplaceAllHTTPRequestRuleBackendHandlerFunc(func(params http_request_rule.ReplaceAllHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.ReplaceAllHTTPRequestRuleBackend has not yet been implemented")
 		}),
+		HTTPRequestRuleReplaceAllHTTPRequestRuleDefaultsHandler: http_request_rule.ReplaceAllHTTPRequestRuleDefaultsHandlerFunc(func(params http_request_rule.ReplaceAllHTTPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.ReplaceAllHTTPRequestRuleDefaults has not yet been implemented")
+		}),
 		HTTPRequestRuleReplaceAllHTTPRequestRuleFrontendHandler: http_request_rule.ReplaceAllHTTPRequestRuleFrontendHandlerFunc(func(params http_request_rule.ReplaceAllHTTPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.ReplaceAllHTTPRequestRuleFrontend has not yet been implemented")
 		}),
 		HTTPResponseRuleReplaceAllHTTPResponseRuleBackendHandler: http_response_rule.ReplaceAllHTTPResponseRuleBackendHandlerFunc(func(params http_response_rule.ReplaceAllHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceAllHTTPResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPResponseRuleReplaceAllHTTPResponseRuleDefaultsHandler: http_response_rule.ReplaceAllHTTPResponseRuleDefaultsHandlerFunc(func(params http_response_rule.ReplaceAllHTTPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.ReplaceAllHTTPResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPResponseRuleReplaceAllHTTPResponseRuleFrontendHandler: http_response_rule.ReplaceAllHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.ReplaceAllHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceAllHTTPResponseRuleFrontend has not yet been implemented")
@@ -1386,11 +1473,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler: tcp_request_rule.ReplaceAllTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceAllTCPRequestRuleBackend has not yet been implemented")
 		}),
+		TCPRequestRuleReplaceAllTCPRequestRuleDefaultsHandler: tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsHandlerFunc(func(params tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.ReplaceAllTCPRequestRuleDefaults has not yet been implemented")
+		}),
 		TCPRequestRuleReplaceAllTCPRequestRuleFrontendHandler: tcp_request_rule.ReplaceAllTCPRequestRuleFrontendHandlerFunc(func(params tcp_request_rule.ReplaceAllTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceAllTCPRequestRuleFrontend has not yet been implemented")
 		}),
 		TCPResponseRuleReplaceAllTCPResponseRuleBackendHandler: tcp_response_rule.ReplaceAllTCPResponseRuleBackendHandlerFunc(func(params tcp_response_rule.ReplaceAllTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.ReplaceAllTCPResponseRuleBackend has not yet been implemented")
+		}),
+		TCPResponseRuleReplaceAllTCPResponseRuleDefaultsHandler: tcp_response_rule.ReplaceAllTCPResponseRuleDefaultsHandlerFunc(func(params tcp_response_rule.ReplaceAllTCPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.ReplaceAllTCPResponseRuleDefaults has not yet been implemented")
 		}),
 		BackendReplaceBackendHandler: backend.ReplaceBackendHandlerFunc(func(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.ReplaceBackend has not yet been implemented")
@@ -1458,6 +1551,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleBackendHandler: http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendHandlerFunc(func(params http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.ReplaceHTTPAfterResponseRuleBackend has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleDefaultsHandler: http_after_response_rule.ReplaceHTTPAfterResponseRuleDefaultsHandlerFunc(func(params http_after_response_rule.ReplaceHTTPAfterResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.ReplaceHTTPAfterResponseRuleDefaults has not yet been implemented")
+		}),
 		HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleFrontendHandler: http_after_response_rule.ReplaceHTTPAfterResponseRuleFrontendHandlerFunc(func(params http_after_response_rule.ReplaceHTTPAfterResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.ReplaceHTTPAfterResponseRuleFrontend has not yet been implemented")
 		}),
@@ -1482,11 +1578,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleReplaceHTTPRequestRuleBackendHandler: http_request_rule.ReplaceHTTPRequestRuleBackendHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRuleBackend has not yet been implemented")
 		}),
+		HTTPRequestRuleReplaceHTTPRequestRuleDefaultsHandler: http_request_rule.ReplaceHTTPRequestRuleDefaultsHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRuleDefaults has not yet been implemented")
+		}),
 		HTTPRequestRuleReplaceHTTPRequestRuleFrontendHandler: http_request_rule.ReplaceHTTPRequestRuleFrontendHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRuleFrontend has not yet been implemented")
 		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleBackendHandler: http_response_rule.ReplaceHTTPResponseRuleBackendHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRuleBackend has not yet been implemented")
+		}),
+		HTTPResponseRuleReplaceHTTPResponseRuleDefaultsHandler: http_response_rule.ReplaceHTTPResponseRuleDefaultsHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRuleDefaults has not yet been implemented")
 		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler: http_response_rule.ReplaceHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRuleFrontend has not yet been implemented")
@@ -1602,11 +1704,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPRequestRuleReplaceTCPRequestRuleBackendHandler: tcp_request_rule.ReplaceTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRuleBackend has not yet been implemented")
 		}),
+		TCPRequestRuleReplaceTCPRequestRuleDefaultsHandler: tcp_request_rule.ReplaceTCPRequestRuleDefaultsHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRuleDefaults has not yet been implemented")
+		}),
 		TCPRequestRuleReplaceTCPRequestRuleFrontendHandler: tcp_request_rule.ReplaceTCPRequestRuleFrontendHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRuleFrontend has not yet been implemented")
 		}),
 		TCPResponseRuleReplaceTCPResponseRuleBackendHandler: tcp_response_rule.ReplaceTCPResponseRuleBackendHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRuleBackend has not yet been implemented")
+		}),
+		TCPResponseRuleReplaceTCPResponseRuleDefaultsHandler: tcp_response_rule.ReplaceTCPResponseRuleDefaultsHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRuleDefaults has not yet been implemented")
 		}),
 		TableReplaceTableHandler: table.ReplaceTableHandlerFunc(func(params table.ReplaceTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.ReplaceTable has not yet been implemented")
@@ -1739,6 +1847,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryCreateAWSRegionHandler service_discovery.CreateAWSRegionHandler
 	// ACLCreateACLBackendHandler sets the operation handler for the create Acl backend operation
 	ACLCreateACLBackendHandler acl.CreateACLBackendHandler
+	// ACLCreateACLDefaultsHandler sets the operation handler for the create Acl defaults operation
+	ACLCreateACLDefaultsHandler acl.CreateACLDefaultsHandler
 	// ACLCreateACLFCGIAppHandler sets the operation handler for the create Acl FCGI app operation
 	ACLCreateACLFCGIAppHandler acl.CreateACLFCGIAppHandler
 	// ACLCreateACLFrontendHandler sets the operation handler for the create Acl frontend operation
@@ -1785,6 +1895,8 @@ type DataPlaneAPI struct {
 	GroupCreateGroupHandler group.CreateGroupHandler
 	// HTTPAfterResponseRuleCreateHTTPAfterResponseRuleBackendHandler sets the operation handler for the create HTTP after response rule backend operation
 	HTTPAfterResponseRuleCreateHTTPAfterResponseRuleBackendHandler http_after_response_rule.CreateHTTPAfterResponseRuleBackendHandler
+	// HTTPAfterResponseRuleCreateHTTPAfterResponseRuleDefaultsHandler sets the operation handler for the create HTTP after response rule defaults operation
+	HTTPAfterResponseRuleCreateHTTPAfterResponseRuleDefaultsHandler http_after_response_rule.CreateHTTPAfterResponseRuleDefaultsHandler
 	// HTTPAfterResponseRuleCreateHTTPAfterResponseRuleFrontendHandler sets the operation handler for the create HTTP after response rule frontend operation
 	HTTPAfterResponseRuleCreateHTTPAfterResponseRuleFrontendHandler http_after_response_rule.CreateHTTPAfterResponseRuleFrontendHandler
 	// HTTPCheckCreateHTTPCheckBackendHandler sets the operation handler for the create HTTP check backend operation
@@ -1801,10 +1913,14 @@ type DataPlaneAPI struct {
 	HTTPErrorsCreateHTTPErrorsSectionHandler http_errors.CreateHTTPErrorsSectionHandler
 	// HTTPRequestRuleCreateHTTPRequestRuleBackendHandler sets the operation handler for the create HTTP request rule backend operation
 	HTTPRequestRuleCreateHTTPRequestRuleBackendHandler http_request_rule.CreateHTTPRequestRuleBackendHandler
+	// HTTPRequestRuleCreateHTTPRequestRuleDefaultsHandler sets the operation handler for the create HTTP request rule defaults operation
+	HTTPRequestRuleCreateHTTPRequestRuleDefaultsHandler http_request_rule.CreateHTTPRequestRuleDefaultsHandler
 	// HTTPRequestRuleCreateHTTPRequestRuleFrontendHandler sets the operation handler for the create HTTP request rule frontend operation
 	HTTPRequestRuleCreateHTTPRequestRuleFrontendHandler http_request_rule.CreateHTTPRequestRuleFrontendHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleBackendHandler sets the operation handler for the create HTTP response rule backend operation
 	HTTPResponseRuleCreateHTTPResponseRuleBackendHandler http_response_rule.CreateHTTPResponseRuleBackendHandler
+	// HTTPResponseRuleCreateHTTPResponseRuleDefaultsHandler sets the operation handler for the create HTTP response rule defaults operation
+	HTTPResponseRuleCreateHTTPResponseRuleDefaultsHandler http_response_rule.CreateHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler sets the operation handler for the create HTTP response rule frontend operation
 	HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler http_response_rule.CreateHTTPResponseRuleFrontendHandler
 	// LogForwardCreateLogForwardHandler sets the operation handler for the create log forward operation
@@ -1883,10 +1999,14 @@ type DataPlaneAPI struct {
 	TCPCheckCreateTCPCheckDefaultsHandler tcp_check.CreateTCPCheckDefaultsHandler
 	// TCPRequestRuleCreateTCPRequestRuleBackendHandler sets the operation handler for the create TCP request rule backend operation
 	TCPRequestRuleCreateTCPRequestRuleBackendHandler tcp_request_rule.CreateTCPRequestRuleBackendHandler
+	// TCPRequestRuleCreateTCPRequestRuleDefaultsHandler sets the operation handler for the create TCP request rule defaults operation
+	TCPRequestRuleCreateTCPRequestRuleDefaultsHandler tcp_request_rule.CreateTCPRequestRuleDefaultsHandler
 	// TCPRequestRuleCreateTCPRequestRuleFrontendHandler sets the operation handler for the create TCP request rule frontend operation
 	TCPRequestRuleCreateTCPRequestRuleFrontendHandler tcp_request_rule.CreateTCPRequestRuleFrontendHandler
 	// TCPResponseRuleCreateTCPResponseRuleBackendHandler sets the operation handler for the create TCP response rule backend operation
 	TCPResponseRuleCreateTCPResponseRuleBackendHandler tcp_response_rule.CreateTCPResponseRuleBackendHandler
+	// TCPResponseRuleCreateTCPResponseRuleDefaultsHandler sets the operation handler for the create TCP response rule defaults operation
+	TCPResponseRuleCreateTCPResponseRuleDefaultsHandler tcp_response_rule.CreateTCPResponseRuleDefaultsHandler
 	// TableCreateTableHandler sets the operation handler for the create table operation
 	TableCreateTableHandler table.CreateTableHandler
 	// TracesCreateTraceEntryHandler sets the operation handler for the create trace entry operation
@@ -1901,6 +2021,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryDeleteAWSRegionHandler service_discovery.DeleteAWSRegionHandler
 	// ACLDeleteACLBackendHandler sets the operation handler for the delete Acl backend operation
 	ACLDeleteACLBackendHandler acl.DeleteACLBackendHandler
+	// ACLDeleteACLDefaultsHandler sets the operation handler for the delete Acl defaults operation
+	ACLDeleteACLDefaultsHandler acl.DeleteACLDefaultsHandler
 	// ACLDeleteACLFCGIAppHandler sets the operation handler for the delete Acl FCGI app operation
 	ACLDeleteACLFCGIAppHandler acl.DeleteACLFCGIAppHandler
 	// ACLDeleteACLFrontendHandler sets the operation handler for the delete Acl frontend operation
@@ -1951,6 +2073,8 @@ type DataPlaneAPI struct {
 	GroupDeleteGroupHandler group.DeleteGroupHandler
 	// HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleBackendHandler sets the operation handler for the delete HTTP after response rule backend operation
 	HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleBackendHandler http_after_response_rule.DeleteHTTPAfterResponseRuleBackendHandler
+	// HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleDefaultsHandler sets the operation handler for the delete HTTP after response rule defaults operation
+	HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleDefaultsHandler http_after_response_rule.DeleteHTTPAfterResponseRuleDefaultsHandler
 	// HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleFrontendHandler sets the operation handler for the delete HTTP after response rule frontend operation
 	HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleFrontendHandler http_after_response_rule.DeleteHTTPAfterResponseRuleFrontendHandler
 	// HTTPCheckDeleteHTTPCheckBackendHandler sets the operation handler for the delete HTTP check backend operation
@@ -1967,10 +2091,14 @@ type DataPlaneAPI struct {
 	HTTPErrorsDeleteHTTPErrorsSectionHandler http_errors.DeleteHTTPErrorsSectionHandler
 	// HTTPRequestRuleDeleteHTTPRequestRuleBackendHandler sets the operation handler for the delete HTTP request rule backend operation
 	HTTPRequestRuleDeleteHTTPRequestRuleBackendHandler http_request_rule.DeleteHTTPRequestRuleBackendHandler
+	// HTTPRequestRuleDeleteHTTPRequestRuleDefaultsHandler sets the operation handler for the delete HTTP request rule defaults operation
+	HTTPRequestRuleDeleteHTTPRequestRuleDefaultsHandler http_request_rule.DeleteHTTPRequestRuleDefaultsHandler
 	// HTTPRequestRuleDeleteHTTPRequestRuleFrontendHandler sets the operation handler for the delete HTTP request rule frontend operation
 	HTTPRequestRuleDeleteHTTPRequestRuleFrontendHandler http_request_rule.DeleteHTTPRequestRuleFrontendHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleBackendHandler sets the operation handler for the delete HTTP response rule backend operation
 	HTTPResponseRuleDeleteHTTPResponseRuleBackendHandler http_response_rule.DeleteHTTPResponseRuleBackendHandler
+	// HTTPResponseRuleDeleteHTTPResponseRuleDefaultsHandler sets the operation handler for the delete HTTP response rule defaults operation
+	HTTPResponseRuleDeleteHTTPResponseRuleDefaultsHandler http_response_rule.DeleteHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler sets the operation handler for the delete HTTP response rule frontend operation
 	HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler http_response_rule.DeleteHTTPResponseRuleFrontendHandler
 	// LogForwardDeleteLogForwardHandler sets the operation handler for the delete log forward operation
@@ -2055,10 +2183,14 @@ type DataPlaneAPI struct {
 	TCPCheckDeleteTCPCheckDefaultsHandler tcp_check.DeleteTCPCheckDefaultsHandler
 	// TCPRequestRuleDeleteTCPRequestRuleBackendHandler sets the operation handler for the delete TCP request rule backend operation
 	TCPRequestRuleDeleteTCPRequestRuleBackendHandler tcp_request_rule.DeleteTCPRequestRuleBackendHandler
+	// TCPRequestRuleDeleteTCPRequestRuleDefaultsHandler sets the operation handler for the delete TCP request rule defaults operation
+	TCPRequestRuleDeleteTCPRequestRuleDefaultsHandler tcp_request_rule.DeleteTCPRequestRuleDefaultsHandler
 	// TCPRequestRuleDeleteTCPRequestRuleFrontendHandler sets the operation handler for the delete TCP request rule frontend operation
 	TCPRequestRuleDeleteTCPRequestRuleFrontendHandler tcp_request_rule.DeleteTCPRequestRuleFrontendHandler
 	// TCPResponseRuleDeleteTCPResponseRuleBackendHandler sets the operation handler for the delete TCP response rule backend operation
 	TCPResponseRuleDeleteTCPResponseRuleBackendHandler tcp_response_rule.DeleteTCPResponseRuleBackendHandler
+	// TCPResponseRuleDeleteTCPResponseRuleDefaultsHandler sets the operation handler for the delete TCP response rule defaults operation
+	TCPResponseRuleDeleteTCPResponseRuleDefaultsHandler tcp_response_rule.DeleteTCPResponseRuleDefaultsHandler
 	// TableDeleteTableHandler sets the operation handler for the delete table operation
 	TableDeleteTableHandler table.DeleteTableHandler
 	// TracesDeleteTraceEntryHandler sets the operation handler for the delete trace entry operation
@@ -2087,12 +2219,16 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryGetAWSRegionsHandler service_discovery.GetAWSRegionsHandler
 	// ACLGetACLBackendHandler sets the operation handler for the get Acl backend operation
 	ACLGetACLBackendHandler acl.GetACLBackendHandler
+	// ACLGetACLDefaultsHandler sets the operation handler for the get Acl defaults operation
+	ACLGetACLDefaultsHandler acl.GetACLDefaultsHandler
 	// ACLGetACLFCGIAppHandler sets the operation handler for the get Acl FCGI app operation
 	ACLGetACLFCGIAppHandler acl.GetACLFCGIAppHandler
 	// ACLGetACLFrontendHandler sets the operation handler for the get Acl frontend operation
 	ACLGetACLFrontendHandler acl.GetACLFrontendHandler
 	// ACLGetAllACLBackendHandler sets the operation handler for the get all Acl backend operation
 	ACLGetAllACLBackendHandler acl.GetAllACLBackendHandler
+	// ACLGetAllACLDefaultsHandler sets the operation handler for the get all Acl defaults operation
+	ACLGetAllACLDefaultsHandler acl.GetAllACLDefaultsHandler
 	// ACLGetAllACLFCGIAppHandler sets the operation handler for the get all Acl FCGI app operation
 	ACLGetAllACLFCGIAppHandler acl.GetAllACLFCGIAppHandler
 	// ACLGetAllACLFrontendHandler sets the operation handler for the get all Acl frontend operation
@@ -2119,6 +2255,8 @@ type DataPlaneAPI struct {
 	FilterGetAllFilterFrontendHandler filter.GetAllFilterFrontendHandler
 	// HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleBackendHandler sets the operation handler for the get all HTTP after response rule backend operation
 	HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleBackendHandler http_after_response_rule.GetAllHTTPAfterResponseRuleBackendHandler
+	// HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleDefaultsHandler sets the operation handler for the get all HTTP after response rule defaults operation
+	HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleDefaultsHandler http_after_response_rule.GetAllHTTPAfterResponseRuleDefaultsHandler
 	// HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleFrontendHandler sets the operation handler for the get all HTTP after response rule frontend operation
 	HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleFrontendHandler http_after_response_rule.GetAllHTTPAfterResponseRuleFrontendHandler
 	// HTTPCheckGetAllHTTPCheckBackendHandler sets the operation handler for the get all HTTP check backend operation
@@ -2133,10 +2271,14 @@ type DataPlaneAPI struct {
 	HTTPErrorRuleGetAllHTTPErrorRuleFrontendHandler http_error_rule.GetAllHTTPErrorRuleFrontendHandler
 	// HTTPRequestRuleGetAllHTTPRequestRuleBackendHandler sets the operation handler for the get all HTTP request rule backend operation
 	HTTPRequestRuleGetAllHTTPRequestRuleBackendHandler http_request_rule.GetAllHTTPRequestRuleBackendHandler
+	// HTTPRequestRuleGetAllHTTPRequestRuleDefaultsHandler sets the operation handler for the get all HTTP request rule defaults operation
+	HTTPRequestRuleGetAllHTTPRequestRuleDefaultsHandler http_request_rule.GetAllHTTPRequestRuleDefaultsHandler
 	// HTTPRequestRuleGetAllHTTPRequestRuleFrontendHandler sets the operation handler for the get all HTTP request rule frontend operation
 	HTTPRequestRuleGetAllHTTPRequestRuleFrontendHandler http_request_rule.GetAllHTTPRequestRuleFrontendHandler
 	// HTTPResponseRuleGetAllHTTPResponseRuleBackendHandler sets the operation handler for the get all HTTP response rule backend operation
 	HTTPResponseRuleGetAllHTTPResponseRuleBackendHandler http_response_rule.GetAllHTTPResponseRuleBackendHandler
+	// HTTPResponseRuleGetAllHTTPResponseRuleDefaultsHandler sets the operation handler for the get all HTTP response rule defaults operation
+	HTTPResponseRuleGetAllHTTPResponseRuleDefaultsHandler http_response_rule.GetAllHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleGetAllHTTPResponseRuleFrontendHandler sets the operation handler for the get all HTTP response rule frontend operation
 	HTTPResponseRuleGetAllHTTPResponseRuleFrontendHandler http_response_rule.GetAllHTTPResponseRuleFrontendHandler
 	// LogTargetGetAllLogTargetBackendHandler sets the operation handler for the get all log target backend operation
@@ -2193,10 +2335,14 @@ type DataPlaneAPI struct {
 	TCPCheckGetAllTCPCheckDefaultsHandler tcp_check.GetAllTCPCheckDefaultsHandler
 	// TCPRequestRuleGetAllTCPRequestRuleBackendHandler sets the operation handler for the get all TCP request rule backend operation
 	TCPRequestRuleGetAllTCPRequestRuleBackendHandler tcp_request_rule.GetAllTCPRequestRuleBackendHandler
+	// TCPRequestRuleGetAllTCPRequestRuleDefaultsHandler sets the operation handler for the get all TCP request rule defaults operation
+	TCPRequestRuleGetAllTCPRequestRuleDefaultsHandler tcp_request_rule.GetAllTCPRequestRuleDefaultsHandler
 	// TCPRequestRuleGetAllTCPRequestRuleFrontendHandler sets the operation handler for the get all TCP request rule frontend operation
 	TCPRequestRuleGetAllTCPRequestRuleFrontendHandler tcp_request_rule.GetAllTCPRequestRuleFrontendHandler
 	// TCPResponseRuleGetAllTCPResponseRuleBackendHandler sets the operation handler for the get all TCP response rule backend operation
 	TCPResponseRuleGetAllTCPResponseRuleBackendHandler tcp_response_rule.GetAllTCPResponseRuleBackendHandler
+	// TCPResponseRuleGetAllTCPResponseRuleDefaultsHandler sets the operation handler for the get all TCP response rule defaults operation
+	TCPResponseRuleGetAllTCPResponseRuleDefaultsHandler tcp_response_rule.GetAllTCPResponseRuleDefaultsHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
 	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
@@ -2275,6 +2421,8 @@ type DataPlaneAPI struct {
 	ConfigurationGetHAProxyConfigurationHandler configuration.GetHAProxyConfigurationHandler
 	// HTTPAfterResponseRuleGetHTTPAfterResponseRuleBackendHandler sets the operation handler for the get HTTP after response rule backend operation
 	HTTPAfterResponseRuleGetHTTPAfterResponseRuleBackendHandler http_after_response_rule.GetHTTPAfterResponseRuleBackendHandler
+	// HTTPAfterResponseRuleGetHTTPAfterResponseRuleDefaultsHandler sets the operation handler for the get HTTP after response rule defaults operation
+	HTTPAfterResponseRuleGetHTTPAfterResponseRuleDefaultsHandler http_after_response_rule.GetHTTPAfterResponseRuleDefaultsHandler
 	// HTTPAfterResponseRuleGetHTTPAfterResponseRuleFrontendHandler sets the operation handler for the get HTTP after response rule frontend operation
 	HTTPAfterResponseRuleGetHTTPAfterResponseRuleFrontendHandler http_after_response_rule.GetHTTPAfterResponseRuleFrontendHandler
 	// HTTPCheckGetHTTPCheckBackendHandler sets the operation handler for the get HTTP check backend operation
@@ -2293,10 +2441,14 @@ type DataPlaneAPI struct {
 	HTTPErrorsGetHTTPErrorsSectionsHandler http_errors.GetHTTPErrorsSectionsHandler
 	// HTTPRequestRuleGetHTTPRequestRuleBackendHandler sets the operation handler for the get HTTP request rule backend operation
 	HTTPRequestRuleGetHTTPRequestRuleBackendHandler http_request_rule.GetHTTPRequestRuleBackendHandler
+	// HTTPRequestRuleGetHTTPRequestRuleDefaultsHandler sets the operation handler for the get HTTP request rule defaults operation
+	HTTPRequestRuleGetHTTPRequestRuleDefaultsHandler http_request_rule.GetHTTPRequestRuleDefaultsHandler
 	// HTTPRequestRuleGetHTTPRequestRuleFrontendHandler sets the operation handler for the get HTTP request rule frontend operation
 	HTTPRequestRuleGetHTTPRequestRuleFrontendHandler http_request_rule.GetHTTPRequestRuleFrontendHandler
 	// HTTPResponseRuleGetHTTPResponseRuleBackendHandler sets the operation handler for the get HTTP response rule backend operation
 	HTTPResponseRuleGetHTTPResponseRuleBackendHandler http_response_rule.GetHTTPResponseRuleBackendHandler
+	// HTTPResponseRuleGetHTTPResponseRuleDefaultsHandler sets the operation handler for the get HTTP response rule defaults operation
+	HTTPResponseRuleGetHTTPResponseRuleDefaultsHandler http_response_rule.GetHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleGetHTTPResponseRuleFrontendHandler sets the operation handler for the get HTTP response rule frontend operation
 	HTTPResponseRuleGetHTTPResponseRuleFrontendHandler http_response_rule.GetHTTPResponseRuleFrontendHandler
 	// DiscoveryGetHaproxyEndpointsHandler sets the operation handler for the get haproxy endpoints operation
@@ -2447,10 +2599,14 @@ type DataPlaneAPI struct {
 	TCPCheckGetTCPCheckDefaultsHandler tcp_check.GetTCPCheckDefaultsHandler
 	// TCPRequestRuleGetTCPRequestRuleBackendHandler sets the operation handler for the get TCP request rule backend operation
 	TCPRequestRuleGetTCPRequestRuleBackendHandler tcp_request_rule.GetTCPRequestRuleBackendHandler
+	// TCPRequestRuleGetTCPRequestRuleDefaultsHandler sets the operation handler for the get TCP request rule defaults operation
+	TCPRequestRuleGetTCPRequestRuleDefaultsHandler tcp_request_rule.GetTCPRequestRuleDefaultsHandler
 	// TCPRequestRuleGetTCPRequestRuleFrontendHandler sets the operation handler for the get TCP request rule frontend operation
 	TCPRequestRuleGetTCPRequestRuleFrontendHandler tcp_request_rule.GetTCPRequestRuleFrontendHandler
 	// TCPResponseRuleGetTCPResponseRuleBackendHandler sets the operation handler for the get TCP response rule backend operation
 	TCPResponseRuleGetTCPResponseRuleBackendHandler tcp_response_rule.GetTCPResponseRuleBackendHandler
+	// TCPResponseRuleGetTCPResponseRuleDefaultsHandler sets the operation handler for the get TCP response rule defaults operation
+	TCPResponseRuleGetTCPResponseRuleDefaultsHandler tcp_response_rule.GetTCPResponseRuleDefaultsHandler
 	// TableGetTableHandler sets the operation handler for the get table operation
 	TableGetTableHandler table.GetTableHandler
 	// TableGetTablesHandler sets the operation handler for the get tables operation
@@ -2479,12 +2635,16 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryReplaceAWSRegionHandler service_discovery.ReplaceAWSRegionHandler
 	// ACLReplaceACLBackendHandler sets the operation handler for the replace Acl backend operation
 	ACLReplaceACLBackendHandler acl.ReplaceACLBackendHandler
+	// ACLReplaceACLDefaultsHandler sets the operation handler for the replace Acl defaults operation
+	ACLReplaceACLDefaultsHandler acl.ReplaceACLDefaultsHandler
 	// ACLReplaceACLFCGIAppHandler sets the operation handler for the replace Acl FCGI app operation
 	ACLReplaceACLFCGIAppHandler acl.ReplaceACLFCGIAppHandler
 	// ACLReplaceACLFrontendHandler sets the operation handler for the replace Acl frontend operation
 	ACLReplaceACLFrontendHandler acl.ReplaceACLFrontendHandler
 	// ACLReplaceAllACLBackendHandler sets the operation handler for the replace all Acl backend operation
 	ACLReplaceAllACLBackendHandler acl.ReplaceAllACLBackendHandler
+	// ACLReplaceAllACLDefaultsHandler sets the operation handler for the replace all Acl defaults operation
+	ACLReplaceAllACLDefaultsHandler acl.ReplaceAllACLDefaultsHandler
 	// ACLReplaceAllACLFCGIAppHandler sets the operation handler for the replace all Acl FCGI app operation
 	ACLReplaceAllACLFCGIAppHandler acl.ReplaceAllACLFCGIAppHandler
 	// ACLReplaceAllACLFrontendHandler sets the operation handler for the replace all Acl frontend operation
@@ -2495,6 +2655,8 @@ type DataPlaneAPI struct {
 	FilterReplaceAllFilterFrontendHandler filter.ReplaceAllFilterFrontendHandler
 	// HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleBackendHandler sets the operation handler for the replace all HTTP after response rule backend operation
 	HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleBackendHandler http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendHandler
+	// HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleDefaultsHandler sets the operation handler for the replace all HTTP after response rule defaults operation
+	HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleDefaultsHandler http_after_response_rule.ReplaceAllHTTPAfterResponseRuleDefaultsHandler
 	// HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleFrontendHandler sets the operation handler for the replace all HTTP after response rule frontend operation
 	HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleFrontendHandler http_after_response_rule.ReplaceAllHTTPAfterResponseRuleFrontendHandler
 	// HTTPCheckReplaceAllHTTPCheckBackendHandler sets the operation handler for the replace all HTTP check backend operation
@@ -2509,10 +2671,14 @@ type DataPlaneAPI struct {
 	HTTPErrorRuleReplaceAllHTTPErrorRuleFrontendHandler http_error_rule.ReplaceAllHTTPErrorRuleFrontendHandler
 	// HTTPRequestRuleReplaceAllHTTPRequestRuleBackendHandler sets the operation handler for the replace all HTTP request rule backend operation
 	HTTPRequestRuleReplaceAllHTTPRequestRuleBackendHandler http_request_rule.ReplaceAllHTTPRequestRuleBackendHandler
+	// HTTPRequestRuleReplaceAllHTTPRequestRuleDefaultsHandler sets the operation handler for the replace all HTTP request rule defaults operation
+	HTTPRequestRuleReplaceAllHTTPRequestRuleDefaultsHandler http_request_rule.ReplaceAllHTTPRequestRuleDefaultsHandler
 	// HTTPRequestRuleReplaceAllHTTPRequestRuleFrontendHandler sets the operation handler for the replace all HTTP request rule frontend operation
 	HTTPRequestRuleReplaceAllHTTPRequestRuleFrontendHandler http_request_rule.ReplaceAllHTTPRequestRuleFrontendHandler
 	// HTTPResponseRuleReplaceAllHTTPResponseRuleBackendHandler sets the operation handler for the replace all HTTP response rule backend operation
 	HTTPResponseRuleReplaceAllHTTPResponseRuleBackendHandler http_response_rule.ReplaceAllHTTPResponseRuleBackendHandler
+	// HTTPResponseRuleReplaceAllHTTPResponseRuleDefaultsHandler sets the operation handler for the replace all HTTP response rule defaults operation
+	HTTPResponseRuleReplaceAllHTTPResponseRuleDefaultsHandler http_response_rule.ReplaceAllHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleReplaceAllHTTPResponseRuleFrontendHandler sets the operation handler for the replace all HTTP response rule frontend operation
 	HTTPResponseRuleReplaceAllHTTPResponseRuleFrontendHandler http_response_rule.ReplaceAllHTTPResponseRuleFrontendHandler
 	// LogTargetReplaceAllLogTargetBackendHandler sets the operation handler for the replace all log target backend operation
@@ -2537,10 +2703,14 @@ type DataPlaneAPI struct {
 	TCPCheckReplaceAllTCPCheckDefaultsHandler tcp_check.ReplaceAllTCPCheckDefaultsHandler
 	// TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler sets the operation handler for the replace all TCP request rule backend operation
 	TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler tcp_request_rule.ReplaceAllTCPRequestRuleBackendHandler
+	// TCPRequestRuleReplaceAllTCPRequestRuleDefaultsHandler sets the operation handler for the replace all TCP request rule defaults operation
+	TCPRequestRuleReplaceAllTCPRequestRuleDefaultsHandler tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsHandler
 	// TCPRequestRuleReplaceAllTCPRequestRuleFrontendHandler sets the operation handler for the replace all TCP request rule frontend operation
 	TCPRequestRuleReplaceAllTCPRequestRuleFrontendHandler tcp_request_rule.ReplaceAllTCPRequestRuleFrontendHandler
 	// TCPResponseRuleReplaceAllTCPResponseRuleBackendHandler sets the operation handler for the replace all TCP response rule backend operation
 	TCPResponseRuleReplaceAllTCPResponseRuleBackendHandler tcp_response_rule.ReplaceAllTCPResponseRuleBackendHandler
+	// TCPResponseRuleReplaceAllTCPResponseRuleDefaultsHandler sets the operation handler for the replace all TCP response rule defaults operation
+	TCPResponseRuleReplaceAllTCPResponseRuleDefaultsHandler tcp_response_rule.ReplaceAllTCPResponseRuleDefaultsHandler
 	// BackendReplaceBackendHandler sets the operation handler for the replace backend operation
 	BackendReplaceBackendHandler backend.ReplaceBackendHandler
 	// BackendSwitchingRuleReplaceBackendSwitchingRuleHandler sets the operation handler for the replace backend switching rule operation
@@ -2585,6 +2755,8 @@ type DataPlaneAPI struct {
 	GroupReplaceGroupHandler group.ReplaceGroupHandler
 	// HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleBackendHandler sets the operation handler for the replace HTTP after response rule backend operation
 	HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleBackendHandler http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendHandler
+	// HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleDefaultsHandler sets the operation handler for the replace HTTP after response rule defaults operation
+	HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleDefaultsHandler http_after_response_rule.ReplaceHTTPAfterResponseRuleDefaultsHandler
 	// HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleFrontendHandler sets the operation handler for the replace HTTP after response rule frontend operation
 	HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleFrontendHandler http_after_response_rule.ReplaceHTTPAfterResponseRuleFrontendHandler
 	// HTTPCheckReplaceHTTPCheckBackendHandler sets the operation handler for the replace HTTP check backend operation
@@ -2601,10 +2773,14 @@ type DataPlaneAPI struct {
 	HTTPErrorsReplaceHTTPErrorsSectionHandler http_errors.ReplaceHTTPErrorsSectionHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleBackendHandler sets the operation handler for the replace HTTP request rule backend operation
 	HTTPRequestRuleReplaceHTTPRequestRuleBackendHandler http_request_rule.ReplaceHTTPRequestRuleBackendHandler
+	// HTTPRequestRuleReplaceHTTPRequestRuleDefaultsHandler sets the operation handler for the replace HTTP request rule defaults operation
+	HTTPRequestRuleReplaceHTTPRequestRuleDefaultsHandler http_request_rule.ReplaceHTTPRequestRuleDefaultsHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleFrontendHandler sets the operation handler for the replace HTTP request rule frontend operation
 	HTTPRequestRuleReplaceHTTPRequestRuleFrontendHandler http_request_rule.ReplaceHTTPRequestRuleFrontendHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleBackendHandler sets the operation handler for the replace HTTP response rule backend operation
 	HTTPResponseRuleReplaceHTTPResponseRuleBackendHandler http_response_rule.ReplaceHTTPResponseRuleBackendHandler
+	// HTTPResponseRuleReplaceHTTPResponseRuleDefaultsHandler sets the operation handler for the replace HTTP response rule defaults operation
+	HTTPResponseRuleReplaceHTTPResponseRuleDefaultsHandler http_response_rule.ReplaceHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler sets the operation handler for the replace HTTP response rule frontend operation
 	HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler http_response_rule.ReplaceHTTPResponseRuleFrontendHandler
 	// LogForwardReplaceLogForwardHandler sets the operation handler for the replace log forward operation
@@ -2681,10 +2857,14 @@ type DataPlaneAPI struct {
 	TCPCheckReplaceTCPCheckDefaultsHandler tcp_check.ReplaceTCPCheckDefaultsHandler
 	// TCPRequestRuleReplaceTCPRequestRuleBackendHandler sets the operation handler for the replace TCP request rule backend operation
 	TCPRequestRuleReplaceTCPRequestRuleBackendHandler tcp_request_rule.ReplaceTCPRequestRuleBackendHandler
+	// TCPRequestRuleReplaceTCPRequestRuleDefaultsHandler sets the operation handler for the replace TCP request rule defaults operation
+	TCPRequestRuleReplaceTCPRequestRuleDefaultsHandler tcp_request_rule.ReplaceTCPRequestRuleDefaultsHandler
 	// TCPRequestRuleReplaceTCPRequestRuleFrontendHandler sets the operation handler for the replace TCP request rule frontend operation
 	TCPRequestRuleReplaceTCPRequestRuleFrontendHandler tcp_request_rule.ReplaceTCPRequestRuleFrontendHandler
 	// TCPResponseRuleReplaceTCPResponseRuleBackendHandler sets the operation handler for the replace TCP response rule backend operation
 	TCPResponseRuleReplaceTCPResponseRuleBackendHandler tcp_response_rule.ReplaceTCPResponseRuleBackendHandler
+	// TCPResponseRuleReplaceTCPResponseRuleDefaultsHandler sets the operation handler for the replace TCP response rule defaults operation
+	TCPResponseRuleReplaceTCPResponseRuleDefaultsHandler tcp_response_rule.ReplaceTCPResponseRuleDefaultsHandler
 	// TableReplaceTableHandler sets the operation handler for the replace table operation
 	TableReplaceTableHandler table.ReplaceTableHandler
 	// TracesReplaceTracesHandler sets the operation handler for the replace traces operation
@@ -2857,6 +3037,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ACLCreateACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.CreateACLBackendHandler")
 	}
+	if o.ACLCreateACLDefaultsHandler == nil {
+		unregistered = append(unregistered, "acl.CreateACLDefaultsHandler")
+	}
 	if o.ACLCreateACLFCGIAppHandler == nil {
 		unregistered = append(unregistered, "acl.CreateACLFCGIAppHandler")
 	}
@@ -2926,6 +3109,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.CreateHTTPAfterResponseRuleBackendHandler")
 	}
+	if o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.CreateHTTPAfterResponseRuleDefaultsHandler")
+	}
 	if o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.CreateHTTPAfterResponseRuleFrontendHandler")
 	}
@@ -2950,11 +3136,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleCreateHTTPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.CreateHTTPRequestRuleBackendHandler")
 	}
+	if o.HTTPRequestRuleCreateHTTPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.CreateHTTPRequestRuleDefaultsHandler")
+	}
 	if o.HTTPRequestRuleCreateHTTPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.CreateHTTPRequestRuleFrontendHandler")
 	}
 	if o.HTTPResponseRuleCreateHTTPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleBackendHandler")
+	}
+	if o.HTTPResponseRuleCreateHTTPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleDefaultsHandler")
 	}
 	if o.HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleFrontendHandler")
@@ -3073,11 +3265,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPRequestRuleCreateTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleBackendHandler")
 	}
+	if o.TCPRequestRuleCreateTCPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleDefaultsHandler")
+	}
 	if o.TCPRequestRuleCreateTCPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleFrontendHandler")
 	}
 	if o.TCPResponseRuleCreateTCPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleBackendHandler")
+	}
+	if o.TCPResponseRuleCreateTCPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleDefaultsHandler")
 	}
 	if o.TableCreateTableHandler == nil {
 		unregistered = append(unregistered, "table.CreateTableHandler")
@@ -3099,6 +3297,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ACLDeleteACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.DeleteACLBackendHandler")
+	}
+	if o.ACLDeleteACLDefaultsHandler == nil {
+		unregistered = append(unregistered, "acl.DeleteACLDefaultsHandler")
 	}
 	if o.ACLDeleteACLFCGIAppHandler == nil {
 		unregistered = append(unregistered, "acl.DeleteACLFCGIAppHandler")
@@ -3175,6 +3376,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.DeleteHTTPAfterResponseRuleBackendHandler")
 	}
+	if o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.DeleteHTTPAfterResponseRuleDefaultsHandler")
+	}
 	if o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.DeleteHTTPAfterResponseRuleFrontendHandler")
 	}
@@ -3199,11 +3403,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleDeleteHTTPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.DeleteHTTPRequestRuleBackendHandler")
 	}
+	if o.HTTPRequestRuleDeleteHTTPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.DeleteHTTPRequestRuleDefaultsHandler")
+	}
 	if o.HTTPRequestRuleDeleteHTTPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.DeleteHTTPRequestRuleFrontendHandler")
 	}
 	if o.HTTPResponseRuleDeleteHTTPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleBackendHandler")
+	}
+	if o.HTTPResponseRuleDeleteHTTPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleDefaultsHandler")
 	}
 	if o.HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleFrontendHandler")
@@ -3331,11 +3541,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPRequestRuleDeleteTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleBackendHandler")
 	}
+	if o.TCPRequestRuleDeleteTCPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleDefaultsHandler")
+	}
 	if o.TCPRequestRuleDeleteTCPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleFrontendHandler")
 	}
 	if o.TCPResponseRuleDeleteTCPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.DeleteTCPResponseRuleBackendHandler")
+	}
+	if o.TCPResponseRuleDeleteTCPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.DeleteTCPResponseRuleDefaultsHandler")
 	}
 	if o.TableDeleteTableHandler == nil {
 		unregistered = append(unregistered, "table.DeleteTableHandler")
@@ -3379,6 +3595,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ACLGetACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.GetACLBackendHandler")
 	}
+	if o.ACLGetACLDefaultsHandler == nil {
+		unregistered = append(unregistered, "acl.GetACLDefaultsHandler")
+	}
 	if o.ACLGetACLFCGIAppHandler == nil {
 		unregistered = append(unregistered, "acl.GetACLFCGIAppHandler")
 	}
@@ -3387,6 +3606,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ACLGetAllACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.GetAllACLBackendHandler")
+	}
+	if o.ACLGetAllACLDefaultsHandler == nil {
+		unregistered = append(unregistered, "acl.GetAllACLDefaultsHandler")
 	}
 	if o.ACLGetAllACLFCGIAppHandler == nil {
 		unregistered = append(unregistered, "acl.GetAllACLFCGIAppHandler")
@@ -3427,6 +3649,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.GetAllHTTPAfterResponseRuleBackendHandler")
 	}
+	if o.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.GetAllHTTPAfterResponseRuleDefaultsHandler")
+	}
 	if o.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.GetAllHTTPAfterResponseRuleFrontendHandler")
 	}
@@ -3448,11 +3673,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleGetAllHTTPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetAllHTTPRequestRuleBackendHandler")
 	}
+	if o.HTTPRequestRuleGetAllHTTPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.GetAllHTTPRequestRuleDefaultsHandler")
+	}
 	if o.HTTPRequestRuleGetAllHTTPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetAllHTTPRequestRuleFrontendHandler")
 	}
 	if o.HTTPResponseRuleGetAllHTTPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.GetAllHTTPResponseRuleBackendHandler")
+	}
+	if o.HTTPResponseRuleGetAllHTTPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.GetAllHTTPResponseRuleDefaultsHandler")
 	}
 	if o.HTTPResponseRuleGetAllHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.GetAllHTTPResponseRuleFrontendHandler")
@@ -3538,11 +3769,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPRequestRuleGetAllTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetAllTCPRequestRuleBackendHandler")
 	}
+	if o.TCPRequestRuleGetAllTCPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.GetAllTCPRequestRuleDefaultsHandler")
+	}
 	if o.TCPRequestRuleGetAllTCPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetAllTCPRequestRuleFrontendHandler")
 	}
 	if o.TCPResponseRuleGetAllTCPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.GetAllTCPResponseRuleBackendHandler")
+	}
+	if o.TCPResponseRuleGetAllTCPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.GetAllTCPResponseRuleDefaultsHandler")
 	}
 	if o.BackendGetBackendHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendHandler")
@@ -3661,6 +3898,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.GetHTTPAfterResponseRuleBackendHandler")
 	}
+	if o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.GetHTTPAfterResponseRuleDefaultsHandler")
+	}
 	if o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.GetHTTPAfterResponseRuleFrontendHandler")
 	}
@@ -3688,11 +3928,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleGetHTTPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRuleBackendHandler")
 	}
+	if o.HTTPRequestRuleGetHTTPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRuleDefaultsHandler")
+	}
 	if o.HTTPRequestRuleGetHTTPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRuleFrontendHandler")
 	}
 	if o.HTTPResponseRuleGetHTTPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRuleBackendHandler")
+	}
+	if o.HTTPResponseRuleGetHTTPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRuleDefaultsHandler")
 	}
 	if o.HTTPResponseRuleGetHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRuleFrontendHandler")
@@ -3919,11 +4165,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPRequestRuleGetTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleBackendHandler")
 	}
+	if o.TCPRequestRuleGetTCPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleDefaultsHandler")
+	}
 	if o.TCPRequestRuleGetTCPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleFrontendHandler")
 	}
 	if o.TCPResponseRuleGetTCPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRuleBackendHandler")
+	}
+	if o.TCPResponseRuleGetTCPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRuleDefaultsHandler")
 	}
 	if o.TableGetTableHandler == nil {
 		unregistered = append(unregistered, "table.GetTableHandler")
@@ -3967,6 +4219,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ACLReplaceACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceACLBackendHandler")
 	}
+	if o.ACLReplaceACLDefaultsHandler == nil {
+		unregistered = append(unregistered, "acl.ReplaceACLDefaultsHandler")
+	}
 	if o.ACLReplaceACLFCGIAppHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceACLFCGIAppHandler")
 	}
@@ -3975,6 +4230,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ACLReplaceAllACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceAllACLBackendHandler")
+	}
+	if o.ACLReplaceAllACLDefaultsHandler == nil {
+		unregistered = append(unregistered, "acl.ReplaceAllACLDefaultsHandler")
 	}
 	if o.ACLReplaceAllACLFCGIAppHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceAllACLFCGIAppHandler")
@@ -3990,6 +4248,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendHandler")
+	}
+	if o.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.ReplaceAllHTTPAfterResponseRuleDefaultsHandler")
 	}
 	if o.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.ReplaceAllHTTPAfterResponseRuleFrontendHandler")
@@ -4012,11 +4273,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleReplaceAllHTTPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceAllHTTPRequestRuleBackendHandler")
 	}
+	if o.HTTPRequestRuleReplaceAllHTTPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.ReplaceAllHTTPRequestRuleDefaultsHandler")
+	}
 	if o.HTTPRequestRuleReplaceAllHTTPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceAllHTTPRequestRuleFrontendHandler")
 	}
 	if o.HTTPResponseRuleReplaceAllHTTPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceAllHTTPResponseRuleBackendHandler")
+	}
+	if o.HTTPResponseRuleReplaceAllHTTPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.ReplaceAllHTTPResponseRuleDefaultsHandler")
 	}
 	if o.HTTPResponseRuleReplaceAllHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceAllHTTPResponseRuleFrontendHandler")
@@ -4054,11 +4321,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceAllTCPRequestRuleBackendHandler")
 	}
+	if o.TCPRequestRuleReplaceAllTCPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsHandler")
+	}
 	if o.TCPRequestRuleReplaceAllTCPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceAllTCPRequestRuleFrontendHandler")
 	}
 	if o.TCPResponseRuleReplaceAllTCPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceAllTCPResponseRuleBackendHandler")
+	}
+	if o.TCPResponseRuleReplaceAllTCPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.ReplaceAllTCPResponseRuleDefaultsHandler")
 	}
 	if o.BackendReplaceBackendHandler == nil {
 		unregistered = append(unregistered, "backend.ReplaceBackendHandler")
@@ -4126,6 +4399,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendHandler")
 	}
+	if o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.ReplaceHTTPAfterResponseRuleDefaultsHandler")
+	}
 	if o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.ReplaceHTTPAfterResponseRuleFrontendHandler")
 	}
@@ -4150,11 +4426,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleReplaceHTTPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleBackendHandler")
 	}
+	if o.HTTPRequestRuleReplaceHTTPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleDefaultsHandler")
+	}
 	if o.HTTPRequestRuleReplaceHTTPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleFrontendHandler")
 	}
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleBackendHandler")
+	}
+	if o.HTTPResponseRuleReplaceHTTPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleDefaultsHandler")
 	}
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleFrontendHandler")
@@ -4270,11 +4552,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPRequestRuleReplaceTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleBackendHandler")
 	}
+	if o.TCPRequestRuleReplaceTCPRequestRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleDefaultsHandler")
+	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleFrontendHandler")
 	}
 	if o.TCPResponseRuleReplaceTCPResponseRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleBackendHandler")
+	}
+	if o.TCPResponseRuleReplaceTCPResponseRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleDefaultsHandler")
 	}
 	if o.TableReplaceTableHandler == nil {
 		unregistered = append(unregistered, "table.ReplaceTableHandler")
@@ -4491,6 +4779,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/acls/{index}"] = acl.NewCreateACLDefaults(o.context, o.ACLCreateACLDefaultsHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/fcgi_apps/{parent_name}/acls/{index}"] = acl.NewCreateACLFCGIApp(o.context, o.ACLCreateACLFCGIAppHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4583,6 +4875,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewCreateHTTPAfterResponseRuleDefaults(o.context, o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleDefaultsHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewCreateHTTPAfterResponseRuleFrontend(o.context, o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleFrontendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4615,11 +4911,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewCreateHTTPRequestRuleDefaults(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleDefaultsHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/frontends/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewCreateHTTPRequestRuleFrontend(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleFrontendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewCreateHTTPResponseRuleBackend(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleBackendHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewCreateHTTPResponseRuleDefaults(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleDefaultsHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -4779,11 +5083,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewCreateTCPRequestRuleDefaults(o.context, o.TCPRequestRuleCreateTCPRequestRuleDefaultsHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewCreateTCPRequestRuleFrontend(o.context, o.TCPRequestRuleCreateTCPRequestRuleFrontendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewCreateTCPResponseRuleBackend(o.context, o.TCPResponseRuleCreateTCPResponseRuleBackendHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewCreateTCPResponseRuleDefaults(o.context, o.TCPResponseRuleCreateTCPResponseRuleDefaultsHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -4812,6 +5124,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/acls/{index}"] = acl.NewDeleteACLBackend(o.context, o.ACLDeleteACLBackendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/acls/{index}"] = acl.NewDeleteACLDefaults(o.context, o.ACLDeleteACLDefaultsHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -4915,6 +5231,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewDeleteHTTPAfterResponseRuleDefaults(o.context, o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleDefaultsHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewDeleteHTTPAfterResponseRuleFrontend(o.context, o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleFrontendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -4947,11 +5267,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewDeleteHTTPRequestRuleDefaults(o.context, o.HTTPRequestRuleDeleteHTTPRequestRuleDefaultsHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewDeleteHTTPRequestRuleFrontend(o.context, o.HTTPRequestRuleDeleteHTTPRequestRuleFrontendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewDeleteHTTPResponseRuleBackend(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleBackendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewDeleteHTTPResponseRuleDefaults(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleDefaultsHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5123,11 +5451,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewDeleteTCPRequestRuleDefaults(o.context, o.TCPRequestRuleDeleteTCPRequestRuleDefaultsHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewDeleteTCPRequestRuleFrontend(o.context, o.TCPRequestRuleDeleteTCPRequestRuleFrontendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewDeleteTCPResponseRuleBackend(o.context, o.TCPResponseRuleDeleteTCPResponseRuleBackendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewDeleteTCPResponseRuleDefaults(o.context, o.TCPResponseRuleDeleteTCPResponseRuleDefaultsHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5187,6 +5523,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/acls/{index}"] = acl.NewGetACLDefaults(o.context, o.ACLGetACLDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/fcgi_apps/{parent_name}/acls/{index}"] = acl.NewGetACLFCGIApp(o.context, o.ACLGetACLFCGIAppHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5196,6 +5536,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/acls"] = acl.NewGetAllACLBackend(o.context, o.ACLGetAllACLBackendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/acls"] = acl.NewGetAllACLDefaults(o.context, o.ACLGetAllACLDefaultsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5251,6 +5595,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules"] = http_after_response_rule.NewGetAllHTTPAfterResponseRuleDefaults(o.context, o.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules"] = http_after_response_rule.NewGetAllHTTPAfterResponseRuleFrontend(o.context, o.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5279,11 +5627,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/http_request_rules"] = http_request_rule.NewGetAllHTTPRequestRuleDefaults(o.context, o.HTTPRequestRuleGetAllHTTPRequestRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/http_request_rules"] = http_request_rule.NewGetAllHTTPRequestRuleFrontend(o.context, o.HTTPRequestRuleGetAllHTTPRequestRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/http_response_rules"] = http_response_rule.NewGetAllHTTPResponseRuleBackend(o.context, o.HTTPResponseRuleGetAllHTTPResponseRuleBackendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/http_response_rules"] = http_response_rule.NewGetAllHTTPResponseRuleDefaults(o.context, o.HTTPResponseRuleGetAllHTTPResponseRuleDefaultsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5399,11 +5755,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules"] = tcp_request_rule.NewGetAllTCPRequestRuleDefaults(o.context, o.TCPRequestRuleGetAllTCPRequestRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules"] = tcp_request_rule.NewGetAllTCPRequestRuleFrontend(o.context, o.TCPRequestRuleGetAllTCPRequestRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/tcp_response_rules"] = tcp_response_rule.NewGetAllTCPResponseRuleBackend(o.context, o.TCPResponseRuleGetAllTCPResponseRuleBackendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules"] = tcp_response_rule.NewGetAllTCPResponseRuleDefaults(o.context, o.TCPResponseRuleGetAllTCPResponseRuleDefaultsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5563,6 +5927,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewGetHTTPAfterResponseRuleDefaults(o.context, o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewGetHTTPAfterResponseRuleFrontend(o.context, o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5599,11 +5967,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewGetHTTPRequestRuleDefaults(o.context, o.HTTPRequestRuleGetHTTPRequestRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewGetHTTPRequestRuleFrontend(o.context, o.HTTPRequestRuleGetHTTPRequestRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewGetHTTPResponseRuleBackend(o.context, o.HTTPResponseRuleGetHTTPResponseRuleBackendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewGetHTTPResponseRuleDefaults(o.context, o.HTTPResponseRuleGetHTTPResponseRuleDefaultsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5907,11 +6283,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewGetTCPRequestRuleDefaults(o.context, o.TCPRequestRuleGetTCPRequestRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewGetTCPRequestRuleFrontend(o.context, o.TCPRequestRuleGetTCPRequestRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewGetTCPResponseRuleBackend(o.context, o.TCPResponseRuleGetTCPResponseRuleBackendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewGetTCPResponseRuleDefaults(o.context, o.TCPResponseRuleGetTCPResponseRuleDefaultsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5971,6 +6355,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/acls/{index}"] = acl.NewReplaceACLDefaults(o.context, o.ACLReplaceACLDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/fcgi_apps/{parent_name}/acls/{index}"] = acl.NewReplaceACLFCGIApp(o.context, o.ACLReplaceACLFCGIAppHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -5980,6 +6368,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/acls"] = acl.NewReplaceAllACLBackend(o.context, o.ACLReplaceAllACLBackendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/acls"] = acl.NewReplaceAllACLDefaults(o.context, o.ACLReplaceAllACLDefaultsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6000,6 +6392,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/http_after_response_rules"] = http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackend(o.context, o.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleBackendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules"] = http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleDefaults(o.context, o.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleDefaultsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6031,11 +6427,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/http_request_rules"] = http_request_rule.NewReplaceAllHTTPRequestRuleDefaults(o.context, o.HTTPRequestRuleReplaceAllHTTPRequestRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/http_request_rules"] = http_request_rule.NewReplaceAllHTTPRequestRuleFrontend(o.context, o.HTTPRequestRuleReplaceAllHTTPRequestRuleFrontendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/http_response_rules"] = http_response_rule.NewReplaceAllHTTPResponseRuleBackend(o.context, o.HTTPResponseRuleReplaceAllHTTPResponseRuleBackendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/http_response_rules"] = http_response_rule.NewReplaceAllHTTPResponseRuleDefaults(o.context, o.HTTPResponseRuleReplaceAllHTTPResponseRuleDefaultsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6087,11 +6491,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules"] = tcp_request_rule.NewReplaceAllTCPRequestRuleDefaults(o.context, o.TCPRequestRuleReplaceAllTCPRequestRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules"] = tcp_request_rule.NewReplaceAllTCPRequestRuleFrontend(o.context, o.TCPRequestRuleReplaceAllTCPRequestRuleFrontendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/tcp_response_rules"] = tcp_response_rule.NewReplaceAllTCPResponseRuleBackend(o.context, o.TCPResponseRuleReplaceAllTCPResponseRuleBackendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules"] = tcp_response_rule.NewReplaceAllTCPResponseRuleDefaults(o.context, o.TCPResponseRuleReplaceAllTCPResponseRuleDefaultsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6183,6 +6595,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewReplaceHTTPAfterResponseRuleDefaults(o.context, o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules/{index}"] = http_after_response_rule.NewReplaceHTTPAfterResponseRuleFrontend(o.context, o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleFrontendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -6215,11 +6631,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewReplaceHTTPRequestRuleDefaults(o.context, o.HTTPRequestRuleReplaceHTTPRequestRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/http_request_rules/{index}"] = http_request_rule.NewReplaceHTTPRequestRuleFrontend(o.context, o.HTTPRequestRuleReplaceHTTPRequestRuleFrontendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRuleBackend(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleBackendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRuleDefaults(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleDefaultsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6375,11 +6799,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewReplaceTCPRequestRuleDefaults(o.context, o.TCPRequestRuleReplaceTCPRequestRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewReplaceTCPRequestRuleFrontend(o.context, o.TCPRequestRuleReplaceTCPRequestRuleFrontendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRuleBackend(o.context, o.TCPResponseRuleReplaceTCPResponseRuleBackendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRuleDefaults(o.context, o.TCPResponseRuleReplaceTCPResponseRuleDefaultsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

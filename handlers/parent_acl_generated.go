@@ -24,36 +24,42 @@ type (
 	CreateACLBackendHandlerImpl  CreateACLHandlerImpl
 	CreateACLFrontendHandlerImpl CreateACLHandlerImpl
 	CreateACLFCGIAppHandlerImpl  CreateACLHandlerImpl
+	CreateACLDefaultsHandlerImpl CreateACLHandlerImpl
 )
 
 type (
 	GetACLBackendHandlerImpl  GetACLHandlerImpl
 	GetACLFrontendHandlerImpl GetACLHandlerImpl
 	GetACLFCGIAppHandlerImpl  GetACLHandlerImpl
+	GetACLDefaultsHandlerImpl GetACLHandlerImpl
 )
 
 type (
 	GetAllACLBackendHandlerImpl  GetAllACLHandlerImpl
 	GetAllACLFrontendHandlerImpl GetAllACLHandlerImpl
 	GetAllACLFCGIAppHandlerImpl  GetAllACLHandlerImpl
+	GetAllACLDefaultsHandlerImpl GetAllACLHandlerImpl
 )
 
 type (
 	DeleteACLBackendHandlerImpl  DeleteACLHandlerImpl
 	DeleteACLFrontendHandlerImpl DeleteACLHandlerImpl
 	DeleteACLFCGIAppHandlerImpl  DeleteACLHandlerImpl
+	DeleteACLDefaultsHandlerImpl DeleteACLHandlerImpl
 )
 
 type (
 	ReplaceACLBackendHandlerImpl  ReplaceACLHandlerImpl
 	ReplaceACLFrontendHandlerImpl ReplaceACLHandlerImpl
 	ReplaceACLFCGIAppHandlerImpl  ReplaceACLHandlerImpl
+	ReplaceACLDefaultsHandlerImpl ReplaceACLHandlerImpl
 )
 
 type (
 	ReplaceAllACLBackendHandlerImpl  ReplaceAllACLHandlerImpl
 	ReplaceAllACLFrontendHandlerImpl ReplaceAllACLHandlerImpl
 	ReplaceAllACLFCGIAppHandlerImpl  ReplaceAllACLHandlerImpl
+	ReplaceAllACLDefaultsHandlerImpl ReplaceAllACLHandlerImpl
 )
 
 func (h *CreateACLBackendHandlerImpl) Handle(params acl.CreateACLBackendParams, principal interface{}) middleware.Responder {
@@ -73,6 +79,12 @@ func (h *CreateACLFCGIAppHandlerImpl) Handle(params acl.CreateACLFCGIAppParams, 
 	return g.Handle(cnconstants.FCGIAppParentType, pg, principal)
 }
 
+func (h *CreateACLDefaultsHandlerImpl) Handle(params acl.CreateACLDefaultsParams, principal interface{}) middleware.Responder {
+	g := CreateACLHandlerImpl(*h)
+	pg := acl.CreateACLBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *GetACLBackendHandlerImpl) Handle(params acl.GetACLBackendParams, principal interface{}) middleware.Responder {
 	g := GetACLHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -88,6 +100,12 @@ func (h *GetACLFCGIAppHandlerImpl) Handle(params acl.GetACLFCGIAppParams, princi
 	g := GetACLHandlerImpl(*h)
 	pg := acl.GetACLBackendParams(params)
 	return g.Handle(cnconstants.FCGIAppParentType, pg, principal)
+}
+
+func (h *GetACLDefaultsHandlerImpl) Handle(params acl.GetACLDefaultsParams, principal interface{}) middleware.Responder {
+	g := GetACLHandlerImpl(*h)
+	pg := acl.GetACLBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
 func (h *GetAllACLBackendHandlerImpl) Handle(params acl.GetAllACLBackendParams, principal interface{}) middleware.Responder {
@@ -107,6 +125,12 @@ func (h *GetAllACLFCGIAppHandlerImpl) Handle(params acl.GetAllACLFCGIAppParams, 
 	return g.Handle(cnconstants.FCGIAppParentType, pg, principal)
 }
 
+func (h *GetAllACLDefaultsHandlerImpl) Handle(params acl.GetAllACLDefaultsParams, principal interface{}) middleware.Responder {
+	g := GetAllACLHandlerImpl(*h)
+	pg := acl.GetAllACLBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *DeleteACLBackendHandlerImpl) Handle(params acl.DeleteACLBackendParams, principal interface{}) middleware.Responder {
 	g := DeleteACLHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -122,6 +146,12 @@ func (h *DeleteACLFCGIAppHandlerImpl) Handle(params acl.DeleteACLFCGIAppParams, 
 	g := DeleteACLHandlerImpl(*h)
 	pg := acl.DeleteACLBackendParams(params)
 	return g.Handle(cnconstants.FCGIAppParentType, pg, principal)
+}
+
+func (h *DeleteACLDefaultsHandlerImpl) Handle(params acl.DeleteACLDefaultsParams, principal interface{}) middleware.Responder {
+	g := DeleteACLHandlerImpl(*h)
+	pg := acl.DeleteACLBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
 func (h *ReplaceACLBackendHandlerImpl) Handle(params acl.ReplaceACLBackendParams, principal interface{}) middleware.Responder {
@@ -141,6 +171,12 @@ func (h *ReplaceACLFCGIAppHandlerImpl) Handle(params acl.ReplaceACLFCGIAppParams
 	return g.Handle(cnconstants.FCGIAppParentType, pg, principal)
 }
 
+func (h *ReplaceACLDefaultsHandlerImpl) Handle(params acl.ReplaceACLDefaultsParams, principal interface{}) middleware.Responder {
+	g := ReplaceACLHandlerImpl(*h)
+	pg := acl.ReplaceACLBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
 func (h *ReplaceAllACLBackendHandlerImpl) Handle(params acl.ReplaceAllACLBackendParams, principal interface{}) middleware.Responder {
 	g := ReplaceAllACLHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -156,4 +192,10 @@ func (h *ReplaceAllACLFCGIAppHandlerImpl) Handle(params acl.ReplaceAllACLFCGIApp
 	g := ReplaceAllACLHandlerImpl(*h)
 	pg := acl.ReplaceAllACLBackendParams(params)
 	return g.Handle(cnconstants.FCGIAppParentType, pg, principal)
+}
+
+func (h *ReplaceAllACLDefaultsHandlerImpl) Handle(params acl.ReplaceAllACLDefaultsParams, principal interface{}) middleware.Responder {
+	g := ReplaceAllACLHandlerImpl(*h)
+	pg := acl.ReplaceAllACLBackendParams(params)
+	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
