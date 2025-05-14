@@ -28951,6 +28951,11 @@ func init() {
         "device_atlas_options": {
           "$ref": "#/definitions/device_atlas_options"
         },
+        "dns_accept_family": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "DNS accept family"
+        },
         "environment_options": {
           "$ref": "#/definitions/environment_options"
         },
@@ -84334,6 +84339,11 @@ func init() {
         },
         "device_atlas_options": {
           "$ref": "#/definitions/device_atlas_options"
+        },
+        "dns_accept_family": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "DNS accept family"
         },
         "environment_options": {
           "$ref": "#/definitions/environment_options"
