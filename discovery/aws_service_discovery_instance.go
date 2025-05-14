@@ -31,6 +31,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
+	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 const (
@@ -76,7 +77,7 @@ func (a awsService) Changed() bool {
 
 func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 	for _, instance := range a.instances {
-		port, _ := a.instancePortFromEC2(instance)
+		parsedPort, _ := a.instancePortFromEC2(instance)
 		var address string
 		switch a.ipv4 {
 		case models.AwsRegionIPV4AddressPrivate:
@@ -90,6 +91,12 @@ func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 		if len(address) == 0 {
 			continue
 		}
+		var port *int64
+
+		if parsedPort > 0 {
+			port = misc.Int64P(parsedPort)
+		}
+
 		servers = append(servers, configuration.ServiceServer{
 			Address: address,
 			Port:    port,
