@@ -63,4 +63,6 @@ cert=/etc/haproxy/ssl/cert.pem
   resource_get "$(ssl_front_uses_path front1)"
   assert_equal "$SC" "200"
   assert_equal "$(get_json_path "$BODY" '.|length')" 0
+
+  run docker exec "${DOCKER_CONTAINER_NAME}" rm $cert
 }
