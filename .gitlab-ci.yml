@@ -191,12 +191,6 @@ HAProxy_2_8:
     matrix:
       - TESTPART: ["1/2", "2/2"]
         HAPROXY_VERSION: "2.8"
-HAProxy_2_9:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "2.9"
 HAProxy_3_0:
   extends: .e2e
   parallel:
@@ -209,3 +203,9 @@ HAProxy_3_1:
     matrix:
       - TESTPART: ["1/2", "2/2"]
         HAPROXY_VERSION: "3.0"
+HAProxy_3_2:
+  extends: .e2e
+  parallel:
+    matrix:
+      - TESTPART: ["1/2", "2/2"]
+        HAPROXY_VERSION: "3.2"
