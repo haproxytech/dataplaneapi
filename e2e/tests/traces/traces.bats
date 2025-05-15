@@ -28,11 +28,9 @@ load 'utils/_helpers'
 @test "traces: get/create/modify/delete (>=3.1)" {
   haproxy_version_ge "3.1" || skip
 
-  debug "traces: create section"
   resource_post "$_TRACES_PATH" "data/new_section.json" "force_reload=true"
   assert_equal "$SC" "201"
 
-  debug "traces: get section"
   resource_get "$_TRACES_PATH"
   assert_equal "$SC" "200"
   assert_equal "h1 sink stderr level developer verbosity complete start now" \
@@ -40,7 +38,6 @@ load 'utils/_helpers'
   assert_equal "h2 sink stderr level developer verbosity complete start now" \
     "$(get_json_path "$BODY" .entries[1].trace)"
 
-  debug "traces: replace section"
   resource_put "$_TRACES_PATH" "data/replace_section.json" "force_reload=true"
   assert_equal "$SC" "200"
   resource_get "$_TRACES_PATH"
@@ -48,7 +45,6 @@ load 'utils/_helpers'
     "$(get_json_path "$BODY" .entries[0].trace)"
 
 
-  debug "traces: add trace entries"
   resource_post "$_TRACE_ENTRIES_PATH" "data/entry1.json"
   assert_equal "$SC" "202"
   resource_post "$_TRACE_ENTRIES_PATH" "data/entry2.json"
@@ -61,13 +57,11 @@ load 'utils/_helpers'
   assert_equal "check sink stderr level developer verbosity quiet start now" \
     "$(get_json_path "$BODY" .entries[2].trace)"
 
-  debug "traces: delete entries"
   resource_delete_body "$_TRACE_ENTRIES_PATH" "data/entry1.json" "force_reload=true"
   assert_equal "$SC" "204"
   resource_delete_body "$_TRACE_ENTRIES_PATH" "data/entry2.json" "force_reload=true"
   assert_equal "$SC" "204"
 
-  debug "traces: delete section"
   resource_delete "$_TRACES_PATH" "force_reload=true"
   assert_equal "$SC" "204"
   resource_get "$_TRACES_PATH"

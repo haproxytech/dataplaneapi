@@ -32,24 +32,20 @@ cert=/etc/haproxy/ssl/cert.pem
 
   run docker cp "${BATS_TEST_DIRNAME}/data/3.pem" "${DOCKER_CONTAINER_NAME}:$cert"
 
-  # debug "ssl-f-use: create"
   resource_post "$(ssl_front_uses_path front1)" "data/post.json"
   assert_equal "$SC" "202"
 
-  # debug "ssl-f-use: get all"
   resource_get "$(ssl_front_uses_path front1)"
   assert_equal "$SC" "200"
   assert_equal "$(get_json_path "$BODY" '.|length')" 1
   assert_equal "$(get_json_path "$BODY" '.[0].certificate')" "$cert"
   assert_equal "$(get_json_path "$BODY" '.[0].allow_0rtt')" true
 
-  # debug "ssl-f-use: get one"
   resource_get "$(ssl_front_uses_path front1 0)"
   assert_equal "$SC" "200"
   assert_equal "$(get_json_path "$BODY" '.certificate')" "$cert"
   assert_equal "$(get_json_path "$BODY" '.allow_0rtt')" true
 
-  # debug "ssl-f-use: edit"
   resource_put "$(ssl_front_uses_path front1 0)" "data/put.json"
   assert_equal "$SC" "202"
   assert_equal "$(get_json_path "$BODY" '.certificate')" "$cert"
@@ -57,7 +53,6 @@ cert=/etc/haproxy/ssl/cert.pem
   assert_equal "$(get_json_path "$BODY" '.no_alpn')" true
   assert_equal "$(get_json_path "$BODY" '.verify')" none
 
-  # debug "ssl-f-use: delete"
   resource_delete "$(ssl_front_uses_path front1 0)"
   assert_equal "$SC" "202"
   resource_get "$(ssl_front_uses_path front1)"
