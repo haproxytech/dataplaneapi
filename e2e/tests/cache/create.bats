@@ -24,7 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "cache: Create one new cache" {
-  resource_post "$_CACHE_BASE_PATH" "data/cache.json" "force_reload=true"
+  resource_post "$_CACHE_BASE_PATH" "data/cache.json"
   assert_equal "$SC" 201
 
   resource_get "$_CACHE_BASE_PATH/cache_created"
@@ -34,13 +34,12 @@ load 'utils/_helpers'
   assert_equal 1000 "$(get_json_path "$BODY" ".total_max_size")"
 }
 
-
 @test "cache: Fail creating cache with same name" {
-  resource_post "$_CACHE_BASE_PATH" "data/cache_same_name.json" "force_reload=true"
+  resource_post "$_CACHE_BASE_PATH" "data/cache_same_name.json"
   assert_equal "$SC" 409
 }
 
 @test "cache: Fail creating cache that isn't valid" {
-  resource_post "$_CACHE_BASE_PATH" "data/cache_unvalid.json" "force_reload=true"
+  resource_post "$_CACHE_BASE_PATH" "data/cache_unvalid.json"
   assert_equal "$SC" 400
 }

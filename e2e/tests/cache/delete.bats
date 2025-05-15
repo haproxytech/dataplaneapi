@@ -24,15 +24,14 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "cache: Delete one cache by name" {
-  resource_delete "$_CACHE_BASE_PATH/test_cache2" "force_reload=true"
+  resource_delete "$_CACHE_BASE_PATH/test_cache2"
   assert_equal "$SC" 204
 
   resource_get "$_CACHE_BASE_PATH/test_cache2"
   assert_equal "$SC" 404
 }
 
-
 @test "cache: Fail deleting cache that doesn't exist" {
-  resource_delete "$_CACHE_BASE_PATH/i_am_not_here" "force_reload=true"
+  resource_delete "$_CACHE_BASE_PATH/i_am_not_here"
   assert_equal "$SC" 404
 }

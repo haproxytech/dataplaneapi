@@ -23,7 +23,7 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "fcgi-app: Return an array of caches" {
+@test "fcgi-app: Return an array of apps" {
   resource_get "$_FCGIAPP_BASE_PATH"
   assert_equal "$SC" 200
   assert_equal 2 "$(get_json_path "$BODY" ". | length")"

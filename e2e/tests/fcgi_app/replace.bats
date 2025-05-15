@@ -23,7 +23,7 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "fcgi-app: Replace one cache" {
+@test "fcgi-app: Replace one app" {
   resource_put "$_FCGIAPP_BASE_PATH/test_1" "data/app_duplicated.json" "force_reload=true"
   assert_equal "$SC" 200
 
@@ -33,7 +33,7 @@ load 'utils/_helpers'
   assert_equal "$(get_json_path "${BODY}" ".log_stder | length")" 0
 }
 
-@test "fcgi-app: Fail replacing cache that doesn't exist" {
+@test "fcgi-app: Fail replacing app that doesn't exist" {
   resource_put "$_FCGIAPP_BASE_PATH/i_am_not_here" "data/app_duplicated.json" "force_reload=true"
   assert_equal "$SC" 409
 }

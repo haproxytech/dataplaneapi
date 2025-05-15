@@ -32,7 +32,6 @@ load 'utils/_helpers'
   assert_equal 1024 "$(get_json_path "$BODY" ".total_max_size")"
 }
 
-
 @test "cache: Fail returning cache that doesn't exist" {
   resource_get "$_CACHE_BASE_PATH/i_am_not_here"
   assert_equal "$SC" 404

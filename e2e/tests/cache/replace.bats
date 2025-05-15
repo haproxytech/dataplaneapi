@@ -24,7 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "cache: Replace one cache" {
-  resource_put "$_CACHE_BASE_PATH/test_cache" "data/cache_same_name.json" "force_reload=true"
+  resource_put "$_CACHE_BASE_PATH/test_cache" "data/cache_same_name.json"
   assert_equal "$SC" 200
 
   resource_get "$_CACHE_BASE_PATH/test_cache"
@@ -36,11 +36,11 @@ load 'utils/_helpers'
 
 
 @test "cache: Fail replacing cache that doesn't exist" {
-  resource_put "$_CACHE_BASE_PATH/i_am_not_here" "data/cache_same_name.json" "force_reload=true"
+  resource_put "$_CACHE_BASE_PATH/i_am_not_here" "data/cache_same_name.json"
   assert_equal "$SC" 404
 }
 
 @test "cache: Fail creating cache that isn't valid" {
-  resource_put "$_CACHE_BASE_PATH/test_cache" "data/cache_unvalid.json" "force_reload=true"
+  resource_put "$_CACHE_BASE_PATH/test_cache" "data/cache_unvalid.json"
   assert_equal "$SC" 400
 }
