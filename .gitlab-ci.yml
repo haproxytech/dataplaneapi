@@ -7,7 +7,7 @@ stages:
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-debian
-  BATS_VERSION: v1.4.1
+  BATS_VERSION: v1.10.0
   GO_VERSION: "1.24"
   DOCKER_VERSION: "26.0"
 
