@@ -131,6 +131,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=LogProfile \
     --tags=SSLFrontUse \
     --tags=SSLRuntime \
+    --tags=Acme \
     -r $SPEC_DIR/copyright.txt \
     --template-dir generate/swagger/templates
 

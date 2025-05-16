@@ -686,6 +686,245 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/acme": {
+      "get": {
+        "description": "Returns an array of all the configured ACME providers",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Return all the ACME providers",
+        "operationId": "getAcmeProviders",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acme_providers"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new acme section",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Add a new Acme provider",
+        "operationId": "createAcmeProvider",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Profile created",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/acme/{name}": {
+      "get": {
+        "description": "Find an acme section by its name",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Find an ACME provider",
+        "operationId": "getAcmeProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "acme section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a acme_provider's configuration by its name",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Modify an ACME provider",
+        "operationId": "editAcmeProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "acme section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "acme_provider configuration updated",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an acme section from the configuration",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Delete an ACME provider",
+        "operationId": "deleteAcmeProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "acme section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "acme provider deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/backends": {
       "get": {
         "description": "Returns an array of all configured backends.",
@@ -26214,6 +26453,80 @@ func init() {
         "$ref": "#/definitions/acl"
       }
     },
+    "acme_provider": {
+      "description": "Define an ACME provider to generate certificates automatically",
+      "type": "object",
+      "title": "ACME Provider",
+      "required": [
+        "name",
+        "directory"
+      ],
+      "properties": {
+        "account_key": {
+          "description": "Path where the the ACME account key is stored",
+          "type": "string"
+        },
+        "bits": {
+          "description": "Number of bits to generate an RSA certificate",
+          "type": "integer",
+          "minimum": 1024,
+          "x-nullable": true,
+          "x-omitempty": true
+        },
+        "challenge": {
+          "description": "ACME challenge type. Only HTTP-01 and DNS-01 are supported.",
+          "type": "string",
+          "enum": [
+            "HTTP-01",
+            "DNS-01"
+          ]
+        },
+        "contact": {
+          "description": "Contact email for the ACME account",
+          "type": "string"
+        },
+        "curves": {
+          "description": "Curves used with the ECDSA key type",
+          "type": "string"
+        },
+        "directory": {
+          "description": "URL to the ACME provider's directory. For example:\nhttps://acme-staging-v02.api.letsencrypt.org/directory\n",
+          "type": "string",
+          "pattern": "^https://[^\\s]+$",
+          "x-nullable": false
+        },
+        "keytype": {
+          "description": "Type of key to generate",
+          "type": "string",
+          "enum": [
+            "RSA",
+            "ECDSA"
+          ]
+        },
+        "map": {
+          "description": "The map which will be used to store the ACME token (key) and thumbprint",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "name": {
+          "description": "ACME provider's name",
+          "type": "string",
+          "x-nullable": false
+        }
+      }
+    },
+    "acme_providers": {
+      "description": "List of ACME sections.",
+      "type": "array",
+      "items": {
+        "x-omitempty": true,
+        "$ref": "#/definitions/acme_provider"
+      }
+    },
     "awsFilters": {
       "type": "object",
       "required": [
@@ -26688,6 +27001,14 @@ func init() {
             }
           },
           "x-display-name": "HTTP bufferrequest"
+        },
+        "http-drop-request-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Request Trailers"
         },
         "http-no-delay": {
           "type": "string",
@@ -28448,6 +28769,10 @@ func init() {
         "certificate"
       ],
       "properties": {
+        "acme": {
+          "description": "ACME section name to use",
+          "type": "string"
+        },
         "alias": {
           "description": "Certificate alias",
           "type": "string"
@@ -28456,6 +28781,15 @@ func init() {
           "description": "Certificate filename",
           "type": "string",
           "x-nullable": false
+        },
+        "domains": {
+          "description": "List of domains used to generate the certificate with ACME",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Domains",
+          "x-omitempty": true
         },
         "issuer": {
           "description": "OCSP issuer filename",
@@ -28919,6 +29253,22 @@ func init() {
             "disabled"
           ],
           "x-display-name": "HTTP bufferrequest"
+        },
+        "http-drop-request-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Request Trailers"
+        },
+        "http-drop-response-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Response Trailers"
         },
         "http-use-htx": {
           "type": "string",
@@ -30446,6 +30796,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "HTTP bufferrequest"
+        },
+        "http-drop-response-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Response Trailers"
         },
         "http-use-htx": {
           "type": "string",
@@ -32517,6 +32875,7 @@ func init() {
               "required": true,
               "value": [
                 "do-resolve",
+                "pause",
                 "set-bc-mark",
                 "set-bc-tos",
                 "set-dst",
@@ -33160,6 +33519,7 @@ func init() {
             "early-hint",
             "lua",
             "normalize-uri",
+            "pause",
             "redirect",
             "reject",
             "replace-header",
@@ -33458,6 +33818,7 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "pause",
                 "set-fc-mark",
                 "set-fc-tos"
               ]
@@ -33956,6 +34317,7 @@ func init() {
             "del-map",
             "deny",
             "lua",
+            "pause",
             "redirect",
             "replace-header",
             "replace-value",
@@ -41942,6 +42304,9 @@ func init() {
       "name": "ACL"
     },
     {
+      "name": "Acme"
+    },
+    {
       "description": "Managing backend configurations (advanced mode)",
       "name": "Backend"
     },
@@ -43088,6 +43453,388 @@ func init() {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/endpoints"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/acme": {
+      "get": {
+        "description": "Returns an array of all the configured ACME providers",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Return all the ACME providers",
+        "operationId": "getAcmeProviders",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acme_providers"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new acme section",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Add a new Acme provider",
+        "operationId": "createAcmeProvider",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Profile created",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/acme/{name}": {
+      "get": {
+        "description": "Find an acme section by its name",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Find an ACME provider",
+        "operationId": "getAcmeProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "acme section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a acme_provider's configuration by its name",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Modify an ACME provider",
+        "operationId": "editAcmeProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "acme section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "acme_provider configuration updated",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acme_provider"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an acme section from the configuration",
+        "tags": [
+          "Acme"
+        ],
+        "summary": "Delete an ACME provider",
+        "operationId": "deleteAcmeProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "acme section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "acme provider deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -84822,6 +85569,80 @@ func init() {
         "$ref": "#/definitions/acl"
       }
     },
+    "acme_provider": {
+      "description": "Define an ACME provider to generate certificates automatically",
+      "type": "object",
+      "title": "ACME Provider",
+      "required": [
+        "name",
+        "directory"
+      ],
+      "properties": {
+        "account_key": {
+          "description": "Path where the the ACME account key is stored",
+          "type": "string"
+        },
+        "bits": {
+          "description": "Number of bits to generate an RSA certificate",
+          "type": "integer",
+          "minimum": 1024,
+          "x-nullable": true,
+          "x-omitempty": true
+        },
+        "challenge": {
+          "description": "ACME challenge type. Only HTTP-01 and DNS-01 are supported.",
+          "type": "string",
+          "enum": [
+            "HTTP-01",
+            "DNS-01"
+          ]
+        },
+        "contact": {
+          "description": "Contact email for the ACME account",
+          "type": "string"
+        },
+        "curves": {
+          "description": "Curves used with the ECDSA key type",
+          "type": "string"
+        },
+        "directory": {
+          "description": "URL to the ACME provider's directory. For example:\nhttps://acme-staging-v02.api.letsencrypt.org/directory\n",
+          "type": "string",
+          "pattern": "^https://[^\\s]+$",
+          "x-nullable": false
+        },
+        "keytype": {
+          "description": "Type of key to generate",
+          "type": "string",
+          "enum": [
+            "RSA",
+            "ECDSA"
+          ]
+        },
+        "map": {
+          "description": "The map which will be used to store the ACME token (key) and thumbprint",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "name": {
+          "description": "ACME provider's name",
+          "type": "string",
+          "x-nullable": false
+        }
+      }
+    },
+    "acme_providers": {
+      "description": "List of ACME sections.",
+      "type": "array",
+      "items": {
+        "x-omitempty": true,
+        "$ref": "#/definitions/acme_provider"
+      }
+    },
     "awsFilters": {
       "type": "object",
       "required": [
@@ -85273,6 +86094,14 @@ func init() {
             }
           },
           "x-display-name": "HTTP bufferrequest"
+        },
+        "http-drop-request-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Request Trailers"
         },
         "http-no-delay": {
           "type": "string",
@@ -86979,6 +87808,10 @@ func init() {
         "certificate"
       ],
       "properties": {
+        "acme": {
+          "description": "ACME section name to use",
+          "type": "string"
+        },
         "alias": {
           "description": "Certificate alias",
           "type": "string"
@@ -86987,6 +87820,15 @@ func init() {
           "description": "Certificate filename",
           "type": "string",
           "x-nullable": false
+        },
+        "domains": {
+          "description": "List of domains used to generate the certificate with ACME",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Domains",
+          "x-omitempty": true
         },
         "issuer": {
           "description": "OCSP issuer filename",
@@ -87454,6 +88296,22 @@ func init() {
             "disabled"
           ],
           "x-display-name": "HTTP bufferrequest"
+        },
+        "http-drop-request-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Request Trailers"
+        },
+        "http-drop-response-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Response Trailers"
         },
         "http-use-htx": {
           "type": "string",
@@ -88960,6 +89818,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "HTTP bufferrequest"
+        },
+        "http-drop-response-trailers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Drop HTTP Response Trailers"
         },
         "http-use-htx": {
           "type": "string",
@@ -90951,6 +91817,7 @@ func init() {
               "required": true,
               "value": [
                 "do-resolve",
+                "pause",
                 "set-bc-mark",
                 "set-bc-tos",
                 "set-dst",
@@ -91594,6 +92461,7 @@ func init() {
             "early-hint",
             "lua",
             "normalize-uri",
+            "pause",
             "redirect",
             "reject",
             "replace-header",
@@ -91893,6 +92761,7 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "pause",
                 "set-fc-mark",
                 "set-fc-tos"
               ]
@@ -92391,6 +93260,7 @@ func init() {
             "del-map",
             "deny",
             "lua",
+            "pause",
             "redirect",
             "replace-header",
             "replace-value",
@@ -100258,6 +101128,9 @@ func init() {
   "tags": [
     {
       "name": "ACL"
+    },
+    {
+      "name": "Acme"
     },
     {
       "description": "Managing backend configurations (advanced mode)",

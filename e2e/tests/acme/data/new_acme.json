@@ -1,0 +1,5 @@
+{
+    "name": "letsencrypt",
+    "contact": "me@example.com",
+    "directory": "https://acme-staging-v02.api.letsencrypt.org/directory"
+}

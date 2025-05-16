@@ -36,6 +36,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/acl_runtime"
+	"github.com/haproxytech/dataplaneapi/operations/acme"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
@@ -197,6 +198,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLCreateACLFrontendHandler: acl.CreateACLFrontendHandlerFunc(func(params acl.CreateACLFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.CreateACLFrontend has not yet been implemented")
+		}),
+		AcmeCreateAcmeProviderHandler: acme.CreateAcmeProviderHandlerFunc(func(params acme.CreateAcmeProviderParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme.CreateAcmeProvider has not yet been implemented")
 		}),
 		BackendCreateBackendHandler: backend.CreateBackendHandlerFunc(func(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.CreateBackend has not yet been implemented")
@@ -458,6 +462,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLDeleteACLFrontendHandler: acl.DeleteACLFrontendHandlerFunc(func(params acl.DeleteACLFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.DeleteACLFrontend has not yet been implemented")
+		}),
+		AcmeDeleteAcmeProviderHandler: acme.DeleteAcmeProviderHandlerFunc(func(params acme.DeleteAcmeProviderParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme.DeleteAcmeProvider has not yet been implemented")
 		}),
 		BackendDeleteBackendHandler: backend.DeleteBackendHandlerFunc(func(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.DeleteBackend has not yet been implemented")
@@ -723,6 +730,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		UserlistDeleteUserlistHandler: userlist.DeleteUserlistHandlerFunc(func(params userlist.DeleteUserlistParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation userlist.DeleteUserlist has not yet been implemented")
 		}),
+		AcmeEditAcmeProviderHandler: acme.EditAcmeProviderHandlerFunc(func(params acme.EditAcmeProviderParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme.EditAcmeProvider has not yet been implemented")
+		}),
 		ClusterEditClusterHandler: cluster.EditClusterHandlerFunc(func(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.EditCluster has not yet been implemented")
 		}),
@@ -755,6 +765,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLGetACLFrontendHandler: acl.GetACLFrontendHandlerFunc(func(params acl.GetACLFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetACLFrontend has not yet been implemented")
+		}),
+		AcmeGetAcmeProviderHandler: acme.GetAcmeProviderHandlerFunc(func(params acme.GetAcmeProviderParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme.GetAcmeProvider has not yet been implemented")
+		}),
+		AcmeGetAcmeProvidersHandler: acme.GetAcmeProvidersHandlerFunc(func(params acme.GetAcmeProvidersParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme.GetAcmeProviders has not yet been implemented")
 		}),
 		ACLGetAllACLBackendHandler: acl.GetAllACLBackendHandlerFunc(func(params acl.GetAllACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetAllACLBackend has not yet been implemented")
@@ -1853,6 +1869,8 @@ type DataPlaneAPI struct {
 	ACLCreateACLFCGIAppHandler acl.CreateACLFCGIAppHandler
 	// ACLCreateACLFrontendHandler sets the operation handler for the create Acl frontend operation
 	ACLCreateACLFrontendHandler acl.CreateACLFrontendHandler
+	// AcmeCreateAcmeProviderHandler sets the operation handler for the create acme provider operation
+	AcmeCreateAcmeProviderHandler acme.CreateAcmeProviderHandler
 	// BackendCreateBackendHandler sets the operation handler for the create backend operation
 	BackendCreateBackendHandler backend.CreateBackendHandler
 	// BackendSwitchingRuleCreateBackendSwitchingRuleHandler sets the operation handler for the create backend switching rule operation
@@ -2027,6 +2045,8 @@ type DataPlaneAPI struct {
 	ACLDeleteACLFCGIAppHandler acl.DeleteACLFCGIAppHandler
 	// ACLDeleteACLFrontendHandler sets the operation handler for the delete Acl frontend operation
 	ACLDeleteACLFrontendHandler acl.DeleteACLFrontendHandler
+	// AcmeDeleteAcmeProviderHandler sets the operation handler for the delete acme provider operation
+	AcmeDeleteAcmeProviderHandler acme.DeleteAcmeProviderHandler
 	// BackendDeleteBackendHandler sets the operation handler for the delete backend operation
 	BackendDeleteBackendHandler backend.DeleteBackendHandler
 	// BackendSwitchingRuleDeleteBackendSwitchingRuleHandler sets the operation handler for the delete backend switching rule operation
@@ -2203,6 +2223,8 @@ type DataPlaneAPI struct {
 	UserDeleteUserHandler user.DeleteUserHandler
 	// UserlistDeleteUserlistHandler sets the operation handler for the delete userlist operation
 	UserlistDeleteUserlistHandler userlist.DeleteUserlistHandler
+	// AcmeEditAcmeProviderHandler sets the operation handler for the edit acme provider operation
+	AcmeEditAcmeProviderHandler acme.EditAcmeProviderHandler
 	// ClusterEditClusterHandler sets the operation handler for the edit cluster operation
 	ClusterEditClusterHandler cluster.EditClusterHandler
 	// CrtStoreEditCrtStoreHandler sets the operation handler for the edit crt store operation
@@ -2225,6 +2247,10 @@ type DataPlaneAPI struct {
 	ACLGetACLFCGIAppHandler acl.GetACLFCGIAppHandler
 	// ACLGetACLFrontendHandler sets the operation handler for the get Acl frontend operation
 	ACLGetACLFrontendHandler acl.GetACLFrontendHandler
+	// AcmeGetAcmeProviderHandler sets the operation handler for the get acme provider operation
+	AcmeGetAcmeProviderHandler acme.GetAcmeProviderHandler
+	// AcmeGetAcmeProvidersHandler sets the operation handler for the get acme providers operation
+	AcmeGetAcmeProvidersHandler acme.GetAcmeProvidersHandler
 	// ACLGetAllACLBackendHandler sets the operation handler for the get all Acl backend operation
 	ACLGetAllACLBackendHandler acl.GetAllACLBackendHandler
 	// ACLGetAllACLDefaultsHandler sets the operation handler for the get all Acl defaults operation
@@ -3046,6 +3072,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ACLCreateACLFrontendHandler == nil {
 		unregistered = append(unregistered, "acl.CreateACLFrontendHandler")
 	}
+	if o.AcmeCreateAcmeProviderHandler == nil {
+		unregistered = append(unregistered, "acme.CreateAcmeProviderHandler")
+	}
 	if o.BackendCreateBackendHandler == nil {
 		unregistered = append(unregistered, "backend.CreateBackendHandler")
 	}
@@ -3306,6 +3335,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ACLDeleteACLFrontendHandler == nil {
 		unregistered = append(unregistered, "acl.DeleteACLFrontendHandler")
+	}
+	if o.AcmeDeleteAcmeProviderHandler == nil {
+		unregistered = append(unregistered, "acme.DeleteAcmeProviderHandler")
 	}
 	if o.BackendDeleteBackendHandler == nil {
 		unregistered = append(unregistered, "backend.DeleteBackendHandler")
@@ -3571,6 +3603,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.UserlistDeleteUserlistHandler == nil {
 		unregistered = append(unregistered, "userlist.DeleteUserlistHandler")
 	}
+	if o.AcmeEditAcmeProviderHandler == nil {
+		unregistered = append(unregistered, "acme.EditAcmeProviderHandler")
+	}
 	if o.ClusterEditClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.EditClusterHandler")
 	}
@@ -3603,6 +3638,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ACLGetACLFrontendHandler == nil {
 		unregistered = append(unregistered, "acl.GetACLFrontendHandler")
+	}
+	if o.AcmeGetAcmeProviderHandler == nil {
+		unregistered = append(unregistered, "acme.GetAcmeProviderHandler")
+	}
+	if o.AcmeGetAcmeProvidersHandler == nil {
+		unregistered = append(unregistered, "acme.GetAcmeProvidersHandler")
 	}
 	if o.ACLGetAllACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.GetAllACLBackendHandler")
@@ -4791,6 +4832,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/acme"] = acme.NewCreateAcmeProvider(o.context, o.AcmeCreateAcmeProviderHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends"] = backend.NewCreateBackend(o.context, o.BackendCreateBackendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -5136,6 +5181,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/acls/{index}"] = acl.NewDeleteACLFrontend(o.context, o.ACLDeleteACLFrontendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/acme/{name}"] = acme.NewDeleteAcmeProvider(o.context, o.AcmeDeleteAcmeProviderHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5491,6 +5540,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/acme/{name}"] = acme.NewEditAcmeProvider(o.context, o.AcmeEditAcmeProviderHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/cluster"] = cluster.NewEditCluster(o.context, o.ClusterEditClusterHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -5532,6 +5585,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/acls/{index}"] = acl.NewGetACLFrontend(o.context, o.ACLGetACLFrontendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/acme/{name}"] = acme.NewGetAcmeProvider(o.context, o.AcmeGetAcmeProviderHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/acme"] = acme.NewGetAcmeProviders(o.context, o.AcmeGetAcmeProvidersHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
