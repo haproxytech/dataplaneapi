@@ -18,6 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v6"
+	client_conf "github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/client-native/v6/models"
 	cn "github.com/haproxytech/dataplaneapi/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -81,6 +82,13 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 			Code:    &c,
 		}
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
+	}
+	// validate constraints that can not be validated by the swagger 2.0 spec.
+	if err := client_conf.ValidateGlobalSection(params.Data); err != nil {
+		code := misc.ErrHTTPBadRequest
+		msg := err.Error()
+		e := &models.Error{Code: &code, Message: &msg}
+		return global.NewReplaceGlobalDefault(int(misc.ErrHTTPBadRequest)).WithPayload(e)
 	}
 
 	err := h.pushGlobalConfiguration(params, t, v)
