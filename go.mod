@@ -24,7 +24,7 @@ require (
 	github.com/google/go-cmp v0.7.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
-	github.com/haproxytech/client-native/v6 v6.1.1-0.20250516101841-8f89b893346d
+	github.com/haproxytech/client-native/v6 v6.1.1-0.20250521114923-c914b666b707
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12

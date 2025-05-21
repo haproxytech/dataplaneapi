@@ -26453,6 +26453,43 @@ func init() {
         "$ref": "#/definitions/acl"
       }
     },
+    "acme_certificate_status": {
+      "description": "Status of a single ACME certificate from runtime.",
+      "type": "object",
+      "title": "ACME certificate status",
+      "properties": {
+        "acme_section": {
+          "description": "ACME section which generated the certificate.",
+          "type": "string"
+        },
+        "certificate": {
+          "description": "Certificate name",
+          "type": "string"
+        },
+        "expiries_in": {
+          "description": "Duration until certificate expiry.",
+          "type": "string"
+        },
+        "expiry_date": {
+          "description": "Certificate expiration date.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "renewal_in": {
+          "description": "Duration until the next planned renewal.",
+          "type": "string"
+        },
+        "scheduled_renewal": {
+          "description": "Planned date for certificate renewal.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "description": "State of the ACME task, either \"Running\" or \"Scheduled\".",
+          "type": "string"
+        }
+      }
+    },
     "acme_provider": {
       "description": "Define an ACME provider to generate certificates automatically",
       "type": "object",
@@ -26525,6 +26562,14 @@ func init() {
       "items": {
         "x-omitempty": true,
         "$ref": "#/definitions/acme_provider"
+      }
+    },
+    "acme_status": {
+      "description": "Status of all the ACME certificates from runtime.",
+      "type": "array",
+      "title": "ACME status",
+      "items": {
+        "$ref": "#/definitions/acme_certificate_status"
       }
     },
     "awsFilters": {
@@ -26985,6 +27030,14 @@ func init() {
         "hash_balance_factor": {
           "type": "integer",
           "x-nullable": true
+        },
+        "hash_preserve_affinity": {
+          "type": "string",
+          "enum": [
+            "always",
+            "maxconn",
+            "maxqueue"
+          ]
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -28880,6 +28933,11 @@ func init() {
         "quiet": {
           "type": "boolean"
         },
+        "stress_level": {
+          "type": "integer",
+          "maximum": 9,
+          "x-nullable": true
+        },
         "zero_warning": {
           "type": "boolean"
         }
@@ -29242,6 +29300,14 @@ func init() {
         "hash_balance_factor": {
           "type": "integer",
           "x-nullable": true
+        },
+        "hash_preserve_affinity": {
+          "type": "string",
+          "enum": [
+            "always",
+            "maxconn",
+            "maxqueue"
+          ]
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -31198,6 +31264,59 @@ func init() {
           },
           "x-display-name": "CPU Maps",
           "x-go-name": "CPUMaps",
+          "x-omitempty": true
+        },
+        "cpu_policy": {
+          "type": "string",
+          "enum": [
+            "none",
+            "efficiency",
+            "first-usable-node",
+            "group-by-2-ccx",
+            "group-by-2-clusters",
+            "group-by-3-ccx",
+            "group-by-3-clusters",
+            "group-by-4-ccx",
+            "group-by-4-cluster",
+            "group-by-ccx",
+            "group-by-cluster",
+            "performance",
+            "resource"
+          ],
+          "x-display-name": "CPU Policy"
+        },
+        "cpu_set": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "directive"
+            ],
+            "properties": {
+              "directive": {
+                "type": "string",
+                "enum": [
+                  "reset",
+                  "drop-cpu",
+                  "only-cpu",
+                  "drop-node",
+                  "only-node",
+                  "drop-cluster",
+                  "only-cluster",
+                  "drop-core",
+                  "only-core",
+                  "drop-thread",
+                  "only-thread"
+                ]
+              },
+              "set": {
+                "type": "string"
+              }
+            },
+            "x-go-name": "CPUSet"
+          },
+          "x-display-name": "CPU Set",
+          "x-go-name": "CPUSets",
           "x-omitempty": true
         },
         "daemon": {
@@ -34597,9 +34716,17 @@ func init() {
         "name"
       ],
       "properties": {
+        "assume-rfc6587-ntf": {
+          "type": "boolean",
+          "x-display-name": "Assume RFC-6587 Non-Transparent Framing"
+        },
         "backlog": {
           "type": "integer",
           "x-nullable": true
+        },
+        "dont-parse-log": {
+          "type": "boolean",
+          "x-display-name": "Don't Parse Log"
         },
         "maxconn": {
           "type": "integer",
@@ -39340,6 +39467,14 @@ func init() {
     "ssl_options": {
       "type": "object",
       "properties": {
+        "acme_scheduler": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "off"
+          ],
+          "x-display-name": "ACME Scheduler"
+        },
         "ca_base": {
           "type": "string",
           "x-display-name": "SSL CA Certificates Base Directory"
@@ -41587,6 +41722,13 @@ func init() {
     "tune_lua_options": {
       "type": "object",
       "properties": {
+        "bool_sample_conversion": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "pre-3.1-bug"
+          ]
+        },
         "burst_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -41665,6 +41807,17 @@ func init() {
         "disable_zero_copy_forwarding": {
           "type": "boolean",
           "x-display-name": "Disable zero-copy forwarding"
+        },
+        "epoll_mask_events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "err",
+              "hup",
+              "rdhup"
+            ]
+          }
         },
         "events_max_events_at_once": {
           "type": "integer",
@@ -41818,6 +41971,11 @@ func init() {
         "max_checks_per_thread": {
           "type": "integer",
           "x-display-name": "Maximum checks per thread",
+          "x-nullable": true
+        },
+        "max_rules_at_once": {
+          "type": "integer",
+          "x-display-name": "Maximum rules at once",
           "x-nullable": true
         },
         "maxaccept": {
@@ -84897,6 +85055,34 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
+    "GlobalBaseCPUSetItems0": {
+      "type": "object",
+      "required": [
+        "directive"
+      ],
+      "properties": {
+        "directive": {
+          "type": "string",
+          "enum": [
+            "reset",
+            "drop-cpu",
+            "only-cpu",
+            "drop-node",
+            "only-node",
+            "drop-cluster",
+            "only-cluster",
+            "drop-core",
+            "only-core",
+            "drop-thread",
+            "only-thread"
+          ]
+        },
+        "set": {
+          "type": "string"
+        }
+      },
+      "x-go-name": "CPUSet"
+    },
     "GlobalBaseDefaultPath": {
       "type": "object",
       "required": [
@@ -85569,6 +85755,43 @@ func init() {
         "$ref": "#/definitions/acl"
       }
     },
+    "acme_certificate_status": {
+      "description": "Status of a single ACME certificate from runtime.",
+      "type": "object",
+      "title": "ACME certificate status",
+      "properties": {
+        "acme_section": {
+          "description": "ACME section which generated the certificate.",
+          "type": "string"
+        },
+        "certificate": {
+          "description": "Certificate name",
+          "type": "string"
+        },
+        "expiries_in": {
+          "description": "Duration until certificate expiry.",
+          "type": "string"
+        },
+        "expiry_date": {
+          "description": "Certificate expiration date.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "renewal_in": {
+          "description": "Duration until the next planned renewal.",
+          "type": "string"
+        },
+        "scheduled_renewal": {
+          "description": "Planned date for certificate renewal.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "description": "State of the ACME task, either \"Running\" or \"Scheduled\".",
+          "type": "string"
+        }
+      }
+    },
     "acme_provider": {
       "description": "Define an ACME provider to generate certificates automatically",
       "type": "object",
@@ -85641,6 +85864,14 @@ func init() {
       "items": {
         "x-omitempty": true,
         "$ref": "#/definitions/acme_provider"
+      }
+    },
+    "acme_status": {
+      "description": "Status of all the ACME certificates from runtime.",
+      "type": "array",
+      "title": "ACME status",
+      "items": {
+        "$ref": "#/definitions/acme_certificate_status"
       }
     },
     "awsFilters": {
@@ -86078,6 +86309,14 @@ func init() {
         "hash_balance_factor": {
           "type": "integer",
           "x-nullable": true
+        },
+        "hash_preserve_affinity": {
+          "type": "string",
+          "enum": [
+            "always",
+            "maxconn",
+            "maxqueue"
+          ]
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -87920,6 +88159,12 @@ func init() {
         "quiet": {
           "type": "boolean"
         },
+        "stress_level": {
+          "type": "integer",
+          "maximum": 9,
+          "minimum": 0,
+          "x-nullable": true
+        },
         "zero_warning": {
           "type": "boolean"
         }
@@ -88285,6 +88530,14 @@ func init() {
         "hash_balance_factor": {
           "type": "integer",
           "x-nullable": true
+        },
+        "hash_preserve_affinity": {
+          "type": "string",
+          "enum": [
+            "always",
+            "maxconn",
+            "maxqueue"
+          ]
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -90209,6 +90462,34 @@ func init() {
           },
           "x-display-name": "CPU Maps",
           "x-go-name": "CPUMaps",
+          "x-omitempty": true
+        },
+        "cpu_policy": {
+          "type": "string",
+          "enum": [
+            "none",
+            "efficiency",
+            "first-usable-node",
+            "group-by-2-ccx",
+            "group-by-2-clusters",
+            "group-by-3-ccx",
+            "group-by-3-clusters",
+            "group-by-4-ccx",
+            "group-by-4-cluster",
+            "group-by-ccx",
+            "group-by-cluster",
+            "performance",
+            "resource"
+          ],
+          "x-display-name": "CPU Policy"
+        },
+        "cpu_set": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalBaseCPUSetItems0"
+          },
+          "x-display-name": "CPU Set",
+          "x-go-name": "CPUSets",
           "x-omitempty": true
         },
         "daemon": {
@@ -93541,9 +93822,17 @@ func init() {
         "name"
       ],
       "properties": {
+        "assume-rfc6587-ntf": {
+          "type": "boolean",
+          "x-display-name": "Assume RFC-6587 Non-Transparent Framing"
+        },
         "backlog": {
           "type": "integer",
           "x-nullable": true
+        },
+        "dont-parse-log": {
+          "type": "boolean",
+          "x-display-name": "Don't Parse Log"
         },
         "maxconn": {
           "type": "integer",
@@ -98215,6 +98504,14 @@ func init() {
     "ssl_options": {
       "type": "object",
       "properties": {
+        "acme_scheduler": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "off"
+          ],
+          "x-display-name": "ACME Scheduler"
+        },
         "ca_base": {
           "type": "string",
           "x-display-name": "SSL CA Certificates Base Directory"
@@ -100405,6 +100702,13 @@ func init() {
     "tune_lua_options": {
       "type": "object",
       "properties": {
+        "bool_sample_conversion": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "pre-3.1-bug"
+          ]
+        },
         "burst_timeout": {
           "type": "integer",
           "minimum": 0,
@@ -100487,6 +100791,17 @@ func init() {
         "disable_zero_copy_forwarding": {
           "type": "boolean",
           "x-display-name": "Disable zero-copy forwarding"
+        },
+        "epoll_mask_events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "err",
+              "hup",
+              "rdhup"
+            ]
+          }
         },
         "events_max_events_at_once": {
           "type": "integer",
@@ -100641,6 +100956,12 @@ func init() {
         "max_checks_per_thread": {
           "type": "integer",
           "x-display-name": "Maximum checks per thread",
+          "x-nullable": true
+        },
+        "max_rules_at_once": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Maximum rules at once",
           "x-nullable": true
         },
         "maxaccept": {
