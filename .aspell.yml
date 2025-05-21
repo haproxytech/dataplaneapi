@@ -36,3 +36,4 @@ allowed:
   - crl
   - crt
   - ocsp
+  - logrus
