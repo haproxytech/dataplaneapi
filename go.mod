@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.29.14
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.67
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.52.4
-	github.com/aws/aws-sdk-go-v2/service/ec2 v1.215.0
+	github.com/aws/aws-sdk-go-v2/service/ec2 v1.220.0
 	github.com/docker/go-units v0.5.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20240428194347-eebcea082ee0
 	github.com/fsnotify/fsnotify v1.9.0
