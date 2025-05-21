@@ -23,6 +23,7 @@ allowed:
   - frontend
   - frontends
   - tcp
+  - cpu
   - crd
   - linter
   - linters
