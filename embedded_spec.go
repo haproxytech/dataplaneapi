@@ -27910,6 +27910,18 @@ func init() {
           "type": "boolean",
           "x-deprecated": true
         },
+        "force_strict_sni": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "force_tlsv10": {
           "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "boolean",
@@ -27953,6 +27965,12 @@ func init() {
         "id": {
           "type": "string",
           "x-display-name": "Socket ID"
+        },
+        "idle_ping": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
         },
         "interface": {
           "type": "string"
@@ -28019,13 +28037,24 @@ func init() {
           },
           "x-deprecated": true
         },
-        "no_tls_tickets": {
+        "no_strict_sni": {
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "no_tls_tickets": {
+          "description": "This field is deprecated in favor of tls_tickets, and will be removed in a future release",
+          "type": "boolean",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          },
+          "x-deprecated": true
         },
         "no_tlsv10": {
           "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
@@ -28193,7 +28222,8 @@ func init() {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "tcp_user_timeout": {
           "type": "integer",
@@ -28207,6 +28237,18 @@ func init() {
         },
         "tls_ticket_keys": {
           "type": "string"
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "tlsv10": {
           "type": "string",
@@ -28519,6 +28561,16 @@ func init() {
           ],
           "x-omitempty": true
         },
+        "minsize_req": {
+          "type": "integer",
+          "x-display-name": "Minimum Size for Requests",
+          "x-size": true
+        },
+        "minsize_res": {
+          "type": "integer",
+          "x-display-name": "Minimum Size for Responses",
+          "x-size": true
+        },
         "offload": {
           "type": "boolean"
         },
@@ -28571,6 +28623,10 @@ func init() {
         "peers": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "recv_only": {
+          "type": "boolean",
+          "x-display-name": "Receive Only"
         },
         "size": {
           "type": "integer",
@@ -37699,6 +37755,17 @@ func init() {
             "disabled"
           ]
         },
+        "check-pool-conn-name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "check-reuse-pool": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "check-send-proxy": {
           "type": "string",
           "enum": [
@@ -37860,6 +37927,12 @@ func init() {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
+          "x-nullable": true
+        },
+        "idle_ping": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "init-addr": {
@@ -38226,6 +38299,9 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "strict-maxconn": {
+          "type": "boolean"
         },
         "tcp_ut": {
           "type": "integer",
@@ -40074,6 +40150,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "No Purge"
         },
+        "recv_only": {
+          "type": "boolean",
+          "x-display-name": "Receive Only"
+        },
         "size": {
           "type": "string",
           "pattern": "^\\d+(k|K|m|M|g|G)?$",
@@ -41836,6 +41916,12 @@ func init() {
           ],
           "x-display-name": "Edge-triggered polling mode"
         },
+        "glitches_kill_cpu_usage": {
+          "type": "integer",
+          "maximum": 100,
+          "x-display-name": "CPU Usage Kill glitched Connections",
+          "x-nullable": true
+        },
         "h1_zero_copy_fwd_recv": {
           "type": "string",
           "enum": [
@@ -41995,6 +42081,18 @@ func init() {
           "x-display-name": "Per-thread Amount of Memory",
           "x-nullable": true
         },
+        "notsent_lowat_client": {
+          "type": "integer",
+          "x-display-name": "Client Not Sent Low Watermark",
+          "x-nullable": true,
+          "x-size": true
+        },
+        "notsent_lowat_server": {
+          "type": "integer",
+          "x-display-name": "Server Not Sent Low Watermark",
+          "x-nullable": true,
+          "x-size": true
+        },
         "pattern_cache_size": {
           "type": "integer",
           "x-display-name": "Pattern Lookup Cache Size",
@@ -42055,6 +42153,15 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of stick-counters",
           "x-nullable": true
+        },
+        "takeover_other_tg_connections": {
+          "type": "string",
+          "enum": [
+            "none",
+            "restricted",
+            "full"
+          ],
+          "x-display-name": "Takeover Other Thread Groups Connections"
         }
       }
     },
@@ -42077,6 +42184,12 @@ func init() {
           "type": "integer",
           "x-display-name": "QUIC Max Number of Bidirectional Streams",
           "x-nullable": true
+        },
+        "frontend_max_tx_memory": {
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Max Tx Memory",
+          "x-nullable": true,
+          "x-size": true
         },
         "max_frame_loss": {
           "type": "integer",
@@ -87172,6 +87285,18 @@ func init() {
           "type": "boolean",
           "x-deprecated": true
         },
+        "force_strict_sni": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "force_tlsv10": {
           "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "boolean",
@@ -87215,6 +87340,13 @@ func init() {
         "id": {
           "type": "string",
           "x-display-name": "Socket ID"
+        },
+        "idle_ping": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
         },
         "interface": {
           "type": "string"
@@ -87281,13 +87413,24 @@ func init() {
           },
           "x-deprecated": true
         },
-        "no_tls_tickets": {
+        "no_strict_sni": {
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "no_tls_tickets": {
+          "description": "This field is deprecated in favor of tls_tickets, and will be removed in a future release",
+          "type": "boolean",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          },
+          "x-deprecated": true
         },
         "no_tlsv10": {
           "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
@@ -87456,7 +87599,8 @@ func init() {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "tcp_user_timeout": {
           "type": "integer",
@@ -87470,6 +87614,18 @@ func init() {
         },
         "tls_ticket_keys": {
           "type": "string"
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "tlsv10": {
           "type": "string",
@@ -87756,6 +87912,16 @@ func init() {
           ],
           "x-omitempty": true
         },
+        "minsize_req": {
+          "type": "integer",
+          "x-display-name": "Minimum Size for Requests",
+          "x-size": true
+        },
+        "minsize_res": {
+          "type": "integer",
+          "x-display-name": "Minimum Size for Responses",
+          "x-size": true
+        },
         "offload": {
           "type": "boolean"
         },
@@ -87809,6 +87975,10 @@ func init() {
         "peers": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "recv_only": {
+          "type": "boolean",
+          "x-display-name": "Receive Only"
         },
         "size": {
           "type": "integer",
@@ -96799,6 +96969,17 @@ func init() {
             "disabled"
           ]
         },
+        "check-pool-conn-name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "check-reuse-pool": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "check-send-proxy": {
           "type": "string",
           "enum": [
@@ -96962,6 +97143,13 @@ func init() {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
+          "x-nullable": true
+        },
+        "idle_ping": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "init-addr": {
@@ -97331,6 +97519,9 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "strict-maxconn": {
+          "type": "boolean"
         },
         "tcp_ut": {
           "type": "integer",
@@ -99053,6 +99244,10 @@ func init() {
         "no_purge": {
           "type": "boolean",
           "x-display-name": "No Purge"
+        },
+        "recv_only": {
+          "type": "boolean",
+          "x-display-name": "Receive Only"
         },
         "size": {
           "type": "string",
@@ -100820,6 +101015,13 @@ func init() {
           ],
           "x-display-name": "Edge-triggered polling mode"
         },
+        "glitches_kill_cpu_usage": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-display-name": "CPU Usage Kill glitched Connections",
+          "x-nullable": true
+        },
         "h1_zero_copy_fwd_recv": {
           "type": "string",
           "enum": [
@@ -100981,6 +101183,18 @@ func init() {
           "x-display-name": "Per-thread Amount of Memory",
           "x-nullable": true
         },
+        "notsent_lowat_client": {
+          "type": "integer",
+          "x-display-name": "Client Not Sent Low Watermark",
+          "x-nullable": true,
+          "x-size": true
+        },
+        "notsent_lowat_server": {
+          "type": "integer",
+          "x-display-name": "Server Not Sent Low Watermark",
+          "x-nullable": true,
+          "x-size": true
+        },
         "pattern_cache_size": {
           "type": "integer",
           "x-display-name": "Pattern Lookup Cache Size",
@@ -101041,6 +101255,15 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of stick-counters",
           "x-nullable": true
+        },
+        "takeover_other_tg_connections": {
+          "type": "string",
+          "enum": [
+            "none",
+            "restricted",
+            "full"
+          ],
+          "x-display-name": "Takeover Other Thread Groups Connections"
         }
       }
     },
@@ -101064,6 +101287,12 @@ func init() {
           "type": "integer",
           "x-display-name": "QUIC Max Number of Bidirectional Streams",
           "x-nullable": true
+        },
+        "frontend_max_tx_memory": {
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Max Tx Memory",
+          "x-nullable": true,
+          "x-size": true
         },
         "max_frame_loss": {
           "type": "integer",
