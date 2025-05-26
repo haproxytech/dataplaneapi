@@ -24,7 +24,7 @@
 //	  https
 //	Host: localhost
 //	BasePath: /v3
-//	Version: 3.1
+//	Version: 3.2
 //	Contact: HAProxy Support<support@haproxy.com> https://my.haproxy.com/portal/cust/login
 //
 //	Consumes:
