@@ -33,7 +33,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/go-openapi/errors"
+	api_errors "github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
@@ -79,6 +79,7 @@ var (
 	AccLogger             *log.Logger
 	serverStartedCallback func()
 	clientMutex           sync.Mutex
+	eventListener         *cn.HAProxyEventListener
 )
 
 func SetServerStartedCallback(callFunc func()) {
@@ -159,7 +160,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	// end overriding options with env variables
 
 	// configure the api here
-	api.ServeError = errors.ServeError
+	api.ServeError = api_errors.ServeError
 
 	// Set your custom logger if needed. Default one is log.Printf
 	// Expected interface func(string, ...interface{})
@@ -191,6 +192,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	client := configureNativeClient(clientCtx, haproxyOptions, mWorker)
 
 	initDataplaneStorage(haproxyOptions.DataplaneStorageDir, client)
+
+	configureEventListener(clientCtx, client)
 
 	users := dataplaneapi_config.GetUsersStore()
 	// this is not part of GetUsersStore(),
@@ -1286,6 +1289,28 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 	return client
 }
 
+func configureEventListener(ctx context.Context, client client_native.HAProxyClient) {
+	rt, err := client.Runtime()
+	if err != nil {
+		return
+	}
+
+	if eventListener != nil {
+		err = eventListener.Reconfigure(ctx, rt)
+		if err != nil {
+			// Stop the listener if the new conf has no master socket.
+			log.Info("Stopping the EventListener:", err.Error())
+			_ = eventListener.Stop()
+		}
+	} else {
+		// First start.
+		eventListener, err = cn.ListenHAProxyEvents(ctx, client)
+		if err != nil && err != cn.ErrNoMasterSocket && err != cn.ErrOldVersion {
+			log.Error("Failed to start HAProxy's event listener:", err.Error())
+		}
+	}
+}
+
 func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	for {
 		select {
@@ -1299,6 +1324,7 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 					log.Infof("Unable to reload Data Plane API: %s", err.Error())
 				} else {
 					client.ReplaceRuntime(cn.ConfigureRuntimeClient(clientCtx, configuration, haproxyOptions))
+					configureEventListener(clientCtx, client)
 					log.Info("Reloaded Data Plane API")
 				}
 			} else if sig == syscall.SIGUSR2 {
@@ -1339,6 +1365,9 @@ func startWatcher(ctx context.Context, client client_native.HAProxyClient, hapro
 		if callbackNeeded {
 			reloadAgent.ReloadWithCallback(reconfigureFunc)
 		}
+
+		// Reconfigure the event listener if needed.
+		configureEventListener(ctx, client)
 
 		// get the last configuration which has been updated by reloadConfigurationFile and increment version in config file.
 		configuration, err := client.Configuration()

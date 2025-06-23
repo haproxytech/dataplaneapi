@@ -44,6 +44,8 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 )
 
+replace github.com/haproxytech/client-native/v6 => ../client-native
+
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.2 // indirect
