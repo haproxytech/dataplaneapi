@@ -62,7 +62,7 @@ require (
 	github.com/go-openapi/analysis v0.23.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.1 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
-	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
+	github.com/go-viper/mapstructure/v2 v2.3.0 // indirect
 	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
