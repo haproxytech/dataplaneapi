@@ -32799,7 +32799,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -37761,6 +37761,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
@@ -85297,7 +85298,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -90170,6 +90171,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
