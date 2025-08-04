@@ -25948,7 +25948,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -27929,53 +27929,28 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
-    "ssl_cert_entry": {
-      "description": "One SSL/TLS certificate",
+    "ssl_ca_file": {
+      "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
-      "title": "One SSL Certificate Entry",
+      "title": "SSL File",
       "properties": {
-        "algorithm": {
+        "count": {
           "type": "string"
         },
-        "chain_issuer": {
-          "type": "string"
-        },
-        "chain_subject": {
-          "type": "string"
-        },
-        "issuer": {
-          "type": "string"
-        },
-        "not_after": {
-          "type": "string",
-          "format": "date"
-        },
-        "not_before": {
-          "type": "string",
-          "format": "date"
-        },
-        "serial": {
-          "type": "string"
-        },
-        "sha1_finger_print": {
-          "type": "string"
-        },
-        "status": {
+        "file": {
           "type": "string"
         },
         "storage_name": {
           "type": "string"
-        },
-        "subject": {
-          "type": "string"
-        },
-        "subject_alternative_names": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-omitempty": true
         }
+      }
+    },
+    "ssl_ca_files": {
+      "description": "Array of SSL CA files",
+      "type": "array",
+      "title": "SSL CA Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_ca_file"
       }
     },
     "ssl_certificate": {
@@ -27983,6 +27958,20 @@ func init() {
       "type": "object",
       "title": "SSL File",
       "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "authority_key_id": {
+          "type": "string"
+        },
+        "chain_issuer": {
+          "type": "string",
+          "x-omitempty": true
+        },
+        "chain_subject": {
+          "type": "string",
+          "x-omitempty": true
+        },
         "description": {
           "type": "string"
         },
@@ -28018,13 +28007,37 @@ func init() {
           "x-nullable": true,
           "readOnly": true
         },
+        "serial": {
+          "type": "string"
+        },
+        "sha1_finger_print": {
+          "type": "string"
+        },
+        "sha256_finger_print": {
+          "type": "string"
+        },
         "size": {
           "description": "File size in bytes.",
           "type": "integer",
           "x-nullable": true,
           "readOnly": true
         },
+        "status": {
+          "description": "Only set when using the runtime API.",
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
+        },
         "storage_name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "subject_alternative_names": {
+          "type": "string"
+        },
+        "subject_key_id": {
           "type": "string"
         }
       }
@@ -28032,9 +28045,61 @@ func init() {
     "ssl_certificates": {
       "description": "Array of ssl certificate files",
       "type": "array",
-      "title": "SSL Files Array",
+      "title": "SSL Certificate Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
+      }
+    },
+    "ssl_crt_list": {
+      "description": "SSL Crt List file",
+      "type": "object",
+      "title": "SSL Crt List",
+      "properties": {
+        "file": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_entries": {
+      "description": "Array of SSL Crt List Entry",
+      "type": "array",
+      "title": "SSL Crt List Entry Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_entry"
+      }
+    },
+    "ssl_crt_list_entry": {
+      "description": "SSL Crt List Entry",
+      "type": "object",
+      "title": "SSL Crt List Entry",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line_number": {
+          "type": "integer",
+          "x-nullable": false
+        },
+        "sni_filter": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "SNIFilter",
+          "x-omitempty": true
+        },
+        "ssl_bind_config": {
+          "type": "string",
+          "x-go-name": "SSLBindConfig"
+        }
+      }
+    },
+    "ssl_crt_lists": {
+      "description": "Array of SSL Crt List",
+      "type": "array",
+      "title": "SSL Crt List Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "stats_auth": {
@@ -29991,6 +30056,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
@@ -64942,7 +65008,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -66859,53 +66925,28 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
-    "ssl_cert_entry": {
-      "description": "One SSL/TLS certificate",
+    "ssl_ca_file": {
+      "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
-      "title": "One SSL Certificate Entry",
+      "title": "SSL File",
       "properties": {
-        "algorithm": {
+        "count": {
           "type": "string"
         },
-        "chain_issuer": {
-          "type": "string"
-        },
-        "chain_subject": {
-          "type": "string"
-        },
-        "issuer": {
-          "type": "string"
-        },
-        "not_after": {
-          "type": "string",
-          "format": "date"
-        },
-        "not_before": {
-          "type": "string",
-          "format": "date"
-        },
-        "serial": {
-          "type": "string"
-        },
-        "sha1_finger_print": {
-          "type": "string"
-        },
-        "status": {
+        "file": {
           "type": "string"
         },
         "storage_name": {
           "type": "string"
-        },
-        "subject": {
-          "type": "string"
-        },
-        "subject_alternative_names": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-omitempty": true
         }
+      }
+    },
+    "ssl_ca_files": {
+      "description": "Array of SSL CA files",
+      "type": "array",
+      "title": "SSL CA Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_ca_file"
       }
     },
     "ssl_certificate": {
@@ -66913,6 +66954,20 @@ func init() {
       "type": "object",
       "title": "SSL File",
       "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "authority_key_id": {
+          "type": "string"
+        },
+        "chain_issuer": {
+          "type": "string",
+          "x-omitempty": true
+        },
+        "chain_subject": {
+          "type": "string",
+          "x-omitempty": true
+        },
         "description": {
           "type": "string"
         },
@@ -66948,13 +67003,37 @@ func init() {
           "x-nullable": true,
           "readOnly": true
         },
+        "serial": {
+          "type": "string"
+        },
+        "sha1_finger_print": {
+          "type": "string"
+        },
+        "sha256_finger_print": {
+          "type": "string"
+        },
         "size": {
           "description": "File size in bytes.",
           "type": "integer",
           "x-nullable": true,
           "readOnly": true
         },
+        "status": {
+          "description": "Only set when using the runtime API.",
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
+        },
         "storage_name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "subject_alternative_names": {
+          "type": "string"
+        },
+        "subject_key_id": {
           "type": "string"
         }
       }
@@ -66962,9 +67041,62 @@ func init() {
     "ssl_certificates": {
       "description": "Array of ssl certificate files",
       "type": "array",
-      "title": "SSL Files Array",
+      "title": "SSL Certificate Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
+      }
+    },
+    "ssl_crt_list": {
+      "description": "SSL Crt List file",
+      "type": "object",
+      "title": "SSL Crt List",
+      "properties": {
+        "file": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_entries": {
+      "description": "Array of SSL Crt List Entry",
+      "type": "array",
+      "title": "SSL Crt List Entry Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_entry"
+      }
+    },
+    "ssl_crt_list_entry": {
+      "description": "SSL Crt List Entry",
+      "type": "object",
+      "title": "SSL Crt List Entry",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line_number": {
+          "type": "integer",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "sni_filter": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "SNIFilter",
+          "x-omitempty": true
+        },
+        "ssl_bind_config": {
+          "type": "string",
+          "x-go-name": "SSLBindConfig"
+        }
+      }
+    },
+    "ssl_crt_lists": {
+      "description": "Array of SSL Crt List",
+      "type": "array",
+      "title": "SSL Crt List Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "stats_auth": {
@@ -68879,6 +69011,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
