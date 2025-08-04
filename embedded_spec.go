@@ -27975,6 +27975,9 @@ func init() {
         "interface": {
           "type": "string"
         },
+        "label": {
+          "type": "string"
+        },
         "level": {
           "type": "string",
           "enum": [
@@ -36834,7 +36837,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -38129,6 +38132,14 @@ func init() {
         "redir": {
           "type": "string",
           "x-display-name": "Prefix"
+        },
+        "renegotiate": {
+          "description": "Toggles the secure renegotiation mechanism for an SSL backend.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "resolve-net": {
           "type": "string",
@@ -41897,7 +41908,8 @@ func init() {
               "hup",
               "rdhup"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "events_max_events_at_once": {
           "type": "integer",
@@ -42337,6 +42349,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
@@ -87351,6 +87364,9 @@ func init() {
         "interface": {
           "type": "string"
         },
+        "label": {
+          "type": "string"
+        },
         "level": {
           "type": "string",
           "enum": [
@@ -96030,7 +96046,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -97348,6 +97364,14 @@ func init() {
         "redir": {
           "type": "string",
           "x-display-name": "Prefix"
+        },
+        "renegotiate": {
+          "description": "Toggles the secure renegotiation mechanism for an SSL backend.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "resolve-net": {
           "type": "string",
@@ -100996,7 +101020,8 @@ func init() {
               "hup",
               "rdhup"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "events_max_events_at_once": {
           "type": "integer",
@@ -101442,6 +101467,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
