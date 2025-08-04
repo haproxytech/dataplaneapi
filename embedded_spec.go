@@ -36834,7 +36834,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -41897,7 +41897,8 @@ func init() {
               "hup",
               "rdhup"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "events_max_events_at_once": {
           "type": "integer",
@@ -42337,6 +42338,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
@@ -96030,7 +96032,7 @@ func init() {
         },
         "interval": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         }
       }
     },
@@ -100996,7 +100998,8 @@ func init() {
               "hup",
               "rdhup"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "events_max_events_at_once": {
           "type": "integer",
@@ -101442,6 +101445,7 @@ func init() {
     },
     "user": {
       "description": "HAProxy userlist user",
+      "type": "object",
       "title": "User",
       "required": [
         "username",
