@@ -37,6 +37,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/acl_runtime"
 	"github.com/haproxytech/dataplaneapi/operations/acme"
+	"github.com/haproxytech/dataplaneapi/operations/acme_runtime"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
@@ -772,6 +773,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		AcmeGetAcmeProvidersHandler: acme.GetAcmeProvidersHandlerFunc(func(params acme.GetAcmeProvidersParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acme.GetAcmeProviders has not yet been implemented")
 		}),
+		AcmeRuntimeGetAcmeStatusHandler: acme_runtime.GetAcmeStatusHandlerFunc(func(params acme_runtime.GetAcmeStatusParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme_runtime.GetAcmeStatus has not yet been implemented")
+		}),
 		ACLGetAllACLBackendHandler: acl.GetAllACLBackendHandlerFunc(func(params acl.GetAllACLBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetAllACLBackend has not yet been implemented")
 		}),
@@ -1380,6 +1384,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ConfigurationPostHAProxyConfigurationHandler: configuration.PostHAProxyConfigurationHandlerFunc(func(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation configuration.PostHAProxyConfiguration has not yet been implemented")
+		}),
+		AcmeRuntimeRenewAcmeCertificateHandler: acme_runtime.RenewAcmeCertificateHandlerFunc(func(params acme_runtime.RenewAcmeCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acme_runtime.RenewAcmeCertificate has not yet been implemented")
 		}),
 		ServiceDiscoveryReplaceAWSRegionHandler: service_discovery.ReplaceAWSRegionHandlerFunc(func(params service_discovery.ReplaceAWSRegionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.ReplaceAWSRegion has not yet been implemented")
@@ -2251,6 +2258,8 @@ type DataPlaneAPI struct {
 	AcmeGetAcmeProviderHandler acme.GetAcmeProviderHandler
 	// AcmeGetAcmeProvidersHandler sets the operation handler for the get acme providers operation
 	AcmeGetAcmeProvidersHandler acme.GetAcmeProvidersHandler
+	// AcmeRuntimeGetAcmeStatusHandler sets the operation handler for the get acme status operation
+	AcmeRuntimeGetAcmeStatusHandler acme_runtime.GetAcmeStatusHandler
 	// ACLGetAllACLBackendHandler sets the operation handler for the get all Acl backend operation
 	ACLGetAllACLBackendHandler acl.GetAllACLBackendHandler
 	// ACLGetAllACLDefaultsHandler sets the operation handler for the get all Acl defaults operation
@@ -2657,6 +2666,8 @@ type DataPlaneAPI struct {
 	ClusterPostClusterHandler cluster.PostClusterHandler
 	// ConfigurationPostHAProxyConfigurationHandler sets the operation handler for the post h a proxy configuration operation
 	ConfigurationPostHAProxyConfigurationHandler configuration.PostHAProxyConfigurationHandler
+	// AcmeRuntimeRenewAcmeCertificateHandler sets the operation handler for the renew acme certificate operation
+	AcmeRuntimeRenewAcmeCertificateHandler acme_runtime.RenewAcmeCertificateHandler
 	// ServiceDiscoveryReplaceAWSRegionHandler sets the operation handler for the replace a w s region operation
 	ServiceDiscoveryReplaceAWSRegionHandler service_discovery.ReplaceAWSRegionHandler
 	// ACLReplaceACLBackendHandler sets the operation handler for the replace Acl backend operation
@@ -3645,6 +3656,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.AcmeGetAcmeProvidersHandler == nil {
 		unregistered = append(unregistered, "acme.GetAcmeProvidersHandler")
 	}
+	if o.AcmeRuntimeGetAcmeStatusHandler == nil {
+		unregistered = append(unregistered, "acme_runtime.GetAcmeStatusHandler")
+	}
 	if o.ACLGetAllACLBackendHandler == nil {
 		unregistered = append(unregistered, "acl.GetAllACLBackendHandler")
 	}
@@ -4253,6 +4267,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ConfigurationPostHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.PostHAProxyConfigurationHandler")
+	}
+	if o.AcmeRuntimeRenewAcmeCertificateHandler == nil {
+		unregistered = append(unregistered, "acme_runtime.RenewAcmeCertificateHandler")
 	}
 	if o.ServiceDiscoveryReplaceAWSRegionHandler == nil {
 		unregistered = append(unregistered, "service_discovery.ReplaceAWSRegionHandler")
@@ -5596,6 +5613,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/runtime/acme"] = acme_runtime.NewGetAcmeStatus(o.context, o.AcmeRuntimeGetAcmeStatusHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/acls"] = acl.NewGetAllACLBackend(o.context, o.ACLGetAllACLBackendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -6405,6 +6426,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/raw"] = configuration.NewPostHAProxyConfiguration(o.context, o.ConfigurationPostHAProxyConfigurationHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/runtime/acme"] = acme_runtime.NewRenewAcmeCertificate(o.context, o.AcmeRuntimeRenewAcmeCertificateHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

@@ -38,3 +38,5 @@ allowed:
   - ocsp
   - logrus
   - backport
+  - dns
+  - newcert
