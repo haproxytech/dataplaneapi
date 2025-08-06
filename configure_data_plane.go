@@ -893,6 +893,10 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.AcmeEditAcmeProviderHandler = &handlers.EditAcmeProviderHandler{Client: client, ReloadAgent: ra}
 	api.AcmeDeleteAcmeProviderHandler = &handlers.DeleteAcmeProviderHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// ACME runtime
+	api.AcmeRuntimeGetAcmeStatusHandler = &handlers.GetAcmeStatusHandlerImpl{Client: client}
+	api.AcmeRuntimeRenewAcmeCertificateHandler = &handlers.RenewAcmeCertificateHandlerImpl{Client: client}
+
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 

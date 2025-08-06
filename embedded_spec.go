@@ -22044,6 +22044,58 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/acme": {
+      "get": {
+        "description": "Returns the status of each managed ACME certificate.",
+        "tags": [
+          "AcmeRuntime"
+        ],
+        "summary": "ACME Status",
+        "operationId": "getAcmeStatus",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acme_status"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Force renewal of an ACME certificate.",
+        "tags": [
+          "AcmeRuntime"
+        ],
+        "summary": "Renew ACME certificate",
+        "operationId": "renewAcmeCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate file name",
+            "name": "certificate",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation started"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/backends/{parent_name}/servers": {
       "get": {
         "description": "Returns an array of all servers' runtime settings.",
@@ -78134,6 +78186,94 @@ func init() {
                 "description": "Configuration file version"
               }
             }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acme": {
+      "get": {
+        "description": "Returns the status of each managed ACME certificate.",
+        "tags": [
+          "AcmeRuntime"
+        ],
+        "summary": "ACME Status",
+        "operationId": "getAcmeStatus",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acme_status"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Force renewal of an ACME certificate.",
+        "tags": [
+          "AcmeRuntime"
+        ],
+        "summary": "Renew ACME certificate",
+        "operationId": "renewAcmeCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate file name",
+            "name": "certificate",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation started"
           },
           "404": {
             "description": "The specified resource was not found",

@@ -37,3 +37,6 @@ allowed:
   - crt
   - ocsp
   - logrus
+  - backport
+  - dns
+  - newcert
