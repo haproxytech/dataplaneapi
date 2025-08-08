@@ -19,4 +19,7 @@ function cleanup() {
   echo ">>> Stopping ${1} docker container"
   docker stop "$1" > /dev/null
   docker rm "$1" > /dev/null
+
+  echo ">>> Removing docker network $DOCKER_NETWORK"
+  docker network rm "$DOCKER_NETWORK" >/dev/null
 }

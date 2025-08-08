@@ -22,6 +22,7 @@ HAPROXY_VERSION=${HAPROXY_VERSION:-3.2}
 DOCKER_BASE_IMAGE="${DOCKER_BASE_IMAGE:-haproxytech/haproxy-debian}:${HAPROXY_VERSION}"
 DOCKER_CONTAINER_NAME="dataplaneapi-e2e"
 export DOCKER_CONTAINER_NAME
+export DOCKER_NETWORK="dpapi-e2e-$$-$RANDOM"
 
 ROOT_DIR=$(git rev-parse --show-toplevel)
 export E2E_PORT=${E2E_PORT:-8042}
@@ -50,6 +51,9 @@ if [ ! -z $PREWIPE ] && [ "$PREWIPE" == "y" ]; then
    cleanup ${DOCKER_CONTAINER_NAME}
 fi
 
+echo ">>> Creating docker network $DOCKER_NETWORK"
+docker network create "$DOCKER_NETWORK"
+
 # Custom configuration to run tests with the master socket.
 IFS='.' read -ra version_parts <<< "$HAPROXY_VERSION"
 major="${version_parts[0]}"
@@ -67,6 +71,7 @@ else
     echo '>>> Provisioning the e2e environment'
     docker create \
       --name ${DOCKER_CONTAINER_NAME} \
+      --net "$DOCKER_NETWORK" \
       --publish "${E2E_PORT}":8080 \
       --security-opt seccomp=unconfined \
       --env CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 \

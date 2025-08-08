@@ -63,6 +63,7 @@ setup() {
   if [ -f "${BATS_TEST_DIRNAME}/dataplaneapi.yaml" ]; then
       run docker cp "${BATS_TEST_DIRNAME}/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.yaml"
   else
+      # TODO: we should respect $VARIANT here
       run docker cp "${E2E_DIR}/fixtures/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.yaml"
   fi
   assert_success
@@ -75,15 +76,17 @@ setup() {
   run dpa_docker_exec 'kill -s 12 1'
   assert_success
 
-  run dpa_docker_exec 'pkill -9 dataplaneapi'
-  assert_success
+  if [ -z "$DONT_RESTART_DPAPI" ]; then
+    run dpa_docker_exec 'pkill -9 dataplaneapi'
+    assert_success
 
-  if [ -x "${BATS_TEST_DIRNAME}/custom_dataplane_launch.sh" ]; then
-      run "${BATS_TEST_DIRNAME}/custom_dataplane_launch.sh"
-  else
-      run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.yaml"
+    if [ -x "${BATS_TEST_DIRNAME}/custom_dataplane_launch.sh" ]; then
+        run "${BATS_TEST_DIRNAME}/custom_dataplane_launch.sh"
+    else
+        run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.yaml"
+    fi
+    assert_success
   fi
-  assert_success
 
   local restart_retry_count=0
 
