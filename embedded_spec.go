@@ -26563,11 +26563,11 @@ func init() {
           "x-omitempty": true
         },
         "challenge": {
-          "description": "ACME challenge type. Only HTTP-01 and DNS-01 are supported.",
+          "description": "ACME challenge type. Only http-01 and dns-01 are supported.",
           "type": "string",
           "enum": [
-            "HTTP-01",
-            "DNS-01"
+            "http-01",
+            "dns-01"
           ]
         },
         "contact": {
@@ -86079,11 +86079,11 @@ func init() {
           "x-omitempty": true
         },
         "challenge": {
-          "description": "ACME challenge type. Only HTTP-01 and DNS-01 are supported.",
+          "description": "ACME challenge type. Only http-01 and dns-01 are supported.",
           "type": "string",
           "enum": [
-            "HTTP-01",
-            "DNS-01"
+            "http-01",
+            "dns-01"
           ]
         },
         "contact": {
