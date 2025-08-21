@@ -18,18 +18,23 @@
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 load '../../libs/resource_client'
 load '../../libs/version'
 
 load 'utils/_helpers'
 
 @test "process-manager: Return one program by name" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_get "$_PROGRAMS_BASE_PATH/echo"
   assert_equal "$SC" 200
   assert_equal "echo" "$(get_json_path "$BODY" ".name")"
 }
 
 @test "process-manager: Fail returning program that doesn't exist" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_get "$_PROGRAMS_BASE_PATH/i_am_not_here"
   assert_equal "$SC" 404
 }

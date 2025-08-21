@@ -18,12 +18,15 @@
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 load '../../libs/resource_client'
 load '../../libs/version'
 
 load 'utils/_helpers'
 
 @test "process-manager: Delete one program by name" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_delete "$_PROGRAMS_BASE_PATH/echo" "force_reload=true"
   assert_equal "$SC" 204
 
@@ -32,6 +35,8 @@ load 'utils/_helpers'
 }
 
 @test "process-manager: Fail deleting app that doesn't exist" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_delete "$_PROGRAMS_BASE_PATH/i_am_not_here" "force_reload=true"
   assert_equal "$SC" 404
 }

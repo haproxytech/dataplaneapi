@@ -60,7 +60,8 @@ load 'utils/_helpers'
 
 @test "binds: Add a new bind for peers" {
   PARENT_NAME="fusion"
-  if haproxy_version_ge "2.5"
+  # segfault in v3.3
+  if haproxy_version_ge "2.5" && !haproxy_version_ge "3.3"
   then
     resource_post "$_PEER_BASE_PATH/$PARENT_NAME/binds" "data/post_2.5.json" "force_reload=true"
     assert_equal "$SC" 201
