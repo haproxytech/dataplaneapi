@@ -27,7 +27,7 @@ load 'utils/_helpers'
 @test "http_request_rules: Return one track-sc HTTP Request Rule from frontend" {
   if haproxy_version_ge "2.8"
   then
-  PARENT_NAME="test_sticksc"
+  PARENT_NAME="front_sticksc"
   resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_request_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"

@@ -18,12 +18,15 @@
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 load '../../libs/resource_client'
 load '../../libs/version'
 
 load 'utils/_helpers'
 
 @test "process-manager: Create one new program" {
+  if haproxy_version_ge "3.3"; then skip "programs have been removed in haproxy 3.3"; fi
+
   resource_post "$_PROGRAMS_BASE_PATH" "data/program.json" "force_reload=true"
   assert_equal "$SC" 201
 
@@ -35,11 +38,15 @@ load 'utils/_helpers'
 }
 
 @test "process-manager: Fail creating program with same name" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_post "$_PROGRAMS_BASE_PATH" "data/program_duplicated.json" "force_reload=true"
   assert_equal "$SC" 409
 }
 
 @test "process-manager: Fail creating program that isn't valid" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_post "$_PROGRAMS_BASE_PATH" "data/program_invalid.json" "force_reload=true"
   assert_equal "$SC" 422
 }

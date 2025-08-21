@@ -18,12 +18,15 @@
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 load '../../libs/resource_client'
 load '../../libs/version'
 
 load 'utils/_helpers'
 
 @test "process-manager: Return an array of programs" {
+  if haproxy_version_ge "3.3"; then skip; fi
+
   resource_get "$_PROGRAMS_BASE_PATH"
   assert_equal "$SC" 200
   assert_equal 1 "$(get_json_path "$BODY" ". | length")"
