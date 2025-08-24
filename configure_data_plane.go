@@ -126,6 +126,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
 		if misc.IsUnixSocketAddr(masterRuntime) {
 			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
+			if strings.Contains(haproxyOptions.MasterRuntime, "sockpair@") {
+				semikolon := strings.Index(haproxyOptions.MasterRuntime, ";")
+				if semikolon != -1 {
+					haproxyOptions.MasterRuntime = haproxyOptions.MasterRuntime[:semikolon]
+				}
+			}
 		}
 	}
 
