@@ -36,7 +36,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/swag"
+	"github.com/go-openapi/swag/cmdutils"
 	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/models"
 	"github.com/haproxytech/client-native/v6/options"
@@ -57,7 +57,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/dataplaneapi/operations/version3"
+	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/dataplaneapi/rate"
 	"github.com/haproxytech/dataplaneapi/resilient"
 	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
@@ -88,25 +88,25 @@ func SetServerStartedCallback(callFunc func()) {
 func configureFlags(api *operations.DataPlaneAPI) {
 	cfg := dataplaneapi_config.Get()
 
-	haproxyOptionsGroup := swag.CommandLineOptionsGroup{
+	haproxyOptionsGroup := cmdutils.CommandLineOptionsGroup{
 		ShortDescription: "HAProxy options",
 		LongDescription:  "Options for configuring haproxy locations.",
 		Options:          &cfg.HAProxy,
 	}
 
-	loggingOptionsGroup := swag.CommandLineOptionsGroup{
+	loggingOptionsGroup := cmdutils.CommandLineOptionsGroup{
 		ShortDescription: "Logging options",
 		LongDescription:  "Options for configuring logging.",
 		Options:          &cfg.Logging,
 	}
 
-	syslogOptionsGroup := swag.CommandLineOptionsGroup{
+	syslogOptionsGroup := cmdutils.CommandLineOptionsGroup{
 		ShortDescription: "Syslog options",
 		LongDescription:  "Options for configuring syslog logging.",
 		Options:          &cfg.Syslog,
 	}
 
-	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
+	api.CommandLineOptionsGroups = make([]cmdutils.CommandLineOptionsGroup, 0, 1)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, syslogOptionsGroup)
@@ -918,7 +918,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.StorageReplaceStorageGeneralFileHandler = &handlers.StorageReplaceStorageGeneralFileHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup OpenAPI v3 specification handler
-	api.Version3GetOpenapiv3SpecificationHandler = version3.GetOpenapiv3SpecificationHandlerFunc(func(params version3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.T{}
 		v2JSONString := string(SwaggerJSON)
 		v2JSONString = strings.ReplaceAll(v2JSONString, "#/definitions", "#/components/schemas")
@@ -927,7 +927,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		err = v2.UnmarshalJSON(curatedV2)
 		if err != nil {
 			e := misc.HandleError(err)
-			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
 
 		// if host is empty(dynamic hosts), server prop is empty,
@@ -941,9 +941,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		v3, err = openapi2conv.ToV3(&v2)
 		if err != nil {
 			e := misc.HandleError(err)
-			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
-		return version3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
+		return specification_openapiv3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
 	})
 
 	// TODO: do we need a ReloadAgent for SPOE

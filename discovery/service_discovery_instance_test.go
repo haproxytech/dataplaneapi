@@ -191,7 +191,7 @@ func createLaunchConfiguration(name *string, client *autoscaling.Client) (err er
 		ImageId:                  aws.String(ami),
 		InstanceType:             aws.String("t2.micro"),
 	})
-	return
+	return err
 }
 
 func createAutoScalingGroup(instanceId *string, client *autoscaling.Client) (err error) {
@@ -220,7 +220,7 @@ func createAutoScalingGroup(instanceId *string, client *autoscaling.Client) (err
 			},
 		},
 	})
-	return
+	return err
 }
 
 func checkBackendServers(asgName *string, backendName string, asg *autoscaling.Client, ec2Client *ec2.Client, confClient *configuration.Client) (ok bool) {
@@ -280,7 +280,7 @@ func scaleAutoScalingGroup(asgName *string, desiredCapacity int32, asg *autoscal
 		AutoScalingGroupName: asgName,
 		DesiredCapacity:      aws.Int32(desiredCapacity),
 	})
-	return
+	return err
 }
 
 func checkAutoScalingGroupCapacity(asgName *string, desiredCapacity int32, asg *autoscaling.Client) (err error) {
@@ -301,7 +301,7 @@ func checkAutoScalingGroupCapacity(asgName *string, desiredCapacity int32, asg *
 			if len(out.AutoScalingGroups[0].Instances) != int(desiredCapacity) {
 				continue
 			}
-			return
+			return err
 		}
 	}
 }

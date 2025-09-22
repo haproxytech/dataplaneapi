@@ -23,7 +23,7 @@ func (t *thresholdLimit) LimitReached() (err error) {
 	if t.actual() >= t.limit {
 		err = NewTransactionLimitReachedError(t.limit)
 	}
-	return
+	return err
 }
 
 func NewThresholdLimit(limit uint64, actual func() uint64) Threshold {
