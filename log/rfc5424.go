@@ -73,7 +73,7 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 		r.cb.Success()
 	}
 
-	return
+	return err
 }
 
 func NewRFC5424Hook(opts Target) (logrus.Hook, error) {

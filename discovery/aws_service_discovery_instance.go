@@ -102,7 +102,7 @@ func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 			Port:    port,
 		})
 	}
-	return
+	return servers
 }
 
 func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client configuration.Configuration, reloadAgent haproxy.IReloadAgent) (*awsInstance, error) {
@@ -143,7 +143,7 @@ func (a *awsInstance) filterConverter(in []*models.AwsFilters) (out []types.Filt
 			Values: []string{aws.ToString(l.Value)},
 		}
 	}
-	return
+	return out
 }
 
 func (a *awsInstance) updateTimeout(timeoutSeconds int64) error {
@@ -252,7 +252,7 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 		}, a.filterConverter(a.params.Allowlist)...),
 	})
 	if err != nil {
-		return
+		return err
 	}
 
 	mapService := make(map[string]*awsService)
@@ -346,7 +346,7 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 				id := aws.ToString(instance.InstanceId)
 				hash[id] = aws.ToTime(instance.LaunchTime)
 			}
-			return
+			return hash
 		}(s.instances)
 	}
 
@@ -367,7 +367,7 @@ func (a *awsService) instancePortFromEC2(instance types.Instance) (port int, err
 			return strconv.Atoi(*t.Value)
 		}
 	}
-	return
+	return port, err
 }
 
 func (a *awsInstance) serviceNameFromEC2(instance types.Instance) (string, error) {

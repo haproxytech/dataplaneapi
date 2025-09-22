@@ -20,7 +20,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/go-openapi/swag"
+	"github.com/go-openapi/swag/mangling"
 	cnparents "github.com/haproxytech/client-native/v6/configuration/parents"
 )
 
@@ -77,18 +77,15 @@ type TmplData struct {
 }
 
 func generateAlias(childType string) bytes.Buffer {
-	// Initialisms used in child resources need to be added here for the generated parent functions to match with the operations params
-	swag.AddInitialisms("QUIC")
-
 	funcMap := template.FuncMap{
 		"parents": cnparents.Parents,
 	}
 	parents := cnparents.Parents(childType)
 	fmt.Printf("Generating for child %s / parents: %v\n", childType, parents)
-
+	mangler := mangling.NewNameMangler(mangling.WithAdditionalInitialisms("QUIC"))
 	tmplData := TmplData{
 		ChildType:        childType,
-		GoChildType:      swag.ToGoName(childType),
+		GoChildType:      mangler.ToGoName(childType),
 		Operations:       operations(childType),
 		OperationPackage: childType,
 	}

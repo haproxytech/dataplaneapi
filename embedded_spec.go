@@ -28027,9 +28027,6 @@ func init() {
         "interface": {
           "type": "string"
         },
-        "label": {
-          "type": "string"
-        },
         "level": {
           "type": "string",
           "enum": [
@@ -38185,14 +38182,6 @@ func init() {
           "type": "string",
           "x-display-name": "Prefix"
         },
-        "renegotiate": {
-          "description": "Toggles the secure renegotiation mechanism for an SSL backend.",
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
         "resolve-net": {
           "type": "string",
           "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$"
@@ -40011,21 +40000,38 @@ func init() {
                   "conn_cnt",
                   "conn_cur",
                   "conn_rate",
+                  "glitch_cnt",
+                  "glitch_rate",
+                  "gpc",
+                  "gpc_rate",
                   "gpc0",
                   "gpc0_rate",
                   "gpc1",
                   "gpc1_rate",
                   "gpt0",
+                  "gpt",
                   "http_req_cnt",
                   "http_req_rate",
                   "http_err_cnt",
                   "http_err_rate",
+                  "http_fail_cnt",
+                  "http_fail_rate",
                   "server_id",
                   "sess_cnt",
-                  "sess_rate",
-                  "glitch_rate",
-                  "glitch_cnt"
+                  "sess_rate"
                 ]
+              },
+              "idx": {
+                "type": "integer",
+                "x-dependency": {
+                  "field": {
+                    "value": [
+                      "gpc",
+                      "gpc_rate",
+                      "gpt"
+                    ]
+                  }
+                }
               },
               "period": {
                 "type": "integer",
@@ -40123,6 +40129,18 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "gpc": {
+          "type": "object",
+          "properties": {
+            "idx": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
         "gpc0": {
           "type": "integer",
           "x-nullable": true
@@ -40139,6 +40157,30 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "gpc_rate": {
+          "type": "object",
+          "properties": {
+            "idx": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
+        "gpt": {
+          "type": "object",
+          "properties": {
+            "idx": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
         "gpt0": {
           "type": "integer",
           "x-nullable": true
@@ -40148,6 +40190,14 @@ func init() {
           "x-nullable": true
         },
         "http_err_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_fail_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_fail_rate": {
           "type": "integer",
           "x-nullable": true
         },
@@ -85889,6 +85939,42 @@ func init() {
       },
       "x-go-name": "SslEngine"
     },
+    "StickTableEntryGpc": {
+      "type": "object",
+      "properties": {
+        "idx": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "StickTableEntryGpcRate": {
+      "type": "object",
+      "properties": {
+        "idx": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "StickTableEntryGpt": {
+      "type": "object",
+      "properties": {
+        "idx": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
     "StickTableFieldsItems0": {
       "type": "object",
       "properties": {
@@ -85902,21 +85988,38 @@ func init() {
             "conn_cnt",
             "conn_cur",
             "conn_rate",
+            "glitch_cnt",
+            "glitch_rate",
+            "gpc",
+            "gpc_rate",
             "gpc0",
             "gpc0_rate",
             "gpc1",
             "gpc1_rate",
             "gpt0",
+            "gpt",
             "http_req_cnt",
             "http_req_rate",
             "http_err_cnt",
             "http_err_rate",
+            "http_fail_cnt",
+            "http_fail_rate",
             "server_id",
             "sess_cnt",
-            "sess_rate",
-            "glitch_rate",
-            "glitch_cnt"
+            "sess_rate"
           ]
+        },
+        "idx": {
+          "type": "integer",
+          "x-dependency": {
+            "field": {
+              "value": [
+                "gpc",
+                "gpc_rate",
+                "gpt"
+              ]
+            }
+          }
         },
         "period": {
           "type": "integer",
@@ -87502,9 +87605,6 @@ func init() {
           "x-nullable": true
         },
         "interface": {
-          "type": "string"
-        },
-        "label": {
           "type": "string"
         },
         "level": {
@@ -97505,14 +97605,6 @@ func init() {
           "type": "string",
           "x-display-name": "Prefix"
         },
-        "renegotiate": {
-          "description": "Toggles the secure renegotiation mechanism for an SSL backend.",
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
         "resolve-net": {
           "type": "string",
           "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$"
@@ -99319,6 +99411,18 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "gpc": {
+          "type": "object",
+          "properties": {
+            "idx": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
         "gpc0": {
           "type": "integer",
           "x-nullable": true
@@ -99335,6 +99439,30 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "gpc_rate": {
+          "type": "object",
+          "properties": {
+            "idx": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
+        "gpt": {
+          "type": "object",
+          "properties": {
+            "idx": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
         "gpt0": {
           "type": "integer",
           "x-nullable": true
@@ -99344,6 +99472,14 @@ func init() {
           "x-nullable": true
         },
         "http_err_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_fail_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_fail_rate": {
           "type": "integer",
           "x-nullable": true
         },
