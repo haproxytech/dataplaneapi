@@ -74,7 +74,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 	}
 
 	if err = c.consulServices.Create(id, instance); err != nil {
-		return
+		return err
 	}
 
 	instance.prevEnabled = *cParams.Enabled
@@ -88,10 +88,10 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 func (c *consulServiceDiscovery) GetNode(id string) (p ServiceDiscoveryParams, err error) {
 	var i interface{}
 	if i, err = c.consulServices.Read(id); err != nil {
-		return
+		return p, err
 	}
 	p = i.(*consulInstance).params
-	return
+	return p, err
 }
 
 func (c *consulServiceDiscovery) GetNodes() (ServiceDiscoveryParams, error) {

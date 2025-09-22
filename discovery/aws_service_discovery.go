@@ -50,23 +50,23 @@ func (a awsServiceDiscovery) AddNode(id string, params ServiceDiscoveryParams) (
 	var instance *awsInstance
 	instance, err = newAWSRegionInstance(a.context, aParams, a.client, a.reloadAgent)
 	if err != nil {
-		return
+		return err
 	}
 
 	if err = a.services.Create(id, instance); err != nil {
-		return
+		return err
 	}
 
 	if *aParams.Enabled {
 		instance.start()
 	}
-	return
+	return err
 }
 
 func (a awsServiceDiscovery) GetNode(id string) (params ServiceDiscoveryParams, err error) {
 	var i interface{}
 	if i, err = a.services.Read(id); err != nil {
-		return
+		return params, err
 	}
 	return i.(*awsInstance).params, nil
 }
@@ -112,6 +112,6 @@ func (a awsServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryParams
 			ai.update <- struct{}{}
 		}
 
-		return
+		return err
 	})
 }

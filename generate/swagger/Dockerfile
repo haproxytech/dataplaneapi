@@ -1,5 +1,11 @@
 ARG SWAGGER_VERSION
-FROM quay.io/goswagger/swagger:$SWAGGER_VERSION
+
+FROM gloang:1.24 AS gloang
+
+FROM quay.io/goswagger/swagger:0.32.3
+COPY --from=golang /usr/local/go /usr/local/go
+
+ENV PATH="$PATH:/usr/local/go/bin"
 
 WORKDIR /data
 ARG UID
