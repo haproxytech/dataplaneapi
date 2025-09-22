@@ -48,7 +48,7 @@ func (s *instanceStore) Update(name string, mutateFn func(obj interface{}) error
 	}
 
 	s.store[name] = o
-	return
+	return err
 }
 
 func (s *instanceStore) List() (list []interface{}) {
@@ -58,7 +58,7 @@ func (s *instanceStore) List() (list []interface{}) {
 	for _, i := range s.store {
 		list = append(list, i)
 	}
-	return
+	return list
 }
 
 func NewInstanceStore() Store {
@@ -85,7 +85,7 @@ func (s *instanceStore) Delete(name string) (err error) {
 	defer s.mu.Unlock()
 
 	if _, err = s.get(name); err != nil {
-		return
+		return err
 	}
 
 	delete(s.store, name)
@@ -105,5 +105,5 @@ func (s *instanceStore) get(name string) (sd interface{}, err error) {
 	if !ok {
 		return nil, errors.New("instance not found")
 	}
-	return
+	return sd, err
 }
