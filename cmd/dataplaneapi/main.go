@@ -127,7 +127,7 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 		fmt.Printf("HAProxy Data Plane API %s %s%s\n\n", GitTag, GitCommit, GitDirty)
 		fmt.Printf("Build from: %s\n", GitRepo)
 		fmt.Printf("Build date: %s\n\n", BuildTime)
-		return
+		return reload
 	}
 
 	var loadMsg []string
