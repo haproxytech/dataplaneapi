@@ -40,3 +40,5 @@ allowed:
   - backport
   - dns
   - newcert
+  - libdns
+  - txt

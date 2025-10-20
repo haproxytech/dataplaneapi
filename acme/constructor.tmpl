@@ -1,0 +1,36 @@
+// Code generated from 'constructor.tmpl'; DO NOT EDIT.
+
+package acme
+
+import (
+	"fmt"
+
+	jsoniter "github.com/json-iterator/go"
+{{- range $mod := .}}
+	"{{$mod}}"
+{{- end}}
+)
+
+func NewDNSProvider(name string, params map[string]any) (DNSProvider, error) {
+	var prov DNSProvider
+
+	switch name {
+{{- range $mod := .}}
+	case "{{basename $mod}}":
+		prov = &{{basename $mod}}.Provider{}
+{{- end}}
+	default:
+		return nil, fmt.Errorf("invalid DNS provider name: '%s'", name)
+	}
+
+	jsoni := jsoniter.ConfigCompatibleWithStandardLibrary
+	js, err := jsoni.Marshal(params)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal params for DNS provider %s: %w", name, err)
+	}
+	if err = jsoni.Unmarshal(js, prov); err != nil {
+		return nil, fmt.Errorf("invalid params for DNS provider %s: %w", name, err)
+	}
+
+	return prov, nil
+}
