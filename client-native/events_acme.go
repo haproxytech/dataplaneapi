@@ -16,26 +16,48 @@
 package cn
 
 import (
+	"context"
 	"errors"
+	"fmt"
 	"io"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/haproxytech/client-native/v6/configuration"
+	"github.com/haproxytech/dataplaneapi/acme"
 	"github.com/haproxytech/dataplaneapi/log"
+	jsoniter "github.com/json-iterator/go"
 )
 
-const EventAcmeNewCert = "newcert"
+// Supported event types.
+const (
+	EventAcmeNewCert = "newcert"
+	EventAcmeDeploy  = "deploy"
+)
 
-func (h *HAProxyEventListener) handleAcmeEvent(message string) {
+// Structs used to unmarshal ACME messages in JSON.
+type acmeIdentifier struct {
+	Type  string `json:"type"`
+	Value string `json:"value"`
+}
+type acmeStatus struct {
+	Identifier acmeIdentifier `json:"identifier"`
+}
+
+func (h *HAProxyEventListener) handleAcmeEvent(ctx context.Context, message string) {
 	name, args, ok := strings.Cut(message, " ")
 	if !ok {
 		log.Warningf("failed to parse ACME Event: '%s'", message)
 		return
 	}
 
-	if name == EventAcmeNewCert {
+	switch name {
+	case EventAcmeNewCert:
 		h.handleAcmeNewCertEvent(args)
+		return
+	case EventAcmeDeploy:
+		h.handleAcmeDeployEvent(ctx, args)
 		return
 	}
 
@@ -92,4 +114,155 @@ func (h *HAProxyEventListener) handleAcmeNewCertEvent(args string) {
 	}
 
 	log.Debugf("events: OK: acme newcert %s => %s", args, crt.StorageName)
+}
+
+// HAProxy needs dpapi to solve a dns-01 challenge.
+// example:
+// acme deploy CertIdentifier thumbprint "QPFLnguBJSfyTiN2c4DWiWJvpveUB3bvY3EoC8cZC-U"\n
+// provider-name "godaddy"\n
+// acme-vars "var=var1,var=var2"\n
+// acme-vars "var1=foobar,var2=var2"\n
+//
+//	{
+//	  "identifier": {
+//	    "type": "dns",
+//	    "value": "test1.example.com"
+//	  },
+//	  "status": "pending",
+//	  "expires": "2025-04-02T13:25:16Z",
+//	  "challenges": [
+//	    {
+//	      "type": "dns-01",
+//	      "url": "https://acme-staging-v02.api.letsencrypt.org/acme/chall/189956024/16553103724/hj-ldw",
+//	      "status": "pending",
+//	      "token": "Yz3R-LFz6JPr04FN6FjnArcojzyFoD9ojFXZAaG5Rmo"
+//	    },
+//	    ...
+//	  ]
+//	}\0
+func (h *HAProxyEventListener) handleAcmeDeployEvent(ctx context.Context, args string) {
+	if len(args) == 0 {
+		log.Error("received HAProxy Event 'acme deploy' without any argument")
+		return
+	}
+
+	var (
+		firstLine = true
+		isJSON    = false
+		certID    string
+		provider  string
+		keyAuth   string
+		acmeArgs  []string
+		acmeJSON  string
+		parseErr  error
+	)
+
+	// Parse the message line by line.
+	strings.SplitSeq(args, "\n")(func(line string) bool {
+		if firstLine {
+			firstLine = false
+			words := strings.Split(line, " ")
+			if len(words) != 3 || words[1] != "thumbprint" || len(words[2]) < 3 {
+				parseErr = fmt.Errorf("invalid acme deploy line: '%s'", line)
+				return false
+			}
+			certID = strings.Trim(words[0], `"`)
+			return true
+		}
+		if isJSON {
+			acmeJSON += line
+			return true
+		}
+		if strings.HasPrefix(line, "provider-name ") {
+			words := strings.Split(line, " ")
+			if len(words) != 2 {
+				parseErr = fmt.Errorf("invalid provider-name line: '%s'", line)
+				return false
+			}
+			provider = strings.Trim(words[1], `"`)
+			return true
+		}
+		if strings.HasPrefix(line, "acme-vars ") {
+			_, vars, found := strings.Cut(line, " ")
+			if !found || len(vars) == 0 {
+				parseErr = fmt.Errorf("invalid acme-vars line: '%s'", line)
+				return false
+			}
+			// Do not trim the double-quotes here.
+			acmeArgs = append(acmeArgs, vars)
+			return true
+		}
+		if strings.HasPrefix(line, "dns-01-record ") {
+			words := strings.Split(line, " ")
+			if len(words) != 2 {
+				parseErr = fmt.Errorf("invalid dns-01-record line: '%s'", line)
+				return false
+			}
+			keyAuth = strings.Trim(words[1], `"`)
+			return true
+		}
+		if strings.HasPrefix(line, "{") {
+			isJSON = true
+			acmeJSON += line
+			return true
+		}
+		// Ignore anything else.
+		return true
+	})
+
+	if parseErr != nil {
+		log.Errorf("events: acme deploy: %s", parseErr.Error())
+		return
+	}
+
+	// Parse the JSON to get the domain name.
+	var status acmeStatus
+	if err := jsoniter.UnmarshalFromString(acmeJSON, &status); err != nil {
+		log.Errorf("events: acme deploy: json.Unmarshal: %s", err.Error())
+		return
+	}
+
+	domainName := status.Identifier.Value
+
+	// Merge the acme-vars
+	vars := make(map[string]any, 8)
+	for _, line := range acmeArgs {
+		hmap := configuration.ParseAcmeVars(line)
+		for k, v := range hmap {
+			vars[k] = v
+		}
+	}
+
+	// Solve the DNS challenge.
+	solver, err := acme.NewDNS01Solver(provider, vars)
+	if err != nil {
+		log.Errorf("events: acme deploy: DNS provider: %s", err.Error())
+		return
+	}
+	err = solver.Present(ctx, domainName, "", keyAuth)
+	if err != nil {
+		log.Errorf("events: acme deploy: DNS solver: %s", err.Error())
+		return
+	}
+	// Remove the challenge in 2h.
+	go func() {
+		time.Sleep(2 * time.Hour)
+		if err := solver.CleanUp(ctx, domainName, "", keyAuth); err != nil {
+			log.Errorf("events: acme deploy: cleanup failed for %s: %v", domainName, err)
+		}
+	}()
+
+	// Send back a response to HAProxy.
+	rt, err := h.client.Runtime()
+	if err != nil {
+		log.Error(err)
+		return
+	}
+	resp, err := rt.ExecuteRaw("acme challenge_ready " + certID + " domain " + domainName)
+	if err != nil {
+		log.Errorf("events: acme deploy: sending response: %s", err.Error())
+		return
+	}
+
+	log.Debugf("events: OK: acme deploy %s => %s", domainName, resp)
 }

@@ -43,6 +43,7 @@ allowed:
   - const
   - cpu
   - crd
+  - crl
   - cronjob
   - crt
   - cve
@@ -125,9 +126,11 @@ allowed:
   - ktls
   - kubebuilder
   - kubernetes
+  - libdns
   - lifecycle
   - linter
   - linters
+  - logrus
   - lowercased
   - lookups
   - lts
@@ -146,6 +149,8 @@ allowed:
   - mutexes
   - namespace
   - namespaces
+  - newcert
+  - ocsp
   - oidc
   - omitempty
   - openapi
@@ -199,6 +204,7 @@ allowed:
   - tls
   - tooltip
   - tsconfig
+  - txt
   - typings
   - ubuntu
   - uniq

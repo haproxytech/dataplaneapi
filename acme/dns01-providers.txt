@@ -1,0 +1,21 @@
+github.com/libdns/azure
+github.com/libdns/cloudflare
+github.com/libdns/cloudns
+github.com/libdns/digitalocean
+github.com/haproxytech/dataplaneapi/acme/exec
+github.com/libdns/gandi
+github.com/libdns/godaddy
+github.com/libdns/googleclouddns
+github.com/libdns/hetzner
+github.com/libdns/infomaniak
+github.com/libdns/inwx
+github.com/libdns/ionos
+github.com/libdns/linode
+github.com/libdns/namecheap
+github.com/libdns/netcup
+github.com/libdns/ovh
+github.com/libdns/porkbun
+github.com/libdns/rfc2136
+//github.com/libdns/route53  req. go1.25
+github.com/libdns/scaleway
+github.com/libdns/vultr/v2

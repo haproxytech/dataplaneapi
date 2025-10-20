@@ -221,7 +221,7 @@ func (h *HAProxyEventListener) listen(ctx context.Context) {
 				break
 			}
 
-			h.handle(ev)
+			h.handle(ctx, ev)
 
 			if h.listener == nil { // just in case
 				break
@@ -230,7 +230,7 @@ func (h *HAProxyEventListener) listen(ctx context.Context) {
 	}
 }
 
-func (h *HAProxyEventListener) handle(ev runtime.Event) {
+func (h *HAProxyEventListener) handle(ctx context.Context, ev runtime.Event) {
 	if !ev.Timestamp.After(h.lastEvent) {
 		// Event already seen! Skip.
 		log.Debugf("events: skipping already seen: '%s'", ev.String())
@@ -247,7 +247,7 @@ func (h *HAProxyEventListener) handle(ev runtime.Event) {
 	}
 
 	if category == EventAcme {
-		h.handleAcmeEvent(rest)
+		h.handleAcmeEvent(ctx, rest)
 		return
 	}
 
