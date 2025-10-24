@@ -200,6 +200,7 @@ allowed:
   - syslog
   - textarea
   - tcp
+  - testname
   - timeseries
   - tls
   - tooltip
