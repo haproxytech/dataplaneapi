@@ -112,8 +112,10 @@ fi
 trap dump_logs ERR
 
 echo '>>> Starting test suite'
-if [ ! -z $TESTNAME ]; then
-    bats -t "${E2E_DIR}"/tests/${TESTNAME}
+if [ -n "$TESTNAME" ]; then
+    # Small hack to allow selecting multiple test directories.
+    pfx() { for i;do echo "$E2E_DIR/tests/$i"; done; }
+    bats -t $(pfx $TESTNAME)
 elif [ ! -z $TESTPART ]; then
     set +e
     echo $TESTPART | grep -q -e "[[:digit:]]/[[:digit:]]"
