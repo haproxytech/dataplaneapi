@@ -208,6 +208,7 @@ allowed:
   - txt
   - typings
   - ubuntu
+  - uid
   - uniq
   - unix
   - unmarshalling

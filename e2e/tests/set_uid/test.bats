@@ -24,7 +24,7 @@ setup() {
   run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run dpa_docker_exec 'useradd -m -p test -s /bin/bash -u 1500 testuiduser'
+  run dpa_docker_exec 'adduser -u 1500 testuiduser || useradd -m -u 1500 testuiduser'
   assert_success
 
   run docker cp "${BATS_TEST_DIRNAME}/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/home/testuiduser/dataplaneapi.yaml"
