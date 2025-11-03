@@ -43,3 +43,4 @@ allowed:
   - libdns
   - txt
   - testname
+  - uid

@@ -24,7 +24,7 @@ setup() {
   run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run dpa_docker_exec 'adduser -u 1500 testuiduser'
+  run dpa_docker_exec 'adduser -u 1500 testuiduser || useradd -m -u 1500 testuiduser'
   #assert_success ignore error since we do not plan to insert password, user will be created
 
   run docker cp "${BATS_TEST_DIRNAME}/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/home/testuiduser/dataplaneapi.yaml"
