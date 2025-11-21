@@ -26615,6 +26615,14 @@ func init() {
           "description": "ACME provider's name",
           "type": "string",
           "x-nullable": false
+        },
+        "reuse_key": {
+          "description": "Try to reuse the private key instead of generating a new one.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         }
       },
       "additionalProperties": false
@@ -86256,6 +86264,14 @@ func init() {
           "description": "ACME provider's name",
           "type": "string",
           "x-nullable": false
+        },
+        "reuse_key": {
+          "description": "Try to reuse the private key instead of generating a new one.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         }
       },
       "additionalProperties": false
