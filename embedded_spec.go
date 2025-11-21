@@ -26555,6 +26555,16 @@ func init() {
           "description": "Path where the the ACME account key is stored",
           "type": "string"
         },
+        "acme_provider": {
+          "description": "DNS provider for the dns-01 challenge",
+          "type": "string"
+        },
+        "acme_vars": {
+          "description": "List of variables passed to the dns-01 provider (typically API keys)",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
         "bits": {
           "description": "Number of bits to generate an RSA certificate",
           "type": "integer",
@@ -26605,8 +26615,17 @@ func init() {
           "description": "ACME provider's name",
           "type": "string",
           "x-nullable": false
+        },
+        "reuse_key": {
+          "description": "Try to reuse the private key instead of generating a new one.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "acme_providers": {
       "description": "List of ACME sections.",
@@ -86174,6 +86193,16 @@ func init() {
           "description": "Path where the the ACME account key is stored",
           "type": "string"
         },
+        "acme_provider": {
+          "description": "DNS provider for the dns-01 challenge",
+          "type": "string"
+        },
+        "acme_vars": {
+          "description": "List of variables passed to the dns-01 provider (typically API keys)",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
         "bits": {
           "description": "Number of bits to generate an RSA certificate",
           "type": "integer",
@@ -86224,8 +86253,17 @@ func init() {
           "description": "ACME provider's name",
           "type": "string",
           "x-nullable": false
+        },
+        "reuse_key": {
+          "description": "Try to reuse the private key instead of generating a new one.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "acme_providers": {
       "description": "List of ACME sections.",
