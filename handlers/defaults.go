@@ -126,13 +126,7 @@ func (h GetDefaultsSectionsHandlerImpl) Handle(params defaults.GetDefaultsSectio
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return defaults.NewGetDefaultsSectionsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, fs, err := configuration.GetDefaultsSections(t)
+	_, fs, err := h.getDefaultsSections(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsSectionsDefault(int(*e.Code)).WithPayload(e)
@@ -140,7 +134,7 @@ func (h GetDefaultsSectionsHandlerImpl) Handle(params defaults.GetDefaultsSectio
 	return defaults.NewGetDefaultsSectionsOK().WithPayload(fs)
 }
 
-func (h *GetDefaultsSectionsHandlerImpl) getDefaultsSections(params defaults.GetDefaultsSectionParams, t string) (int64, models.DefaultsSections, error) {
+func (h *GetDefaultsSectionsHandlerImpl) getDefaultsSections(params defaults.GetDefaultsSectionsParams, t string) (int64, models.DefaultsSections, error) {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		return 0, nil, err
