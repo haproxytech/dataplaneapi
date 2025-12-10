@@ -91,17 +91,18 @@ func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.Ge
 		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 	retf := &models.SslCertificate{
-		File:        filename,
-		Description: "managed SSL file",
-		StorageName: filepath.Base(filename),
-		Size:        &size,
-		NotAfter:    (*strfmt.DateTime)(info.NotAfter),
-		NotBefore:   (*strfmt.DateTime)(info.NotBefore),
-		Issuers:     info.Issuers,
-		Domains:     info.DNS,
-		IPAddresses: info.IPs,
-		Subject:     info.Subject,
-		Serial:      info.Serial,
+		File:              filename,
+		Description:       "managed SSL file",
+		StorageName:       filepath.Base(filename),
+		Size:              &size,
+		NotAfter:          (*strfmt.DateTime)(info.NotAfter),
+		NotBefore:         (*strfmt.DateTime)(info.NotBefore),
+		Issuers:           info.Issuers,
+		Domains:           info.DNS,
+		IPAddresses:       info.IPs,
+		Subject:           info.Subject,
+		Serial:            info.Serial,
+		Sha256FingerPrint: info.Sha256FingerPrint,
 	}
 	return storage.NewGetOneStorageSSLCertificateOK().WithPayload(retf)
 }
@@ -211,17 +212,18 @@ func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.R
 		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 	retf := &models.SslCertificate{
-		File:        filename,
-		Description: "managed SSL file",
-		StorageName: filepath.Base(filename),
-		Size:        misc.Int64P(len(params.Data)),
-		NotAfter:    (*strfmt.DateTime)(info.NotAfter),
-		NotBefore:   (*strfmt.DateTime)(info.NotBefore),
-		Issuers:     info.Issuers,
-		Domains:     info.DNS,
-		IPAddresses: info.IPs,
-		Subject:     info.Subject,
-		Serial:      info.Serial,
+		File:              filename,
+		Description:       "managed SSL file",
+		StorageName:       filepath.Base(filename),
+		Size:              misc.Int64P(len(params.Data)),
+		NotAfter:          (*strfmt.DateTime)(info.NotAfter),
+		NotBefore:         (*strfmt.DateTime)(info.NotBefore),
+		Issuers:           info.Issuers,
+		Domains:           info.DNS,
+		IPAddresses:       info.IPs,
+		Subject:           info.Subject,
+		Serial:            info.Serial,
+		Sha256FingerPrint: info.Sha256FingerPrint,
 	}
 
 	skipReload := false
@@ -295,17 +297,18 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 	retf := &models.SslCertificate{
-		File:        filename,
-		Description: "managed SSL file",
-		StorageName: filepath.Base(filename),
-		Size:        &size,
-		NotAfter:    (*strfmt.DateTime)(info.NotAfter),
-		NotBefore:   (*strfmt.DateTime)(info.NotBefore),
-		Issuers:     info.Issuers,
-		Domains:     info.DNS,
-		IPAddresses: info.IPs,
-		Subject:     info.Subject,
-		Serial:      info.Serial,
+		File:              filename,
+		Description:       "managed SSL file",
+		StorageName:       filepath.Base(filename),
+		Size:              &size,
+		NotAfter:          (*strfmt.DateTime)(info.NotAfter),
+		NotBefore:         (*strfmt.DateTime)(info.NotBefore),
+		Issuers:           info.Issuers,
+		Domains:           info.DNS,
+		IPAddresses:       info.IPs,
+		Subject:           info.Subject,
+		Serial:            info.Serial,
+		Sha256FingerPrint: info.Sha256FingerPrint,
 	}
 
 	skipReload := false
