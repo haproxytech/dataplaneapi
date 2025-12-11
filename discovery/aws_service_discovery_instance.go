@@ -230,9 +230,12 @@ func (a *awsInstance) setAPIClient() (*ec2.Client, error) {
 }
 
 func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
+	ctx, cancel := context.WithTimeout(a.ctx, a.timeout)
+	defer cancel()
+
 	var io *ec2.DescribeInstancesOutput
 
-	io, err = api.DescribeInstances(a.ctx, &ec2.DescribeInstancesInput{
+	io, err = api.DescribeInstances(ctx, &ec2.DescribeInstancesInput{
 		Filters: append([]types.Filter{
 			{
 				Name:   aws.String("tag-key"),
@@ -283,7 +286,7 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 
 	if len(a.params.Denylist) > 0 {
 		// AWS API doesn't provide negative filter search, so doing on our own
-		io, err = api.DescribeInstances(a.ctx, &ec2.DescribeInstancesInput{
+		io, err = api.DescribeInstances(ctx, &ec2.DescribeInstancesInput{
 			Filters: a.filterConverter(a.params.Denylist),
 		})
 		if err == nil {
