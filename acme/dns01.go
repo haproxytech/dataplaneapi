@@ -24,10 +24,15 @@ import (
 	"time"
 
 	"github.com/libdns/libdns"
+	"github.com/miekg/dns"
 )
 
-// TTL of the temporary DNS record used for DNS-01 validation.
-const DefaultTTL = 30 * time.Second
+const (
+	// TTL of the temporary DNS record used for DNS-01 validation.
+	DefaultTTL = 30 * time.Second
+	// Typical negative response TTL defined in the SOA.
+	defaultDNSPropagationTimeout = 300 * time.Second
+)
 
 // DNSProvider defines the operations required for dns-01 challenges.
 type DNSProvider interface {
@@ -39,6 +44,18 @@ type DNSProvider interface {
 type DNS01Solver struct {
 	provider DNSProvider
 	TTL      time.Duration
+
+	// How long to wait before starting propagation checks.
+	// Default: 0 (no wait).
+	PropagationDelay time.Duration
+
+	// Maximum time to wait for temporary DNS record to appear.
+	// Set to -1 to disable propagation checks.
+	// Default: 2 minutes.
+	PropagationTimeout time.Duration
+
+	// Preferred DNS resolver(s) to use when doing DNS lookups.
+	Resolvers []string
 }
 
 func NewDNS01Solver(name string, params map[string]any, ttl ...time.Duration) (*DNS01Solver, error) {
@@ -60,7 +77,7 @@ func (s *DNS01Solver) Present(ctx context.Context, domain, zone, keyAuth string)
 	rec := makeRecord(domain, keyAuth, s.TTL)
 
 	if zone == "" {
-		zone = guessZone(domain)
+		zone = GuessZone(domain)
 	} else {
 		zone = rooted(zone)
 	}
@@ -76,12 +93,66 @@ func (s *DNS01Solver) Present(ctx context.Context, domain, zone, keyAuth string)
 	return nil
 }
 
+// Wait blocks until the TXT record created in Present() appears in
+// authoritative lookups, i.e. until it has propagated, or until
+// timeout, whichever is first.
+func (s *DNS01Solver) Wait(ctx context.Context, domain, zone, keyAuth string) error {
+	// if configured to, pause before doing propagation checks
+	// (even if they are disabled, the wait might be desirable on its own)
+	if s.PropagationDelay > 0 {
+		select {
+		case <-time.After(s.PropagationDelay):
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	}
+
+	// skip propagation checks if configured to do so
+	if s.PropagationTimeout == -1 {
+		return nil
+	}
+
+	// timings
+	timeout := s.PropagationTimeout
+	if timeout == 0 {
+		timeout = defaultDNSPropagationTimeout
+	}
+	const interval = 5 * time.Second
+
+	// how we'll do the checks
+	checkAuthoritativeServers := len(s.Resolvers) == 0
+	resolvers := RecursiveNameservers(s.Resolvers)
+
+	absName := strings.Trim(domain, ".")
+
+	var err error
+	start := time.Now()
+	for time.Since(start) < timeout {
+		select {
+		case <-time.After(interval):
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+
+		var ready bool
+		ready, err = checkDNSPropagation(ctx, absName, dns.TypeTXT, keyAuth, checkAuthoritativeServers, resolvers)
+		if err != nil {
+			return fmt.Errorf("checking DNS propagation of %q (resolvers=%v): %w", absName, resolvers, err)
+		}
+		if ready {
+			return nil
+		}
+	}
+
+	return fmt.Errorf("DNS propagation timed out. Last error: %v", err)
+}
+
 // CleanUp deletes the DNS TXT record created in Present().
 func (s *DNS01Solver) CleanUp(ctx context.Context, domain, zone, keyAuth string) error {
 	rr := makeRecord(domain, keyAuth, s.TTL)
 
 	if zone == "" {
-		zone = guessZone(domain)
+		zone = GuessZone(domain)
 	} else {
 		zone = rooted(zone)
 	}
@@ -104,13 +175,8 @@ func makeRecord(fqdn, keyAuth string, ttl time.Duration) libdns.RR {
 	}
 }
 
-// Extract the root zone for a domain in case the user did not provide it.
-//
-// This simplistic algorithm will only work for simple cases.  The correct
-// way to do this would be to do an SOA request on the FQDN, but since
-// dataplaneapi may not use the right resolvers (as configured in haproxy.cfg)
-// it is better to avoid doing any DNS request.
-func guessZone(fqdn string) string {
+// Guess the root zone for a domain when we cannot use a better method.
+func GuessZone(fqdn string) string {
 	fqdn = trimWildcard(fqdn)
 	parts := make([]string, 0, 8)
 	strings.SplitSeq(fqdn, ".")(func(part string) bool {

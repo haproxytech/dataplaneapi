@@ -54,6 +54,7 @@ require (
 	github.com/libdns/scaleway v0.2.3
 	github.com/libdns/vultr/v2 v2.0.4
 	github.com/maruel/panicparse/v2 v2.5.0
+	github.com/miekg/dns v1.1.64
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
 	github.com/rs/cors v1.11.1
 	github.com/rubyist/circuitbreaker v2.2.1+incompatible
@@ -125,7 +126,6 @@ require (
 	github.com/lestrrat-go/strftime v1.1.1 // indirect
 	github.com/linode/linodego v1.56.0 // indirect
 	github.com/mailru/easyjson v0.9.1 // indirect
-	github.com/miekg/dns v1.1.64 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
