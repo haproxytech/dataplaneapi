@@ -20,7 +20,9 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -239,18 +241,45 @@ func (h *HAProxyEventListener) handleAcmeDeployEvent(ctx context.Context, args s
 		log.Errorf("events: acme deploy: DNS provider: %s", err.Error())
 		return
 	}
-	err = solver.Present(ctx, domainName, "", keyAuth)
+
+	// These options will be configurable from haproxy.cfg in a future version.
+	// For now use environment variables.
+	solver.PropagationDelay = getEnvDuration("DPAPI_ACME_PROPAGDELAY_SEC", 0)
+	solver.PropagationTimeout = getEnvDuration("DPAPI_ACME_PROPAGTIMEOUT_SEC", time.Hour)
+
+	var zone string
+	if solver.PropagationTimeout != -1 {
+		zone = acme.GuessZone(domainName)
+	} else {
+		zone, err = acme.FindZoneByFQDN(ctx, domainName, acme.RecursiveNameservers(nil))
+	}
+	if err != nil {
+		log.Errorf("events: acme deploy: failed to find root zone for '%s': %s", domainName, err.Error())
+		return
+	}
+	err = solver.Present(ctx, domainName, zone, keyAuth)
 	if err != nil {
 		log.Errorf("events: acme deploy: DNS solver: %s", err.Error())
 		return
 	}
-	// Remove the challenge in 2h.
+	// Wait for DNS propagation and cleanup.
+	err = solver.Wait(ctx, domainName, zone, keyAuth)
+	// Remove the challenge in 10m if Wait() was successful. This should be
+	// more than enough for HAProxy to finish the challenge with the ACME server.
+	waitBeforeCleanup := 10 * time.Minute
+	if err != nil {
+		waitBeforeCleanup = time.Second
+	}
 	go func() {
-		time.Sleep(2 * time.Hour)
-		if err := solver.CleanUp(ctx, domainName, "", keyAuth); err != nil {
+		time.Sleep(waitBeforeCleanup)
+		if err := solver.CleanUp(ctx, domainName, zone, keyAuth); err != nil {
 			log.Errorf("events: acme deploy: cleanup failed for %s: %v", domainName, err)
 		}
 	}()
+	if err != nil {
+		log.Errorf("events: acme deploy: DNS propagation check failed for '%s': %v", domainName, err)
+		return
+	}
 
 	// Send back a response to HAProxy.
 	rt, err := h.client.Runtime()
@@ -265,4 +294,21 @@ func (h *HAProxyEventListener) handleAcmeDeployEvent(ctx context.Context, args s
 	}
 
 	log.Debugf("events: OK: acme deploy %s => %s", domainName, resp)
+}
+
+// Parse an environment variable containing a duration in seconds, or return a default value.
+func getEnvDuration(name string, def time.Duration) time.Duration {
+	str := os.Getenv(name)
+	if str == "" {
+		return def
+	}
+	if str == "-1" {
+		// special case to disable waiting for propagation
+		return -1
+	}
+	num, err := strconv.Atoi(str)
+	if err != nil {
+		return def
+	}
+	return time.Duration(num) * time.Second
 }

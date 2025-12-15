@@ -94,7 +94,7 @@ func Test_guessZone(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.fqdn, func(t *testing.T) {
-			got := guessZone(tt.fqdn)
+			got := GuessZone(tt.fqdn)
 			if got != tt.want {
 				t.Errorf("guessZone() = %v, want %v", got, tt.want)
 			}

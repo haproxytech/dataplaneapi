@@ -44,3 +44,10 @@ allowed:
   - txt
   - testname
   - uid
+  - DPAPI
+  - PROPAGDELAY
+  - PROPAGTIMEOUT
+  - cfg
+  - resolv
+  - conf
+  - resolvers
