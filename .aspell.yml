@@ -29,6 +29,7 @@ allowed:
   - bwlim
   - caniuse
   - casbin
+  - cfg
   - chmigrate
   - cli
   - clickhouse
@@ -163,6 +164,8 @@ allowed:
   - placholder
   - podman
   - pre
+  - PROPAGDELAY
+  - PROPAGTIMEOUT
   - quic
   - rbac
   - readme
@@ -175,6 +178,8 @@ allowed:
   - repo
   - repos
   - req
+  - resolv
+  - resolvers
   - rsync
   - ruleset
   - rulesets
