@@ -148,6 +148,37 @@ func (a *awsInstance) updateTimeout(timeoutSeconds int64) error {
 	return nil
 }
 
+func (a *awsInstance) updateServicesFn() {
+	a.logDebug("discovery job update triggered")
+
+	var api *ec2.Client
+	var err error
+
+	if api, err = a.setAPIClient(); err != nil {
+		a.logErrorf("error while setting up the API client: %s", err.Error())
+		return
+	}
+
+	if err = a.updateServices(api); err != nil {
+		switch t := err.(type) {
+		case *configuration.ConfError:
+			switch t.Err() {
+			case configuration.ErrObjectAlreadyExists:
+				a.logDebug("object already exists, ignoring error")
+				return
+			default:
+				a.logErrorf("a configuration error occurred while updating service: %s", err.Error())
+				return
+			}
+		default:
+			a.logErrorf("an error occurred while updating service: %s", err.Error())
+			return
+		}
+	}
+
+	a.logDebug("discovery job reconciliation completed")
+}
+
 func (a *awsInstance) start() {
 	a.update = make(chan struct{})
 
@@ -163,7 +194,9 @@ func (a *awsInstance) start() {
 				if !ok {
 					return
 				}
+
 				a.logDebug("discovery job update triggered")
+
 				err := a.discoveryConfig.UpdateParams(discoveryInstanceParams{
 					Allowlist:       []string{},
 					Denylist:        []string{},
@@ -173,34 +206,13 @@ func (a *awsInstance) start() {
 					SlotsIncrement:  int(a.params.ServerSlotsGrowthIncrement),
 				})
 				if err != nil {
-					a.stop()
+					a.logErrorf("error while updating discovery settings: %s", err.Error())
+					break
 				}
+
+				a.logDebug("discovery job update completed")
 			case <-discoveryTimer.C:
-				a.logDebug("discovery job update triggered")
-
-				var api *ec2.Client
-				var err error
-
-				if api, err = a.setAPIClient(); err != nil {
-					a.logErrorf("error while setting up the API client: %s", err.Error())
-					a.stop()
-				}
-				if err = a.updateServices(api); err != nil {
-					switch t := err.(type) {
-					case *configuration.ConfError:
-						switch t.Err() {
-						case configuration.ErrObjectAlreadyExists:
-							continue
-						default:
-							a.stop()
-							a.logErrorf("error while updating service: %s", err.Error())
-						}
-					default:
-						a.stop()
-					}
-				}
-
-				a.logDebug("discovery job reconciliation completed")
+				a.updateServicesFn()
 				discoveryTimer.Reset(a.timeout)
 			case <-a.ctx.Done():
 				a.stop()
@@ -210,6 +222,9 @@ func (a *awsInstance) start() {
 }
 
 func (a *awsInstance) setAPIClient() (*ec2.Client, error) {
+	ctx, cancelFn := context.WithTimeout(a.ctx, a.timeout)
+	defer cancelFn()
+
 	opts := []func(options *config.LoadOptions) error{
 		config.WithRegion(*a.params.Region),
 	}
@@ -221,7 +236,7 @@ func (a *awsInstance) setAPIClient() (*ec2.Client, error) {
 			},
 		}))
 	}
-	cfg, err := config.LoadDefaultConfig(context.Background(), opts...)
+	cfg, err := config.LoadDefaultConfig(ctx, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("cannot generate the AWS instance due to a configuration setup error: %w", err)
 	}
