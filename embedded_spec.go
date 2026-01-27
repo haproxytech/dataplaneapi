@@ -10390,7 +10390,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApps"
+              "$ref": "#/definitions/fcgi_apps"
             },
             "headers": {
               "Configuration-Version": {
@@ -10417,7 +10417,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -10437,13 +10437,13 @@ func init() {
           "201": {
             "description": "Application created",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -10491,7 +10491,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Configuration-Version": {
@@ -10528,7 +10528,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -10548,13 +10548,13 @@ func init() {
           "200": {
             "description": "Application replaced",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -30231,12 +30231,12 @@ func init() {
         }
       }
     },
-    "fcgiApp": {
+    "fcgi_app": {
       "description": "App with all it's children resources",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/fcgiAppBase"
+          "$ref": "#/definitions/fcgi_app_base"
         },
         {
           "type": "object",
@@ -30250,7 +30250,7 @@ func init() {
       ],
       "x-go-name": "FCGIApp"
     },
-    "fcgiAppBase": {
+    "fcgi_app_base": {
       "description": "HAProxy FastCGI application configuration",
       "type": "object",
       "title": "FCGI application base",
@@ -30287,7 +30287,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogStderr",
-            "$ref": "#/definitions/fcgiLogStderr"
+            "$ref": "#/definitions/fcgi_log_stderr"
           },
           "x-omitempty": true
         },
@@ -30320,7 +30320,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogPassHeader",
-            "$ref": "#/definitions/fcgiPassHeader"
+            "$ref": "#/definitions/fcgi_pass_header"
           },
           "x-omitempty": true
         },
@@ -30331,19 +30331,19 @@ func init() {
         "set_params": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/fcgiSetParam"
+            "$ref": "#/definitions/fcgi_set_param"
           },
           "x-omitempty": true
         }
       }
     },
-    "fcgiApps": {
+    "fcgi_apps": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/fcgiApp"
+        "$ref": "#/definitions/fcgi_app"
       }
     },
-    "fcgiLogStderr": {
+    "fcgi_log_stderr": {
       "description": "Enables logging of STDERR messages that the FastCGI application reports.\nIt is an optional setting. By default, HAProxy Enterprise ignores STDERR messages.",
       "type": "object",
       "properties": {
@@ -30404,7 +30404,7 @@ func init() {
         }
       }
     },
-    "fcgiPassHeader": {
+    "fcgi_pass_header": {
       "description": "Specifies the name of a request header to pass to the FastCGI application.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.\nMost request headers are already available to the FastCGI application with the prefix \"HTTP\".\nThus, you only need this directive to pass headers that are purposefully omitted.\nCurrently, the headers \"Authorization\", \"Proxy-Authorization\", and hop-by-hop headers are omitted.\nNote that the headers \"Content-type\" and \"Content-length\" never pass to the FastCGI application because they are already converted into parameters.",
       "type": "object",
       "properties": {
@@ -30430,7 +30430,7 @@ func init() {
         }
       }
     },
-    "fcgiSetParam": {
+    "fcgi_set_param": {
       "description": "Sets a FastCGI parameter to pass to this application.\nIts value, defined by \u003cformat\u003e can take a formatted string, the same as the log directive.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.",
       "type": "object",
       "properties": {
@@ -59578,7 +59578,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApps"
+              "$ref": "#/definitions/fcgi_apps"
             },
             "headers": {
               "Configuration-Version": {
@@ -59614,7 +59614,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -59650,13 +59650,13 @@ func init() {
           "201": {
             "description": "Application created",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -59739,7 +59739,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Configuration-Version": {
@@ -59794,7 +59794,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -59830,13 +59830,13 @@ func init() {
           "200": {
             "description": "Application replaced",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -89775,12 +89775,12 @@ func init() {
         }
       }
     },
-    "fcgiApp": {
+    "fcgi_app": {
       "description": "App with all it's children resources",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/fcgiAppBase"
+          "$ref": "#/definitions/fcgi_app_base"
         },
         {
           "type": "object",
@@ -89794,7 +89794,7 @@ func init() {
       ],
       "x-go-name": "FCGIApp"
     },
-    "fcgiAppBase": {
+    "fcgi_app_base": {
       "description": "HAProxy FastCGI application configuration",
       "type": "object",
       "title": "FCGI application base",
@@ -89831,7 +89831,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogStderr",
-            "$ref": "#/definitions/fcgiLogStderr"
+            "$ref": "#/definitions/fcgi_log_stderr"
           },
           "x-omitempty": true
         },
@@ -89864,7 +89864,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogPassHeader",
-            "$ref": "#/definitions/fcgiPassHeader"
+            "$ref": "#/definitions/fcgi_pass_header"
           },
           "x-omitempty": true
         },
@@ -89875,19 +89875,19 @@ func init() {
         "set_params": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/fcgiSetParam"
+            "$ref": "#/definitions/fcgi_set_param"
           },
           "x-omitempty": true
         }
       }
     },
-    "fcgiApps": {
+    "fcgi_apps": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/fcgiApp"
+        "$ref": "#/definitions/fcgi_app"
       }
     },
-    "fcgiLogStderr": {
+    "fcgi_log_stderr": {
       "description": "Enables logging of STDERR messages that the FastCGI application reports.\nIt is an optional setting. By default, HAProxy Enterprise ignores STDERR messages.",
       "type": "object",
       "properties": {
@@ -89948,7 +89948,7 @@ func init() {
         }
       }
     },
-    "fcgiPassHeader": {
+    "fcgi_pass_header": {
       "description": "Specifies the name of a request header to pass to the FastCGI application.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.\nMost request headers are already available to the FastCGI application with the prefix \"HTTP\".\nThus, you only need this directive to pass headers that are purposefully omitted.\nCurrently, the headers \"Authorization\", \"Proxy-Authorization\", and hop-by-hop headers are omitted.\nNote that the headers \"Content-type\" and \"Content-length\" never pass to the FastCGI application because they are already converted into parameters.",
       "type": "object",
       "properties": {
@@ -89974,7 +89974,7 @@ func init() {
         }
       }
     },
-    "fcgiSetParam": {
+    "fcgi_set_param": {
       "description": "Sets a FastCGI parameter to pass to this application.\nIts value, defined by \u003cformat\u003e can take a formatted string, the same as the log directive.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.",
       "type": "object",
       "properties": {
