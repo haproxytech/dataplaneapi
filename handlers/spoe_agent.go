@@ -28,7 +28,7 @@ type SpoeCreateSpoeAgentHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParams, principal interface{}) middleware.Responder {
+func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -61,7 +61,7 @@ type SpoeDeleteSpoeAgentHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParams, principal interface{}) middleware.Responder {
+func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -94,7 +94,7 @@ type SpoeGetAllSpoeAgentHandlerImpl struct {
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetAllSpoeAgentHandlerImpl) Handle(params spoe.GetAllSpoeAgentParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetAllSpoeAgentHandlerImpl) Handle(params spoe.GetAllSpoeAgentParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -123,7 +123,7 @@ type SpoeGetSpoeAgentHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -155,7 +155,7 @@ type SpoeReplaceSpoeAgentHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentParams, principal interface{}) middleware.Responder {
+func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)

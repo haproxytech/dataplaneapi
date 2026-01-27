@@ -26,7 +26,7 @@ type GetAcmeStatusHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *GetAcmeStatusHandlerImpl) Handle(params acme_runtime.GetAcmeStatusParams, principal interface{}) middleware.Responder {
+func (h *GetAcmeStatusHandlerImpl) Handle(params acme_runtime.GetAcmeStatusParams, principal any) middleware.Responder {
 	rt, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -46,7 +46,7 @@ type RenewAcmeCertificateHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *RenewAcmeCertificateHandlerImpl) Handle(params acme_runtime.RenewAcmeCertificateParams, principal interface{}) middleware.Responder {
+func (h *RenewAcmeCertificateHandlerImpl) Handle(params acme_runtime.RenewAcmeCertificateParams, principal any) middleware.Responder {
 	rt, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

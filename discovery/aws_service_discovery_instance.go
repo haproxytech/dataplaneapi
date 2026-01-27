@@ -46,7 +46,7 @@ type awsInstance struct {
 	update          chan struct{}
 	state           map[string]map[string]time.Time
 	discoveryConfig *ServiceDiscoveryInstance
-	logFields       map[string]interface{}
+	logFields       map[string]any
 	timeout         time.Duration
 }
 
@@ -111,7 +111,7 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 		return nil, err
 	}
 
-	logFields := map[string]interface{}{"ServiceDiscovery": "AWS", "ID": *params.ID}
+	logFields := map[string]any{"ServiceDiscovery": "AWS", "ID": *params.ID}
 
 	ai := &awsInstance{
 		params:    params,
@@ -378,10 +378,10 @@ func (a *awsInstance) stop() {
 
 func (a *awsService) instancePortFromEC2(instance types.Instance) (port int, err error) {
 	for _, t := range instance.Tags {
-		switch {
-		case *t.Key == HAProxyServicePortTag:
+		switch *t.Key {
+		case HAProxyServicePortTag:
 			port, err = strconv.Atoi(*t.Value)
-		case *t.Key == HAProxyInstancePortTag:
+		case HAProxyInstancePortTag:
 			return strconv.Atoi(*t.Value)
 		}
 	}
@@ -413,6 +413,6 @@ func (a *awsInstance) logDebug(message string) {
 	log.WithFields(a.logFields, log.DebugLevel, message)
 }
 
-func (a *awsInstance) logErrorf(format string, args ...interface{}) {
+func (a *awsInstance) logErrorf(format string, args ...any) {
 	log.WithFieldsf(a.logFields, log.ErrorLevel, format, args...)
 }

@@ -29,7 +29,7 @@ type GetTracesHandlerImpl struct {
 }
 
 // Get the traces section (it is unique)
-func (h *GetTracesHandlerImpl) Handle(params traces.GetTracesParams, principal interface{}) middleware.Responder {
+func (h *GetTracesHandlerImpl) Handle(params traces.GetTracesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -62,7 +62,7 @@ type CreateTracesHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *CreateTracesHandlerImpl) Handle(params traces.CreateTracesParams, principal interface{}) middleware.Responder {
+func (h *CreateTracesHandlerImpl) Handle(params traces.CreateTracesParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -114,7 +114,7 @@ type ReplaceTracesHandler struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *ReplaceTracesHandler) Handle(params traces.ReplaceTracesParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTracesHandler) Handle(params traces.ReplaceTracesParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -172,7 +172,7 @@ type DeleteTracesHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *DeleteTracesHandlerImpl) Handle(params traces.DeleteTracesParams, principal interface{}) middleware.Responder {
+func (h *DeleteTracesHandlerImpl) Handle(params traces.DeleteTracesParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -226,7 +226,7 @@ type CreateTraceEntryHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *CreateTraceEntryHandlerImpl) Handle(params traces.CreateTraceEntryParams, principal interface{}) middleware.Responder {
+func (h *CreateTraceEntryHandlerImpl) Handle(params traces.CreateTraceEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -279,7 +279,7 @@ type DeleteTraceEntryHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *DeleteTraceEntryHandlerImpl) Handle(params traces.DeleteTraceEntryParams, principal interface{}) middleware.Responder {
+func (h *DeleteTraceEntryHandlerImpl) Handle(params traces.DeleteTraceEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

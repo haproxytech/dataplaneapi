@@ -61,7 +61,7 @@ type ReplaceAllLogTargetHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.CreateLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.CreateLogTargetBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -109,7 +109,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType,
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.DeleteLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.DeleteLogTargetBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -157,7 +157,7 @@ func (h *DeleteLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType,
 }
 
 // Handle executing the request and returning a response
-func (h *GetLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.GetLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.GetLogTargetBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -178,7 +178,7 @@ func (h *GetLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.GetAllLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.GetAllLogTargetBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -202,7 +202,7 @@ func (h *GetAllLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType,
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.ReplaceLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.ReplaceLogTargetBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -253,7 +253,7 @@ func logTargetParentTypeRequiresParentName(parentType string) bool {
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.ReplaceAllLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllLogTargetHandlerImpl) Handle(parentType cnconstants.CnParentType, params log_target.ReplaceAllLogTargetBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

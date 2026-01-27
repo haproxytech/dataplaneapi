@@ -55,7 +55,7 @@ type DeleteRuntimeServerHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
+func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParams, principal any) middleware.Responder {
 	rn, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -83,7 +83,7 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllRuntimeServerHandlerImpl) Handle(params server.GetAllRuntimeServerParams, principal interface{}) middleware.Responder {
+func (h *GetAllRuntimeServerHandlerImpl) Handle(params server.GetAllRuntimeServerParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -103,7 +103,7 @@ func (h *GetAllRuntimeServerHandlerImpl) Handle(params server.GetAllRuntimeServe
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeServerParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -156,7 +156,7 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 // Adds a new server dynamically without modifying the configuration.
 // Warning: this only works if you have not defined a `default_server` in the defaults
 // or in the current `backend` section.
-func (h *AddRuntimeServerHandlerImpl) Handle(params server.AddRuntimeServerParams, principal interface{}) middleware.Responder {
+func (h *AddRuntimeServerHandlerImpl) Handle(params server.AddRuntimeServerParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -201,7 +201,7 @@ func isNotFoundError(err error) bool {
 }
 
 // Deletes a server from a backend immediately, without waiting for connections to drain.
-func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServerParams, principal interface{}) middleware.Responder {
+func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServerParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

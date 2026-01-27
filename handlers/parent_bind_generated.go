@@ -50,86 +50,86 @@ type (
 	ReplaceBindPeerHandlerImpl       ReplaceBindHandlerImpl
 )
 
-func (h *CreateBindFrontendHandlerImpl) Handle(params bind.CreateBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateBindFrontendHandlerImpl) Handle(params bind.CreateBindFrontendParams, principal any) middleware.Responder {
 	g := CreateBindHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *CreateBindLogForwardHandlerImpl) Handle(params bind.CreateBindLogForwardParams, principal interface{}) middleware.Responder {
+func (h *CreateBindLogForwardHandlerImpl) Handle(params bind.CreateBindLogForwardParams, principal any) middleware.Responder {
 	g := CreateBindHandlerImpl(*h)
 	pg := bind.CreateBindFrontendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *CreateBindPeerHandlerImpl) Handle(params bind.CreateBindPeerParams, principal interface{}) middleware.Responder {
+func (h *CreateBindPeerHandlerImpl) Handle(params bind.CreateBindPeerParams, principal any) middleware.Responder {
 	g := CreateBindHandlerImpl(*h)
 	pg := bind.CreateBindFrontendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *GetBindFrontendHandlerImpl) Handle(params bind.GetBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetBindFrontendHandlerImpl) Handle(params bind.GetBindFrontendParams, principal any) middleware.Responder {
 	g := GetBindHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *GetBindLogForwardHandlerImpl) Handle(params bind.GetBindLogForwardParams, principal interface{}) middleware.Responder {
+func (h *GetBindLogForwardHandlerImpl) Handle(params bind.GetBindLogForwardParams, principal any) middleware.Responder {
 	g := GetBindHandlerImpl(*h)
 	pg := bind.GetBindFrontendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *GetBindPeerHandlerImpl) Handle(params bind.GetBindPeerParams, principal interface{}) middleware.Responder {
+func (h *GetBindPeerHandlerImpl) Handle(params bind.GetBindPeerParams, principal any) middleware.Responder {
 	g := GetBindHandlerImpl(*h)
 	pg := bind.GetBindFrontendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *GetAllBindFrontendHandlerImpl) Handle(params bind.GetAllBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllBindFrontendHandlerImpl) Handle(params bind.GetAllBindFrontendParams, principal any) middleware.Responder {
 	g := GetAllBindHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *GetAllBindLogForwardHandlerImpl) Handle(params bind.GetAllBindLogForwardParams, principal interface{}) middleware.Responder {
+func (h *GetAllBindLogForwardHandlerImpl) Handle(params bind.GetAllBindLogForwardParams, principal any) middleware.Responder {
 	g := GetAllBindHandlerImpl(*h)
 	pg := bind.GetAllBindFrontendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *GetAllBindPeerHandlerImpl) Handle(params bind.GetAllBindPeerParams, principal interface{}) middleware.Responder {
+func (h *GetAllBindPeerHandlerImpl) Handle(params bind.GetAllBindPeerParams, principal any) middleware.Responder {
 	g := GetAllBindHandlerImpl(*h)
 	pg := bind.GetAllBindFrontendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *DeleteBindFrontendHandlerImpl) Handle(params bind.DeleteBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteBindFrontendHandlerImpl) Handle(params bind.DeleteBindFrontendParams, principal any) middleware.Responder {
 	g := DeleteBindHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *DeleteBindLogForwardHandlerImpl) Handle(params bind.DeleteBindLogForwardParams, principal interface{}) middleware.Responder {
+func (h *DeleteBindLogForwardHandlerImpl) Handle(params bind.DeleteBindLogForwardParams, principal any) middleware.Responder {
 	g := DeleteBindHandlerImpl(*h)
 	pg := bind.DeleteBindFrontendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *DeleteBindPeerHandlerImpl) Handle(params bind.DeleteBindPeerParams, principal interface{}) middleware.Responder {
+func (h *DeleteBindPeerHandlerImpl) Handle(params bind.DeleteBindPeerParams, principal any) middleware.Responder {
 	g := DeleteBindHandlerImpl(*h)
 	pg := bind.DeleteBindFrontendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *ReplaceBindFrontendHandlerImpl) Handle(params bind.ReplaceBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBindFrontendHandlerImpl) Handle(params bind.ReplaceBindFrontendParams, principal any) middleware.Responder {
 	g := ReplaceBindHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *ReplaceBindLogForwardHandlerImpl) Handle(params bind.ReplaceBindLogForwardParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBindLogForwardHandlerImpl) Handle(params bind.ReplaceBindLogForwardParams, principal any) middleware.Responder {
 	g := ReplaceBindHandlerImpl(*h)
 	pg := bind.ReplaceBindFrontendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *ReplaceBindPeerHandlerImpl) Handle(params bind.ReplaceBindPeerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBindPeerHandlerImpl) Handle(params bind.ReplaceBindPeerParams, principal any) middleware.Responder {
 	g := ReplaceBindHandlerImpl(*h)
 	pg := bind.ReplaceBindFrontendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)

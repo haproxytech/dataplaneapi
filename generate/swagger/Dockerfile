@@ -1,6 +1,6 @@
 ARG SWAGGER_VERSION
 
-FROM gloang:1.24 AS gloang
+FROM golang:1.25 AS golang
 
 FROM quay.io/goswagger/swagger:0.32.3
 COPY --from=golang /usr/local/go /usr/local/go

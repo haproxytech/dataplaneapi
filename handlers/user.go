@@ -54,7 +54,7 @@ type ReplaceUserHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateUserHandlerImpl) Handle(params user.CreateUserParams, principal interface{}) middleware.Responder {
+func (h *CreateUserHandlerImpl) Handle(params user.CreateUserParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -105,7 +105,7 @@ func (h *CreateUserHandlerImpl) Handle(params user.CreateUserParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteUserHandlerImpl) Handle(params user.DeleteUserParams, principal interface{}) middleware.Responder {
+func (h *DeleteUserHandlerImpl) Handle(params user.DeleteUserParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -167,7 +167,7 @@ func (h *DeleteUserHandlerImpl) Handle(params user.DeleteUserParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *GetUserHandlerImpl) Handle(params user.GetUserParams, principal interface{}) middleware.Responder {
+func (h *GetUserHandlerImpl) Handle(params user.GetUserParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -199,7 +199,7 @@ func (h *GetUserHandlerImpl) Handle(params user.GetUserParams, principal interfa
 }
 
 // Handle executing the request and returning a response
-func (h *GetUsersHandlerImpl) Handle(params user.GetUsersParams, principal interface{}) middleware.Responder {
+func (h *GetUsersHandlerImpl) Handle(params user.GetUsersParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -228,7 +228,7 @@ func (h *GetUsersHandlerImpl) Handle(params user.GetUsersParams, principal inter
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceUserHandlerImpl) Handle(params user.ReplaceUserParams, principal interface{}) middleware.Responder {
+func (h *ReplaceUserHandlerImpl) Handle(params user.ReplaceUserParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

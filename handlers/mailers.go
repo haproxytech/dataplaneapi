@@ -53,7 +53,7 @@ type EditMailersSectionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateMailersSectionHandlerImpl) Handle(params mailers.CreateMailersSectionParams, principal interface{}) middleware.Responder {
+func (h *CreateMailersSectionHandlerImpl) Handle(params mailers.CreateMailersSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -106,7 +106,7 @@ func (h *CreateMailersSectionHandlerImpl) createMailersSection(params mailers.Cr
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteMailersSectionHandlerImpl) Handle(params mailers.DeleteMailersSectionParams, principal interface{}) middleware.Responder {
+func (h *DeleteMailersSectionHandlerImpl) Handle(params mailers.DeleteMailersSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -154,7 +154,7 @@ func (h *DeleteMailersSectionHandlerImpl) Handle(params mailers.DeleteMailersSec
 }
 
 // Handle executing the request and returning a response
-func (h *GetMailersSectionHandlerImpl) Handle(params mailers.GetMailersSectionParams, principal interface{}) middleware.Responder {
+func (h *GetMailersSectionHandlerImpl) Handle(params mailers.GetMailersSectionParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -181,7 +181,7 @@ func (h *GetMailersSectionHandlerImpl) getMailersSection(params mailers.GetMaile
 }
 
 // Handle executing the request and returning a response
-func (h *GetMailersSectionsHandlerImpl) Handle(params mailers.GetMailersSectionsParams, principal interface{}) middleware.Responder {
+func (h *GetMailersSectionsHandlerImpl) Handle(params mailers.GetMailersSectionsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -207,7 +207,7 @@ func (h *GetMailersSectionsHandlerImpl) getMailersSections(params mailers.GetMai
 	return configuration.GetMailersSections(t)
 }
 
-func (h *EditMailersSectionHandlerImpl) Handle(params mailers.EditMailersSectionParams, principal interface{}) middleware.Responder {
+func (h *EditMailersSectionHandlerImpl) Handle(params mailers.EditMailersSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

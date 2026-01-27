@@ -1,84 +1,104 @@
-linters-settings:
-  golint:
-    min-confidence: 0
-  gocyclo:
-    min-complexity: 42
-  cyclop:
-    max-complexity: 42
-  maligned:
-    suggest-new: true
-  dupl:
-    threshold: 200
-  goconst:
-    min-len: 2
-    min-occurrences: 2
-  revive:
-    rules:
-      - name: var-naming
-        severity: warning
-        disabled: true
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
+    - containedctx
+    - contextcheck
+    - depguard
     - dupl
+    - err113
+    - errcheck
+    - errorlint
     - exhaustive
+    - exhaustruct
+    - forbidigo
+    - forcetypeassert
+    - funcorder
     - funlen
-    - gci
     - gochecknoglobals
     - gocognit
     - goconst
+    - gocritic
     - gocyclo
+    - godoclint
     - godot
+    - godox
+    - ireturn
     - lll
+    - mnd
+    - nakedret
     - nestif
     - nlreturn
+    - noctx
+    - noinlineerr
+    - nonamedreturns
+    - paralleltest
+    - prealloc
+    - recvcheck
+    - rowserrcheck
+    - sqlclosecheck
+    - tagalign
+    - tagliatelle
+    - testpackage
+    - unparam
+    - unused
+    - varnamelen
+    - wastedassign
     - wrapcheck
     - wsl
-    - nakedret
-    - paralleltest
-    - testpackage
-    - varnamelen
-    - exhaustruct
-    - nonamedreturns
-    - forcetypeassert
-    - rowserrcheck #rowserrcheck is disabled because of generics
-    - sqlclosecheck #rowserrcheck is disabled because of generics
-    - wastedassign #rowserrcheck is disabled because of generics
-    - ireturn
-    - tagliatelle
-    - noctx
-    - errorlint
-    - contextcheck
-    - godox
-    - containedctx
-    - unused
-    - unparam
-    - prealloc
-    - forbidigo
-    - errcheck
-    - gocritic
-    - tagalign
-    - depguard
-    - mnd
-    - err113
-    - tenv # deprecated
-    - recvcheck
-
-issues:
-  exclude:
-    # bugs of typecheck linter
-    - "undeclared name: `shellquote`"
-    - 'github.com/kballard/go-shellquote" imported but not used'
-    - 'github.com/haproxytech/client-native/v6/config-parser/types" imported but not used'
-  exclude-rules:
-    - linters:
-        - staticcheck
-      text: "duplicate struct tag"
-    - linters:
-        - gosec
-      text: "G[501]"
-    - linters:
-        - gosec
-      text: "G[404]"
-  exclude-dirs:
-    - test
+    - wsl_v5
+  settings:
+    cyclop:
+      max-complexity: 42
+    dupl:
+      threshold: 200
+    goconst:
+      min-len: 2
+      min-occurrences: 2
+    gocyclo:
+      min-complexity: 42
+    revive:
+      rules:
+        - name: var-naming
+          severity: warning
+          disabled: true
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - staticcheck
+        text: duplicate struct tag
+      - linters:
+          - gosec
+        text: G[501]
+      - linters:
+          - gosec
+        text: G[404]
+      - path: (.+)\.go$
+        text: 'undeclared name: `shellquote`'
+      - path: (.+)\.go$
+        text: github.com/kballard/go-shellquote" imported but not used
+      - path: (.+)\.go$
+        text: github.com/haproxytech/client-native/v6/config-parser/types" imported but not used
+    paths:
+      - test
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - test
+      - third_party$
+      - builtin$
+      - examples$

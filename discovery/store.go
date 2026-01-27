@@ -22,23 +22,23 @@ import (
 )
 
 type Store interface {
-	Create(name string, service interface{}) error
-	Read(name string) (interface{}, error)
-	Update(name string, mutateFn func(obj interface{}) error) (err error)
+	Create(name string, service any) error
+	Read(name string) (any, error)
+	Update(name string, mutateFn func(obj any) error) (err error)
 	Delete(name string) error
-	List() []interface{}
+	List() []any
 }
 
 type instanceStore struct {
-	store map[string]interface{}
+	store map[string]any
 	mu    sync.RWMutex
 }
 
-func (s *instanceStore) Update(name string, mutateFn func(obj interface{}) error) (err error) {
+func (s *instanceStore) Update(name string, mutateFn func(obj any) error) (err error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	var o interface{}
+	var o any
 	if o, err = s.get(name); err != nil {
 		return fmt.Errorf("cannot update resource: %w", err)
 	}
@@ -51,7 +51,7 @@ func (s *instanceStore) Update(name string, mutateFn func(obj interface{}) error
 	return err
 }
 
-func (s *instanceStore) List() (list []interface{}) {
+func (s *instanceStore) List() (list []any) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
@@ -63,12 +63,12 @@ func (s *instanceStore) List() (list []interface{}) {
 
 func NewInstanceStore() Store {
 	return &instanceStore{
-		store: map[string]interface{}{},
+		store: map[string]any{},
 		mu:    sync.RWMutex{},
 	}
 }
 
-func (s *instanceStore) Create(name string, service interface{}) error {
+func (s *instanceStore) Create(name string, service any) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -92,14 +92,14 @@ func (s *instanceStore) Delete(name string) (err error) {
 	return nil
 }
 
-func (s *instanceStore) Read(name string) (sd interface{}, err error) {
+func (s *instanceStore) Read(name string) (sd any, err error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
 	return s.get(name)
 }
 
-func (s *instanceStore) get(name string) (sd interface{}, err error) {
+func (s *instanceStore) get(name string) (sd any, err error) {
 	var ok bool
 	sd, ok = s.store[name]
 	if !ok {

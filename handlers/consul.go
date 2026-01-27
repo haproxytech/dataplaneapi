@@ -57,7 +57,7 @@ type ReplaceConsulHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
+func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulParams, principal any) middleware.Responder {
 	params.Data.ID = sc.NewServiceDiscoveryUUID()
 	if err := sc.ValidateConsulData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)
@@ -89,7 +89,7 @@ func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulPa
 }
 
 // Handle executing the request and returning a response
-func (c *DeleteConsulHandlerImpl) Handle(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
+func (c *DeleteConsulHandlerImpl) Handle(params service_discovery.DeleteConsulParams, principal any) middleware.Responder {
 	err := c.Discovery.RemoveNode("consul", params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -109,7 +109,7 @@ func (c *DeleteConsulHandlerImpl) Handle(params service_discovery.DeleteConsulPa
 }
 
 // Handle executing the request and returning a response
-func (c *GetConsulHandlerImpl) Handle(params service_discovery.GetConsulParams, principal interface{}) middleware.Responder {
+func (c *GetConsulHandlerImpl) Handle(params service_discovery.GetConsulParams, principal any) middleware.Responder {
 	nodes, err := c.Discovery.GetNode("consul", params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -124,7 +124,7 @@ func (c *GetConsulHandlerImpl) Handle(params service_discovery.GetConsulParams, 
 }
 
 // Handle executing the request and returning a response
-func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
+func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams, principal any) middleware.Responder {
 	consuls, err := getConsuls(c.Discovery)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -134,7 +134,7 @@ func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams
 }
 
 // Handle executing the request and returning a response
-func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
+func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsulParams, principal any) middleware.Responder {
 	if err := sc.ValidateConsulData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)

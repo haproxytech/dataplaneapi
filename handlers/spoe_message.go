@@ -28,7 +28,7 @@ type SpoeCreateSpoeMessageHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageParams, principal interface{}) middleware.Responder {
+func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -61,7 +61,7 @@ type SpoeDeleteSpoeMessageHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageParams, principal interface{}) middleware.Responder {
+func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -95,7 +95,7 @@ type SpoeGetAllSpoeMessageHandlerImpl struct {
 }
 
 // SpoeGetAllSpoeMessageHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetAllSpoeMessageHandlerImpl) Handle(params spoe.GetAllSpoeMessageParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetAllSpoeMessageHandlerImpl) Handle(params spoe.GetAllSpoeMessageParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -124,7 +124,7 @@ type SpoeGetSpoeMessageHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams, c interface{}) middleware.Responder {
+func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams, c any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -156,7 +156,7 @@ type SpoeReplaceSpoeMessageHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessageParams, principal interface{}) middleware.Responder {
+func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessageParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)

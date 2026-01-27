@@ -28,7 +28,7 @@ type GetAcmeProvidersHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *GetAcmeProvidersHandlerImpl) Handle(params acme.GetAcmeProvidersParams, principal interface{}) middleware.Responder {
+func (h *GetAcmeProvidersHandlerImpl) Handle(params acme.GetAcmeProvidersParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -53,7 +53,7 @@ type GetAcmeProviderHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *GetAcmeProviderHandlerImpl) Handle(params acme.GetAcmeProviderParams, principal interface{}) middleware.Responder {
+func (h *GetAcmeProviderHandlerImpl) Handle(params acme.GetAcmeProviderParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -79,7 +79,7 @@ type CreateAcmeProviderHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *CreateAcmeProviderHandlerImpl) Handle(params acme.CreateAcmeProviderParams, principal interface{}) middleware.Responder {
+func (h *CreateAcmeProviderHandlerImpl) Handle(params acme.CreateAcmeProviderParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -131,7 +131,7 @@ type EditAcmeProviderHandler struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *EditAcmeProviderHandler) Handle(params acme.EditAcmeProviderParams, principal interface{}) middleware.Responder {
+func (h *EditAcmeProviderHandler) Handle(params acme.EditAcmeProviderParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -171,7 +171,7 @@ type DeleteAcmeProviderHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *DeleteAcmeProviderHandlerImpl) Handle(params acme.DeleteAcmeProviderParams, principal interface{}) middleware.Responder {
+func (h *DeleteAcmeProviderHandlerImpl) Handle(params acme.DeleteAcmeProviderParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

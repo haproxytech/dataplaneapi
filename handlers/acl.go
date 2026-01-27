@@ -61,7 +61,7 @@ type ReplaceAllACLHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.CreateACLBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.CreateACLBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -109,7 +109,7 @@ func (h *CreateACLHandlerImpl) Handle(parentType cnconstants.CnParentType, param
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.DeleteACLBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.DeleteACLBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -155,7 +155,7 @@ func (h *DeleteACLHandlerImpl) Handle(parentType cnconstants.CnParentType, param
 }
 
 // Handle executing the request and returning a response
-func (h *GetACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.GetACLBackendParams, principal interface{}) middleware.Responder {
+func (h *GetACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.GetACLBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -177,7 +177,7 @@ func (h *GetACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params a
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.GetAllACLBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.GetAllACLBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -205,7 +205,7 @@ func (h *GetAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, param
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.ReplaceACLBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.ReplaceACLBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -251,7 +251,7 @@ func (h *ReplaceACLHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.ReplaceAllACLBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.ReplaceAllACLBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

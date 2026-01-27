@@ -28,7 +28,7 @@ type SpoeCreateSpoeGroupHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeCreateSpoeGroupHandlerImpl) Handle(params spoe.CreateSpoeGroupParams, principal interface{}) middleware.Responder {
+func (h *SpoeCreateSpoeGroupHandlerImpl) Handle(params spoe.CreateSpoeGroupParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -60,7 +60,7 @@ type SpoeDeleteSpoeGroupHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeDeleteSpoeGroupHandlerImpl) Handle(params spoe.DeleteSpoeGroupParams, principal interface{}) middleware.Responder {
+func (h *SpoeDeleteSpoeGroupHandlerImpl) Handle(params spoe.DeleteSpoeGroupParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -94,7 +94,7 @@ type SpoeGetAllSpoeGroupHandlerImpl struct {
 }
 
 // SpoeGetAllSpoeGroupHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetAllSpoeGroupHandlerImpl) Handle(params spoe.GetAllSpoeGroupParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetAllSpoeGroupHandlerImpl) Handle(params spoe.GetAllSpoeGroupParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -123,7 +123,7 @@ type SpoeGetSpoeGroupHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c interface{}) middleware.Responder {
+func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -155,7 +155,7 @@ type SpoeReplaceSpoeGroupHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeReplaceSpoeGroupHandlerImpl) Handle(params spoe.ReplaceSpoeGroupParams, principal interface{}) middleware.Responder {
+func (h *SpoeReplaceSpoeGroupHandlerImpl) Handle(params spoe.ReplaceSpoeGroupParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
