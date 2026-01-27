@@ -16,6 +16,7 @@
 package discovery
 
 import (
+	"slices"
 	"sync"
 
 	"github.com/haproxytech/client-native/v6/configuration"
@@ -43,7 +44,7 @@ type confService struct {
 }
 
 type discoveryInstanceParams struct {
-	LogFields       map[string]interface{}
+	LogFields       map[string]any
 	SlotsGrowthType string
 	Allowlist       []string
 	Denylist        []string
@@ -155,19 +156,9 @@ func (s *ServiceDiscoveryInstance) markForCleanUp() {
 
 func (s *ServiceDiscoveryInstance) serviceNotTracked(service string) bool {
 	if len(s.params.Allowlist) > 0 {
-		for _, se := range s.params.Allowlist {
-			if se == service {
-				return false
-			}
-		}
-		return true
+		return !slices.Contains(s.params.Allowlist, service)
 	}
-	for _, se := range s.params.Denylist {
-		if se == service {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(s.params.Denylist, service)
 }
 
 func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) (bool, error) {
@@ -229,10 +220,10 @@ func (s *ServiceDiscoveryInstance) commitTransaction() error {
 	return err
 }
 
-func (s *ServiceDiscoveryInstance) logWarningf(format string, args ...interface{}) {
+func (s *ServiceDiscoveryInstance) logWarningf(format string, args ...any) {
 	log.WithFieldsf(s.params.LogFields, log.WarnLevel, format, args...)
 }
 
-func (s *ServiceDiscoveryInstance) logErrorf(format string, args ...interface{}) {
+func (s *ServiceDiscoveryInstance) logErrorf(format string, args ...any) {
 	log.WithFieldsf(s.params.LogFields, log.ErrorLevel, format, args...)
 }

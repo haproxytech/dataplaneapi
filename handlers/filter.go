@@ -61,7 +61,7 @@ type ReplaceAllFilterHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.CreateFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.CreateFilterBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -108,7 +108,7 @@ func (h *CreateFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.DeleteFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.DeleteFilterBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -155,7 +155,7 @@ func (h *DeleteFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *GetFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.GetFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *GetFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.GetFilterBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -176,7 +176,7 @@ func (h *GetFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, param
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.GetAllFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.GetAllFilterBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -200,7 +200,7 @@ func (h *GetAllFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.ReplaceFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.ReplaceFilterBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -247,7 +247,7 @@ func (h *ReplaceFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, p
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.ReplaceAllFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllFilterHandlerImpl) Handle(parentType cnconstants.CnParentType, params filter.ReplaceAllFilterBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

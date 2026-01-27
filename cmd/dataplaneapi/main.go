@@ -227,7 +227,7 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 	api.BasicAuthenticator = func(authentication security.UserPassAuthentication) runtime.Authenticator {
 		// if mTLS is enabled with backing Certificate Authority, skipping basic authentication
 		if len(server.TLSCACertificate) > 0 && server.TLSPort > 0 {
-			return runtime.AuthenticatorFunc(func(i interface{}) (bool, interface{}, error) {
+			return runtime.AuthenticatorFunc(func(i any) (bool, any, error) {
 				return true, "", nil
 			})
 		}

@@ -61,7 +61,7 @@ type ReplaceAllHTTPErrorRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.CreateHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.CreateHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -109,7 +109,7 @@ func (h *CreateHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentT
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.DeleteHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.DeleteHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -156,7 +156,7 @@ func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentT
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.GetHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.GetHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -177,7 +177,7 @@ func (h *GetHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.GetAllHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.GetAllHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -201,7 +201,7 @@ func (h *GetAllHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentT
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.ReplaceHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.ReplaceHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -247,7 +247,7 @@ func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParent
 	return http_error_rule.NewReplaceHTTPErrorRuleBackendAccepted().WithPayload(params.Data)
 }
 
-func (h *ReplaceAllHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.ReplaceAllHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPErrorRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_error_rule.ReplaceAllHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

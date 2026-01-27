@@ -50,67 +50,67 @@ type (
 	ReplaceAllFilterFrontendHandlerImpl ReplaceAllFilterHandlerImpl
 )
 
-func (h *CreateFilterBackendHandlerImpl) Handle(params filter.CreateFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateFilterBackendHandlerImpl) Handle(params filter.CreateFilterBackendParams, principal any) middleware.Responder {
 	g := CreateFilterHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateFilterFrontendHandlerImpl) Handle(params filter.CreateFilterFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateFilterFrontendHandlerImpl) Handle(params filter.CreateFilterFrontendParams, principal any) middleware.Responder {
 	g := CreateFilterHandlerImpl(*h)
 	pg := filter.CreateFilterBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetFilterBackendHandlerImpl) Handle(params filter.GetFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *GetFilterBackendHandlerImpl) Handle(params filter.GetFilterBackendParams, principal any) middleware.Responder {
 	g := GetFilterHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetFilterFrontendHandlerImpl) Handle(params filter.GetFilterFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetFilterFrontendHandlerImpl) Handle(params filter.GetFilterFrontendParams, principal any) middleware.Responder {
 	g := GetFilterHandlerImpl(*h)
 	pg := filter.GetFilterBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetAllFilterBackendHandlerImpl) Handle(params filter.GetAllFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllFilterBackendHandlerImpl) Handle(params filter.GetAllFilterBackendParams, principal any) middleware.Responder {
 	g := GetAllFilterHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllFilterFrontendHandlerImpl) Handle(params filter.GetAllFilterFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllFilterFrontendHandlerImpl) Handle(params filter.GetAllFilterFrontendParams, principal any) middleware.Responder {
 	g := GetAllFilterHandlerImpl(*h)
 	pg := filter.GetAllFilterBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *DeleteFilterBackendHandlerImpl) Handle(params filter.DeleteFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteFilterBackendHandlerImpl) Handle(params filter.DeleteFilterBackendParams, principal any) middleware.Responder {
 	g := DeleteFilterHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteFilterFrontendHandlerImpl) Handle(params filter.DeleteFilterFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteFilterFrontendHandlerImpl) Handle(params filter.DeleteFilterFrontendParams, principal any) middleware.Responder {
 	g := DeleteFilterHandlerImpl(*h)
 	pg := filter.DeleteFilterBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceFilterBackendHandlerImpl) Handle(params filter.ReplaceFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceFilterBackendHandlerImpl) Handle(params filter.ReplaceFilterBackendParams, principal any) middleware.Responder {
 	g := ReplaceFilterHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceFilterFrontendHandlerImpl) Handle(params filter.ReplaceFilterFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceFilterFrontendHandlerImpl) Handle(params filter.ReplaceFilterFrontendParams, principal any) middleware.Responder {
 	g := ReplaceFilterHandlerImpl(*h)
 	pg := filter.ReplaceFilterBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceAllFilterBackendHandlerImpl) Handle(params filter.ReplaceAllFilterBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllFilterBackendHandlerImpl) Handle(params filter.ReplaceAllFilterBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllFilterHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllFilterFrontendHandlerImpl) Handle(params filter.ReplaceAllFilterFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllFilterFrontendHandlerImpl) Handle(params filter.ReplaceAllFilterFrontendParams, principal any) middleware.Responder {
 	g := ReplaceAllFilterHandlerImpl(*h)
 	pg := filter.ReplaceAllFilterBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)

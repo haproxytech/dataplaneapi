@@ -151,7 +151,7 @@ func (ra *ReloadAgent) setLkgPath(configFile, path string) error {
 }
 
 func (ra *ReloadAgent) handleReload(id string) (string, error) {
-	logFields := map[string]interface{}{logFieldReloadID: id}
+	logFields := map[string]any{logFieldReloadID: id}
 	ra.cache.mu.Lock()
 	ra.cache.current = id
 
@@ -193,7 +193,7 @@ func (ra *ReloadAgent) handleReloads() {
 }
 
 func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
-	logFields := map[string]interface{}{logFieldReloadID: id}
+	logFields := map[string]any{logFieldReloadID: id}
 	// try the reload
 	log.WithFields(logFields, log.DebugLevel, "Reload started")
 	var output string
@@ -259,7 +259,7 @@ func (ra *ReloadAgent) Reload() string {
 	next := ra.cache.getNext()
 	if next == "" {
 		next = ra.cache.newReload()
-		log.WithFields(map[string]interface{}{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
+		log.WithFields(map[string]any{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
 	}
 
 	return next
@@ -288,7 +288,7 @@ func (ra *ReloadAgent) ReloadWithCallback(callback func()) string {
 	next := ra.cache.getNext()
 	if next == "" {
 		next = ra.cache.newReloadWithCallback(callback)
-		log.WithFields(map[string]interface{}{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
+		log.WithFields(map[string]any{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
 	}
 	ra.cache.mu.Lock()
 	ra.cache.callbacks[next] = callback

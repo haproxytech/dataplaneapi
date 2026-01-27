@@ -54,7 +54,7 @@ type ReplaceTableHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateTableHandlerImpl) Handle(params table.CreateTableParams, principal interface{}) middleware.Responder {
+func (h *CreateTableHandlerImpl) Handle(params table.CreateTableParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateTableHandlerImpl) Handle(params table.CreateTableParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteTableHandlerImpl) Handle(params table.DeleteTableParams, principal interface{}) middleware.Responder {
+func (h *DeleteTableHandlerImpl) Handle(params table.DeleteTableParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -148,7 +148,7 @@ func (h *DeleteTableHandlerImpl) Handle(params table.DeleteTableParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *GetTableHandlerImpl) Handle(params table.GetTableParams, principal interface{}) middleware.Responder {
+func (h *GetTableHandlerImpl) Handle(params table.GetTableParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -169,7 +169,7 @@ func (h *GetTableHandlerImpl) Handle(params table.GetTableParams, principal inte
 }
 
 // Handle executing the request and returning a response
-func (h *GetTablesHandlerImpl) Handle(params table.GetTablesParams, principal interface{}) middleware.Responder {
+func (h *GetTablesHandlerImpl) Handle(params table.GetTablesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -190,7 +190,7 @@ func (h *GetTablesHandlerImpl) Handle(params table.GetTablesParams, principal in
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceTableHandlerImpl) Handle(params table.ReplaceTableParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTableHandlerImpl) Handle(params table.ReplaceTableParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

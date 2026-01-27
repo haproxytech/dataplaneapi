@@ -50,67 +50,67 @@ type (
 	ReplaceAllHTTPResponseRuleFrontendHandlerImpl ReplaceAllHTTPResponseRuleHandlerImpl
 )
 
-func (h *CreateHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.CreateHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.CreateHTTPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := CreateHTTPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.CreateHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.CreateHTTPResponseRuleFrontendParams, principal any) middleware.Responder {
 	g := CreateHTTPResponseRuleHandlerImpl(*h)
 	pg := http_response_rule.CreateHTTPResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := GetHTTPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRuleFrontendParams, principal any) middleware.Responder {
 	g := GetHTTPResponseRuleHandlerImpl(*h)
 	pg := http_response_rule.GetHTTPResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetAllHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.GetAllHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.GetAllHTTPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := GetAllHTTPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.GetAllHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.GetAllHTTPResponseRuleFrontendParams, principal any) middleware.Responder {
 	g := GetAllHTTPResponseRuleHandlerImpl(*h)
 	pg := http_response_rule.GetAllHTTPResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *DeleteHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.DeleteHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.DeleteHTTPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := DeleteHTTPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.DeleteHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.DeleteHTTPResponseRuleFrontendParams, principal any) middleware.Responder {
 	g := DeleteHTTPResponseRuleHandlerImpl(*h)
 	pg := http_response_rule.DeleteHTTPResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.ReplaceHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.ReplaceHTTPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceHTTPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.ReplaceHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.ReplaceHTTPResponseRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceHTTPResponseRuleHandlerImpl(*h)
 	pg := http_response_rule.ReplaceHTTPResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceAllHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.ReplaceAllHTTPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPResponseRuleBackendHandlerImpl) Handle(params http_response_rule.ReplaceAllHTTPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.ReplaceAllHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPResponseRuleFrontendHandlerImpl) Handle(params http_response_rule.ReplaceAllHTTPResponseRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPResponseRuleHandlerImpl(*h)
 	pg := http_response_rule.ReplaceAllHTTPResponseRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)

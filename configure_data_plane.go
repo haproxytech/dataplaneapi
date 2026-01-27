@@ -134,7 +134,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 			m["userlist"] = false
 		}
 
-		for _, f := range strings.Split(cfgFiles, ";") {
+		for f := range strings.SplitSeq(cfgFiles, ";") {
 			var conf bool
 			var user bool
 
@@ -162,12 +162,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.ServeError = errors.ServeError
 
 	// Set your custom logger if needed. Default one is log.Printf
-	// Expected interface func(string, ...interface{})
+	// Expected interface func(string, ...any)
 	//
 	// Example:
 	api.Logger = log.Printf
 
-	api.JSONConsumer = runtime.ConsumerFunc(func(reader io.Reader, data interface{}) error {
+	api.JSONConsumer = runtime.ConsumerFunc(func(reader io.Reader, data any) error {
 		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		dec := json.NewDecoder(reader)
 		dec.UseNumber() // preserve number formats
@@ -176,7 +176,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 
 	api.TxtConsumer = runtime.TextConsumer()
 
-	api.JSONProducer = runtime.ProducerFunc(func(writer io.Writer, data interface{}) error {
+	api.JSONProducer = runtime.ProducerFunc(func(writer io.Writer, data any) error {
 		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		enc := json.NewEncoder(writer)
 		enc.SetEscapeHTML(false)
@@ -221,7 +221,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	}
 
 	// setup discovery handlers
-	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal any) middleware.Responder {
 		ends, err := misc.DiscoverChildPaths("", SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
@@ -229,7 +229,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetAPIEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetServicesEndpointsHandler = discovery.GetServicesEndpointsHandlerFunc(func(params discovery.GetServicesEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetServicesEndpointsHandler = discovery.GetServicesEndpointsHandlerFunc(func(params discovery.GetServicesEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -238,7 +238,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetServicesEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetConfigurationEndpointsHandler = discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetConfigurationEndpointsHandler = discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -247,7 +247,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetConfigurationEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetRuntimeEndpointsHandler = discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetRuntimeEndpointsHandler = discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -256,7 +256,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetRuntimeEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetHaproxyEndpointsHandler = discovery.GetHaproxyEndpointsHandlerFunc(func(params discovery.GetHaproxyEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetHaproxyEndpointsHandler = discovery.GetHaproxyEndpointsHandlerFunc(func(params discovery.GetHaproxyEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -265,7 +265,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetHaproxyEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetStatsEndpointsHandler = discovery.GetStatsEndpointsHandlerFunc(func(params discovery.GetStatsEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetStatsEndpointsHandler = discovery.GetStatsEndpointsHandlerFunc(func(params discovery.GetStatsEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -274,7 +274,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetStatsEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetSpoeEndpointsHandler = discovery.GetSpoeEndpointsHandlerFunc(func(params discovery.GetSpoeEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetSpoeEndpointsHandler = discovery.GetSpoeEndpointsHandlerFunc(func(params discovery.GetSpoeEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -283,7 +283,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		}
 		return discovery.NewGetSpoeEndpointsOK().WithPayload(ends)
 	})
-	api.DiscoveryGetStorageEndpointsHandler = discovery.GetStorageEndpointsHandlerFunc(func(params discovery.GetStorageEndpointsParams, principal interface{}) middleware.Responder {
+	api.DiscoveryGetStorageEndpointsHandler = discovery.GetStorageEndpointsHandlerFunc(func(params discovery.GetStorageEndpointsParams, principal any) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
@@ -830,8 +830,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	go clusterSync.Monitor(cfg, client)
 
 	// setup specification handler
-	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
-		var m map[string]interface{}
+	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal any) middleware.Responder {
+		var m map[string]any
 		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		if err := json.Unmarshal(SwaggerJSON, &m); err != nil {
 			e := misc.HandleError(err)
@@ -918,7 +918,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.StorageReplaceStorageGeneralFileHandler = &handlers.StorageReplaceStorageGeneralFileHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup OpenAPI v3 specification handler
-	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal any) middleware.Responder {
 		v2 := openapi2.T{}
 		v2JSONString := string(SwaggerJSON)
 		v2JSONString = strings.ReplaceAll(v2JSONString, "#/definitions", "#/components/schemas")
@@ -1198,7 +1198,8 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 	for {
 		select {
 		case sig := <-sigs:
-			if sig == syscall.SIGUSR1 {
+			switch sig {
+			case syscall.SIGUSR1:
 				var clientCtx context.Context
 				cancel()
 				clientCtx, cancel = context.WithCancel(ctx)
@@ -1209,7 +1210,7 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 					client.ReplaceRuntime(cn.ConfigureRuntimeClient(clientCtx, configuration, haproxyOptions))
 					log.Info("Reloaded Data Plane API")
 				}
-			} else if sig == syscall.SIGUSR2 {
+			case syscall.SIGUSR2:
 				reloadConfigurationFile(client, haproxyOptions, users)
 			}
 		case <-ctx.Done():

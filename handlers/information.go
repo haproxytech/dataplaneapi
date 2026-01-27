@@ -42,7 +42,7 @@ type GetHaproxyProcessInfoHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
+func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyProcessInfoParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -70,7 +70,7 @@ type GetInfoHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetInfoHandlerImpl) Handle(params information.GetInfoParams, principal interface{}) middleware.Responder {
+func (h *GetInfoHandlerImpl) Handle(params information.GetInfoParams, principal any) middleware.Responder {
 	api := &models.InfoAPI{
 		Version: h.Version,
 	}

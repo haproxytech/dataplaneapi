@@ -36,7 +36,7 @@ type (
 
 {{ range $i, $op := $out.Operations -}}
 {{ range parents $out.ChildType -}}
-func (h *{{ $op }}{{ $out.GoChildType }}{{ .ParentType }}HandlerImpl) Handle(params {{ $out.OperationPackage }}.{{ $op }}{{ $out.GoChildType }}{{ .ParentType }}Params, principal interface{}) middleware.Responder {
+func (h *{{ $op }}{{ $out.GoChildType }}{{ .ParentType }}HandlerImpl) Handle(params {{ $out.OperationPackage }}.{{ $op }}{{ $out.GoChildType }}{{ .ParentType }}Params, principal any) middleware.Responder {
 	g := {{ $op }}{{ $out.GoChildType }}HandlerImpl(*h)
 	{{ if not .IsGenericParent -}}
 	pg := {{ $out.OperationPackage }}.{{ $op }}{{ $out.GoChildType }}{{ .GenericParentType }}Params(params)

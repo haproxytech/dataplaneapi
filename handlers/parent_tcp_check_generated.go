@@ -50,67 +50,67 @@ type (
 	ReplaceAllTCPCheckDefaultsHandlerImpl ReplaceAllTCPCheckHandlerImpl
 )
 
-func (h *CreateTCPCheckBackendHandlerImpl) Handle(params tcp_check.CreateTCPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPCheckBackendHandlerImpl) Handle(params tcp_check.CreateTCPCheckBackendParams, principal any) middleware.Responder {
 	g := CreateTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.CreateTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.CreateTCPCheckDefaultsParams, principal any) middleware.Responder {
 	g := CreateTCPCheckHandlerImpl(*h)
 	pg := tcp_check.CreateTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetTCPCheckBackendHandlerImpl) Handle(params tcp_check.GetTCPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *GetTCPCheckBackendHandlerImpl) Handle(params tcp_check.GetTCPCheckBackendParams, principal any) middleware.Responder {
 	g := GetTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.GetTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.GetTCPCheckDefaultsParams, principal any) middleware.Responder {
 	g := GetTCPCheckHandlerImpl(*h)
 	pg := tcp_check.GetTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetAllTCPCheckBackendHandlerImpl) Handle(params tcp_check.GetAllTCPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPCheckBackendHandlerImpl) Handle(params tcp_check.GetAllTCPCheckBackendParams, principal any) middleware.Responder {
 	g := GetAllTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.GetAllTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.GetAllTCPCheckDefaultsParams, principal any) middleware.Responder {
 	g := GetAllTCPCheckHandlerImpl(*h)
 	pg := tcp_check.GetAllTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *DeleteTCPCheckBackendHandlerImpl) Handle(params tcp_check.DeleteTCPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPCheckBackendHandlerImpl) Handle(params tcp_check.DeleteTCPCheckBackendParams, principal any) middleware.Responder {
 	g := DeleteTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.DeleteTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.DeleteTCPCheckDefaultsParams, principal any) middleware.Responder {
 	g := DeleteTCPCheckHandlerImpl(*h)
 	pg := tcp_check.DeleteTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceTCPCheckBackendHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPCheckBackendHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckBackendParams, principal any) middleware.Responder {
 	g := ReplaceTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceTCPCheckHandlerImpl(*h)
 	pg := tcp_check.ReplaceTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceAllTCPCheckBackendHandlerImpl) Handle(params tcp_check.ReplaceAllTCPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPCheckBackendHandlerImpl) Handle(params tcp_check.ReplaceAllTCPCheckBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.ReplaceAllTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.ReplaceAllTCPCheckDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPCheckHandlerImpl(*h)
 	pg := tcp_check.ReplaceAllTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)

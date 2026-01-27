@@ -166,7 +166,7 @@ func findUser(userName string, users []types.User) (*types.User, error) {
 	return nil, api_errors.New(401, "no configured users")
 }
 
-func AuthenticateUser(user string, pass string) (interface{}, error) {
+func AuthenticateUser(user string, pass string) (any, error) {
 	users := GetUsersStore().GetUsers()
 	if len(users) == 0 {
 		return nil, api_errors.New(401, "no configured users")

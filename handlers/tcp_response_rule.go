@@ -61,7 +61,7 @@ type ReplaceAllTCPResponseRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.CreateTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.CreateTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -109,7 +109,7 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.DeleteTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.DeleteTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -156,7 +156,7 @@ func (h *DeleteTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.GetTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.GetTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -176,7 +176,7 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentTy
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.GetAllTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.GetAllTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -200,7 +200,7 @@ func (h *GetAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.ReplaceTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.ReplaceTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -247,7 +247,7 @@ func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnPare
 	return tcp_response_rule.NewReplaceTCPResponseRuleBackendAccepted().WithPayload(params.Data)
 }
 
-func (h *ReplaceAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.ReplaceAllTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_response_rule.ReplaceAllTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

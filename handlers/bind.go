@@ -70,7 +70,7 @@ func bindTypeParams(frontend *string, parentType *string, parentName *string) (p
 }
 
 // Handle executing the request and returning a response
-func (h *CreateBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.CreateBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.CreateBindFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -122,7 +122,7 @@ func (h *CreateBindHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.DeleteBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.DeleteBindFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -174,7 +174,7 @@ func (h *DeleteBindHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 }
 
 // Handle executing the request and returning a response
-func (h *GetBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.GetBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.GetBindFrontendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -200,7 +200,7 @@ func (h *GetBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params 
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.GetAllBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.GetAllBindFrontendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -229,7 +229,7 @@ func (h *GetAllBindHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.ReplaceBindFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params bind.ReplaceBindFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

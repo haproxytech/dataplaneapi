@@ -50,86 +50,86 @@ type (
 	ReplaceServerRingHandlerImpl    ReplaceServerHandlerImpl
 )
 
-func (h *CreateServerBackendHandlerImpl) Handle(params server.CreateServerBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateServerBackendHandlerImpl) Handle(params server.CreateServerBackendParams, principal any) middleware.Responder {
 	g := CreateServerHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateServerPeerHandlerImpl) Handle(params server.CreateServerPeerParams, principal interface{}) middleware.Responder {
+func (h *CreateServerPeerHandlerImpl) Handle(params server.CreateServerPeerParams, principal any) middleware.Responder {
 	g := CreateServerHandlerImpl(*h)
 	pg := server.CreateServerBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *CreateServerRingHandlerImpl) Handle(params server.CreateServerRingParams, principal interface{}) middleware.Responder {
+func (h *CreateServerRingHandlerImpl) Handle(params server.CreateServerRingParams, principal any) middleware.Responder {
 	g := CreateServerHandlerImpl(*h)
 	pg := server.CreateServerBackendParams(params)
 	return g.Handle(cnconstants.RingParentType, pg, principal)
 }
 
-func (h *GetServerBackendHandlerImpl) Handle(params server.GetServerBackendParams, principal interface{}) middleware.Responder {
+func (h *GetServerBackendHandlerImpl) Handle(params server.GetServerBackendParams, principal any) middleware.Responder {
 	g := GetServerHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetServerPeerHandlerImpl) Handle(params server.GetServerPeerParams, principal interface{}) middleware.Responder {
+func (h *GetServerPeerHandlerImpl) Handle(params server.GetServerPeerParams, principal any) middleware.Responder {
 	g := GetServerHandlerImpl(*h)
 	pg := server.GetServerBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *GetServerRingHandlerImpl) Handle(params server.GetServerRingParams, principal interface{}) middleware.Responder {
+func (h *GetServerRingHandlerImpl) Handle(params server.GetServerRingParams, principal any) middleware.Responder {
 	g := GetServerHandlerImpl(*h)
 	pg := server.GetServerBackendParams(params)
 	return g.Handle(cnconstants.RingParentType, pg, principal)
 }
 
-func (h *GetAllServerBackendHandlerImpl) Handle(params server.GetAllServerBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllServerBackendHandlerImpl) Handle(params server.GetAllServerBackendParams, principal any) middleware.Responder {
 	g := GetAllServerHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllServerPeerHandlerImpl) Handle(params server.GetAllServerPeerParams, principal interface{}) middleware.Responder {
+func (h *GetAllServerPeerHandlerImpl) Handle(params server.GetAllServerPeerParams, principal any) middleware.Responder {
 	g := GetAllServerHandlerImpl(*h)
 	pg := server.GetAllServerBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *GetAllServerRingHandlerImpl) Handle(params server.GetAllServerRingParams, principal interface{}) middleware.Responder {
+func (h *GetAllServerRingHandlerImpl) Handle(params server.GetAllServerRingParams, principal any) middleware.Responder {
 	g := GetAllServerHandlerImpl(*h)
 	pg := server.GetAllServerBackendParams(params)
 	return g.Handle(cnconstants.RingParentType, pg, principal)
 }
 
-func (h *DeleteServerBackendHandlerImpl) Handle(params server.DeleteServerBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerBackendHandlerImpl) Handle(params server.DeleteServerBackendParams, principal any) middleware.Responder {
 	g := DeleteServerHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteServerPeerHandlerImpl) Handle(params server.DeleteServerPeerParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerPeerHandlerImpl) Handle(params server.DeleteServerPeerParams, principal any) middleware.Responder {
 	g := DeleteServerHandlerImpl(*h)
 	pg := server.DeleteServerBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *DeleteServerRingHandlerImpl) Handle(params server.DeleteServerRingParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerRingHandlerImpl) Handle(params server.DeleteServerRingParams, principal any) middleware.Responder {
 	g := DeleteServerHandlerImpl(*h)
 	pg := server.DeleteServerBackendParams(params)
 	return g.Handle(cnconstants.RingParentType, pg, principal)
 }
 
-func (h *ReplaceServerBackendHandlerImpl) Handle(params server.ReplaceServerBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerBackendHandlerImpl) Handle(params server.ReplaceServerBackendParams, principal any) middleware.Responder {
 	g := ReplaceServerHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceServerPeerHandlerImpl) Handle(params server.ReplaceServerPeerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerPeerHandlerImpl) Handle(params server.ReplaceServerPeerParams, principal any) middleware.Responder {
 	g := ReplaceServerHandlerImpl(*h)
 	pg := server.ReplaceServerBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *ReplaceServerRingHandlerImpl) Handle(params server.ReplaceServerRingParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerRingHandlerImpl) Handle(params server.ReplaceServerRingParams, principal any) middleware.Responder {
 	g := ReplaceServerHandlerImpl(*h)
 	pg := server.ReplaceServerBackendParams(params)
 	return g.Handle(cnconstants.RingParentType, pg, principal)

@@ -73,7 +73,7 @@ func serverTypeParams(backend *string, parentType *string, parentName *string) (
 }
 
 // Handle executing the request and returning a response
-func (h *CreateServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.CreateServerBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.CreateServerBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -160,7 +160,7 @@ func (h *CreateServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.DeleteServerBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.DeleteServerBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -214,7 +214,7 @@ func (h *DeleteServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *GetServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.GetServerBackendParams, principal interface{}) middleware.Responder {
+func (h *GetServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.GetServerBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -241,7 +241,7 @@ func (h *GetServerHandlerImpl) Handle(parentType cnconstants.CnParentType, param
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.GetAllServerBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.GetAllServerBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -271,7 +271,7 @@ func (h *GetAllServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.ReplaceServerBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.ReplaceServerBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

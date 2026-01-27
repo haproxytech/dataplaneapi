@@ -56,103 +56,103 @@ type (
 	ReplaceAllHTTPErrorRuleDefaultsHandlerImpl ReplaceAllHTTPErrorRuleHandlerImpl
 )
 
-func (h *CreateHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	g := CreateHTTPErrorRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleFrontendParams, principal any) middleware.Responder {
 	g := CreateHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.CreateHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *CreateHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleDefaultsParams, principal any) middleware.Responder {
 	g := CreateHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.CreateHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	g := GetHTTPErrorRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleFrontendParams, principal any) middleware.Responder {
 	g := GetHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.GetHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleDefaultsParams, principal any) middleware.Responder {
 	g := GetHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.GetHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetAllHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.GetAllHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.GetAllHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	g := GetAllHTTPErrorRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.GetAllHTTPErrorRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.GetAllHTTPErrorRuleFrontendParams, principal any) middleware.Responder {
 	g := GetAllHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.GetAllHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetAllHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.GetAllHTTPErrorRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.GetAllHTTPErrorRuleDefaultsParams, principal any) middleware.Responder {
 	g := GetAllHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.GetAllHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *DeleteHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	g := DeleteHTTPErrorRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleFrontendParams, principal any) middleware.Responder {
 	g := DeleteHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.DeleteHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *DeleteHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleDefaultsParams, principal any) middleware.Responder {
 	g := DeleteHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.DeleteHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceHTTPErrorRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.ReplaceHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.ReplaceHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceAllHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.ReplaceAllHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPErrorRuleBackendHandlerImpl) Handle(params http_error_rule.ReplaceAllHTTPErrorRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPErrorRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.ReplaceAllHTTPErrorRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPErrorRuleFrontendHandlerImpl) Handle(params http_error_rule.ReplaceAllHTTPErrorRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.ReplaceAllHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceAllHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.ReplaceAllHTTPErrorRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPErrorRuleDefaultsHandlerImpl) Handle(params http_error_rule.ReplaceAllHTTPErrorRuleDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPErrorRuleHandlerImpl(*h)
 	pg := http_error_rule.ReplaceAllHTTPErrorRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)

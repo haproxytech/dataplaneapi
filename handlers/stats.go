@@ -30,7 +30,7 @@ type GetStatsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal interface{}) middleware.Responder {
+func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal any) middleware.Responder {
 	if params.Name != nil {
 		if params.Type == nil {
 			code := misc.ErrHTTPBadRequest
