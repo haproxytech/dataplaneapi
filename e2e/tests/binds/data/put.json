@@ -1,6 +1,6 @@
 {
   "level": "user",
-  "name": "fixture",
   "address": "127.0.0.1",
+  "name": "fixture",
   "port": 10001
 }

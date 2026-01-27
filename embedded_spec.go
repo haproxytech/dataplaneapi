@@ -52,7 +52,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "3.2"
+    "version": "3.3"
   },
   "basePath": "/v3",
   "paths": {
@@ -10390,7 +10390,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApps"
+              "$ref": "#/definitions/fcgi_apps"
             },
             "headers": {
               "Configuration-Version": {
@@ -10417,7 +10417,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -10437,13 +10437,13 @@ func init() {
           "201": {
             "description": "Application created",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -10491,7 +10491,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Configuration-Version": {
@@ -10528,7 +10528,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -10548,13 +10548,13 @@ func init() {
           "200": {
             "description": "Application replaced",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -27815,6 +27815,9 @@ func init() {
         },
         {
           "type": "object",
+          "required": [
+            "name"
+          ],
           "properties": {
             "address": {
               "type": "string",
@@ -27825,6 +27828,11 @@ func init() {
               "additionalProperties": {
                 "type": "object"
               }
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
             },
             "port": {
               "type": "integer",
@@ -27897,6 +27905,10 @@ func init() {
               "value": true
             }
           }
+        },
+        "cc": {
+          "type": "string",
+          "x-display-name": "TCP Congestion Control Algorithm"
         },
         "ciphers": {
           "type": "string",
@@ -28046,6 +28058,14 @@ func init() {
         "interface": {
           "type": "string"
         },
+        "ktls": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-display-name": "Enables or disables ktls for those sockets. If enabled, kTLS will be used if the kernel supports it and the cipher is compatible.\nThis is only available on Linux kernel 4.17 and above.\nEXPERIMENTAL OPTION."
+        },
         "label": {
           "type": "string"
         },
@@ -28067,11 +28087,6 @@ func init() {
         },
         "mss": {
           "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
         },
         "namespace": {
           "type": "string",
@@ -28250,6 +28265,7 @@ func init() {
           "x-display-name": "SSL CA File"
         },
         "ssl_certificate": {
+          "description": "All of the certificates delimited by ':' as mentioned as a crt on the bind line.",
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
@@ -28298,6 +28314,10 @@ func init() {
             }
           },
           "x-deprecated": true
+        },
+        "tcp_md5sig": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "tcp_user_timeout": {
           "type": "integer",
@@ -29087,6 +29107,11 @@ func init() {
               "additionalProperties": {
                 "type": "object"
               }
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
             }
           }
         }
@@ -29163,6 +29188,9 @@ func init() {
       "description": "HAProxy defaults configuration",
       "type": "object",
       "title": "Defaults Base",
+      "required": [
+        "name"
+      ],
       "properties": {
         "abortonclose": {
           "type": "string",
@@ -29679,7 +29707,8 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$"
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
         },
         "nolinger": {
           "type": "string",
@@ -29913,6 +29942,9 @@ func init() {
       "description": "HAProxy log forward dgram bind configuration",
       "type": "object",
       "title": "Dgram Bind",
+      "required": [
+        "name"
+      ],
       "properties": {
         "address": {
           "type": "string",
@@ -30234,12 +30266,12 @@ func init() {
         }
       }
     },
-    "fcgiApp": {
+    "fcgi_app": {
       "description": "App with all it's children resources",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/fcgiAppBase"
+          "$ref": "#/definitions/fcgi_app_base"
         },
         {
           "type": "object",
@@ -30253,7 +30285,7 @@ func init() {
       ],
       "x-go-name": "FCGIApp"
     },
-    "fcgiAppBase": {
+    "fcgi_app_base": {
       "description": "HAProxy FastCGI application configuration",
       "type": "object",
       "title": "FCGI application base",
@@ -30290,7 +30322,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogStderr",
-            "$ref": "#/definitions/fcgiLogStderr"
+            "$ref": "#/definitions/fcgi_log_stderr"
           },
           "x-omitempty": true
         },
@@ -30323,7 +30355,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogPassHeader",
-            "$ref": "#/definitions/fcgiPassHeader"
+            "$ref": "#/definitions/fcgi_pass_header"
           },
           "x-omitempty": true
         },
@@ -30334,19 +30366,19 @@ func init() {
         "set_params": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/fcgiSetParam"
+            "$ref": "#/definitions/fcgi_set_param"
           },
           "x-omitempty": true
         }
       }
     },
-    "fcgiApps": {
+    "fcgi_apps": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/fcgiApp"
+        "$ref": "#/definitions/fcgi_app"
       }
     },
-    "fcgiLogStderr": {
+    "fcgi_log_stderr": {
       "description": "Enables logging of STDERR messages that the FastCGI application reports.\nIt is an optional setting. By default, HAProxy Enterprise ignores STDERR messages.",
       "type": "object",
       "properties": {
@@ -30407,7 +30439,7 @@ func init() {
         }
       }
     },
-    "fcgiPassHeader": {
+    "fcgi_pass_header": {
       "description": "Specifies the name of a request header to pass to the FastCGI application.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.\nMost request headers are already available to the FastCGI application with the prefix \"HTTP\".\nThus, you only need this directive to pass headers that are purposefully omitted.\nCurrently, the headers \"Authorization\", \"Proxy-Authorization\", and hop-by-hop headers are omitted.\nNote that the headers \"Content-type\" and \"Content-length\" never pass to the FastCGI application because they are already converted into parameters.",
       "type": "object",
       "properties": {
@@ -30433,7 +30465,7 @@ func init() {
         }
       }
     },
-    "fcgiSetParam": {
+    "fcgi_set_param": {
       "description": "Sets a FastCGI parameter to pass to this application.\nIts value, defined by \u003cformat\u003e can take a formatted string, the same as the log directive.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.",
       "type": "object",
       "properties": {
@@ -30808,6 +30840,13 @@ func init() {
         "name"
       ],
       "properties": {
+        "abortonclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "accept_invalid_http_request": {
           "type": "string",
           "enum": [
@@ -31722,6 +31761,11 @@ func init() {
                   "address": {
                     "type": "string",
                     "pattern": "^[^\\s]+$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[^\\s]+$",
+                    "x-nullable": false
                   }
                 }
               }
@@ -31788,6 +31832,16 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "OS Capabilities",
           "x-omitempty": true
+        },
+        "shm_stats_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Shared Memory Statistics File (EXPERIMENTAL)"
+        },
+        "shm_stats_file_max_objects": {
+          "type": "integer",
+          "x-display-name": "Maximum number of objects the shared memory used for shared counters will be able to store per thread group. (EXPERIMENTAL)",
+          "x-nullable": true
         },
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
@@ -36427,6 +36481,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
         },
+        "noktls": {
+          "type": "boolean",
+          "x-display-name": "Disables the use of ktls. It is equivalent to the command line argument \"-dT\""
+        },
         "nopoll": {
           "type": "boolean",
           "x-display-name": "Disable the use of the \"poll\" event polling system"
@@ -37822,6 +37880,10 @@ func init() {
             "disabled"
           ]
         },
+        "cc": {
+          "type": "string",
+          "x-display-name": "TCP Congestion Control Algorithm"
+        },
         "check": {
           "type": "string",
           "enum": [
@@ -37867,6 +37929,13 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Name"
+        },
+        "check_sni_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "check_via_socks4": {
           "type": "string",
@@ -38028,6 +38097,14 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "ktls": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-display-name": "Enables or disables ktls for those sockets. If enabled, kTLS will be used if the kernel supports it and the cipher is compatible.\nThis is only available on Linux kernel 4.17 and above.\nEXPERIMENTAL OPTION."
         },
         "log-bufsize": {
           "type": "integer",
@@ -38303,6 +38380,13 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "sni_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "socks4": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -38384,6 +38468,10 @@ func init() {
         },
         "strict-maxconn": {
           "type": "boolean"
+        },
+        "tcp_md5sig": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "tcp_ut": {
           "type": "integer",
@@ -39739,6 +39827,9 @@ func init() {
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
         },
+        "passphrase_cmd": {
+          "type": "string"
+        },
         "propquery": {
           "type": "string",
           "x-display-name": "SSL Query String Property"
@@ -40272,6 +40363,9 @@ func init() {
     },
     "table": {
       "type": "object",
+      "required": [
+        "name"
+      ],
       "properties": {
         "expire": {
           "type": "string",
@@ -42925,7 +43019,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "3.2"
+    "version": "3.3"
   },
   "basePath": "/v3",
   "paths": {
@@ -59589,7 +59683,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApps"
+              "$ref": "#/definitions/fcgi_apps"
             },
             "headers": {
               "Configuration-Version": {
@@ -59625,7 +59719,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -59661,13 +59755,13 @@ func init() {
           "201": {
             "description": "Application created",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -59750,7 +59844,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Configuration-Version": {
@@ -59805,7 +59899,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           {
@@ -59841,13 +59935,13 @@ func init() {
           "200": {
             "description": "Application replaced",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/fcgiApp"
+              "$ref": "#/definitions/fcgi_app"
             },
             "headers": {
               "Reload-ID": {
@@ -85554,6 +85648,11 @@ func init() {
             "address": {
               "type": "string",
               "pattern": "^[^\\s]+$"
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
             }
           }
         }
@@ -87424,6 +87523,9 @@ func init() {
         },
         {
           "type": "object",
+          "required": [
+            "name"
+          ],
           "properties": {
             "address": {
               "type": "string",
@@ -87434,6 +87536,11 @@ func init() {
               "additionalProperties": {
                 "type": "object"
               }
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
             },
             "port": {
               "type": "integer",
@@ -87506,6 +87613,10 @@ func init() {
               "value": true
             }
           }
+        },
+        "cc": {
+          "type": "string",
+          "x-display-name": "TCP Congestion Control Algorithm"
         },
         "ciphers": {
           "type": "string",
@@ -87656,6 +87767,14 @@ func init() {
         "interface": {
           "type": "string"
         },
+        "ktls": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-display-name": "Enables or disables ktls for those sockets. If enabled, kTLS will be used if the kernel supports it and the cipher is compatible.\nThis is only available on Linux kernel 4.17 and above.\nEXPERIMENTAL OPTION."
+        },
         "label": {
           "type": "string"
         },
@@ -87677,11 +87796,6 @@ func init() {
         },
         "mss": {
           "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
         },
         "namespace": {
           "type": "string",
@@ -87861,6 +87975,7 @@ func init() {
           "x-display-name": "SSL CA File"
         },
         "ssl_certificate": {
+          "description": "All of the certificates delimited by ':' as mentioned as a crt on the bind line.",
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
@@ -87909,6 +88024,10 @@ func init() {
             }
           },
           "x-deprecated": true
+        },
+        "tcp_md5sig": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "tcp_user_timeout": {
           "type": "integer",
@@ -88662,6 +88781,11 @@ func init() {
               "additionalProperties": {
                 "type": "object"
               }
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
             }
           }
         }
@@ -88738,6 +88862,9 @@ func init() {
       "description": "HAProxy defaults configuration",
       "type": "object",
       "title": "Defaults Base",
+      "required": [
+        "name"
+      ],
       "properties": {
         "abortonclose": {
           "type": "string",
@@ -89259,7 +89386,8 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$"
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
         },
         "nolinger": {
           "type": "string",
@@ -89498,6 +89626,9 @@ func init() {
       "description": "HAProxy log forward dgram bind configuration",
       "type": "object",
       "title": "Dgram Bind",
+      "required": [
+        "name"
+      ],
       "properties": {
         "address": {
           "type": "string",
@@ -89789,12 +89920,12 @@ func init() {
         }
       }
     },
-    "fcgiApp": {
+    "fcgi_app": {
       "description": "App with all it's children resources",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/fcgiAppBase"
+          "$ref": "#/definitions/fcgi_app_base"
         },
         {
           "type": "object",
@@ -89808,7 +89939,7 @@ func init() {
       ],
       "x-go-name": "FCGIApp"
     },
-    "fcgiAppBase": {
+    "fcgi_app_base": {
       "description": "HAProxy FastCGI application configuration",
       "type": "object",
       "title": "FCGI application base",
@@ -89845,7 +89976,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogStderr",
-            "$ref": "#/definitions/fcgiLogStderr"
+            "$ref": "#/definitions/fcgi_log_stderr"
           },
           "x-omitempty": true
         },
@@ -89878,7 +90009,7 @@ func init() {
           "type": "array",
           "items": {
             "x-go-name": "FCGIAppLogPassHeader",
-            "$ref": "#/definitions/fcgiPassHeader"
+            "$ref": "#/definitions/fcgi_pass_header"
           },
           "x-omitempty": true
         },
@@ -89889,19 +90020,19 @@ func init() {
         "set_params": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/fcgiSetParam"
+            "$ref": "#/definitions/fcgi_set_param"
           },
           "x-omitempty": true
         }
       }
     },
-    "fcgiApps": {
+    "fcgi_apps": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/fcgiApp"
+        "$ref": "#/definitions/fcgi_app"
       }
     },
-    "fcgiLogStderr": {
+    "fcgi_log_stderr": {
       "description": "Enables logging of STDERR messages that the FastCGI application reports.\nIt is an optional setting. By default, HAProxy Enterprise ignores STDERR messages.",
       "type": "object",
       "properties": {
@@ -89962,7 +90093,7 @@ func init() {
         }
       }
     },
-    "fcgiPassHeader": {
+    "fcgi_pass_header": {
       "description": "Specifies the name of a request header to pass to the FastCGI application.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.\nMost request headers are already available to the FastCGI application with the prefix \"HTTP\".\nThus, you only need this directive to pass headers that are purposefully omitted.\nCurrently, the headers \"Authorization\", \"Proxy-Authorization\", and hop-by-hop headers are omitted.\nNote that the headers \"Content-type\" and \"Content-length\" never pass to the FastCGI application because they are already converted into parameters.",
       "type": "object",
       "properties": {
@@ -89988,7 +90119,7 @@ func init() {
         }
       }
     },
-    "fcgiSetParam": {
+    "fcgi_set_param": {
       "description": "Sets a FastCGI parameter to pass to this application.\nIts value, defined by \u003cformat\u003e can take a formatted string, the same as the log directive.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.",
       "type": "object",
       "properties": {
@@ -90363,6 +90494,13 @@ func init() {
         "name"
       ],
       "properties": {
+        "abortonclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "accept_invalid_http_request": {
           "type": "string",
           "enum": [
@@ -91253,6 +91391,17 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "OS Capabilities",
           "x-omitempty": true
+        },
+        "shm_stats_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Shared Memory Statistics File (EXPERIMENTAL)"
+        },
+        "shm_stats_file_max_objects": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Maximum number of objects the shared memory used for shared counters will be able to store per thread group. (EXPERIMENTAL)",
+          "x-nullable": true
         },
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
@@ -95857,6 +96006,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
         },
+        "noktls": {
+          "type": "boolean",
+          "x-display-name": "Disables the use of ktls. It is equivalent to the command line argument \"-dT\""
+        },
         "nopoll": {
           "type": "boolean",
           "x-display-name": "Disable the use of the \"poll\" event polling system"
@@ -97270,6 +97423,10 @@ func init() {
             "disabled"
           ]
         },
+        "cc": {
+          "type": "string",
+          "x-display-name": "TCP Congestion Control Algorithm"
+        },
         "check": {
           "type": "string",
           "enum": [
@@ -97315,6 +97472,13 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Name"
+        },
+        "check_sni_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "check_via_socks4": {
           "type": "string",
@@ -97480,6 +97644,14 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "ktls": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-display-name": "Enables or disables ktls for those sockets. If enabled, kTLS will be used if the kernel supports it and the cipher is compatible.\nThis is only available on Linux kernel 4.17 and above.\nEXPERIMENTAL OPTION."
         },
         "log-bufsize": {
           "type": "integer",
@@ -97757,6 +97929,13 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "sni_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "socks4": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -97838,6 +98017,10 @@ func init() {
         },
         "strict-maxconn": {
           "type": "boolean"
+        },
+        "tcp_md5sig": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "tcp_ut": {
           "type": "integer",
@@ -99110,6 +99293,9 @@ func init() {
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
         },
+        "passphrase_cmd": {
+          "type": "string"
+        },
         "propquery": {
           "type": "string",
           "x-display-name": "SSL Query String Property"
@@ -99584,6 +99770,9 @@ func init() {
     },
     "table": {
       "type": "object",
+      "required": [
+        "name"
+      ],
       "properties": {
         "expire": {
           "type": "string",

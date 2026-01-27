@@ -1,7 +1,7 @@
 {
   "level": "user",
-  "name": "fixture",
   "no_alpn": true,
   "address": "127.0.0.1",
+  "name": "fixture",
   "port": 10001
 }
