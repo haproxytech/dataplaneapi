@@ -55,7 +55,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		return err
 	}
 
-	logFields := map[string]interface{}{"ServiceDiscovery": "Consul", "ID": *cParams.ID}
+	logFields := map[string]any{"ServiceDiscovery": "Consul", "ID": *cParams.ID}
 
 	instance := &consulInstance{
 		params:  cParams,
@@ -86,7 +86,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 }
 
 func (c *consulServiceDiscovery) GetNode(id string) (p ServiceDiscoveryParams, err error) {
-	var i interface{}
+	var i any
 	if i, err = c.consulServices.Read(id); err != nil {
 		return p, err
 	}
@@ -111,7 +111,7 @@ func (c *consulServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryPa
 	if !ok {
 		return errors.New("expected models.Consuls")
 	}
-	return c.consulServices.Update(id, func(item interface{}) error {
+	return c.consulServices.Update(id, func(item any) error {
 		ci := item.(*consulInstance)
 		ci.params = cParams
 		if err = ci.updateTimeout(int(*cParams.RetryTimeout)); err != nil {

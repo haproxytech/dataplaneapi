@@ -47,7 +47,7 @@ func (c *Client) Runtime() (runtime.Runtime, error) {
 	}
 
 	// Now, for let's try to reconfigure once the runtime
-	cfg, err := c.HAProxyClient.Configuration()
+	cfg, err := c.Configuration()
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (c *Client) Runtime() (runtime.Runtime, error) {
 	if rnt == nil {
 		return nil, errors.New("retry - unable to configure runtime client")
 	}
-	c.HAProxyClient.ReplaceRuntime(rnt)
+	c.ReplaceRuntime(rnt)
 
 	return c.HAProxyClient.Runtime()
 }

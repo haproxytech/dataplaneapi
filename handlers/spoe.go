@@ -29,7 +29,7 @@ type SpoeCreateSpoeHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, principal interface{}) middleware.Responder {
+func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, principal any) middleware.Responder {
 	file, ok := params.FileUpload.(*runtime.File)
 	if !ok {
 		return spoe.NewCreateSpoeBadRequest()
@@ -54,7 +54,7 @@ type SpoeDeleteSpoeFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeDeleteSpoeFileHandlerImpl) Handle(params spoe.DeleteSpoeFileParams, principal interface{}) middleware.Responder {
+func (h *SpoeDeleteSpoeFileHandlerImpl) Handle(params spoe.DeleteSpoeFileParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -75,7 +75,7 @@ type SpoeGetAllSpoeFilesHandlerImpl struct {
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetAllSpoeFilesHandlerImpl) Handle(params spoe.GetAllSpoeFilesParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetAllSpoeFilesHandlerImpl) Handle(params spoe.GetAllSpoeFilesParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -95,7 +95,7 @@ type SpoeGetOneSpoeFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *SpoeGetOneSpoeFileHandlerImpl) Handle(params spoe.GetOneSpoeFileParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetOneSpoeFileHandlerImpl) Handle(params spoe.GetOneSpoeFileParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)

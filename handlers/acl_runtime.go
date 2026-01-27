@@ -12,7 +12,7 @@ type GetACLSHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetACLSHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParams, i interface{}) middleware.Responder {
+func (h GetACLSHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -32,7 +32,7 @@ type GetACLHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetACLHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsIDParams, i interface{}) middleware.Responder {
+func (h GetACLHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsIDParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -52,7 +52,7 @@ type GetACLFileEntriesHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetACLFileEntriesHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesParams, i interface{}) middleware.Responder {
+func (h GetACLFileEntriesHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -71,7 +71,7 @@ type PostACLFileEntryHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h PostACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesParams, i interface{}) middleware.Responder {
+func (h PostACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesParams, i any) middleware.Responder {
 	var err error
 	runtime, err := h.Client.Runtime()
 	if err != nil {
@@ -98,7 +98,7 @@ type GetACLFileEntryRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetACLFileEntryRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDParams, i interface{}) middleware.Responder {
+func (h GetACLFileEntryRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -118,7 +118,7 @@ type DeleteACLFileEntryHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h DeleteACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams, i interface{}) middleware.Responder {
+func (h DeleteACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -136,7 +136,7 @@ type ACLRuntimeAddPayloadRuntimeACLHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h ACLRuntimeAddPayloadRuntimeACLHandlerImpl) Handle(params acl_runtime.AddPayloadRuntimeACLParams, i interface{}) middleware.Responder {
+func (h ACLRuntimeAddPayloadRuntimeACLHandlerImpl) Handle(params acl_runtime.AddPayloadRuntimeACLParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

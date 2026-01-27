@@ -44,32 +44,32 @@ type (
 	ReplaceAllTCPResponseRuleBackendHandlerImpl ReplaceAllTCPResponseRuleHandlerImpl
 )
 
-func (h *CreateTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.CreateTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.CreateTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := CreateTCPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := GetTCPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.GetAllTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.GetAllTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := GetAllTCPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.DeleteTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.DeleteTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := DeleteTCPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.ReplaceTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.ReplaceTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceTCPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.ReplaceAllTCPResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPResponseRuleBackendHandlerImpl) Handle(params tcp_response_rule.ReplaceAllTCPResponseRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPResponseRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }

@@ -54,7 +54,7 @@ type ReplaceRingHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateRingHandlerImpl) Handle(params ring.CreateRingParams, principal interface{}) middleware.Responder {
+func (h *CreateRingHandlerImpl) Handle(params ring.CreateRingParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -107,7 +107,7 @@ func (h *CreateRingHandlerImpl) createRing(params ring.CreateRingParams, t strin
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteRingHandlerImpl) Handle(params ring.DeleteRingParams, principal interface{}) middleware.Responder {
+func (h *DeleteRingHandlerImpl) Handle(params ring.DeleteRingParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -154,7 +154,7 @@ func (h *DeleteRingHandlerImpl) Handle(params ring.DeleteRingParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *GetRingHandlerImpl) Handle(params ring.GetRingParams, principal interface{}) middleware.Responder {
+func (h *GetRingHandlerImpl) Handle(params ring.GetRingParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -180,7 +180,7 @@ func (h *GetRingHandlerImpl) getRing(params ring.GetRingParams, t string) (int64
 }
 
 // Handle executing the request and returning a response
-func (h *GetRingsHandlerImpl) Handle(params ring.GetRingsParams, principal interface{}) middleware.Responder {
+func (h *GetRingsHandlerImpl) Handle(params ring.GetRingsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -206,7 +206,7 @@ func (h *GetRingsHandlerImpl) getRings(params ring.GetRingsParams, t string) (in
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceRingHandlerImpl) Handle(params ring.ReplaceRingParams, principal interface{}) middleware.Responder {
+func (h *ReplaceRingHandlerImpl) Handle(params ring.ReplaceRingParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

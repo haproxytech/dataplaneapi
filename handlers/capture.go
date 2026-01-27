@@ -53,7 +53,7 @@ type ReplaceDeclareCapturesHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *CreateDeclareCaptureHandlerImpl) Handle(params capture.CreateDeclareCaptureParams, principal interface{}) middleware.Responder {
+func (h *CreateDeclareCaptureHandlerImpl) Handle(params capture.CreateDeclareCaptureParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -104,7 +104,7 @@ func (h *CreateDeclareCaptureHandlerImpl) Handle(params capture.CreateDeclareCap
 	return capture.NewCreateDeclareCaptureAccepted().WithPayload(params.Data)
 }
 
-func (h *DeleteDeclareCaptureHandlerImpl) Handle(params capture.DeleteDeclareCaptureParams, principal interface{}) middleware.Responder {
+func (h *DeleteDeclareCaptureHandlerImpl) Handle(params capture.DeleteDeclareCaptureParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -148,7 +148,7 @@ func (h *DeleteDeclareCaptureHandlerImpl) Handle(params capture.DeleteDeclareCap
 	return capture.NewDeleteDeclareCaptureAccepted()
 }
 
-func (h *GetDeclareCaptureHandlerImpl) Handle(params capture.GetDeclareCaptureParams, principal interface{}) middleware.Responder {
+func (h *GetDeclareCaptureHandlerImpl) Handle(params capture.GetDeclareCaptureParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -175,7 +175,7 @@ func (h *GetDeclareCaptureHandlerImpl) Handle(params capture.GetDeclareCapturePa
 	return capture.NewGetDeclareCaptureOK().WithPayload(data)
 }
 
-func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCapturesParams, principal interface{}) middleware.Responder {
+func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCapturesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -205,7 +205,7 @@ func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCaptures
 	return capture.NewGetDeclareCapturesOK().WithPayload(data)
 }
 
-func (h *ReplaceDeclareCaptureHandlerImpl) Handle(params capture.ReplaceDeclareCaptureParams, principal interface{}) middleware.Responder {
+func (h *ReplaceDeclareCaptureHandlerImpl) Handle(params capture.ReplaceDeclareCaptureParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -258,7 +258,7 @@ func (h *ReplaceDeclareCaptureHandlerImpl) Handle(params capture.ReplaceDeclareC
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceDeclareCapturesHandlerImpl) Handle(params capture.ReplaceDeclareCapturesParams, principal interface{}) middleware.Responder {
+func (h *ReplaceDeclareCapturesHandlerImpl) Handle(params capture.ReplaceDeclareCapturesParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

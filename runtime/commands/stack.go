@@ -77,7 +77,7 @@ func MakeStackDump() (string, error) {
 	srcLen := 0
 	pkgLen := 0
 	for _, bucket := range buckets {
-		for _, line := range bucket.Signature.Stack.Calls {
+		for _, line := range bucket.Stack.Calls {
 			if l := len(fmt.Sprintf("%s:%d", line.SrcName, line.Line)); l > srcLen {
 				srcLen = l
 			}

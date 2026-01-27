@@ -44,7 +44,7 @@ type (
 	ReplaceAllLogTargetGlobalHandlerImpl ReplaceAllLogTargetHandlerImpl
 )
 
-func (h *CreateLogTargetGlobalHandlerImpl) Handle(params log_target.CreateLogTargetGlobalParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetGlobalHandlerImpl) Handle(params log_target.CreateLogTargetGlobalParams, principal any) middleware.Responder {
 	g := CreateLogTargetHandlerImpl(*h)
 	paramsG := log_target.CreateLogTargetBackendParams{
 		Data:          params.Data,
@@ -58,7 +58,7 @@ func (h *CreateLogTargetGlobalHandlerImpl) Handle(params log_target.CreateLogTar
 	return g.Handle(cnconstants.GlobalParentType, paramsG, principal)
 }
 
-func (h *GetLogTargetGlobalHandlerImpl) Handle(params log_target.GetLogTargetGlobalParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetGlobalHandlerImpl) Handle(params log_target.GetLogTargetGlobalParams, principal any) middleware.Responder {
 	g := GetLogTargetHandlerImpl(*h)
 	paramsG := log_target.GetLogTargetBackendParams{
 		HTTPRequest:   params.HTTPRequest,
@@ -69,7 +69,7 @@ func (h *GetLogTargetGlobalHandlerImpl) Handle(params log_target.GetLogTargetGlo
 	return g.Handle(cnconstants.GlobalParentType, paramsG, principal)
 }
 
-func (h *GetAllLogTargetGlobalHandlerImpl) Handle(params log_target.GetAllLogTargetGlobalParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetGlobalHandlerImpl) Handle(params log_target.GetAllLogTargetGlobalParams, principal any) middleware.Responder {
 	g := GetAllLogTargetHandlerImpl(*h)
 	paramsG := log_target.GetAllLogTargetBackendParams{
 		HTTPRequest:   params.HTTPRequest,
@@ -79,7 +79,7 @@ func (h *GetAllLogTargetGlobalHandlerImpl) Handle(params log_target.GetAllLogTar
 	return g.Handle(cnconstants.GlobalParentType, paramsG, principal)
 }
 
-func (h *DeleteLogTargetGlobalHandlerImpl) Handle(params log_target.DeleteLogTargetGlobalParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetGlobalHandlerImpl) Handle(params log_target.DeleteLogTargetGlobalParams, principal any) middleware.Responder {
 	g := DeleteLogTargetHandlerImpl(*h)
 	paramsG := log_target.DeleteLogTargetBackendParams{
 		HTTPRequest:   params.HTTPRequest,
@@ -92,7 +92,7 @@ func (h *DeleteLogTargetGlobalHandlerImpl) Handle(params log_target.DeleteLogTar
 	return g.Handle(cnconstants.GlobalParentType, paramsG, principal)
 }
 
-func (h *ReplaceLogTargetGlobalHandlerImpl) Handle(params log_target.ReplaceLogTargetGlobalParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetGlobalHandlerImpl) Handle(params log_target.ReplaceLogTargetGlobalParams, principal any) middleware.Responder {
 	g := ReplaceLogTargetHandlerImpl(*h)
 	paramsG := log_target.ReplaceLogTargetBackendParams{
 		Data:          params.Data,
@@ -106,7 +106,7 @@ func (h *ReplaceLogTargetGlobalHandlerImpl) Handle(params log_target.ReplaceLogT
 	return g.Handle(cnconstants.GlobalParentType, paramsG, principal)
 }
 
-func (h *ReplaceAllLogTargetGlobalHandlerImpl) Handle(params log_target.ReplaceAllLogTargetGlobalParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllLogTargetGlobalHandlerImpl) Handle(params log_target.ReplaceAllLogTargetGlobalParams, principal any) middleware.Responder {
 	g := ReplaceAllLogTargetHandlerImpl(*h)
 	paramsG := log_target.ReplaceAllLogTargetBackendParams{
 		Data:          params.Data,

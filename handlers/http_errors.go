@@ -53,7 +53,7 @@ type ReplaceHTTPErrorsSectionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPErrorsSectionHandlerImpl) Handle(params http_errors.CreateHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPErrorsSectionHandlerImpl) Handle(params http_errors.CreateHTTPErrorsSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateHTTPErrorsSectionHandlerImpl) Handle(params http_errors.CreateHTT
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPErrorsSectionHandlerImpl) Handle(params http_errors.DeleteHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPErrorsSectionHandlerImpl) Handle(params http_errors.DeleteHTTPErrorsSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteHTTPErrorsSectionHandlerImpl) Handle(params http_errors.DeleteHTT
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPErrorsSectionHandlerImpl) Handle(params http_errors.GetHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorsSectionHandlerImpl) Handle(params http_errors.GetHTTPErrorsSectionParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -171,7 +171,7 @@ func (h *GetHTTPErrorsSectionHandlerImpl) Handle(params http_errors.GetHTTPError
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPErrorsSectionsHandlerImpl) Handle(params http_errors.GetHTTPErrorsSectionsParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorsSectionsHandlerImpl) Handle(params http_errors.GetHTTPErrorsSectionsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -192,7 +192,7 @@ func (h *GetHTTPErrorsSectionsHandlerImpl) Handle(params http_errors.GetHTTPErro
 	return http_errors.NewGetHTTPErrorsSectionsOK().WithPayload(ms)
 }
 
-func (h *ReplaceHTTPErrorsSectionHandlerImpl) Handle(params http_errors.ReplaceHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPErrorsSectionHandlerImpl) Handle(params http_errors.ReplaceHTTPErrorsSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

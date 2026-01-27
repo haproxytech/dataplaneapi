@@ -50,67 +50,67 @@ type (
 	ReplaceAllQUICInitialRuleDefaultsHandlerImpl ReplaceAllQUICInitialRuleHandlerImpl
 )
 
-func (h *CreateQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.CreateQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.CreateQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	g := CreateQUICInitialRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *CreateQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.CreateQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *CreateQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.CreateQUICInitialRuleDefaultsParams, principal any) middleware.Responder {
 	g := CreateQUICInitialRuleHandlerImpl(*h)
 	pg := quic_initial_rule.CreateQUICInitialRuleFrontendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.GetQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.GetQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	g := GetQUICInitialRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *GetQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.GetQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.GetQUICInitialRuleDefaultsParams, principal any) middleware.Responder {
 	g := GetQUICInitialRuleHandlerImpl(*h)
 	pg := quic_initial_rule.GetQUICInitialRuleFrontendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetAllQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.GetAllQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.GetAllQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	g := GetAllQUICInitialRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *GetAllQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.GetAllQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetAllQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.GetAllQUICInitialRuleDefaultsParams, principal any) middleware.Responder {
 	g := GetAllQUICInitialRuleHandlerImpl(*h)
 	pg := quic_initial_rule.GetAllQUICInitialRuleFrontendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *DeleteQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.DeleteQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.DeleteQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	g := DeleteQUICInitialRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *DeleteQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.DeleteQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *DeleteQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.DeleteQUICInitialRuleDefaultsParams, principal any) middleware.Responder {
 	g := DeleteQUICInitialRuleHandlerImpl(*h)
 	pg := quic_initial_rule.DeleteQUICInitialRuleFrontendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.ReplaceQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.ReplaceQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceQUICInitialRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *ReplaceQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.ReplaceQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.ReplaceQUICInitialRuleDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceQUICInitialRuleHandlerImpl(*h)
 	pg := quic_initial_rule.ReplaceQUICInitialRuleFrontendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceAllQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.ReplaceAllQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllQUICInitialRuleFrontendHandlerImpl) Handle(params quic_initial_rule.ReplaceAllQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceAllQUICInitialRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.FrontendParentType, params, principal)
 }
 
-func (h *ReplaceAllQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.ReplaceAllQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllQUICInitialRuleDefaultsHandlerImpl) Handle(params quic_initial_rule.ReplaceAllQUICInitialRuleDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceAllQUICInitialRuleHandlerImpl(*h)
 	pg := quic_initial_rule.ReplaceAllQUICInitialRuleFrontendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)

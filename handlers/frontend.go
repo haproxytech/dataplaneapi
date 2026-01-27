@@ -54,7 +54,7 @@ type ReplaceFrontendHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -106,7 +106,7 @@ func (h *CreateFrontendHandlerImpl) createFrontend(params frontend.CreateFronten
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteFrontendHandlerImpl) Handle(params frontend.DeleteFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteFrontendHandlerImpl) Handle(params frontend.DeleteFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -153,7 +153,7 @@ func (h *DeleteFrontendHandlerImpl) Handle(params frontend.DeleteFrontendParams,
 }
 
 // Handle executing the request and returning a response
-func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -179,7 +179,7 @@ func (h *GetFrontendHandlerImpl) getFrontend(params frontend.GetFrontendParams, 
 }
 
 // Handle executing the request and returning a response
-func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, principal interface{}) middleware.Responder {
+func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -205,7 +205,7 @@ func (h *GetFrontendsHandlerImpl) getFrontends(params frontend.GetFrontendsParam
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

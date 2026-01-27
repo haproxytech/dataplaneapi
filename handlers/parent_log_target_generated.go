@@ -68,175 +68,175 @@ type (
 	ReplaceAllLogTargetLogForwardHandlerImpl ReplaceAllLogTargetHandlerImpl
 )
 
-func (h *CreateLogTargetBackendHandlerImpl) Handle(params log_target.CreateLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetBackendHandlerImpl) Handle(params log_target.CreateLogTargetBackendParams, principal any) middleware.Responder {
 	g := CreateLogTargetHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateLogTargetFrontendHandlerImpl) Handle(params log_target.CreateLogTargetFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetFrontendHandlerImpl) Handle(params log_target.CreateLogTargetFrontendParams, principal any) middleware.Responder {
 	g := CreateLogTargetHandlerImpl(*h)
 	pg := log_target.CreateLogTargetBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *CreateLogTargetDefaultsHandlerImpl) Handle(params log_target.CreateLogTargetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetDefaultsHandlerImpl) Handle(params log_target.CreateLogTargetDefaultsParams, principal any) middleware.Responder {
 	g := CreateLogTargetHandlerImpl(*h)
 	pg := log_target.CreateLogTargetBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *CreateLogTargetPeerHandlerImpl) Handle(params log_target.CreateLogTargetPeerParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetPeerHandlerImpl) Handle(params log_target.CreateLogTargetPeerParams, principal any) middleware.Responder {
 	g := CreateLogTargetHandlerImpl(*h)
 	pg := log_target.CreateLogTargetBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *CreateLogTargetLogForwardHandlerImpl) Handle(params log_target.CreateLogTargetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetLogForwardHandlerImpl) Handle(params log_target.CreateLogTargetLogForwardParams, principal any) middleware.Responder {
 	g := CreateLogTargetHandlerImpl(*h)
 	pg := log_target.CreateLogTargetBackendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *GetLogTargetBackendHandlerImpl) Handle(params log_target.GetLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetBackendHandlerImpl) Handle(params log_target.GetLogTargetBackendParams, principal any) middleware.Responder {
 	g := GetLogTargetHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetLogTargetFrontendHandlerImpl) Handle(params log_target.GetLogTargetFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetFrontendHandlerImpl) Handle(params log_target.GetLogTargetFrontendParams, principal any) middleware.Responder {
 	g := GetLogTargetHandlerImpl(*h)
 	pg := log_target.GetLogTargetBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetLogTargetDefaultsHandlerImpl) Handle(params log_target.GetLogTargetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetDefaultsHandlerImpl) Handle(params log_target.GetLogTargetDefaultsParams, principal any) middleware.Responder {
 	g := GetLogTargetHandlerImpl(*h)
 	pg := log_target.GetLogTargetBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetLogTargetPeerHandlerImpl) Handle(params log_target.GetLogTargetPeerParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetPeerHandlerImpl) Handle(params log_target.GetLogTargetPeerParams, principal any) middleware.Responder {
 	g := GetLogTargetHandlerImpl(*h)
 	pg := log_target.GetLogTargetBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *GetLogTargetLogForwardHandlerImpl) Handle(params log_target.GetLogTargetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetLogForwardHandlerImpl) Handle(params log_target.GetLogTargetLogForwardParams, principal any) middleware.Responder {
 	g := GetLogTargetHandlerImpl(*h)
 	pg := log_target.GetLogTargetBackendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *GetAllLogTargetBackendHandlerImpl) Handle(params log_target.GetAllLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetBackendHandlerImpl) Handle(params log_target.GetAllLogTargetBackendParams, principal any) middleware.Responder {
 	g := GetAllLogTargetHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllLogTargetFrontendHandlerImpl) Handle(params log_target.GetAllLogTargetFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetFrontendHandlerImpl) Handle(params log_target.GetAllLogTargetFrontendParams, principal any) middleware.Responder {
 	g := GetAllLogTargetHandlerImpl(*h)
 	pg := log_target.GetAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetAllLogTargetDefaultsHandlerImpl) Handle(params log_target.GetAllLogTargetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetDefaultsHandlerImpl) Handle(params log_target.GetAllLogTargetDefaultsParams, principal any) middleware.Responder {
 	g := GetAllLogTargetHandlerImpl(*h)
 	pg := log_target.GetAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetAllLogTargetPeerHandlerImpl) Handle(params log_target.GetAllLogTargetPeerParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetPeerHandlerImpl) Handle(params log_target.GetAllLogTargetPeerParams, principal any) middleware.Responder {
 	g := GetAllLogTargetHandlerImpl(*h)
 	pg := log_target.GetAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *GetAllLogTargetLogForwardHandlerImpl) Handle(params log_target.GetAllLogTargetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *GetAllLogTargetLogForwardHandlerImpl) Handle(params log_target.GetAllLogTargetLogForwardParams, principal any) middleware.Responder {
 	g := GetAllLogTargetHandlerImpl(*h)
 	pg := log_target.GetAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *DeleteLogTargetBackendHandlerImpl) Handle(params log_target.DeleteLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetBackendHandlerImpl) Handle(params log_target.DeleteLogTargetBackendParams, principal any) middleware.Responder {
 	g := DeleteLogTargetHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteLogTargetFrontendHandlerImpl) Handle(params log_target.DeleteLogTargetFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetFrontendHandlerImpl) Handle(params log_target.DeleteLogTargetFrontendParams, principal any) middleware.Responder {
 	g := DeleteLogTargetHandlerImpl(*h)
 	pg := log_target.DeleteLogTargetBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *DeleteLogTargetDefaultsHandlerImpl) Handle(params log_target.DeleteLogTargetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetDefaultsHandlerImpl) Handle(params log_target.DeleteLogTargetDefaultsParams, principal any) middleware.Responder {
 	g := DeleteLogTargetHandlerImpl(*h)
 	pg := log_target.DeleteLogTargetBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *DeleteLogTargetPeerHandlerImpl) Handle(params log_target.DeleteLogTargetPeerParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetPeerHandlerImpl) Handle(params log_target.DeleteLogTargetPeerParams, principal any) middleware.Responder {
 	g := DeleteLogTargetHandlerImpl(*h)
 	pg := log_target.DeleteLogTargetBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *DeleteLogTargetLogForwardHandlerImpl) Handle(params log_target.DeleteLogTargetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetLogForwardHandlerImpl) Handle(params log_target.DeleteLogTargetLogForwardParams, principal any) middleware.Responder {
 	g := DeleteLogTargetHandlerImpl(*h)
 	pg := log_target.DeleteLogTargetBackendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *ReplaceLogTargetBackendHandlerImpl) Handle(params log_target.ReplaceLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetBackendHandlerImpl) Handle(params log_target.ReplaceLogTargetBackendParams, principal any) middleware.Responder {
 	g := ReplaceLogTargetHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceLogTargetFrontendHandlerImpl) Handle(params log_target.ReplaceLogTargetFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetFrontendHandlerImpl) Handle(params log_target.ReplaceLogTargetFrontendParams, principal any) middleware.Responder {
 	g := ReplaceLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceLogTargetBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceLogTargetDefaultsHandlerImpl) Handle(params log_target.ReplaceLogTargetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetDefaultsHandlerImpl) Handle(params log_target.ReplaceLogTargetDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceLogTargetBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceLogTargetPeerHandlerImpl) Handle(params log_target.ReplaceLogTargetPeerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetPeerHandlerImpl) Handle(params log_target.ReplaceLogTargetPeerParams, principal any) middleware.Responder {
 	g := ReplaceLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceLogTargetBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *ReplaceLogTargetLogForwardHandlerImpl) Handle(params log_target.ReplaceLogTargetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetLogForwardHandlerImpl) Handle(params log_target.ReplaceLogTargetLogForwardParams, principal any) middleware.Responder {
 	g := ReplaceLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceLogTargetBackendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)
 }
 
-func (h *ReplaceAllLogTargetBackendHandlerImpl) Handle(params log_target.ReplaceAllLogTargetBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllLogTargetBackendHandlerImpl) Handle(params log_target.ReplaceAllLogTargetBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllLogTargetHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllLogTargetFrontendHandlerImpl) Handle(params log_target.ReplaceAllLogTargetFrontendParams, principal interface{}) middleware.Responder {
-	g := ReplaceAllLogTargetHandlerImpl(*h)
-	pg := log_target.ReplaceAllLogTargetBackendParams(params)
-	return g.Handle(cnconstants.FrontendParentType, pg, principal)
-}
-
-func (h *ReplaceAllLogTargetDefaultsHandlerImpl) Handle(params log_target.ReplaceAllLogTargetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllLogTargetFrontendHandlerImpl) Handle(params log_target.ReplaceAllLogTargetFrontendParams, principal any) middleware.Responder {
 	g := ReplaceAllLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceAllLogTargetBackendParams(params)
+	return g.Handle(cnconstants.FrontendParentType, pg, principal)
+}
+
+func (h *ReplaceAllLogTargetDefaultsHandlerImpl) Handle(params log_target.ReplaceAllLogTargetDefaultsParams, principal any) middleware.Responder {
+	g := ReplaceAllLogTargetHandlerImpl(*h)
+	pg := log_target.ReplaceAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceAllLogTargetPeerHandlerImpl) Handle(params log_target.ReplaceAllLogTargetPeerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllLogTargetPeerHandlerImpl) Handle(params log_target.ReplaceAllLogTargetPeerParams, principal any) middleware.Responder {
 	g := ReplaceAllLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.PeerParentType, pg, principal)
 }
 
-func (h *ReplaceAllLogTargetLogForwardHandlerImpl) Handle(params log_target.ReplaceAllLogTargetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllLogTargetLogForwardHandlerImpl) Handle(params log_target.ReplaceAllLogTargetLogForwardParams, principal any) middleware.Responder {
 	g := ReplaceAllLogTargetHandlerImpl(*h)
 	pg := log_target.ReplaceAllLogTargetBackendParams(params)
 	return g.Handle(cnconstants.LogForwardParentType, pg, principal)

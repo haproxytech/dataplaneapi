@@ -50,67 +50,67 @@ type (
 	ReplaceAllHTTPCheckDefaultsHandlerImpl ReplaceAllHTTPCheckHandlerImpl
 )
 
-func (h *CreateHTTPCheckBackendHandlerImpl) Handle(params http_check.CreateHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPCheckBackendHandlerImpl) Handle(params http_check.CreateHTTPCheckBackendParams, principal any) middleware.Responder {
 	g := CreateHTTPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateHTTPCheckDefaultsHandlerImpl) Handle(params http_check.CreateHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPCheckDefaultsHandlerImpl) Handle(params http_check.CreateHTTPCheckDefaultsParams, principal any) middleware.Responder {
 	g := CreateHTTPCheckHandlerImpl(*h)
 	pg := http_check.CreateHTTPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetHTTPCheckBackendHandlerImpl) Handle(params http_check.GetHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPCheckBackendHandlerImpl) Handle(params http_check.GetHTTPCheckBackendParams, principal any) middleware.Responder {
 	g := GetHTTPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetHTTPCheckDefaultsHandlerImpl) Handle(params http_check.GetHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPCheckDefaultsHandlerImpl) Handle(params http_check.GetHTTPCheckDefaultsParams, principal any) middleware.Responder {
 	g := GetHTTPCheckHandlerImpl(*h)
 	pg := http_check.GetHTTPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetAllHTTPCheckBackendHandlerImpl) Handle(params http_check.GetAllHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPCheckBackendHandlerImpl) Handle(params http_check.GetAllHTTPCheckBackendParams, principal any) middleware.Responder {
 	g := GetAllHTTPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllHTTPCheckDefaultsHandlerImpl) Handle(params http_check.GetAllHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPCheckDefaultsHandlerImpl) Handle(params http_check.GetAllHTTPCheckDefaultsParams, principal any) middleware.Responder {
 	g := GetAllHTTPCheckHandlerImpl(*h)
 	pg := http_check.GetAllHTTPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *DeleteHTTPCheckBackendHandlerImpl) Handle(params http_check.DeleteHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPCheckBackendHandlerImpl) Handle(params http_check.DeleteHTTPCheckBackendParams, principal any) middleware.Responder {
 	g := DeleteHTTPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteHTTPCheckDefaultsHandlerImpl) Handle(params http_check.DeleteHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPCheckDefaultsHandlerImpl) Handle(params http_check.DeleteHTTPCheckDefaultsParams, principal any) middleware.Responder {
 	g := DeleteHTTPCheckHandlerImpl(*h)
 	pg := http_check.DeleteHTTPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceHTTPCheckBackendHandlerImpl) Handle(params http_check.ReplaceHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPCheckBackendHandlerImpl) Handle(params http_check.ReplaceHTTPCheckBackendParams, principal any) middleware.Responder {
 	g := ReplaceHTTPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceHTTPCheckDefaultsHandlerImpl) Handle(params http_check.ReplaceHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPCheckDefaultsHandlerImpl) Handle(params http_check.ReplaceHTTPCheckDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceHTTPCheckHandlerImpl(*h)
 	pg := http_check.ReplaceHTTPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceAllHTTPCheckBackendHandlerImpl) Handle(params http_check.ReplaceAllHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPCheckBackendHandlerImpl) Handle(params http_check.ReplaceAllHTTPCheckBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllHTTPCheckDefaultsHandlerImpl) Handle(params http_check.ReplaceAllHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPCheckDefaultsHandlerImpl) Handle(params http_check.ReplaceAllHTTPCheckDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceAllHTTPCheckHandlerImpl(*h)
 	pg := http_check.ReplaceAllHTTPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)

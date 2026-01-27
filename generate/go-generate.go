@@ -63,7 +63,7 @@ var groupParents = map[string]string{
 	"log_targets": "log",
 }
 
-var itemDefaults = map[string]interface{}{
+var itemDefaults = map[string]any{
 	"port":              80,
 	"listen_limit":      1024,
 	"tls_host":          "null",
@@ -208,8 +208,8 @@ func stripAtomic(str string) string {
 	if len(str) == 0 {
 		return ""
 	}
-	if strings.HasPrefix(str, "Atomic") {
-		return strings.ToLower(strings.TrimPrefix(str, "Atomic"))
+	if after, ok := strings.CutPrefix(str, "Atomic"); ok {
+		return strings.ToLower(after)
 	}
 	return str
 }

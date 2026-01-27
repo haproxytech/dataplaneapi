@@ -16,7 +16,7 @@ type CreateQUICInitialRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (c CreateQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.CreateQUICInitialRuleFrontendParams, _ interface{}) middleware.Responder {
+func (c CreateQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.CreateQUICInitialRuleFrontendParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -67,7 +67,7 @@ type DeleteQUICInitialRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (d DeleteQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.DeleteQUICInitialRuleFrontendParams, _ interface{}) middleware.Responder {
+func (d DeleteQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.DeleteQUICInitialRuleFrontendParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -117,7 +117,7 @@ type GetQUICInitialRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.GetQUICInitialRuleFrontendParams, _ interface{}) middleware.Responder {
+func (g GetQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.GetQUICInitialRuleFrontendParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -143,7 +143,7 @@ type GetAllQUICInitialRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetAllQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.GetAllQUICInitialRuleFrontendParams, _ interface{}) middleware.Responder {
+func (g GetAllQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.GetAllQUICInitialRuleFrontendParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -170,7 +170,7 @@ type ReplaceQUICInitialRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (r ReplaceQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.ReplaceQUICInitialRuleFrontendParams, _ interface{}) middleware.Responder {
+func (r ReplaceQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.ReplaceQUICInitialRuleFrontendParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -222,7 +222,7 @@ type ReplaceAllQUICInitialRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.ReplaceAllQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params quic_initial_rule.ReplaceAllQUICInitialRuleFrontendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

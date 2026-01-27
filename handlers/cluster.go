@@ -63,7 +63,7 @@ type EditClusterHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
+func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.InitiateCertificateRefreshParams, principal any) middleware.Responder {
 	if h.Config.Mode.Load() != configuration.ModeCluster {
 		return cluster.NewInitiateCertificateRefreshForbidden()
 	}
@@ -118,7 +118,7 @@ func (h *CreateClusterHandlerImpl) err409(err error, transaction *models.Transac
 	})
 }
 
-func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
+func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal any) middleware.Responder {
 	key := h.Config.Cluster.BootstrapKey.Load()
 	if params.Data.BootstrapKey != "" && key != params.Data.BootstrapKey {
 		// before we switch to cluster mode, check if folder for storage is compatible with dataplane
@@ -159,11 +159,11 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 }
 
 // Handle executing the request and returning a response
-func (h *GetClusterHandlerImpl) Handle(params cluster.GetClusterParams, principal interface{}) middleware.Responder {
+func (h *GetClusterHandlerImpl) Handle(params cluster.GetClusterParams, principal any) middleware.Responder {
 	return cluster.NewGetClusterOK().WithPayload(getClusterSettings(h.Config))
 }
 
-func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, principal interface{}) middleware.Responder {
+func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, principal any) middleware.Responder {
 	log.Warningf("received instructions from %s to switch to standalone mode", params.HTTPRequest.RemoteAddr)
 	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
 	if h.Config.Mode.Load() == configuration.ModeCluster {
@@ -240,7 +240,7 @@ func (h *DeleteClusterHandlerImpl) err500(err error, transaction *models.Transac
 	})
 }
 
-func (h *EditClusterHandlerImpl) Handle(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
+func (h *EditClusterHandlerImpl) Handle(params cluster.EditClusterParams, principal any) middleware.Responder {
 	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
 	if h.Config.Mode.Load() == configuration.ModeCluster {
 		// for now change only cluster log targets in PUT method
@@ -312,7 +312,7 @@ func clusterLogTargetsChanged(oldCLT []*models.ClusterLogTarget, newCLT []*model
 				}
 			}
 		}
-		return !(eqCtr == len(oldCLT))
+		return eqCtr != len(oldCLT)
 	}
 	return true
 }

@@ -37,7 +37,7 @@ type StorageCreateStorageMapFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateStorageMapFileParams, principal interface{}) middleware.Responder {
+func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateStorageMapFileParams, principal any) middleware.Responder {
 	file, ok := params.FileUpload.(*runtime.File)
 	if !ok {
 		return storage.NewCreateStorageMapFileBadRequest()
@@ -72,7 +72,7 @@ type GetAllStorageMapFilesHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
+func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMapFilesParams, principal any) middleware.Responder {
 	st, err := h.Client.MapStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -104,7 +104,7 @@ type GetOneStorageMapHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
+func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapParams, principal any) middleware.Responder {
 	st, err := h.Client.MapStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -132,7 +132,7 @@ type StorageDeleteStorageMapHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
+func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorageMapParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -183,7 +183,7 @@ type StorageReplaceStorageMapFileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
+func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceStorageMapFileParams, principal any) middleware.Responder {
 	st, err := h.Client.MapStorage()
 	if err != nil {
 		e := misc.HandleError(err)

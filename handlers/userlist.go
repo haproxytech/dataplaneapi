@@ -48,7 +48,7 @@ type GetUserListsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateUserListHandlerImpl) Handle(params userlist.CreateUserlistParams, principal interface{}) middleware.Responder {
+func (h *CreateUserListHandlerImpl) Handle(params userlist.CreateUserlistParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -100,7 +100,7 @@ func (h *CreateUserListHandlerImpl) createUserList(params userlist.CreateUserlis
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteUserListHandlerImpl) Handle(params userlist.DeleteUserlistParams, principal interface{}) middleware.Responder {
+func (h *DeleteUserListHandlerImpl) Handle(params userlist.DeleteUserlistParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -147,7 +147,7 @@ func (h *DeleteUserListHandlerImpl) Handle(params userlist.DeleteUserlistParams,
 }
 
 // Handle executing the request and returning a response
-func (h *GetUserListHandlerImpl) Handle(params userlist.GetUserlistParams, principal interface{}) middleware.Responder {
+func (h *GetUserListHandlerImpl) Handle(params userlist.GetUserlistParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -173,7 +173,7 @@ func (h *GetUserListHandlerImpl) getUserList(params userlist.GetUserlistParams, 
 }
 
 // Handle executing the request and returning a response
-func (h *GetUserListsHandlerImpl) Handle(params userlist.GetUserlistsParams, principal interface{}) middleware.Responder {
+func (h *GetUserListsHandlerImpl) Handle(params userlist.GetUserlistsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID

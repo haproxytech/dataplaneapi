@@ -38,7 +38,7 @@ type StorageGetAllStorageSSLCertificatesHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *StorageGetAllStorageSSLCertificatesHandlerImpl) Handle(params storage.GetAllStorageSSLCertificatesParams, principal interface{}) middleware.Responder {
+func (h *StorageGetAllStorageSSLCertificatesHandlerImpl) Handle(params storage.GetAllStorageSSLCertificatesParams, principal any) middleware.Responder {
 	sslStorage, err := h.Client.SSLCertStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -67,7 +67,7 @@ type StorageGetOneStorageSSLCertificateHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.GetOneStorageSSLCertificateParams, principal any) middleware.Responder {
 	sslStorage, err := h.Client.SSLCertStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -109,7 +109,7 @@ type StorageDeleteStorageSSLCertificateHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.DeleteStorageSSLCertificateParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -183,7 +183,7 @@ type StorageReplaceStorageSSLCertificateHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.ReplaceStorageSSLCertificateParams, principal any) middleware.Responder {
 	sslStorage, err := h.Client.SSLCertStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -246,7 +246,7 @@ type StorageCreateStorageSSLCertificateHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.CreateStorageSSLCertificateParams, principal any) middleware.Responder {
 	sslStorage, err := h.Client.SSLCertStorage()
 	if err != nil {
 		e := misc.HandleError(err)

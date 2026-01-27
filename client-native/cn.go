@@ -44,10 +44,7 @@ func ConfigureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 
 	p := confClient.Parser()
 	comments, err := p.Get(parser.Comments, parser.CommentsSectionName, "#")
-	insertDisclaimer := false
-	if err != nil {
-		insertDisclaimer = true
-	}
+	insertDisclaimer := err != nil
 	data, ok := comments.([]types.Comments)
 	if !ok {
 		insertDisclaimer = true
