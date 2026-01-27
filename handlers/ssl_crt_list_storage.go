@@ -42,7 +42,7 @@ type StorageGetAllStorageSSLCrtListFilesHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *StorageGetAllStorageSSLCrtListFilesHandlerImpl) Handle(params storage.GetAllStorageSSLCrtListFilesParams, principal interface{}) middleware.Responder {
+func (h *StorageGetAllStorageSSLCrtListFilesHandlerImpl) Handle(params storage.GetAllStorageSSLCrtListFilesParams, principal any) middleware.Responder {
 	crtListStorage, err := h.Client.CrtListStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -70,7 +70,7 @@ type StorageGetOneStorageSSLCrtListFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageGetOneStorageSSLCrtListFileHandlerImpl) Handle(params storage.GetOneStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+func (h *StorageGetOneStorageSSLCrtListFileHandlerImpl) Handle(params storage.GetOneStorageSSLCrtListFileParams, principal any) middleware.Responder {
 	crtListStorage, err := h.Client.CrtListStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -100,7 +100,7 @@ type StorageDeleteStorageSSLCrtListFileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageDeleteStorageSSLCrtListFileHandlerImpl) Handle(params storage.DeleteStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+func (h *StorageDeleteStorageSSLCrtListFileHandlerImpl) Handle(params storage.DeleteStorageSSLCrtListFileParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -173,7 +173,7 @@ type StorageReplaceStorageSSLCrtListFileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageReplaceStorageSSLCrtListFileHandlerImpl) Handle(params storage.ReplaceStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+func (h *StorageReplaceStorageSSLCrtListFileHandlerImpl) Handle(params storage.ReplaceStorageSSLCrtListFileParams, principal any) middleware.Responder {
 	crtListStorage, err := h.Client.CrtListStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -224,7 +224,7 @@ type StorageCreateStorageSSLCrtListFileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageCreateStorageSSLCrtListFileHandlerImpl) Handle(params storage.CreateStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+func (h *StorageCreateStorageSSLCrtListFileHandlerImpl) Handle(params storage.CreateStorageSSLCrtListFileParams, principal any) middleware.Responder {
 	crtListStorage, err := h.Client.CrtListStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -273,7 +273,7 @@ type StorageGetStorageSSLCrtListEntriesHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageGetStorageSSLCrtListEntriesHandlerImpl) Handle(params storage.GetStorageSSLCrtListEntriesParams, principal interface{}) middleware.Responder {
+func (h *StorageGetStorageSSLCrtListEntriesHandlerImpl) Handle(params storage.GetStorageSSLCrtListEntriesParams, principal any) middleware.Responder {
 	crtListStorage, err := h.Client.CrtListStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -298,7 +298,7 @@ type StorageCreateStorageSSLCrtListEntryHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageCreateStorageSSLCrtListEntryHandlerImpl) Handle(params storage.CreateStorageSSLCrtListEntryParams, principal interface{}) middleware.Responder {
+func (h *StorageCreateStorageSSLCrtListEntryHandlerImpl) Handle(params storage.CreateStorageSSLCrtListEntryParams, principal any) middleware.Responder {
 	entry := params.Data
 	if entry.File == "" {
 		e := misc.SetError(400, "missing certificate file name")
@@ -373,7 +373,7 @@ type StorageDeleteStorageSSLCrtListEntryHandlerImpl struct {
 
 // Delete an entry in a crt-list. If the line_number is not provided,
 // delete the first match, which is what the runtime API does.
-func (h *StorageDeleteStorageSSLCrtListEntryHandlerImpl) Handle(params storage.DeleteStorageSSLCrtListEntryParams, principal interface{}) middleware.Responder {
+func (h *StorageDeleteStorageSSLCrtListEntryHandlerImpl) Handle(params storage.DeleteStorageSSLCrtListEntryParams, principal any) middleware.Responder {
 	crtListStorage, err := h.Client.CrtListStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -387,10 +387,7 @@ func (h *StorageDeleteStorageSSLCrtListEntryHandlerImpl) Handle(params storage.D
 		return storage.NewDeleteStorageSSLCrtListEntryDefault(int(*e.Code)).WithPayload(e)
 	}
 	lineno := int64(0)
-	firstMatch := true
-	if params.LineNumber < 1 {
-		firstMatch = false
-	}
+	firstMatch := params.LineNumber > 0
 	var sb strings.Builder // the modified contents
 	sb.Grow(len(content))
 	strings.SplitSeq(content, "\n")(func(line string) bool {

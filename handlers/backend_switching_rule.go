@@ -60,7 +60,7 @@ type ReplaceBackendSwitchingRulesHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.CreateBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
+func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.CreateBackendSwitchingRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -105,7 +105,7 @@ func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.DeleteBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
+func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.DeleteBackendSwitchingRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -153,7 +153,7 @@ func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 }
 
 // Handle executing the request and returning a response
-func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.GetBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
+func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.GetBackendSwitchingRuleParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -174,7 +174,7 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 }
 
 // Handle executing the request and returning a response
-func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_rule.GetBackendSwitchingRulesParams, principal interface{}) middleware.Responder {
+func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_rule.GetBackendSwitchingRulesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -198,7 +198,7 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -245,7 +245,7 @@ func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_rule.ReplaceBackendSwitchingRulesParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_rule.ReplaceBackendSwitchingRulesParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

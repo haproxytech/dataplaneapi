@@ -29,7 +29,7 @@ type GetCrtStoresHandlerImpl struct {
 }
 
 // Get all crt-stores
-func (h *GetCrtStoresHandlerImpl) Handle(params crt_store.GetCrtStoresParams, principal interface{}) middleware.Responder {
+func (h *GetCrtStoresHandlerImpl) Handle(params crt_store.GetCrtStoresParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -55,7 +55,7 @@ type GetCrtStoreHandlerImpl struct {
 }
 
 // Get one crt-store
-func (h *GetCrtStoreHandlerImpl) Handle(params crt_store.GetCrtStoreParams, principal interface{}) middleware.Responder {
+func (h *GetCrtStoreHandlerImpl) Handle(params crt_store.GetCrtStoreParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -81,7 +81,7 @@ type CreateCrtStoreHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *CreateCrtStoreHandlerImpl) Handle(params crt_store.CreateCrtStoreParams, principal interface{}) middleware.Responder {
+func (h *CreateCrtStoreHandlerImpl) Handle(params crt_store.CreateCrtStoreParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -133,7 +133,7 @@ type EditCrtStoreHandler struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *EditCrtStoreHandler) Handle(params crt_store.EditCrtStoreParams, principal interface{}) middleware.Responder {
+func (h *EditCrtStoreHandler) Handle(params crt_store.EditCrtStoreParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -173,7 +173,7 @@ type DeleteCrtStoreHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *DeleteCrtStoreHandlerImpl) Handle(params crt_store.DeleteCrtStoreParams, principal interface{}) middleware.Responder {
+func (h *DeleteCrtStoreHandlerImpl) Handle(params crt_store.DeleteCrtStoreParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

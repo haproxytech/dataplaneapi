@@ -90,7 +90,7 @@ type MergeRequest struct {
 
 var baseURL string
 
-const LABEL_COLOR = "#8fbc8f" //nolint:stylecheck
+const LABEL_COLOR = "#8fbc8f"
 
 func main() {
 	_ = godotenv.Overload()
@@ -143,34 +143,41 @@ func main() {
 
 	gitlabToken := os.Getenv("GITLAB_TOKEN")
 
-	CI_MERGE_REQUEST_IID_STR := os.Getenv("CI_MERGE_REQUEST_IID") //nolint:stylecheck
+	CI_MERGE_REQUEST_IID_STR := os.Getenv("CI_MERGE_REQUEST_IID")
 	if CI_MERGE_REQUEST_IID_STR == "" {
 		slog.Error("CI_MERGE_REQUEST_IID not set")
 		os.Exit(1)
 	}
-	CI_MERGE_REQUEST_IID, err := strconv.Atoi(CI_MERGE_REQUEST_IID_STR) //nolint:stylecheck
+	CI_MERGE_REQUEST_IID, err := strconv.Atoi(CI_MERGE_REQUEST_IID_STR)
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
 	}
 
-	CI_PROJECT_ID := os.Getenv("CI_PROJECT_ID") //nolint:stylecheck
+	CI_PROJECT_ID := os.Getenv("CI_PROJECT_ID")
 	if CI_PROJECT_ID == "" {
 		slog.Error("CI_PROJECT_ID not set")
 		os.Exit(1)
 	}
-	question := `<!-- MR BACKPORT QUESTION -->` + "\n" + "Does this needs backport ? \n| Version | label |\n|:--:|:--:|"
+	sb := strings.Builder{}
+	sb.WriteString(`<!-- MR BACKPORT QUESTION -->` + "\n" + "Does this needs backport ? \n| Version | label |\n|:--:|:--:|")
 	backportLabels := map[string]struct{}{
 		"backport-ee": {},
 	}
 	for _, version := range versions {
 		ver := strconv.Itoa(int(version.Major())) + "." + strconv.Itoa(int(version.Minor()))
-		question += "\n" + "| " + ver + " | " + "backport-" + ver + " |"
+		sb.WriteString("\n")
+		sb.WriteString("| ")
+		sb.WriteString(ver)
+		sb.WriteString(" | ")
+		sb.WriteString("backport-")
+		sb.WriteString(ver)
+		sb.WriteString(" |")
 		backportLabels["backport-"+ver] = struct{}{}
 	}
 	// ee
-	question += "\n" + "| EE | " + "backport-ee |"
-	question += "\n\n" + "please add labels for backporting."
+	sb.WriteString("\n" + "| EE | " + "backport-ee |")
+	sb.WriteString("\n\n" + "please add labels for backporting.")
 
 	mr, err := getMergeRequest(baseURL, gitlabToken, CI_PROJECT_ID, CI_MERGE_REQUEST_IID)
 	if err != nil {
@@ -199,13 +206,13 @@ func main() {
 			os.Exit(1)
 		}
 		slog.Info("No backport question found, creating one as thread")
-		startThreadOnMergeRequest(baseURL, gitlabToken, CI_PROJECT_ID, CI_MERGE_REQUEST_IID, question)
+		startThreadOnMergeRequest(baseURL, gitlabToken, CI_PROJECT_ID, CI_MERGE_REQUEST_IID, sb.String())
 	}
 }
 
 func startThreadOnMergeRequest(baseURL, token, projectID string, mergeRequestIID int, threadBody string) {
 	client := &http.Client{}
-	threadData := map[string]interface{}{
+	threadData := map[string]any{
 		"body": threadBody,
 	}
 	threadDataBytes, err := json.Marshal(threadData)

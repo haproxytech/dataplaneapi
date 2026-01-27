@@ -9,8 +9,8 @@ GIT_MODIFIED=${GIT_MODIFIED1}${GIT_MODIFIED2}
 SWAGGER_VERSION=${shell curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $$2}'}
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
-GOLANGCI_LINT_VERSION=1.64.5
-CHECK_COMMIT=5.0.4
+GOLANGCI_LINT_VERSION=2.8.0
+CHECK_COMMIT=5.4.0
 
 all: update clean build
 

@@ -43,7 +43,7 @@ type PostRawConfigurationHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
+func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyConfigurationParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -77,7 +77,7 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 }
 
 // Handle executing the request and returning a response
-func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
+func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProxyConfigurationParams, principal any) middleware.Responder {
 	v := int64(0)
 	if params.Version != nil {
 		v = *params.Version
@@ -215,8 +215,8 @@ func executeRuntimeActions(actionsStr string, client client_native.HAProxyClient
 	if err != nil {
 		return err
 	}
-	actions := strings.Split(actionsStr, ";")
-	for _, a := range actions {
+	actions := strings.SplitSeq(actionsStr, ";")
+	for a := range actions {
 		params := strings.Split(a, " ")
 		if len(params) == 0 {
 			continue

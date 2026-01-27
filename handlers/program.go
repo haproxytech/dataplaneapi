@@ -28,7 +28,7 @@ type DeleteProgramHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (d DeleteProgramHandlerImpl) Handle(params process_manager.DeleteProgramParams, _ interface{}) middleware.Responder {
+func (d DeleteProgramHandlerImpl) Handle(params process_manager.DeleteProgramParams, _ any) middleware.Responder {
 	var t string
 	var v int64
 
@@ -83,7 +83,7 @@ type CreateProgramHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (c CreateProgramHandlerImpl) Handle(params process_manager.CreateProgramParams, _ interface{}) middleware.Responder {
+func (c CreateProgramHandlerImpl) Handle(params process_manager.CreateProgramParams, _ any) middleware.Responder {
 	var t string
 	var v int64
 
@@ -137,7 +137,7 @@ type GetProgramHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetProgramHandlerImpl) Handle(params process_manager.GetProgramParams, _ interface{}) middleware.Responder {
+func (g GetProgramHandlerImpl) Handle(params process_manager.GetProgramParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -165,7 +165,7 @@ type GetProgramsHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetProgramsHandlerImpl) Handle(params process_manager.GetProgramsParams, _ interface{}) middleware.Responder {
+func (g GetProgramsHandlerImpl) Handle(params process_manager.GetProgramsParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -194,7 +194,7 @@ type ReplaceProgramHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (r ReplaceProgramHandlerImpl) Handle(params process_manager.ReplaceProgramParams, _ interface{}) middleware.Responder {
+func (r ReplaceProgramHandlerImpl) Handle(params process_manager.ReplaceProgramParams, _ any) middleware.Responder {
 	var t string
 	var v int64
 

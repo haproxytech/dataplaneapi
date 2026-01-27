@@ -26,7 +26,7 @@ type GetAllCrtListsHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetAllCrtListsHandlerImpl) Handle(params ssl_runtime.GetAllCrtListsParams, i interface{}) middleware.Responder {
+func (h GetAllCrtListsHandlerImpl) Handle(params ssl_runtime.GetAllCrtListsParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -46,7 +46,7 @@ type GetAllCrtListEntriesHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetAllCrtListEntriesHandlerImpl) Handle(params ssl_runtime.GetAllCrtListEntriesParams, i interface{}) middleware.Responder {
+func (h GetAllCrtListEntriesHandlerImpl) Handle(params ssl_runtime.GetAllCrtListEntriesParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -66,7 +66,7 @@ type AddCrtListEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h AddCrtListEntryHandlerImpl) Handle(params ssl_runtime.AddCrtListEntryParams, i interface{}) middleware.Responder {
+func (h AddCrtListEntryHandlerImpl) Handle(params ssl_runtime.AddCrtListEntryParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -86,7 +86,7 @@ type DeleteCrtListEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h DeleteCrtListEntryHandlerImpl) Handle(params ssl_runtime.DeleteCrtListEntryParams, i interface{}) middleware.Responder {
+func (h DeleteCrtListEntryHandlerImpl) Handle(params ssl_runtime.DeleteCrtListEntryParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

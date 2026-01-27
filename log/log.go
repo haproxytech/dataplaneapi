@@ -190,127 +190,127 @@ func AccessLogger() (*Logger, error) {
 	return accessLogger, nil
 }
 
-func Log(level logrus.Level, args ...interface{}) {
+func Log(level logrus.Level, args ...any) {
 	if appLogger != nil {
 		appLogger.Log(level, args...)
 	}
 }
 
-func Logf(level logrus.Level, format string, args ...interface{}) {
+func Logf(level logrus.Level, format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Logf(level, format, args...)
 	}
 }
 
-func Print(args ...interface{}) {
+func Print(args ...any) {
 	if appLogger != nil {
 		appLogger.Print(args...)
 	}
 }
 
-func Trace(args ...interface{}) {
+func Trace(args ...any) {
 	if appLogger != nil {
 		appLogger.Trace(args...)
 	}
 }
 
-func Debug(args ...interface{}) {
+func Debug(args ...any) {
 	if appLogger != nil {
 		appLogger.Debug(args...)
 	}
 }
 
-func Info(args ...interface{}) {
+func Info(args ...any) {
 	if appLogger != nil {
 		appLogger.Info(args...)
 	}
 }
 
-func Warning(args ...interface{}) {
+func Warning(args ...any) {
 	if appLogger != nil {
 		appLogger.Warning(args...)
 	}
 }
 
-func Error(args ...interface{}) {
+func Error(args ...any) {
 	if appLogger != nil {
 		appLogger.Error(args...)
 	}
 }
 
-func Panic(args ...interface{}) {
+func Panic(args ...any) {
 	if appLogger != nil {
 		appLogger.Panic(args...)
 	}
 }
 
-func Fatal(args ...interface{}) {
+func Fatal(args ...any) {
 	if appLogger != nil {
 		appLogger.Panic(args...)
 	}
 }
 
-func Printf(format string, args ...interface{}) {
+func Printf(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Printf(format, args...)
 	}
 }
 
-func Tracef(format string, args ...interface{}) {
+func Tracef(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Tracef(format, args...)
 	}
 }
 
-func Debugf(format string, args ...interface{}) {
+func Debugf(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Debugf(format, args...)
 	}
 }
 
-func Infof(format string, args ...interface{}) {
+func Infof(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Infof(format, args...)
 	}
 }
 
-func Warningf(format string, args ...interface{}) {
+func Warningf(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Warningf(format, args...)
 	}
 }
 
-func Errorf(format string, args ...interface{}) {
+func Errorf(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Errorf(format, args...)
 	}
 }
 
-func Panicf(format string, args ...interface{}) {
+func Panicf(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Panicf(format, args...)
 	}
 }
 
-func Fatalf(format string, args ...interface{}) {
+func Fatalf(format string, args ...any) {
 	if appLogger != nil {
 		appLogger.Fatalf(format, args...)
 	}
 }
 
-func Fatalln(format string, args ...interface{}) { //nolint:goprintffuncname
+func Fatalln(format string, args ...any) { //nolint:goprintffuncname
 	if appLogger != nil {
 		appLogger.Fatalln(args...)
 	}
 }
 
-func WithFields(fields map[string]interface{}, level logrus.Level, args ...interface{}) {
+func WithFields(fields map[string]any, level logrus.Level, args ...any) {
 	if appLogger != nil {
 		appLogger.WithFields(fields, level, args...)
 	}
 }
 
-func WithFieldsf(fields map[string]interface{}, level logrus.Level, format string, args ...interface{}) {
+func WithFieldsf(fields map[string]any, level logrus.Level, format string, args ...any) {
 	if appLogger != nil {
 		appLogger.WithFieldsf(fields, level, format, args...)
 	}

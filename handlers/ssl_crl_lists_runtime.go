@@ -29,7 +29,7 @@ type GetAllCrlHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetAllCrlHandlerImpl) Handle(params ssl_runtime.GetAllCrlParams, i interface{}) middleware.Responder {
+func (h GetAllCrlHandlerImpl) Handle(params ssl_runtime.GetAllCrlParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -49,7 +49,7 @@ type CreateCrlHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h CreateCrlHandlerImpl) Handle(params ssl_runtime.CreateCrlParams, i interface{}) middleware.Responder {
+func (h CreateCrlHandlerImpl) Handle(params ssl_runtime.CreateCrlParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -92,7 +92,7 @@ type GetCrlHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetCrlHandlerImpl) Handle(params ssl_runtime.GetCrlParams, i interface{}) middleware.Responder {
+func (h GetCrlHandlerImpl) Handle(params ssl_runtime.GetCrlParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -112,7 +112,7 @@ type ReplaceCrlHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h ReplaceCrlHandlerImpl) Handle(params ssl_runtime.ReplaceCrlParams, i interface{}) middleware.Responder {
+func (h ReplaceCrlHandlerImpl) Handle(params ssl_runtime.ReplaceCrlParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -144,7 +144,7 @@ type DeleteCrlHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h DeleteCrlHandlerImpl) Handle(params ssl_runtime.DeleteCrlParams, i interface{}) middleware.Responder {
+func (h DeleteCrlHandlerImpl) Handle(params ssl_runtime.DeleteCrlParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

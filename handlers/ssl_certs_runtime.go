@@ -29,7 +29,7 @@ type GetAllCertsHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetAllCertsHandlerImpl) Handle(params ssl_runtime.GetAllCertsParams, i interface{}) middleware.Responder {
+func (h GetAllCertsHandlerImpl) Handle(params ssl_runtime.GetAllCertsParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -49,7 +49,7 @@ type CreateCertHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h CreateCertHandlerImpl) Handle(params ssl_runtime.CreateCertParams, i interface{}) middleware.Responder {
+func (h CreateCertHandlerImpl) Handle(params ssl_runtime.CreateCertParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -93,7 +93,7 @@ type GetCertHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetCertHandlerImpl) Handle(params ssl_runtime.GetCertParams, i interface{}) middleware.Responder {
+func (h GetCertHandlerImpl) Handle(params ssl_runtime.GetCertParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -113,7 +113,7 @@ type ReplaceCertHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h ReplaceCertHandlerImpl) Handle(params ssl_runtime.ReplaceCertParams, i interface{}) middleware.Responder {
+func (h ReplaceCertHandlerImpl) Handle(params ssl_runtime.ReplaceCertParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -147,7 +147,7 @@ type DeleteCertHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h DeleteCertHandlerImpl) Handle(params ssl_runtime.DeleteCertParams, i interface{}) middleware.Responder {
+func (h DeleteCertHandlerImpl) Handle(params ssl_runtime.DeleteCertParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

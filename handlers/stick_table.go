@@ -47,7 +47,7 @@ type SetStickTableEntriesHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
+func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -68,7 +68,7 @@ func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesPara
 }
 
 // Handle executing the request and returning a response
-func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams, principal interface{}) middleware.Responder {
+func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -96,7 +96,7 @@ func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams
 }
 
 // Handle executing the request and returning a response
-func (h *SetStickTableEntriesHandlerImpl) Handle(params stick_table.SetStickTableEntriesParams, principal interface{}) middleware.Responder {
+func (h *SetStickTableEntriesHandlerImpl) Handle(params stick_table.SetStickTableEntriesParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -113,7 +113,7 @@ func (h *SetStickTableEntriesHandlerImpl) Handle(params stick_table.SetStickTabl
 }
 
 // Handle executing the request and returning a response
-func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTableEntriesParams, principal interface{}) middleware.Responder {
+func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTableEntriesParams, principal any) middleware.Responder {
 	filter := make([]string, 0)
 	if params.Filter != nil {
 		filter = strings.Split(*params.Filter, ",")

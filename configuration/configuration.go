@@ -324,7 +324,7 @@ func (c *Configuration) LoadDataplaneStorageConfig() ([]string, error) {
 }
 
 func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string, port int) error {
-	var m map[string]interface{}
+	var m map[string]any
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(swaggerJSON, &m)
 	if err != nil {

@@ -54,7 +54,7 @@ type ReplaceCacheHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateCacheHandlerImpl) Handle(params cache.CreateCacheParams, principal interface{}) middleware.Responder {
+func (h *CreateCacheHandlerImpl) Handle(params cache.CreateCacheParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreateCacheHandlerImpl) Handle(params cache.CreateCacheParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteCacheHandlerImpl) Handle(params cache.DeleteCacheParams, principal interface{}) middleware.Responder {
+func (h *DeleteCacheHandlerImpl) Handle(params cache.DeleteCacheParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteCacheHandlerImpl) Handle(params cache.DeleteCacheParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *GetCacheHandlerImpl) Handle(params cache.GetCacheParams, principal interface{}) middleware.Responder {
+func (h *GetCacheHandlerImpl) Handle(params cache.GetCacheParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetCacheHandlerImpl) Handle(params cache.GetCacheParams, principal inte
 }
 
 // Handle executing the request and returning a response
-func (h *GetCachesHandlerImpl) Handle(params cache.GetCachesParams, principal interface{}) middleware.Responder {
+func (h *GetCachesHandlerImpl) Handle(params cache.GetCachesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -191,7 +191,7 @@ func (h *GetCachesHandlerImpl) Handle(params cache.GetCachesParams, principal in
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceCacheHandlerImpl) Handle(params cache.ReplaceCacheParams, principal interface{}) middleware.Responder {
+func (h *ReplaceCacheHandlerImpl) Handle(params cache.ReplaceCacheParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

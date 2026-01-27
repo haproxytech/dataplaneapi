@@ -16,7 +16,7 @@ type CreateHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.CreateHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
+func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.CreateHTTPAfterResponseRuleBackendParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -67,7 +67,7 @@ type DeleteHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
+func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -117,7 +117,7 @@ type GetHTTPAfterResponseRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.GetHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
+func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.GetHTTPAfterResponseRuleBackendParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -143,7 +143,7 @@ type GetAllHTTPAfterResponseRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetAllHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.GetAllHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
+func (g GetAllHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.GetAllHTTPAfterResponseRuleBackendParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -170,7 +170,7 @@ type ReplaceHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
+func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -222,7 +222,7 @@ type ReplaceAllHTTPAfterResponseRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

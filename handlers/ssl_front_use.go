@@ -29,7 +29,7 @@ type GetAllSSLFrontUsesHandlerImpl struct {
 	Client cn.HAProxyClient
 }
 
-func (h GetAllSSLFrontUsesHandlerImpl) Handle(params sfu.GetAllSSLFrontUsesParams, i interface{}) middleware.Responder {
+func (h GetAllSSLFrontUsesHandlerImpl) Handle(params sfu.GetAllSSLFrontUsesParams, i any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -55,7 +55,7 @@ type CreateSSLFrontUseHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h CreateSSLFrontUseHandlerImpl) Handle(params sfu.CreateSSLFrontUseParams, i interface{}) middleware.Responder {
+func (h CreateSSLFrontUseHandlerImpl) Handle(params sfu.CreateSSLFrontUseParams, i any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -107,7 +107,7 @@ type GetSSLFrontUseHandlerImpl struct {
 	Client cn.HAProxyClient
 }
 
-func (h GetSSLFrontUseHandlerImpl) Handle(params sfu.GetSSLFrontUseParams, i interface{}) middleware.Responder {
+func (h GetSSLFrontUseHandlerImpl) Handle(params sfu.GetSSLFrontUseParams, i any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -133,7 +133,7 @@ type ReplaceSSLFrontUseHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h ReplaceSSLFrontUseHandlerImpl) Handle(params sfu.ReplaceSSLFrontUseParams, i interface{}) middleware.Responder {
+func (h ReplaceSSLFrontUseHandlerImpl) Handle(params sfu.ReplaceSSLFrontUseParams, i any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -186,7 +186,7 @@ type DeleteSSLFrontUseHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h DeleteSSLFrontUseHandlerImpl) Handle(params sfu.DeleteSSLFrontUseParams, i interface{}) middleware.Responder {
+func (h DeleteSSLFrontUseHandlerImpl) Handle(params sfu.DeleteSSLFrontUseParams, i any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

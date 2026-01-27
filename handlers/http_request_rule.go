@@ -61,7 +61,7 @@ type ReplaceAllHTTPRequestRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.CreateHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.CreateHTTPRequestRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -109,7 +109,7 @@ func (h *CreateHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.DeleteHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.DeleteHTTPRequestRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -156,7 +156,7 @@ func (h *DeleteHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.GetHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.GetHTTPRequestRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -177,7 +177,7 @@ func (h *GetHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentTy
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.GetAllHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.GetAllHTTPRequestRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -201,7 +201,7 @@ func (h *GetAllHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.ReplaceHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.ReplaceHTTPRequestRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -248,7 +248,7 @@ func (h *ReplaceHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnPare
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.ReplaceAllHTTPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_request_rule.ReplaceAllHTTPRequestRuleBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

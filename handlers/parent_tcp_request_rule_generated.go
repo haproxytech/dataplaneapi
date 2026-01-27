@@ -56,103 +56,103 @@ type (
 	ReplaceAllTCPRequestRuleDefaultsHandlerImpl ReplaceAllTCPRequestRuleHandlerImpl
 )
 
-func (h *CreateTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleBackendParams, principal any) middleware.Responder {
 	g := CreateTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *CreateTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleFrontendParams, principal any) middleware.Responder {
 	g := CreateTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.CreateTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *CreateTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleDefaultsParams, principal any) middleware.Responder {
 	g := CreateTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.CreateTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleBackendParams, principal any) middleware.Responder {
 	g := GetTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleFrontendParams, principal any) middleware.Responder {
 	g := GetTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.GetTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleDefaultsParams, principal any) middleware.Responder {
 	g := GetTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.GetTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *GetAllTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleBackendParams, principal any) middleware.Responder {
 	g := GetAllTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *GetAllTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleFrontendParams, principal any) middleware.Responder {
 	g := GetAllTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.GetAllTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *GetAllTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.GetAllTCPRequestRuleDefaultsParams, principal any) middleware.Responder {
 	g := GetAllTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.GetAllTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *DeleteTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleBackendParams, principal any) middleware.Responder {
 	g := DeleteTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *DeleteTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleFrontendParams, principal any) middleware.Responder {
 	g := DeleteTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.DeleteTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *DeleteTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleDefaultsParams, principal any) middleware.Responder {
 	g := DeleteTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.DeleteTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.ReplaceTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.ReplaceTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
-func (h *ReplaceAllTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPRequestRuleBackendHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPRequestRuleHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
 }
 
-func (h *ReplaceAllTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleFrontendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPRequestRuleFrontendHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleFrontendParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.FrontendParentType, pg, principal)
 }
 
-func (h *ReplaceAllTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPRequestRuleDefaultsHandlerImpl) Handle(params tcp_request_rule.ReplaceAllTCPRequestRuleDefaultsParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPRequestRuleHandlerImpl(*h)
 	pg := tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)

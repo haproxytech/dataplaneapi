@@ -61,7 +61,7 @@ type ReplaceAllHTTPCheckHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.CreateHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.CreateHTTPCheckBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -109,7 +109,7 @@ func (h *CreateHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType,
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.DeleteHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.DeleteHTTPCheckBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -156,7 +156,7 @@ func (h *DeleteHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType,
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.GetHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.GetHTTPCheckBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -177,7 +177,7 @@ func (h *GetHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 }
 
 // Handle executing the request and returning a response
-func (h *GetAllHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.GetAllHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *GetAllHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.GetAllHTTPCheckBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -201,7 +201,7 @@ func (h *GetAllHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType,
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.ReplaceHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.ReplaceHTTPCheckBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -248,7 +248,7 @@ func (h *ReplaceHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAllHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.ReplaceAllHTTPCheckBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPCheckHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_check.ReplaceAllHTTPCheckBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

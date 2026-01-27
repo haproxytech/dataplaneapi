@@ -29,7 +29,7 @@ type GetLogProfilesHandlerImpl struct {
 }
 
 // Get all log-profiles
-func (h *GetLogProfilesHandlerImpl) Handle(params log_profile.GetLogProfilesParams, principal interface{}) middleware.Responder {
+func (h *GetLogProfilesHandlerImpl) Handle(params log_profile.GetLogProfilesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -55,7 +55,7 @@ type GetLogProfileHandlerImpl struct {
 }
 
 // Get one log-profile
-func (h *GetLogProfileHandlerImpl) Handle(params log_profile.GetLogProfileParams, principal interface{}) middleware.Responder {
+func (h *GetLogProfileHandlerImpl) Handle(params log_profile.GetLogProfileParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -81,7 +81,7 @@ type CreateLogProfileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *CreateLogProfileHandlerImpl) Handle(params log_profile.CreateLogProfileParams, principal interface{}) middleware.Responder {
+func (h *CreateLogProfileHandlerImpl) Handle(params log_profile.CreateLogProfileParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -133,7 +133,7 @@ type EditLogProfileHandler struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *EditLogProfileHandler) Handle(params log_profile.EditLogProfileParams, principal interface{}) middleware.Responder {
+func (h *EditLogProfileHandler) Handle(params log_profile.EditLogProfileParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -173,7 +173,7 @@ type DeleteLogProfileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *DeleteLogProfileHandlerImpl) Handle(params log_profile.DeleteLogProfileParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogProfileHandlerImpl) Handle(params log_profile.DeleteLogProfileParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

@@ -29,7 +29,7 @@ type GetAllCaFilesHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetAllCaFilesHandlerImpl) Handle(params ssl_runtime.GetAllCaFilesParams, i interface{}) middleware.Responder {
+func (h GetAllCaFilesHandlerImpl) Handle(params ssl_runtime.GetAllCaFilesParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -49,7 +49,7 @@ type CreateCaFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h CreateCaFileHandlerImpl) Handle(params ssl_runtime.CreateCaFileParams, i interface{}) middleware.Responder {
+func (h CreateCaFileHandlerImpl) Handle(params ssl_runtime.CreateCaFileParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -92,7 +92,7 @@ type GetCaFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetCaFileHandlerImpl) Handle(params ssl_runtime.GetCaFileParams, i interface{}) middleware.Responder {
+func (h GetCaFileHandlerImpl) Handle(params ssl_runtime.GetCaFileParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -112,7 +112,7 @@ type SetCaFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h SetCaFileHandlerImpl) Handle(params ssl_runtime.SetCaFileParams, i interface{}) middleware.Responder {
+func (h SetCaFileHandlerImpl) Handle(params ssl_runtime.SetCaFileParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -142,7 +142,7 @@ type DeleteCaFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h DeleteCaFileHandlerImpl) Handle(params ssl_runtime.DeleteCaFileParams, i interface{}) middleware.Responder {
+func (h DeleteCaFileHandlerImpl) Handle(params ssl_runtime.DeleteCaFileParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -161,7 +161,7 @@ type AddCaEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h AddCaEntryHandlerImpl) Handle(params ssl_runtime.AddCaEntryParams, i interface{}) middleware.Responder {
+func (h AddCaEntryHandlerImpl) Handle(params ssl_runtime.AddCaEntryParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -191,7 +191,7 @@ type GetCaEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetCaEntryHandlerImpl) Handle(params ssl_runtime.GetCaEntryParams, i interface{}) middleware.Responder {
+func (h GetCaEntryHandlerImpl) Handle(params ssl_runtime.GetCaEntryParams, i any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

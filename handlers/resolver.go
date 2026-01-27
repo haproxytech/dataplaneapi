@@ -54,7 +54,7 @@ type ReplaceResolverHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateResolverHandlerImpl) Handle(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
+func (h *CreateResolverHandlerImpl) Handle(params resolver.CreateResolverParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -113,7 +113,7 @@ func (h *CreateResolverHandlerImpl) getResolver(params resolver.CreateResolverPa
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
+func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -160,7 +160,7 @@ func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams,
 }
 
 // Handle executing the request and returning a response
-func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, principal interface{}) middleware.Responder {
+func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -186,7 +186,7 @@ func (h *GetResolverHandlerImpl) getResolver(params resolver.GetResolverParams, 
 }
 
 // Handle executing the request and returning a response
-func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, principal interface{}) middleware.Responder {
+func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -212,7 +212,7 @@ func (h *GetResolversHandlerImpl) getResolvers(params resolver.GetResolversParam
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceResolverHandlerImpl) Handle(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
+func (h *ReplaceResolverHandlerImpl) Handle(params resolver.ReplaceResolverParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
