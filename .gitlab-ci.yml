@@ -180,51 +180,9 @@ govulncheck:
     - go mod tidy
     - go run cmd/govulncheck-report/main.go
 
-HAProxy_2_2:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "2.2"
-HAProxy_2_4:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "2.4"
-HAProxy_2_6:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "2.6"
-HAProxy_2_8:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "2.8"
-HAProxy_3_0:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "3.0"
-HAProxy_3_1:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "3.0"
 HAProxy_3_2:
   extends: .e2e
   parallel:
     matrix:
-      - TESTPART: ["1/2", "2/2"]
+      - TESTPART: ["1/4", "2/4", "3/4", "4/4"]
         HAPROXY_VERSION: "3.2"
-HAProxy_3_3:
-  extends: .e2e
-  parallel:
-    matrix:
-      - TESTPART: ["1/2", "2/2"]
-        HAPROXY_VERSION: "3.3"
