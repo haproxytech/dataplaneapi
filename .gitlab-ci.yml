@@ -192,9 +192,9 @@ govulncheck:
     - go mod tidy
     - go run cmd/govulncheck-report/main.go
 
-HAProxy_3.4:
+HAProxy_3.3:
   extends: .e2e
   parallel:
     matrix:
       - TESTPART: ["1/4", "2/4", "3/4", "4/4"]
-        HAPROXY_VERSION: "3.4"
+        HAPROXY_VERSION: "3.3"
