@@ -5,12 +5,13 @@ package acme
 import (
 	"fmt"
 
+	"github.com/haproxytech/dataplaneapi/acme/exec"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/libdns/azure"
 	"github.com/libdns/cloudflare"
 	"github.com/libdns/cloudns"
+	"github.com/libdns/desec"
 	"github.com/libdns/digitalocean"
-	"github.com/haproxytech/dataplaneapi/acme/exec"
 	"github.com/libdns/gandi"
 	"github.com/libdns/godaddy"
 	"github.com/libdns/googleclouddns"
@@ -39,6 +40,8 @@ func NewDNSProvider(name string, params map[string]any) (DNSProvider, error) {
 		prov = &cloudflare.Provider{}
 	case "cloudns":
 		prov = &cloudns.Provider{}
+	case "desec":
+		prov = &desec.Provider{}
 	case "digitalocean":
 		prov = &digitalocean.Provider{}
 	case "exec":
