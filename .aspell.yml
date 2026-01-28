@@ -126,6 +126,7 @@ allowed:
 - tooltip
 - tsconfig
 - ubuntu
+- uid
 - uniq
 - unix
 - unsub
