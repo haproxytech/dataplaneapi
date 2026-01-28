@@ -40,3 +40,4 @@ allowed:
   - backport
   - dns
   - newcert
+  - uid
