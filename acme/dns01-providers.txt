@@ -1,6 +1,7 @@
 github.com/libdns/azure
 github.com/libdns/cloudflare
 github.com/libdns/cloudns
+github.com/libdns/desec
 github.com/libdns/digitalocean
 github.com/haproxytech/dataplaneapi/acme/exec
 github.com/libdns/gandi
