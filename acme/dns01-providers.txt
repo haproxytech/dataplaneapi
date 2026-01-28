@@ -16,6 +16,6 @@ github.com/libdns/netcup
 github.com/libdns/ovh
 github.com/libdns/porkbun
 github.com/libdns/rfc2136
-//github.com/libdns/route53  req. go1.25
+github.com/libdns/route53
 github.com/libdns/scaleway
 github.com/libdns/vultr/v2

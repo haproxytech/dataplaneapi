@@ -5,12 +5,12 @@ package acme
 import (
 	"fmt"
 
-	"github.com/haproxytech/dataplaneapi/acme/exec"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/libdns/azure"
 	"github.com/libdns/cloudflare"
 	"github.com/libdns/cloudns"
 	"github.com/libdns/digitalocean"
+	"github.com/haproxytech/dataplaneapi/acme/exec"
 	"github.com/libdns/gandi"
 	"github.com/libdns/godaddy"
 	"github.com/libdns/googleclouddns"
@@ -24,6 +24,7 @@ import (
 	"github.com/libdns/ovh"
 	"github.com/libdns/porkbun"
 	"github.com/libdns/rfc2136"
+	"github.com/libdns/route53"
 	"github.com/libdns/scaleway"
 	"github.com/libdns/vultr/v2"
 )
@@ -68,6 +69,8 @@ func NewDNSProvider(name string, params map[string]any) (DNSProvider, error) {
 		prov = &porkbun.Provider{}
 	case "rfc2136":
 		prov = &rfc2136.Provider{}
+	case "route53":
+		prov = &route53.Provider{}
 	case "scaleway":
 		prov = &scaleway.Provider{}
 	case "vultr":
