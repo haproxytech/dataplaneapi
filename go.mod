@@ -51,6 +51,7 @@ require (
 	github.com/libdns/ovh v1.1.0
 	github.com/libdns/porkbun v1.1.0
 	github.com/libdns/rfc2136 v1.0.1
+	github.com/libdns/route53 v1.6.0
 	github.com/libdns/scaleway v0.2.3
 	github.com/libdns/vultr/v2 v2.0.4
 	github.com/maruel/panicparse/v2 v2.5.0
@@ -82,6 +83,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.9 // indirect
+	github.com/aws/aws-sdk-go-v2/service/route53 v1.58.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.29.6 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.38.6 // indirect
