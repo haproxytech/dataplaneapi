@@ -7,8 +7,8 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-debian
   BATS_VERSION: v1.4.1
-  GO_VERSION: "1.24"
-  DOCKER_VERSION: "26.0"
+  GO_VERSION: "1.25"
+  DOCKER_VERSION: "29.1"
 
 diff:
   stage: lint
@@ -61,7 +61,7 @@ gofumpt:
 commit-policy:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/commit-check:5.0.4
+    name: $CI_REGISTRY_GO/commit-check:5.4.2
     entrypoint: [""]
   tags:
     - go
@@ -106,7 +106,7 @@ build:
   before_script:
     - apk add git bash curl jq git
     - git clone https://github.com/bats-core/bats-core.git && cd bats-core && git checkout $BATS_VERSION && ./install.sh /usr/local && cd ..
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY_GO
+    - docker login -u='$app' -p $CI_REGISTRY_TOKEN $CI_REGISTRY_GO
   script:
     - bash -x ./e2e/run.bash
   rules:
