@@ -81,14 +81,16 @@ type configTypeUserlist struct {
 }
 
 type configTypeReload struct {
-	ReloadDelay     *int    `yaml:"reload_delay,omitempty"`
-	ReloadCmd       *string `yaml:"reload_cmd,omitempty"`
-	RestartCmd      *string `yaml:"restart_cmd,omitempty"`
-	StatusCmd       *string `yaml:"status_cmd,omitempty"`
-	ServiceName     *string `yaml:"service_name,omitempty"`
-	ReloadRetention *int    `yaml:"reload_retention,omitempty"`
-	ReloadStrategy  *string `yaml:"reload_strategy,omitempty"`
-	ValidateCmd     *string `yaml:"validate_cmd,omitempty"`
+	ReloadDelay         *int      `yaml:"reload_delay,omitempty"`
+	ReloadCmd           *string   `yaml:"reload_cmd,omitempty"`
+	RestartCmd          *string   `yaml:"restart_cmd,omitempty"`
+	StatusCmd           *string   `yaml:"status_cmd,omitempty"`
+	ServiceName         *string   `yaml:"service_name,omitempty"`
+	ReloadRetention     *int      `yaml:"reload_retention,omitempty"`
+	ReloadStrategy      *string   `yaml:"reload_strategy,omitempty"`
+	ValidateCmd         *string   `yaml:"validate_cmd,omitempty"`
+	ValidateFilesBefore *[]string `yaml:"validate_files_before,omitempty"`
+	ValidateFilesAfter  *[]string `yaml:"validate_files_after,omitempty"`
 }
 
 type configTypeTransaction struct {
@@ -251,6 +253,12 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.Reload != nil && cfgStorage.Haproxy.Reload.ValidateCmd != nil && !misc.HasOSArg("", "validate-cmd", "") {
 		cfg.HAProxy.ValidateCmd = *cfgStorage.Haproxy.Reload.ValidateCmd
+	}
+	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.Reload != nil && cfgStorage.Haproxy.Reload.ValidateFilesBefore != nil && !misc.HasOSArg("", "validate-files-before", "") {
+		cfg.HAProxy.ValidateFilesBefore = *cfgStorage.Haproxy.Reload.ValidateFilesBefore
+	}
+	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.Reload != nil && cfgStorage.Haproxy.Reload.ValidateFilesAfter != nil && !misc.HasOSArg("", "validate-files-after", "") {
+		cfg.HAProxy.ValidateFilesAfter = *cfgStorage.Haproxy.Reload.ValidateFilesAfter
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Transaction != nil && cfgStorage.Dataplaneapi.Transaction.TransactionDir != nil && !misc.HasOSArg("t", "transaction-dir", "") {
 		cfg.HAProxy.TransactionDir = *cfgStorage.Dataplaneapi.Transaction.TransactionDir
