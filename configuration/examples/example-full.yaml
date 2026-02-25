@@ -72,6 +72,9 @@ haproxy:
     reload_retention: 1 # int 2
     reload_strategy: custom
     validate_cmd: null # string 2
+    validate_files_before:
+    - "/etc/haproxy/global.def"
+    validate_files_after: [] # []string
 cluster: # Deprecated starting 3.0, see ./README.md for more information
   cluster_tls_dir: null # string
   id: null # string
