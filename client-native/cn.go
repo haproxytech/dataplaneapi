@@ -34,6 +34,7 @@ func ConfigureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		configuration_options.UsePersistentTransactions,
 		configuration_options.TransactionsDir(haproxyOptions.TransactionDir),
 		configuration_options.ValidateCmd(haproxyOptions.ValidateCmd),
+		configuration_options.ValidateConfigFiles(haproxyOptions.ValidateFilesBefore, haproxyOptions.ValidateFilesAfter),
 		configuration_options.MasterWorker,
 		configuration_options.UseMd5Hash,
 		configuration_options.PreferredTimeSuffix(haproxyOptions.PreferredTimeSuffix),

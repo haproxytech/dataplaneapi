@@ -49,6 +49,8 @@ type HAProxyConfiguration struct {
 	ReloadStrategy       string        `long:"reload-strategy" description:"Either systemd, s6 or custom" default:"custom" group:"reload"`
 	TransactionDir       string        `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy" group:"transaction"`
 	ValidateCmd          string        `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check" group:"reload"`
+	ValidateFilesBefore  []string      `long:"validate-files-before" description:"A list of configuration files to be loaded before the main file for validation" group:"reload"`
+	ValidateFilesAfter   []string      `long:"validate-files-after" description:"A list of configuration files to be loaded after the main file for validation" group:"reload"`
 	BackupsDir           string        `long:"backups-dir" description:"Path to directory in which to place backup files" group:"transaction"`
 	MapsDir              string        `short:"p" long:"maps-dir" description:"Path to directory of map files managed by dataplane" default:"/etc/haproxy/maps" group:"resources"`
 	SpoeTransactionDir   string        `long:"spoe-transaction-dir" description:"Path to the SPOE transaction directory" default:"/tmp/spoe-haproxy" group:"resources"`
