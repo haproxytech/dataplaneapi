@@ -222,6 +222,9 @@ func executeRuntimeActions(actionsStr string, client client_native.HAProxyClient
 			continue
 		}
 		action := params[0]
+		if action == "" {
+			continue
+		}
 		switch action {
 		case "SetFrontendMaxConn":
 			if len(params) > 2 {
