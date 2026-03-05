@@ -57,6 +57,10 @@ load 'utils/_helpers'
   resource_post "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries" "data/post.json"
   assert_equal "$SC" 201
   assert_equal "$(get_json_path "${BODY}" " .value" )" "/js"
+
+  # Adding the same entry twice should return a 409 error.
+  resource_post "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries" "data/post.json"
+  assert_equal "$SC" 409
 }
 
 @test "acl_runtime: Delete an ACL file entry by its ID" {

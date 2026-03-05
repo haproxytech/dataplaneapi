@@ -102,6 +102,8 @@ func HandleError(err error) *models.Error {
 		code := ErrHTTPInternalServerError
 		if errors.Is(t, client_errors.ErrNotFound) {
 			code = ErrHTTPNotFound
+		} else if errors.Is(t, client_errors.ErrAlreadyExists) {
+			code = ErrHTTPConflict
 		}
 		return &models.Error{Code: &code, Message: &msg}
 	}
