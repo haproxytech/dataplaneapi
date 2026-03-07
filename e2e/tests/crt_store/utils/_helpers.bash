@@ -17,4 +17,3 @@
 
 _STORE_NAME="test_store1"
 _CRT_STORE_PATH="/services/haproxy/configuration/crt_stores"
-_CRT_LOAD_PATH="/services/haproxy/configuration/crt_loads"
