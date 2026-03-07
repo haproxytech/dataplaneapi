@@ -44,6 +44,8 @@ setup() {
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
 
+    sleep 3
+
     assert dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 
     post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
@@ -94,6 +96,7 @@ setup() {
     dpa_curl_status_body '$output'
     assert_equal "$SC" 202
 
+    sleep 3
     assert dpa_diff_docker_file '/etc/haproxy/ssl/1.pem' "data/2.pem"
 }
 
@@ -107,6 +110,7 @@ setup() {
     dpa_curl_status_body '$output'
     assert_equal "$SC" 200
 
+    sleep 3
     # confirm haproxy wasn't reloaded or restarted
     post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
     new_logs_count=$(( $pre_logs_count - $post_logs_count ))
@@ -117,6 +121,7 @@ setup() {
     resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/1.pem"
     assert_equal "$SC" 202
 
+    sleep 3
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 }
 
@@ -144,6 +149,7 @@ setup() {
     resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/7.pem" "skip_reload=true"
     assert_equal "$SC" 204
 
+    sleep 3
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/7.pem'
 }
 
@@ -162,6 +168,8 @@ setup() {
     assert_equal $SC 201
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
+
+    sleep 3
 
     assert dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 
