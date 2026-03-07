@@ -44,6 +44,7 @@ allowed:
   - txt
   - testname
   - uid
+  - url
   - DPAPI
   - PROPAGDELAY
   - PROPAGTIMEOUT
