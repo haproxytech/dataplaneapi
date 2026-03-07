@@ -17195,7 +17195,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -20276,6 +20276,10 @@ func init() {
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
         },
         "fifty_one_degrees_options": {
           "type": "object",
@@ -27361,7 +27365,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "target_server": "www"
       }
@@ -56579,7 +56583,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -59606,6 +59610,10 @@ func init() {
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
         },
         "fifty_one_degrees_options": {
           "type": "object",
@@ -66547,7 +66555,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "target_server": "www"
       }
