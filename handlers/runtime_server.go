@@ -17,6 +17,7 @@ package handlers
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -122,24 +123,80 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 		return server.NewReplaceRuntimeServerNotFound().WithPayload(&models.Error{Code: &code, Message: &msg})
 	}
 
+	// save original values for rollback
+	origOperationalState := rs.OperationalState
+	origAdminState := rs.AdminState
+	origWeight := rs.Weight
+
+	var changedOperational, changedAdmin, changedWeight bool
+
 	// change operational state
 	if params.Data.OperationalState != "" && rs.OperationalState != params.Data.OperationalState {
-		err = runtime.SetServerHealth(params.ParentName, params.Name, params.Data.OperationalState)
-		if err != nil {
+		if err = runtime.SetServerHealth(params.ParentName, params.Name, params.Data.OperationalState); err != nil {
 			e := misc.HandleError(err)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 		}
+		changedOperational = true
 	}
 
 	// change admin state
 	if params.Data.AdminState != "" && rs.AdminState != params.Data.AdminState {
-		err = runtime.SetServerState(params.ParentName, params.Name, params.Data.AdminState)
-		if err != nil {
+		if err = runtime.SetServerState(params.ParentName, params.Name, params.Data.AdminState); err != nil {
 			e := misc.HandleError(err)
+			if changedOperational {
+				//nolint:errcheck
+				runtime.SetServerHealth(params.ParentName, params.Name, origOperationalState)
+			}
+			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
+		}
+		changedAdmin = true
+	}
 
-			// try to revert operational state and fall silently
-			//nolint:errcheck
-			runtime.SetServerHealth(params.ParentName, params.Name, rs.OperationalState)
+	// change weight
+	if params.Data.Weight != nil && (rs.Weight == nil || *params.Data.Weight != *rs.Weight) {
+		if err = runtime.SetServerWeight(params.ParentName, params.Name, strconv.FormatInt(*params.Data.Weight, 10)); err != nil {
+			e := misc.HandleError(err)
+			if changedAdmin {
+				//nolint:errcheck
+				runtime.SetServerState(params.ParentName, params.Name, origAdminState)
+			}
+			if changedOperational {
+				//nolint:errcheck
+				runtime.SetServerHealth(params.ParentName, params.Name, origOperationalState)
+			}
+			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
+		}
+		changedWeight = true
+	}
+
+	// change address/port
+	addrChanged := params.Data.Address != "" && rs.Address != params.Data.Address
+	portChanged := params.Data.Port != nil && (rs.Port == nil || *params.Data.Port != *rs.Port)
+	if addrChanged || portChanged {
+		newAddr := rs.Address
+		if params.Data.Address != "" {
+			newAddr = params.Data.Address
+		}
+		var newPort int
+		if params.Data.Port != nil {
+			newPort = int(*params.Data.Port)
+		} else if rs.Port != nil {
+			newPort = int(*rs.Port)
+		}
+		if err = runtime.SetServerAddr(params.ParentName, params.Name, newAddr, newPort); err != nil {
+			e := misc.HandleError(err)
+			if changedWeight {
+				//nolint:errcheck
+				runtime.SetServerWeight(params.ParentName, params.Name, formatWeightPtr(origWeight))
+			}
+			if changedAdmin {
+				//nolint:errcheck
+				runtime.SetServerState(params.ParentName, params.Name, origAdminState)
+			}
+			if changedOperational {
+				//nolint:errcheck
+				runtime.SetServerHealth(params.ParentName, params.Name, origOperationalState)
+			}
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 		}
 	}
@@ -151,6 +208,13 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 	}
 
 	return server.NewReplaceRuntimeServerOK().WithPayload(rs)
+}
+
+func formatWeightPtr(w *int64) string {
+	if w == nil {
+		return "0"
+	}
+	return strconv.FormatInt(*w, 10)
 }
 
 // Adds a new server dynamically without modifying the configuration.
