@@ -45,7 +45,7 @@ func NewDeleteCrtLoad(ctx *middleware.Context, handler DeleteCrtLoadHandler) *De
 }
 
 /*
-	DeleteCrtLoad swagger:route DELETE /services/haproxy/configuration/crt_loads/{certificate} CrtLoad deleteCrtLoad
+	DeleteCrtLoad swagger:route DELETE /services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate} CrtLoad deleteCrtLoad
 
 # Delete a certificate load entry
 

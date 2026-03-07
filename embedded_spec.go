@@ -6050,7 +6050,101 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads": {
+    "/services/haproxy/configuration/crt_stores": {
+      "get": {
+        "description": "Returns an array of all the configured crt_store sections in HAProxy",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return all the Certificate Stores",
+        "operationId": "getCrtStores",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_stores"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new crt_store section",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Add a new Certificate Store",
+        "operationId": "createCrtStore",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate Store created",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads": {
       "get": {
         "description": "Returns the list of loaded certificates from the specified crt_store",
         "tags": [
@@ -6063,7 +6157,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6100,7 +6194,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6152,7 +6246,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads/{certificate}": {
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}": {
       "get": {
         "description": "Returns one load entry by its certificate name in the specified crt_store",
         "tags": [
@@ -6172,7 +6266,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6219,7 +6313,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6289,7 +6383,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6324,94 +6418,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_stores": {
-      "get": {
-        "description": "Returns an array of all the configured crt_store sections in HAProxy",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Return all the Certificate Stores",
-        "operationId": "getCrtStores",
-        "parameters": [
-          {
-            "$ref": "#/parameters/transaction_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/crt_stores"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new crt_store section",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Add a new Certificate Store",
-        "operationId": "createCrtStore",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          },
-          {
-            "$ref": "#/parameters/force_reload"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Certificate Store created",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "409": {
-            "$ref": "#/responses/AlreadyExists"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
     "/services/haproxy/configuration/crt_stores/{name}": {
       "get": {
         "description": "Returns crt_store section by its name",
@@ -6430,6 +6436,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6484,6 +6493,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6539,6 +6551,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -27244,8 +27259,8 @@ func init() {
           }
         },
         "http_send_name_header": {
+          "description": "The header string to use to send the server name",
           "type": "string",
-          "x-display-name": "The header string to use to send the server name",
           "x-nullable": true
         },
         "httpchk_params": {
@@ -27648,7 +27663,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -29035,6 +29050,26 @@ func init() {
     },
     "crt_store": {
       "description": "Storage mechanism to load and store certificates used in the configuration",
+      "title": "Certificate Store",
+      "allOf": [
+        {
+          "$ref": "#/definitions/crt_store_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "crt_loads": {
+              "additionalProperties": {
+                "$ref": "#/definitions/crt_load"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "CrtStore"
+    },
+    "crt_store_base": {
+      "description": "Storage mechanism to load and store certificates used in the configuration",
       "type": "object",
       "title": "Certificate Store",
       "required": [
@@ -29048,9 +29083,6 @@ func init() {
         "key_base": {
           "description": "Default directory to fetch SSL private keys from",
           "type": "string"
-        },
-        "loads": {
-          "$ref": "#/definitions/crt_loads"
         },
         "metadata": {
           "additionalProperties": {
@@ -29564,8 +29596,8 @@ func init() {
           ]
         },
         "http_send_name_header": {
+          "description": "Add the server name to a request",
           "type": "string",
-          "x-display-name": "Add the server name to a request",
           "x-nullable": true
         },
         "http_use_proxy_header": {
@@ -29672,8 +29704,8 @@ func init() {
           "x-display-name": "Log ASAP"
         },
         "max_keep_alive_queue": {
+          "description": "Maximum server queue size for maintaining keep-alive connections",
           "type": "integer",
-          "x-display-name": "Maximum server queue size for maintaining keep-alive connections",
           "x-nullable": true
         },
         "maxconn": {
@@ -29762,8 +29794,8 @@ func init() {
           "x-nullable": true
         },
         "retry_on": {
-          "type": "string",
-          "x-display-name": "Specify when to attempt to automatically retry a failed request"
+          "description": "Specify when to attempt to automatically retry a failed request",
+          "type": "string"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -30102,8 +30134,8 @@ func init() {
           "x-omitempty": true
         },
         "resetenv": {
-          "type": "string",
-          "x-display-name": "Remove all environment variables except the ones specified"
+          "description": "Remove all environment variables except the ones specified",
+          "type": "string"
         },
         "setenv": {
           "type": "array",
@@ -30130,8 +30162,8 @@ func init() {
           "x-omitempty": true
         },
         "unsetenv": {
-          "type": "string",
-          "x-display-name": "Removes environment variables specified in arguments"
+          "description": "Removes environment variables specified in arguments",
+          "type": "string"
         }
       }
     },
@@ -31523,8 +31555,8 @@ func init() {
           "x-go-name": "GlobalDefaultPath"
         },
         "description": {
-          "type": "string",
-          "x-display-name": "Text that describes the instance"
+          "description": "Text that describes the instance",
+          "type": "string"
         },
         "device_atlas_options": {
           "$ref": "#/definitions/device_atlas_options"
@@ -31551,9 +31583,9 @@ func init() {
           "$ref": "#/definitions/fifty_one_degrees_options"
         },
         "force_cfg_parser_pause": {
+          "description": "Pause the configuration parser to simulate long reloads",
           "type": "integer",
           "x-default-unit": "ms",
-          "x-display-name": "Pause the configuration parser to simulate long reloads",
           "x-duration": true,
           "x-nullable": true
         },
@@ -31562,9 +31594,9 @@ func init() {
           "x-display-name": "GID"
         },
         "grace": {
+          "description": "Defines a delay between SIGUSR1 and real soft-stop",
           "type": "integer",
           "x-default-unit": "ms",
-          "x-display-name": "Defines a delay between SIGUSR1 and real soft-stop",
           "x-duration": true,
           "x-nullable": true
         },
@@ -31643,19 +31675,19 @@ func init() {
           "$ref": "#/definitions/http_client_options"
         },
         "http_err_codes": {
+          "description": "Replace, reduce or extend the list of status codes that define an error",
           "type": "array",
           "items": {
             "$ref": "#/definitions/http_codes"
           },
-          "x-display-name": "Replace, reduce or extend the list of status codes that define an error",
           "x-omitempty": true
         },
         "http_fail_codes": {
+          "description": "Replace, reduce or extend the list of status codes that define a failure",
           "type": "array",
           "items": {
             "$ref": "#/definitions/http_codes"
           },
-          "x-display-name": "Replace, reduce or extend the list of status codes that define a failure",
           "x-omitempty": true
         },
         "insecure_fork_wanted": {
@@ -31706,8 +31738,8 @@ func init() {
           }
         },
         "mworker_max_reloads": {
+          "description": "The number of times a worker can survive a reload",
           "type": "integer",
-          "x-display-name": "The number of times a worker can survive a reload",
           "x-nullable": true
         },
         "nbthread": {
@@ -31715,8 +31747,9 @@ func init() {
           "x-display-name": "Number of Threads"
         },
         "no_quic": {
+          "description": "Disable the use of the QUIC protocol",
           "type": "boolean",
-          "x-display-name": "Disable the use of the QUIC protocol"
+          "x-display-name": "Disable QUIC"
         },
         "node": {
           "type": "string"
@@ -31834,13 +31867,13 @@ func init() {
           "x-omitempty": true
         },
         "shm_stats_file": {
+          "description": "Shared Memory Statistics File (EXPERIMENTAL)",
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Shared Memory Statistics File (EXPERIMENTAL)"
+          "pattern": "^[^\\s]+$"
         },
         "shm_stats_file_max_objects": {
+          "description": "Maximum number of objects the shared memory used for shared counters will be able to store per thread group. (EXPERIMENTAL)",
           "type": "integer",
-          "x-display-name": "Maximum number of objects the shared memory used for shared counters will be able to store per thread group. (EXPERIMENTAL)",
           "x-nullable": true
         },
         "ssl_options": {
@@ -31925,10 +31958,10 @@ func init() {
           "x-display-name": "User"
         },
         "warn_blocked_traffic_after": {
+          "description": "Delay after which a stuck task triggers a warning",
           "type": "integer",
           "minimum": 1,
           "x-default-unit": "ms",
-          "x-display-name": "Delay after which a stuck task triggers a warning",
           "x-duration": true,
           "x-nullable": true
         },
@@ -35353,9 +35386,9 @@ func init() {
           "x-nullable": false
         },
         "timeout": {
+          "description": "Timeout to send an email in milliseconds",
           "type": "integer",
           "x-default-unit": "ms",
-          "x-display-name": "Timeout to send an email in milliseconds",
           "x-duration": true,
           "x-nullable": true
         }
@@ -36431,6 +36464,10 @@ func init() {
         "busy_polling": {
           "type": "boolean"
         },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "max_spread_checks": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -36442,77 +36479,77 @@ func init() {
           "x-display-name": "Maximum HAProxy CPU usage"
         },
         "maxcomprate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process input compression rate"
+          "description": "Maximum per-process input compression rate",
+          "type": "integer"
         },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections"
         },
         "maxconnrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent connections"
+          "description": "Maximum per-process number of concurrent connections",
+          "type": "integer"
         },
         "maxpipes": {
           "type": "integer",
           "x-display-name": "Maximum per-process number of pipes"
         },
         "maxsessrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of sessions per second"
+          "description": "Maximum per-process number of sessions per second",
+          "type": "integer"
         },
         "maxzlibmem": {
-          "type": "integer",
-          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
+          "description": "Maximum amount of RAM in megabytes per process usable by the zlib",
+          "type": "integer"
         },
         "noepoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
+          "description": "Disable the use of the \"epoll\" event polling system on Linux",
+          "type": "boolean"
         },
         "noevports": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
+          "description": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later",
+          "type": "boolean"
         },
         "nogetaddrinfo": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of getaddrinfo for name resolving"
+          "description": "Disable the use of getaddrinfo for name resolving",
+          "type": "boolean"
         },
         "nokqueue": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
+          "description": "Disable the use of the \"kqueue\" event polling system on BSD",
+          "type": "boolean"
         },
         "noktls": {
-          "type": "boolean",
-          "x-display-name": "Disables the use of ktls. It is equivalent to the command line argument \"-dT\""
+          "description": "Disables the use of ktls. It is equivalent to the command line argument \"-dT\"",
+          "type": "boolean"
         },
         "nopoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"poll\" event polling system"
+          "description": "Disable the use of the \"poll\" event polling system",
+          "type": "boolean"
         },
         "noreuseport": {
           "type": "boolean",
           "x-display-name": "Disable the use of SO_REUSEPORT"
         },
         "nosplice": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
+          "description": "Disable the use of kernel tcp splicing between sockets on Linux",
+          "type": "boolean"
         },
         "profiling_memory": {
+          "description": "Enable or disables per-function memory profiling",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enable or disables per-function memory profiling"
+          ]
         },
         "profiling_tasks": {
+          "description": "Enable or disables per-task CPU profiling",
           "type": "string",
           "enum": [
             "auto",
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enable or disables per-task CPU profiling"
+          ]
         },
         "server_state_base": {
           "type": "string",
@@ -36525,8 +36562,8 @@ func init() {
           "x-display-name": "Server State File"
         },
         "spread_checks": {
-          "type": "integer",
-          "x-display-name": "Add some randomness in the check interval"
+          "description": "Add some randomness in the check interval",
+          "type": "integer"
         },
         "thread_hard_limit": {
           "type": "integer",
@@ -37160,10 +37197,11 @@ func init() {
       ],
       "properties": {
         "description": {
-          "type": "string",
-          "x-display-name": "The description is an optional description string of the ring"
+          "description": "The description is an optional description string of the ring",
+          "type": "string"
         },
         "format": {
+          "description": "Format used to store events into the ring buffer",
           "type": "string",
           "enum": [
             "iso",
@@ -37174,12 +37212,11 @@ func init() {
             "short",
             "priority",
             "timed"
-          ],
-          "x-display-name": "Format used to store events into the ring buffer"
+          ]
         },
         "maxlen": {
+          "description": "The maximum length of an event message stored into the ring",
           "type": "integer",
-          "x-display-name": "The maximum length of an event message stored into the ring",
           "x-nullable": true
         },
         "metadata": {
@@ -37193,8 +37230,8 @@ func init() {
           "x-nullable": false
         },
         "size": {
+          "description": "Optional size in bytes for the ring-buffer",
           "type": "integer",
-          "x-display-name": "Optional size in bytes for the ring-buffer",
           "x-nullable": true,
           "x-size": true
         },
@@ -37730,8 +37767,7 @@ func init() {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": false,
-          "readOnly": true
+          "x-nullable": false
         },
         "admin_state": {
           "type": "string",
@@ -37741,8 +37777,86 @@ func init() {
             "drain"
           ]
         },
+        "agent_addr": {
+          "type": "string",
+          "readOnly": true
+        },
+        "agent_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "agent_state": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "backend_forced_id": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "backend_id": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "backend_name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "check_addr": {
+          "type": "string",
+          "readOnly": true
+        },
+        "check_health": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_result": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_state": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_status": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "forced_id": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "fqdn": {
+          "type": "string",
+          "readOnly": true
+        },
         "id": {
           "type": "string",
+          "readOnly": true
+        },
+        "iweight": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "last_time_change": {
+          "type": "integer",
+          "x-nullable": true,
           "readOnly": true
         },
         "name": {
@@ -37761,8 +37875,24 @@ func init() {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
+          "x-nullable": true
+        },
+        "srvrecord": {
+          "type": "string",
+          "readOnly": true
+        },
+        "use_ssl": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "uweight": {
+          "type": "integer",
           "x-nullable": true,
           "readOnly": true
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
         }
       },
       "example": {
@@ -38615,7 +38745,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "target_server": "www"
       }
     },
@@ -39812,12 +39942,12 @@ func init() {
           "x-display-name": "SSL Load Extra Files"
         },
         "maxsslconn": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent SSL connections"
+          "description": "Maximum per-process number of concurrent SSL connections",
+          "type": "integer"
         },
         "maxsslrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of SSL sessions per second"
+          "description": "Maximum per-process number of SSL sessions per second",
+          "type": "integer"
         },
         "mode_async": {
           "type": "string",
@@ -41970,9 +42100,9 @@ func init() {
           "x-size": true
         },
         "bufsize_small": {
+          "description": "Size of small buffers (for memory-restrained situations)",
           "type": "integer",
           "minimum": 1,
-          "x-display-name": "Size of small buffers (for memory-restrained situations)",
           "x-nullable": true,
           "x-size": true
         },
@@ -42106,12 +42236,12 @@ func init() {
       "type": "object",
       "properties": {
         "applet_zero_copy_forwarding": {
+          "description": "Enables of disabled the zero-copy forwarding of data for the applets",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
+          ]
         },
         "comp_maxlevel": {
           "type": "integer",
@@ -42161,61 +42291,61 @@ func init() {
           "x-nullable": true
         },
         "h1_zero_copy_fwd_recv": {
+          "description": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+          ]
         },
         "h1_zero_copy_fwd_send": {
+          "description": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
+          ]
         },
         "h2_be_glitches_threshold": {
+          "description": "Automatically kill a backend connection past a number of glitches",
           "type": "integer",
-          "x-display-name": "Automatically kill a backend connection past a number of glitches",
           "x-nullable": true
         },
         "h2_be_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "Initial window size for outgoing connections"
+          "description": "Initial window size for outgoing connections",
+          "type": "integer"
         },
         "h2_be_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+          "description": "Maximum number of concurrent streams per outgoing connection",
+          "type": "integer"
         },
         "h2_be_rxbuf": {
+          "description": "HTTP/2 receive buffer size for outgoing connections",
           "type": "integer",
-          "x-display-name": "HTTP/2 receive buffer size for outgoing connections",
           "x-nullable": true,
           "x-size": true
         },
         "h2_fe_glitches_threshold": {
+          "description": "Automatically kill a frontend connection past a number of glitches",
           "type": "integer",
-          "x-display-name": "Automatically kill a frontend connection past a number of glitches",
           "x-nullable": true
         },
         "h2_fe_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "Initial window size for incoming connections"
+          "description": "Initial window size for incoming connections",
+          "type": "integer"
         },
         "h2_fe_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of concurrent streams per incoming connection"
+          "description": "Maximum number of concurrent streams per incoming connection",
+          "type": "integer"
         },
         "h2_fe_max_total_streams": {
+          "description": "Maximum number of total streams processed per incoming HTTP/2 connection",
           "type": "integer",
-          "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
           "x-nullable": true
         },
         "h2_fe_rxbuf": {
+          "description": "HTTP/2 receive buffer size for incoming connections",
           "type": "integer",
-          "x-display-name": "HTTP/2 receive buffer size for incoming connections",
           "x-nullable": true,
           "x-size": true
         },
@@ -42238,12 +42368,12 @@ func init() {
           "x-display-name": "HTTP/2 Maximum Frame Size"
         },
         "h2_zero_copy_fwd_send": {
+          "description": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
+          ]
         },
         "http_cookielen": {
           "type": "integer",
@@ -42337,8 +42467,8 @@ func init() {
           "x-nullable": true
         },
         "peers_max_updates_at_once": {
-          "type": "integer",
-          "x-display-name": "Maximum number of stick-table updates at once"
+          "description": "Maximum number of stick-table updates at once",
+          "type": "integer"
         },
         "pool_high_fd_ratio": {
           "type": "integer",
@@ -42349,30 +42479,30 @@ func init() {
           "x-display-name": "Max Used Low FD Ratio"
         },
         "pt_zero_copy_forwarding": {
+          "description": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+          ]
         },
         "renice_runtime": {
+          "description": "Scheduling priority applied after the configuration parsing",
           "type": "integer",
           "maximum": 19,
           "minimum": -20,
-          "x-display-name": "Scheduling priority applied after the configuration parsing",
           "x-nullable": true
         },
         "renice_startup": {
+          "description": "Scheduling priority applied before the rest of the configuration",
           "type": "integer",
           "maximum": 19,
           "minimum": -20,
-          "x-display-name": "Scheduling priority applied before the rest of the configuration",
           "x-nullable": true
         },
         "ring_queues": {
+          "description": "Number of write queues in front of ring buffers",
           "type": "integer",
-          "x-display-name": "Number of write queues in front of ring buffers",
           "x-nullable": true
         },
         "runqueue_depth": {
@@ -42435,9 +42565,9 @@ func init() {
           "x-nullable": true
         },
         "reorder_ratio": {
+          "description": "Ratio applied to the packet reordering threshold",
           "type": "integer",
           "maximum": 100,
-          "x-display-name": "Ratio applied to the packet reordering threshold",
           "x-nullable": true
         },
         "retry_threshold": {
@@ -42454,12 +42584,12 @@ func init() {
           "x-display-name": "QUIC Socket Owner"
         },
         "zero_copy_fwd_send": {
+          "description": "Enables or disables the zero-copy sends for the QUIC multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
+          ]
         }
       }
     },
@@ -42510,13 +42640,13 @@ func init() {
           "x-size": false
         },
         "ocsp_update_max_delay": {
+          "description": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
           "type": "integer",
-          "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
           "x-nullable": true
         },
         "ocsp_update_min_delay": {
+          "description": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
           "type": "integer",
-          "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
           "x-nullable": true
         }
       }
@@ -42671,24 +42801,24 @@ func init() {
       "type": "object",
       "properties": {
         "cache_size": {
-          "type": "integer",
-          "x-display-name": "Sets the WURFL Useragent cache size"
+          "description": "Sets the WURFL Useragent cache size",
+          "type": "integer"
         },
         "data_file": {
-          "type": "string",
-          "x-display-name": "The path of the WURFL data file"
+          "description": "The path of the WURFL data file",
+          "type": "string"
         },
         "information_list": {
-          "type": "string",
-          "x-display-name": "A space-delimited list of WURFL capabilities"
+          "description": "A space-delimited list of WURFL capabilities",
+          "type": "string"
         },
         "information_list_separator": {
-          "type": "string",
-          "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+          "description": "A char that will be used to separate values in a response header containing WURFL results",
+          "type": "string"
         },
         "patch_file": {
-          "type": "string",
-          "x-display-name": "A list of WURFL patch file paths"
+          "description": "A list of WURFL patch file paths",
+          "type": "string"
         }
       }
     }
@@ -52676,7 +52806,161 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads": {
+    "/services/haproxy/configuration/crt_stores": {
+      "get": {
+        "description": "Returns an array of all the configured crt_store sections in HAProxy",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return all the Certificate Stores",
+        "operationId": "getCrtStores",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_stores"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new crt_store section",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Add a new Certificate Store",
+        "operationId": "createCrtStore",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate Store created",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads": {
       "get": {
         "description": "Returns the list of loaded certificates from the specified crt_store",
         "tags": [
@@ -52689,7 +52973,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52739,7 +53023,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52830,7 +53114,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads/{certificate}": {
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}": {
       "get": {
         "description": "Returns one load entry by its certificate name in the specified crt_store",
         "tags": [
@@ -52850,7 +53134,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52919,7 +53203,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -53028,7 +53312,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -53093,146 +53377,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_stores": {
-      "get": {
-        "description": "Returns an array of all the configured crt_store sections in HAProxy",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Return all the Certificate Stores",
-        "operationId": "getCrtStores",
-        "parameters": [
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
-            "name": "transaction_id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/crt_stores"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new crt_store section",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Add a new Certificate Store",
-        "operationId": "createCrtStore",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
-            "name": "version",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "default": false,
-            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
-            "name": "force_reload",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Certificate Store created",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "409": {
-            "description": "The specified resource already exists",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      }
-    },
     "/services/haproxy/configuration/crt_stores/{name}": {
       "get": {
         "description": "Returns crt_store section by its name",
@@ -53254,6 +53398,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -53338,6 +53489,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -53432,6 +53590,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -86971,8 +87136,8 @@ func init() {
           }
         },
         "http_send_name_header": {
+          "description": "The header string to use to send the server name",
           "type": "string",
-          "x-display-name": "The header string to use to send the server name",
           "x-nullable": true
         },
         "httpchk_params": {
@@ -87356,7 +87521,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -88707,6 +88872,26 @@ func init() {
     },
     "crt_store": {
       "description": "Storage mechanism to load and store certificates used in the configuration",
+      "title": "Certificate Store",
+      "allOf": [
+        {
+          "$ref": "#/definitions/crt_store_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "crt_loads": {
+              "additionalProperties": {
+                "$ref": "#/definitions/crt_load"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "CrtStore"
+    },
+    "crt_store_base": {
+      "description": "Storage mechanism to load and store certificates used in the configuration",
       "type": "object",
       "title": "Certificate Store",
       "required": [
@@ -88720,9 +88905,6 @@ func init() {
         "key_base": {
           "description": "Default directory to fetch SSL private keys from",
           "type": "string"
-        },
-        "loads": {
-          "$ref": "#/definitions/crt_loads"
         },
         "metadata": {
           "additionalProperties": {
@@ -89243,8 +89425,8 @@ func init() {
           ]
         },
         "http_send_name_header": {
+          "description": "Add the server name to a request",
           "type": "string",
-          "x-display-name": "Add the server name to a request",
           "x-nullable": true
         },
         "http_use_proxy_header": {
@@ -89351,8 +89533,8 @@ func init() {
           "x-display-name": "Log ASAP"
         },
         "max_keep_alive_queue": {
+          "description": "Maximum server queue size for maintaining keep-alive connections",
           "type": "integer",
-          "x-display-name": "Maximum server queue size for maintaining keep-alive connections",
           "x-nullable": true
         },
         "maxconn": {
@@ -89442,8 +89624,8 @@ func init() {
           "x-nullable": true
         },
         "retry_on": {
-          "type": "string",
-          "x-display-name": "Specify when to attempt to automatically retry a failed request"
+          "description": "Specify when to attempt to automatically retry a failed request",
+          "type": "string"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -89771,8 +89953,8 @@ func init() {
           "x-omitempty": true
         },
         "resetenv": {
-          "type": "string",
-          "x-display-name": "Remove all environment variables except the ones specified"
+          "description": "Remove all environment variables except the ones specified",
+          "type": "string"
         },
         "setenv": {
           "type": "array",
@@ -89784,8 +89966,8 @@ func init() {
           "x-omitempty": true
         },
         "unsetenv": {
-          "type": "string",
-          "x-display-name": "Removes environment variables specified in arguments"
+          "description": "Removes environment variables specified in arguments",
+          "type": "string"
         }
       }
     },
@@ -91143,8 +91325,8 @@ func init() {
           "x-go-name": "GlobalDefaultPath"
         },
         "description": {
-          "type": "string",
-          "x-display-name": "Text that describes the instance"
+          "description": "Text that describes the instance",
+          "type": "string"
         },
         "device_atlas_options": {
           "$ref": "#/definitions/device_atlas_options"
@@ -91171,10 +91353,10 @@ func init() {
           "$ref": "#/definitions/fifty_one_degrees_options"
         },
         "force_cfg_parser_pause": {
+          "description": "Pause the configuration parser to simulate long reloads",
           "type": "integer",
           "minimum": 0,
           "x-default-unit": "ms",
-          "x-display-name": "Pause the configuration parser to simulate long reloads",
           "x-duration": true,
           "x-nullable": true
         },
@@ -91183,10 +91365,10 @@ func init() {
           "x-display-name": "GID"
         },
         "grace": {
+          "description": "Defines a delay between SIGUSR1 and real soft-stop",
           "type": "integer",
           "minimum": 0,
           "x-default-unit": "ms",
-          "x-display-name": "Defines a delay between SIGUSR1 and real soft-stop",
           "x-duration": true,
           "x-nullable": true
         },
@@ -91253,19 +91435,19 @@ func init() {
           "$ref": "#/definitions/http_client_options"
         },
         "http_err_codes": {
+          "description": "Replace, reduce or extend the list of status codes that define an error",
           "type": "array",
           "items": {
             "$ref": "#/definitions/http_codes"
           },
-          "x-display-name": "Replace, reduce or extend the list of status codes that define an error",
           "x-omitempty": true
         },
         "http_fail_codes": {
+          "description": "Replace, reduce or extend the list of status codes that define a failure",
           "type": "array",
           "items": {
             "$ref": "#/definitions/http_codes"
           },
-          "x-display-name": "Replace, reduce or extend the list of status codes that define a failure",
           "x-omitempty": true
         },
         "insecure_fork_wanted": {
@@ -91316,9 +91498,9 @@ func init() {
           }
         },
         "mworker_max_reloads": {
+          "description": "The number of times a worker can survive a reload",
           "type": "integer",
           "minimum": 0,
-          "x-display-name": "The number of times a worker can survive a reload",
           "x-nullable": true
         },
         "nbthread": {
@@ -91326,8 +91508,9 @@ func init() {
           "x-display-name": "Number of Threads"
         },
         "no_quic": {
+          "description": "Disable the use of the QUIC protocol",
           "type": "boolean",
-          "x-display-name": "Disable the use of the QUIC protocol"
+          "x-display-name": "Disable QUIC"
         },
         "node": {
           "type": "string"
@@ -91393,14 +91576,14 @@ func init() {
           "x-omitempty": true
         },
         "shm_stats_file": {
+          "description": "Shared Memory Statistics File (EXPERIMENTAL)",
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Shared Memory Statistics File (EXPERIMENTAL)"
+          "pattern": "^[^\\s]+$"
         },
         "shm_stats_file_max_objects": {
+          "description": "Maximum number of objects the shared memory used for shared counters will be able to store per thread group. (EXPERIMENTAL)",
           "type": "integer",
           "minimum": 0,
-          "x-display-name": "Maximum number of objects the shared memory used for shared counters will be able to store per thread group. (EXPERIMENTAL)",
           "x-nullable": true
         },
         "ssl_options": {
@@ -91471,10 +91654,10 @@ func init() {
           "x-display-name": "User"
         },
         "warn_blocked_traffic_after": {
+          "description": "Delay after which a stuck task triggers a warning",
           "type": "integer",
           "minimum": 1,
           "x-default-unit": "ms",
-          "x-display-name": "Delay after which a stuck task triggers a warning",
           "x-duration": true,
           "x-nullable": true
         },
@@ -94876,10 +95059,10 @@ func init() {
           "x-nullable": false
         },
         "timeout": {
+          "description": "Timeout to send an email in milliseconds",
           "type": "integer",
           "minimum": 0,
           "x-default-unit": "ms",
-          "x-display-name": "Timeout to send an email in milliseconds",
           "x-duration": true,
           "x-nullable": true
         }
@@ -95955,6 +96138,10 @@ func init() {
         "busy_polling": {
           "type": "boolean"
         },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "max_spread_checks": {
           "type": "integer",
           "minimum": 0,
@@ -95967,77 +96154,77 @@ func init() {
           "x-display-name": "Maximum HAProxy CPU usage"
         },
         "maxcomprate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process input compression rate"
+          "description": "Maximum per-process input compression rate",
+          "type": "integer"
         },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections"
         },
         "maxconnrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent connections"
+          "description": "Maximum per-process number of concurrent connections",
+          "type": "integer"
         },
         "maxpipes": {
           "type": "integer",
           "x-display-name": "Maximum per-process number of pipes"
         },
         "maxsessrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of sessions per second"
+          "description": "Maximum per-process number of sessions per second",
+          "type": "integer"
         },
         "maxzlibmem": {
-          "type": "integer",
-          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
+          "description": "Maximum amount of RAM in megabytes per process usable by the zlib",
+          "type": "integer"
         },
         "noepoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
+          "description": "Disable the use of the \"epoll\" event polling system on Linux",
+          "type": "boolean"
         },
         "noevports": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
+          "description": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later",
+          "type": "boolean"
         },
         "nogetaddrinfo": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of getaddrinfo for name resolving"
+          "description": "Disable the use of getaddrinfo for name resolving",
+          "type": "boolean"
         },
         "nokqueue": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
+          "description": "Disable the use of the \"kqueue\" event polling system on BSD",
+          "type": "boolean"
         },
         "noktls": {
-          "type": "boolean",
-          "x-display-name": "Disables the use of ktls. It is equivalent to the command line argument \"-dT\""
+          "description": "Disables the use of ktls. It is equivalent to the command line argument \"-dT\"",
+          "type": "boolean"
         },
         "nopoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"poll\" event polling system"
+          "description": "Disable the use of the \"poll\" event polling system",
+          "type": "boolean"
         },
         "noreuseport": {
           "type": "boolean",
           "x-display-name": "Disable the use of SO_REUSEPORT"
         },
         "nosplice": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
+          "description": "Disable the use of kernel tcp splicing between sockets on Linux",
+          "type": "boolean"
         },
         "profiling_memory": {
+          "description": "Enable or disables per-function memory profiling",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enable or disables per-function memory profiling"
+          ]
         },
         "profiling_tasks": {
+          "description": "Enable or disables per-task CPU profiling",
           "type": "string",
           "enum": [
             "auto",
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enable or disables per-task CPU profiling"
+          ]
         },
         "server_state_base": {
           "type": "string",
@@ -96050,8 +96237,8 @@ func init() {
           "x-display-name": "Server State File"
         },
         "spread_checks": {
-          "type": "integer",
-          "x-display-name": "Add some randomness in the check interval"
+          "description": "Add some randomness in the check interval",
+          "type": "integer"
         },
         "thread_hard_limit": {
           "type": "integer",
@@ -96693,10 +96880,11 @@ func init() {
       ],
       "properties": {
         "description": {
-          "type": "string",
-          "x-display-name": "The description is an optional description string of the ring"
+          "description": "The description is an optional description string of the ring",
+          "type": "string"
         },
         "format": {
+          "description": "Format used to store events into the ring buffer",
           "type": "string",
           "enum": [
             "iso",
@@ -96707,12 +96895,11 @@ func init() {
             "short",
             "priority",
             "timed"
-          ],
-          "x-display-name": "Format used to store events into the ring buffer"
+          ]
         },
         "maxlen": {
+          "description": "The maximum length of an event message stored into the ring",
           "type": "integer",
-          "x-display-name": "The maximum length of an event message stored into the ring",
           "x-nullable": true
         },
         "metadata": {
@@ -96726,9 +96913,9 @@ func init() {
           "x-nullable": false
         },
         "size": {
+          "description": "Optional size in bytes for the ring-buffer",
           "type": "integer",
           "minimum": 0,
-          "x-display-name": "Optional size in bytes for the ring-buffer",
           "x-nullable": true,
           "x-size": true
         },
@@ -97272,8 +97459,7 @@ func init() {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": false,
-          "readOnly": true
+          "x-nullable": false
         },
         "admin_state": {
           "type": "string",
@@ -97283,8 +97469,88 @@ func init() {
             "drain"
           ]
         },
+        "agent_addr": {
+          "type": "string",
+          "readOnly": true
+        },
+        "agent_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "agent_state": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "backend_forced_id": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "backend_id": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "backend_name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "check_addr": {
+          "type": "string",
+          "readOnly": true
+        },
+        "check_health": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_result": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_state": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "check_status": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "forced_id": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "fqdn": {
+          "type": "string",
+          "readOnly": true
+        },
         "id": {
           "type": "string",
+          "readOnly": true
+        },
+        "iweight": {
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "last_time_change": {
+          "type": "integer",
+          "x-nullable": true,
           "readOnly": true
         },
         "name": {
@@ -97303,8 +97569,24 @@ func init() {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
+          "x-nullable": true
+        },
+        "srvrecord": {
+          "type": "string",
+          "readOnly": true
+        },
+        "use_ssl": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "uweight": {
+          "type": "integer",
           "x-nullable": true,
           "readOnly": true
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
         }
       },
       "example": {
@@ -98165,7 +98447,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "target_server": "www"
       }
     },
@@ -99278,12 +99560,12 @@ func init() {
           "x-display-name": "SSL Load Extra Files"
         },
         "maxsslconn": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent SSL connections"
+          "description": "Maximum per-process number of concurrent SSL connections",
+          "type": "integer"
         },
         "maxsslrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of SSL sessions per second"
+          "description": "Maximum per-process number of SSL sessions per second",
+          "type": "integer"
         },
         "mode_async": {
           "type": "string",
@@ -101377,9 +101659,9 @@ func init() {
           "x-size": true
         },
         "bufsize_small": {
+          "description": "Size of small buffers (for memory-restrained situations)",
           "type": "integer",
           "minimum": 1,
-          "x-display-name": "Size of small buffers (for memory-restrained situations)",
           "x-nullable": true,
           "x-size": true
         },
@@ -101517,12 +101799,12 @@ func init() {
       "type": "object",
       "properties": {
         "applet_zero_copy_forwarding": {
+          "description": "Enables of disabled the zero-copy forwarding of data for the applets",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
+          ]
         },
         "comp_maxlevel": {
           "type": "integer",
@@ -101573,61 +101855,61 @@ func init() {
           "x-nullable": true
         },
         "h1_zero_copy_fwd_recv": {
+          "description": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+          ]
         },
         "h1_zero_copy_fwd_send": {
+          "description": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
+          ]
         },
         "h2_be_glitches_threshold": {
+          "description": "Automatically kill a backend connection past a number of glitches",
           "type": "integer",
-          "x-display-name": "Automatically kill a backend connection past a number of glitches",
           "x-nullable": true
         },
         "h2_be_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "Initial window size for outgoing connections"
+          "description": "Initial window size for outgoing connections",
+          "type": "integer"
         },
         "h2_be_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+          "description": "Maximum number of concurrent streams per outgoing connection",
+          "type": "integer"
         },
         "h2_be_rxbuf": {
+          "description": "HTTP/2 receive buffer size for outgoing connections",
           "type": "integer",
-          "x-display-name": "HTTP/2 receive buffer size for outgoing connections",
           "x-nullable": true,
           "x-size": true
         },
         "h2_fe_glitches_threshold": {
+          "description": "Automatically kill a frontend connection past a number of glitches",
           "type": "integer",
-          "x-display-name": "Automatically kill a frontend connection past a number of glitches",
           "x-nullable": true
         },
         "h2_fe_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "Initial window size for incoming connections"
+          "description": "Initial window size for incoming connections",
+          "type": "integer"
         },
         "h2_fe_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of concurrent streams per incoming connection"
+          "description": "Maximum number of concurrent streams per incoming connection",
+          "type": "integer"
         },
         "h2_fe_max_total_streams": {
+          "description": "Maximum number of total streams processed per incoming HTTP/2 connection",
           "type": "integer",
-          "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
           "x-nullable": true
         },
         "h2_fe_rxbuf": {
+          "description": "HTTP/2 receive buffer size for incoming connections",
           "type": "integer",
-          "x-display-name": "HTTP/2 receive buffer size for incoming connections",
           "x-nullable": true,
           "x-size": true
         },
@@ -101650,12 +101932,12 @@ func init() {
           "x-display-name": "HTTP/2 Maximum Frame Size"
         },
         "h2_zero_copy_fwd_send": {
+          "description": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
+          ]
         },
         "http_cookielen": {
           "type": "integer",
@@ -101751,8 +102033,8 @@ func init() {
           "x-nullable": true
         },
         "peers_max_updates_at_once": {
-          "type": "integer",
-          "x-display-name": "Maximum number of stick-table updates at once"
+          "description": "Maximum number of stick-table updates at once",
+          "type": "integer"
         },
         "pool_high_fd_ratio": {
           "type": "integer",
@@ -101763,30 +102045,30 @@ func init() {
           "x-display-name": "Max Used Low FD Ratio"
         },
         "pt_zero_copy_forwarding": {
+          "description": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+          ]
         },
         "renice_runtime": {
+          "description": "Scheduling priority applied after the configuration parsing",
           "type": "integer",
           "maximum": 19,
           "minimum": -20,
-          "x-display-name": "Scheduling priority applied after the configuration parsing",
           "x-nullable": true
         },
         "renice_startup": {
+          "description": "Scheduling priority applied before the rest of the configuration",
           "type": "integer",
           "maximum": 19,
           "minimum": -20,
-          "x-display-name": "Scheduling priority applied before the rest of the configuration",
           "x-nullable": true
         },
         "ring_queues": {
+          "description": "Number of write queues in front of ring buffers",
           "type": "integer",
-          "x-display-name": "Number of write queues in front of ring buffers",
           "x-nullable": true
         },
         "runqueue_depth": {
@@ -101850,10 +102132,10 @@ func init() {
           "x-nullable": true
         },
         "reorder_ratio": {
+          "description": "Ratio applied to the packet reordering threshold",
           "type": "integer",
           "maximum": 100,
           "minimum": 0,
-          "x-display-name": "Ratio applied to the packet reordering threshold",
           "x-nullable": true
         },
         "retry_threshold": {
@@ -101870,12 +102152,12 @@ func init() {
           "x-display-name": "QUIC Socket Owner"
         },
         "zero_copy_fwd_send": {
+          "description": "Enables or disables the zero-copy sends for the QUIC multiplexer",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ],
-          "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
+          ]
         }
       }
     },
@@ -101927,13 +102209,13 @@ func init() {
           "x-size": false
         },
         "ocsp_update_max_delay": {
+          "description": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
           "type": "integer",
-          "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
           "x-nullable": true
         },
         "ocsp_update_min_delay": {
+          "description": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
           "type": "integer",
-          "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
           "x-nullable": true
         }
       }
@@ -102088,24 +102370,24 @@ func init() {
       "type": "object",
       "properties": {
         "cache_size": {
-          "type": "integer",
-          "x-display-name": "Sets the WURFL Useragent cache size"
+          "description": "Sets the WURFL Useragent cache size",
+          "type": "integer"
         },
         "data_file": {
-          "type": "string",
-          "x-display-name": "The path of the WURFL data file"
+          "description": "The path of the WURFL data file",
+          "type": "string"
         },
         "information_list": {
-          "type": "string",
-          "x-display-name": "A space-delimited list of WURFL capabilities"
+          "description": "A space-delimited list of WURFL capabilities",
+          "type": "string"
         },
         "information_list_separator": {
-          "type": "string",
-          "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+          "description": "A char that will be used to separate values in a response header containing WURFL results",
+          "type": "string"
         },
         "patch_file": {
-          "type": "string",
-          "x-display-name": "A list of WURFL patch file paths"
+          "description": "A list of WURFL patch file paths",
+          "type": "string"
         }
       }
     }

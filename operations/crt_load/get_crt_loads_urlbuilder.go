@@ -24,11 +24,13 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // GetCrtLoadsURL generates an URL for the get crt loads operation
 type GetCrtLoadsURL struct {
-	CrtStore      string
+	CrtStore string
+
 	TransactionID *string
 
 	_basePath string
@@ -55,7 +57,14 @@ func (o *GetCrtLoadsURL) SetBasePath(bp string) {
 func (o *GetCrtLoadsURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/crt_loads"
+	var _path = "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads"
+
+	crtStore := o.CrtStore
+	if crtStore != "" {
+		_path = strings.Replace(_path, "{crt_store}", crtStore, -1)
+	} else {
+		return nil, errors.New("crtStore is required on GetCrtLoadsURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -64,11 +73,6 @@ func (o *GetCrtLoadsURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	crtStoreQ := o.CrtStore
-	if crtStoreQ != "" {
-		qs.Set("crt_store", crtStoreQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

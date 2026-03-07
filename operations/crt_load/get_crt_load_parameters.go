@@ -27,7 +27,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 )
 
 // NewGetCrtLoadParams creates a new GetCrtLoadParams object
@@ -54,7 +53,7 @@ type GetCrtLoadParams struct {
 	Certificate string
 	/*Parent crt_store name
 	  Required: true
-	  In: query
+	  In: path
 	*/
 	CrtStore string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
@@ -79,8 +78,8 @@ func (o *GetCrtLoadParams) BindRequest(r *http.Request, route *middleware.Matche
 		res = append(res, err)
 	}
 
-	qCrtStore, qhkCrtStore, _ := qs.GetOK("crt_store")
-	if err := o.bindCrtStore(qCrtStore, qhkCrtStore, route.Formats); err != nil {
+	rCrtStore, rhkCrtStore, _ := route.Params.GetOK("crt_store")
+	if err := o.bindCrtStore(rCrtStore, rhkCrtStore, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -108,22 +107,15 @@ func (o *GetCrtLoadParams) bindCertificate(rawData []string, hasKey bool, format
 	return nil
 }
 
-// bindCrtStore binds and validates parameter CrtStore from query.
+// bindCrtStore binds and validates parameter CrtStore from path.
 func (o *GetCrtLoadParams) bindCrtStore(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("crt_store", "query", rawData)
-	}
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("crt_store", "query", raw); err != nil {
-		return err
-	}
+	// Parameter is provided by construction from the route
 	o.CrtStore = raw
 
 	return nil

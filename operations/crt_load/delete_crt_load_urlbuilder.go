@@ -32,8 +32,8 @@ import (
 // DeleteCrtLoadURL generates an URL for the delete crt load operation
 type DeleteCrtLoadURL struct {
 	Certificate string
+	CrtStore    string
 
-	CrtStore      string
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -62,13 +62,20 @@ func (o *DeleteCrtLoadURL) SetBasePath(bp string) {
 func (o *DeleteCrtLoadURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/crt_loads/{certificate}"
+	var _path = "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}"
 
 	certificate := o.Certificate
 	if certificate != "" {
 		_path = strings.Replace(_path, "{certificate}", certificate, -1)
 	} else {
 		return nil, errors.New("certificate is required on DeleteCrtLoadURL")
+	}
+
+	crtStore := o.CrtStore
+	if crtStore != "" {
+		_path = strings.Replace(_path, "{crt_store}", crtStore, -1)
+	} else {
+		return nil, errors.New("crtStore is required on DeleteCrtLoadURL")
 	}
 
 	_basePath := o._basePath
@@ -78,11 +85,6 @@ func (o *DeleteCrtLoadURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	crtStoreQ := o.CrtStore
-	if crtStoreQ != "" {
-		qs.Set("crt_store", crtStoreQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {
