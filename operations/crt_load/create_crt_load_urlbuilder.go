@@ -24,13 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateCrtLoadURL generates an URL for the create crt load operation
 type CreateCrtLoadURL struct {
-	CrtStore      string
+	CrtStore string
+
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -59,7 +61,14 @@ func (o *CreateCrtLoadURL) SetBasePath(bp string) {
 func (o *CreateCrtLoadURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/crt_loads"
+	var _path = "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads"
+
+	crtStore := o.CrtStore
+	if crtStore != "" {
+		_path = strings.Replace(_path, "{crt_store}", crtStore, -1)
+	} else {
+		return nil, errors.New("crtStore is required on CreateCrtLoadURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -68,11 +77,6 @@ func (o *CreateCrtLoadURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	crtStoreQ := o.CrtStore
-	if crtStoreQ != "" {
-		qs.Set("crt_store", crtStoreQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

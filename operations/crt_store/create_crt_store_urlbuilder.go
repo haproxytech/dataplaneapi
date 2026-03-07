@@ -31,6 +31,7 @@ import (
 // CreateCrtStoreURL generates an URL for the create crt store operation
 type CreateCrtStoreURL struct {
 	ForceReload   *bool
+	FullSection   *bool
 	TransactionID *string
 	Version       *int64
 
@@ -74,6 +75,14 @@ func (o *CreateCrtStoreURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
+	}
+
+	var fullSectionQ string
+	if o.FullSection != nil {
+		fullSectionQ = swag.FormatBool(*o.FullSection)
+	}
+	if fullSectionQ != "" {
+		qs.Set("full_section", fullSectionQ)
 	}
 
 	var transactionIDQ string

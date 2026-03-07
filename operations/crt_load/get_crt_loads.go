@@ -45,7 +45,7 @@ func NewGetCrtLoads(ctx *middleware.Context, handler GetCrtLoadsHandler) *GetCrt
 }
 
 /*
-	GetCrtLoads swagger:route GET /services/haproxy/configuration/crt_loads CrtLoad getCrtLoads
+	GetCrtLoads swagger:route GET /services/haproxy/configuration/crt_stores/{crt_store}/crt_loads CrtLoad getCrtLoads
 
 # Return an array of loaded certificates
 

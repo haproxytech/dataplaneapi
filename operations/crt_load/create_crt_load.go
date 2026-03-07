@@ -45,7 +45,7 @@ func NewCreateCrtLoad(ctx *middleware.Context, handler CreateCrtLoadHandler) *Cr
 }
 
 /*
-	CreateCrtLoad swagger:route POST /services/haproxy/configuration/crt_loads CrtLoad createCrtLoad
+	CreateCrtLoad swagger:route POST /services/haproxy/configuration/crt_stores/{crt_store}/crt_loads CrtLoad createCrtLoad
 
 # Add a new certificate to load
 

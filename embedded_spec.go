@@ -6050,7 +6050,101 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads": {
+    "/services/haproxy/configuration/crt_stores": {
+      "get": {
+        "description": "Returns an array of all the configured crt_store sections in HAProxy",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return all the Certificate Stores",
+        "operationId": "getCrtStores",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_stores"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new crt_store section",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Add a new Certificate Store",
+        "operationId": "createCrtStore",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate Store created",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads": {
       "get": {
         "description": "Returns the list of loaded certificates from the specified crt_store",
         "tags": [
@@ -6063,7 +6157,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6100,7 +6194,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6152,7 +6246,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads/{certificate}": {
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}": {
       "get": {
         "description": "Returns one load entry by its certificate name in the specified crt_store",
         "tags": [
@@ -6172,7 +6266,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6219,7 +6313,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6289,7 +6383,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -6324,94 +6418,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_stores": {
-      "get": {
-        "description": "Returns an array of all the configured crt_store sections in HAProxy",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Return all the Certificate Stores",
-        "operationId": "getCrtStores",
-        "parameters": [
-          {
-            "$ref": "#/parameters/transaction_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/crt_stores"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new crt_store section",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Add a new Certificate Store",
-        "operationId": "createCrtStore",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          },
-          {
-            "$ref": "#/parameters/force_reload"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Certificate Store created",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "409": {
-            "$ref": "#/responses/AlreadyExists"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
     "/services/haproxy/configuration/crt_stores/{name}": {
       "get": {
         "description": "Returns crt_store section by its name",
@@ -6430,6 +6436,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6484,6 +6493,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6539,6 +6551,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -27244,8 +27259,8 @@ func init() {
           }
         },
         "http_send_name_header": {
+          "description": "The header string to use to send the server name",
           "type": "string",
-          "x-display-name": "The header string to use to send the server name",
           "x-nullable": true
         },
         "httpchk_params": {
@@ -27648,7 +27663,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -29012,6 +29027,26 @@ func init() {
     },
     "crt_store": {
       "description": "Storage mechanism to load and store certificates used in the configuration",
+      "title": "Certificate Store",
+      "allOf": [
+        {
+          "$ref": "#/definitions/crt_store_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "crt_loads": {
+              "additionalProperties": {
+                "$ref": "#/definitions/crt_load"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "CrtStore"
+    },
+    "crt_store_base": {
+      "description": "Storage mechanism to load and store certificates used in the configuration",
       "type": "object",
       "title": "Certificate Store",
       "required": [
@@ -29025,9 +29060,6 @@ func init() {
         "key_base": {
           "description": "Default directory to fetch SSL private keys from",
           "type": "string"
-        },
-        "loads": {
-          "$ref": "#/definitions/crt_loads"
         },
         "metadata": {
           "additionalProperties": {
@@ -29533,8 +29565,8 @@ func init() {
           ]
         },
         "http_send_name_header": {
+          "description": "Add the server name to a request",
           "type": "string",
-          "x-display-name": "Add the server name to a request",
           "x-nullable": true
         },
         "http_use_proxy_header": {
@@ -29641,8 +29673,8 @@ func init() {
           "x-display-name": "Log ASAP"
         },
         "max_keep_alive_queue": {
+          "description": "Maximum server queue size for maintaining keep-alive connections",
           "type": "integer",
-          "x-display-name": "Maximum server queue size for maintaining keep-alive connections",
           "x-nullable": true
         },
         "maxconn": {
@@ -29730,8 +29762,8 @@ func init() {
           "x-nullable": true
         },
         "retry_on": {
-          "type": "string",
-          "x-display-name": "Specify when to attempt to automatically retry a failed request"
+          "description": "Specify when to attempt to automatically retry a failed request",
+          "type": "string"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -35296,9 +35328,9 @@ func init() {
           "x-nullable": false
         },
         "timeout": {
+          "description": "Timeout to send an email in milliseconds",
           "type": "integer",
           "x-default-unit": "ms",
-          "x-display-name": "Timeout to send an email in milliseconds",
           "x-duration": true,
           "x-nullable": true
         }
@@ -36374,6 +36406,10 @@ func init() {
         "busy_polling": {
           "type": "boolean"
         },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "max_spread_checks": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -37099,10 +37135,11 @@ func init() {
       ],
       "properties": {
         "description": {
-          "type": "string",
-          "x-display-name": "The description is an optional description string of the ring"
+          "description": "The description is an optional description string of the ring",
+          "type": "string"
         },
         "format": {
+          "description": "Format used to store events into the ring buffer",
           "type": "string",
           "enum": [
             "iso",
@@ -37113,12 +37150,11 @@ func init() {
             "short",
             "priority",
             "timed"
-          ],
-          "x-display-name": "Format used to store events into the ring buffer"
+          ]
         },
         "maxlen": {
+          "description": "The maximum length of an event message stored into the ring",
           "type": "integer",
-          "x-display-name": "The maximum length of an event message stored into the ring",
           "x-nullable": true
         },
         "metadata": {
@@ -37132,8 +37168,8 @@ func init() {
           "x-nullable": false
         },
         "size": {
+          "description": "Optional size in bytes for the ring-buffer",
           "type": "integer",
-          "x-display-name": "Optional size in bytes for the ring-buffer",
           "x-nullable": true,
           "x-size": true
         },
@@ -38516,7 +38552,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "target_server": "www"
       }
     },
@@ -52571,7 +52607,161 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads": {
+    "/services/haproxy/configuration/crt_stores": {
+      "get": {
+        "description": "Returns an array of all the configured crt_store sections in HAProxy",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return all the Certificate Stores",
+        "operationId": "getCrtStores",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_stores"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new crt_store section",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Add a new Certificate Store",
+        "operationId": "createCrtStore",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate Store created",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads": {
       "get": {
         "description": "Returns the list of loaded certificates from the specified crt_store",
         "tags": [
@@ -52584,7 +52774,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52634,7 +52824,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52725,7 +52915,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_loads/{certificate}": {
+    "/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}": {
       "get": {
         "description": "Returns one load entry by its certificate name in the specified crt_store",
         "tags": [
@@ -52745,7 +52935,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52814,7 +53004,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52923,7 +53113,7 @@ func init() {
             "type": "string",
             "description": "Parent crt_store section name",
             "name": "crt_store",
-            "in": "query",
+            "in": "path",
             "required": true
           },
           {
@@ -52988,146 +53178,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/crt_stores": {
-      "get": {
-        "description": "Returns an array of all the configured crt_store sections in HAProxy",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Return all the Certificate Stores",
-        "operationId": "getCrtStores",
-        "parameters": [
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
-            "name": "transaction_id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/crt_stores"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new crt_store section",
-        "tags": [
-          "CrtStore"
-        ],
-        "summary": "Add a new Certificate Store",
-        "operationId": "createCrtStore",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
-            "name": "version",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "default": false,
-            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
-            "name": "force_reload",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Certificate Store created",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/crt_store"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "409": {
-            "description": "The specified resource already exists",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      }
-    },
     "/services/haproxy/configuration/crt_stores/{name}": {
       "get": {
         "description": "Returns crt_store section by its name",
@@ -53149,6 +53199,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -53233,6 +53290,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -53327,6 +53391,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -86861,8 +86932,8 @@ func init() {
           }
         },
         "http_send_name_header": {
+          "description": "The header string to use to send the server name",
           "type": "string",
-          "x-display-name": "The header string to use to send the server name",
           "x-nullable": true
         },
         "httpchk_params": {
@@ -87246,7 +87317,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -88574,6 +88645,26 @@ func init() {
     },
     "crt_store": {
       "description": "Storage mechanism to load and store certificates used in the configuration",
+      "title": "Certificate Store",
+      "allOf": [
+        {
+          "$ref": "#/definitions/crt_store_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "crt_loads": {
+              "additionalProperties": {
+                "$ref": "#/definitions/crt_load"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "CrtStore"
+    },
+    "crt_store_base": {
+      "description": "Storage mechanism to load and store certificates used in the configuration",
       "type": "object",
       "title": "Certificate Store",
       "required": [
@@ -88587,9 +88678,6 @@ func init() {
         "key_base": {
           "description": "Default directory to fetch SSL private keys from",
           "type": "string"
-        },
-        "loads": {
-          "$ref": "#/definitions/crt_loads"
         },
         "metadata": {
           "additionalProperties": {
@@ -89102,8 +89190,8 @@ func init() {
           ]
         },
         "http_send_name_header": {
+          "description": "Add the server name to a request",
           "type": "string",
-          "x-display-name": "Add the server name to a request",
           "x-nullable": true
         },
         "http_use_proxy_header": {
@@ -89210,8 +89298,8 @@ func init() {
           "x-display-name": "Log ASAP"
         },
         "max_keep_alive_queue": {
+          "description": "Maximum server queue size for maintaining keep-alive connections",
           "type": "integer",
-          "x-display-name": "Maximum server queue size for maintaining keep-alive connections",
           "x-nullable": true
         },
         "maxconn": {
@@ -89300,8 +89388,8 @@ func init() {
           "x-nullable": true
         },
         "retry_on": {
-          "type": "string",
-          "x-display-name": "Specify when to attempt to automatically retry a failed request"
+          "description": "Specify when to attempt to automatically retry a failed request",
+          "type": "string"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -94713,10 +94801,10 @@ func init() {
           "x-nullable": false
         },
         "timeout": {
+          "description": "Timeout to send an email in milliseconds",
           "type": "integer",
           "minimum": 0,
           "x-default-unit": "ms",
-          "x-display-name": "Timeout to send an email in milliseconds",
           "x-duration": true,
           "x-nullable": true
         }
@@ -95792,6 +95880,10 @@ func init() {
         "busy_polling": {
           "type": "boolean"
         },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "max_spread_checks": {
           "type": "integer",
           "minimum": 0,
@@ -96526,10 +96618,11 @@ func init() {
       ],
       "properties": {
         "description": {
-          "type": "string",
-          "x-display-name": "The description is an optional description string of the ring"
+          "description": "The description is an optional description string of the ring",
+          "type": "string"
         },
         "format": {
+          "description": "Format used to store events into the ring buffer",
           "type": "string",
           "enum": [
             "iso",
@@ -96540,12 +96633,11 @@ func init() {
             "short",
             "priority",
             "timed"
-          ],
-          "x-display-name": "Format used to store events into the ring buffer"
+          ]
         },
         "maxlen": {
+          "description": "The maximum length of an event message stored into the ring",
           "type": "integer",
-          "x-display-name": "The maximum length of an event message stored into the ring",
           "x-nullable": true
         },
         "metadata": {
@@ -96559,9 +96651,9 @@ func init() {
           "x-nullable": false
         },
         "size": {
+          "description": "Optional size in bytes for the ring-buffer",
           "type": "integer",
           "minimum": 0,
-          "x-display-name": "Optional size in bytes for the ring-buffer",
           "x-nullable": true,
           "x-size": true
         },
@@ -97960,7 +98052,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "target_server": "www"
       }
     },

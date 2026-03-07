@@ -4893,7 +4893,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/crt_loads"] = crt_load.NewCreateCrtLoad(o.context, o.CrtLoadCreateCrtLoadHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads"] = crt_load.NewCreateCrtLoad(o.context, o.CrtLoadCreateCrtLoadHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -5253,7 +5253,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/crt_loads/{certificate}"] = crt_load.NewDeleteCrtLoad(o.context, o.CrtLoadDeleteCrtLoadHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}"] = crt_load.NewDeleteCrtLoad(o.context, o.CrtLoadDeleteCrtLoadHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5925,11 +5925,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/crt_loads/{certificate}"] = crt_load.NewGetCrtLoad(o.context, o.CrtLoadGetCrtLoadHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}"] = crt_load.NewGetCrtLoad(o.context, o.CrtLoadGetCrtLoadHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/crt_loads"] = crt_load.NewGetCrtLoads(o.context, o.CrtLoadGetCrtLoadsHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads"] = crt_load.NewGetCrtLoads(o.context, o.CrtLoadGetCrtLoadsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -6633,7 +6633,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/crt_loads/{certificate}"] = crt_load.NewReplaceCrtLoad(o.context, o.CrtLoadReplaceCrtLoadHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate}"] = crt_load.NewReplaceCrtLoad(o.context, o.CrtLoadReplaceCrtLoadHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
