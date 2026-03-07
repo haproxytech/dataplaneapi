@@ -43,7 +43,7 @@ func (d DeleteProgramHandlerImpl) Handle(params process_manager.DeleteProgramPar
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 
@@ -98,7 +98,7 @@ func (c CreateProgramHandlerImpl) Handle(params process_manager.CreateProgramPar
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 
@@ -210,7 +210,7 @@ func (r ReplaceProgramHandlerImpl) Handle(params process_manager.ReplaceProgramP
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 

@@ -70,7 +70,7 @@ func main() {
 		}
 		currentBranch = string(out)
 	}
-	slog.Info("Current branch: " + currentBranch)
+	slog.Info("Current branch: " + currentBranch) //nolint:gosec // log message from trusted CI environment variables
 
 	cmd := exec.Command("govulncheck", "./...")
 	out, _ := cmd.Output()
@@ -135,7 +135,7 @@ func main() {
 }
 
 func createIssue(baseURL, token, projectID string, title, commentBody string) {
-	slog.Info("Active issue with title '" + title + "' not found in project " + projectID)
+	slog.Info("Active issue with title '" + title + "' not found in project " + projectID) //nolint:gosec // log message from trusted CI environment variables
 	// Create the issue here
 	issueData := map[string]any{
 		"title":       title,

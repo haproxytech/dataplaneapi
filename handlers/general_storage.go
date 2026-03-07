@@ -19,6 +19,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -41,8 +42,8 @@ type StorageCreateStorageGeneralFileHandlerImpl struct {
 func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.CreateStorageGeneralFileParams, principal any) middleware.Responder {
 	if params.FileUpload == nil {
 		e := &models.Error{
-			Code:    misc.Int64P(400),
-			Message: misc.StringP("No file_upload form param specified"),
+			Code:    new(int64(http.StatusBadRequest)),
+			Message: new("No file_upload form param specified"),
 		}
 		return storage.NewReplaceStorageGeneralFileBadRequest().WithPayload(e)
 	}
@@ -199,8 +200,8 @@ func (h *StorageReplaceStorageGeneralFileHandlerImpl) Handle(params storage.Repl
 
 	if params.FileUpload == nil {
 		e := &models.Error{
-			Code:    misc.Int64P(400),
-			Message: misc.StringP("No file_upload form param specified"),
+			Code:    new(int64(http.StatusBadRequest)),
+			Message: new("No file_upload form param specified"),
 		}
 		return storage.NewReplaceStorageGeneralFileBadRequest().WithPayload(e)
 	}
