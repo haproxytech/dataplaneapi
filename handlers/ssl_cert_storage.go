@@ -214,7 +214,7 @@ func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.R
 		File:        filename,
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
-		Size:        misc.Int64P(len(params.Data)),
+		Size:        new(int64(len(params.Data))),
 		NotAfter:    (*strfmt.DateTime)(info.NotAfter),
 		NotBefore:   (*strfmt.DateTime)(info.NotBefore),
 		Issuers:     info.Issuers,

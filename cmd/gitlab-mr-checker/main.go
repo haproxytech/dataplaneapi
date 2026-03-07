@@ -221,18 +221,18 @@ func startThreadOnMergeRequest(baseURL, token, projectID string, mergeRequestIID
 		os.Exit(1)
 	}
 
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost,
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, //nolint:gosec // URL constructed from trusted CI environment variables
 		fmt.Sprintf("%s/projects/%s/merge_requests/%d/discussions", baseURL, url.PathEscape(projectID), mergeRequestIID), bytes.NewBuffer(threadDataBytes))
 	if err != nil {
-		slog.Error(err.Error())
+		slog.Error(err.Error()) //nolint:gosec // log message from trusted CI environment variables
 		os.Exit(1)
 	}
 	req.Header.Add("PRIVATE-TOKEN", token) //nolint:canonicalheader
 	req.Header.Add("Content-Type", "application/json")
 
-	resp, err := client.Do(req)
+	resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 	if err != nil {
-		slog.Error(err.Error())
+		slog.Error(err.Error()) //nolint:gosec // log message from trusted CI environment variables
 		os.Exit(1)
 	}
 	defer resp.Body.Close()
@@ -241,14 +241,14 @@ func startThreadOnMergeRequest(baseURL, token, projectID string, mergeRequestIID
 func getMergeRequest(baseURL, token, projectID string, mergeRequestIID int) (*MergeRequest, error) {
 	client := &http.Client{}
 
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet,
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, //nolint:gosec // URL constructed from trusted CI environment variables
 		fmt.Sprintf("%s/projects/%s/merge_requests/%d", baseURL, url.PathEscape(projectID), mergeRequestIID), nil)
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Add("PRIVATE-TOKEN", token) //nolint:canonicalheader
 
-	resp, err := client.Do(req)
+	resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return nil, err
 	}
@@ -276,14 +276,14 @@ func getMergeRequest(baseURL, token, projectID string, mergeRequestIID int) (*Me
 func getMergeRequestComments(baseURL, token, projectID string, mergeRequestIID int) ([]Note, error) {
 	client := &http.Client{}
 
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet,
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, //nolint:gosec // URL constructed from trusted CI environment variables
 		fmt.Sprintf("%s/projects/%s/merge_requests/%d/notes", baseURL, url.PathEscape(projectID), mergeRequestIID), nil)
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Add("PRIVATE-TOKEN", token) //nolint:canonicalheader
 
-	resp, err := client.Do(req)
+	resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return nil, err
 	}
@@ -309,13 +309,13 @@ func getProjectlabels(backportLabels map[string]struct{}, projectID string) erro
 	if token == "" {
 		return errors.New("GITLAB_TOKEN not set")
 	}
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet,
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, //nolint:gosec // URL constructed from trusted CI environment variables
 		fmt.Sprintf("%s/projects/%s/labels", baseURL, url.PathEscape(projectID)), nil)
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
 	}
 	req.Header.Add("PRIVATE-TOKEN", token) //nolint:canonicalheader
-	resp, err := client.Do(req)
+	resp, err := client.Do(req)            //nolint:gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return fmt.Errorf("failed to get project labels: %w", err)
 	}
@@ -353,14 +353,14 @@ func getProjectlabels(backportLabels map[string]struct{}, projectID string) erro
 		if err != nil {
 			return fmt.Errorf("failed to marshal label data: %w", err)
 		}
-		req, err := http.NewRequestWithContext(context.Background(), http.MethodPost,
+		req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, //nolint:gosec // URL constructed from trusted CI environment variables
 			fmt.Sprintf("%s/projects/%s/labels", baseURL, url.PathEscape(projectID)), bytes.NewBuffer(labelDataBytes))
 		if err != nil {
 			return fmt.Errorf("failed to create request to create label: %w", err)
 		}
 		req.Header.Add("PRIVATE-TOKEN", token) //nolint:canonicalheader
 		req.Header.Add("Content-Type", "application/json")
-		resp, err := client.Do(req)
+		resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 		if err != nil {
 			return fmt.Errorf("failed to create label %s: %w", label, err)
 		}
@@ -387,13 +387,13 @@ func GetBranches() ([]string, error) {
 	nextPageURL := fmt.Sprintf("%s/projects/%s/repository/branches", baseURL, url.PathEscape(projectID))
 
 	for nextPageURL != "" {
-		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, nextPageURL, nil)
+		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, nextPageURL, nil) //nolint:gosec // URL constructed from trusted CI environment variables
 		if err != nil {
 			return nil, fmt.Errorf("failed to create request: %w", err)
 		}
 		req.Header.Add("PRIVATE-TOKEN", token) //nolint:canonicalheader
 
-		resp, err := client.Do(req)
+		resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 		if err != nil {
 			return nil, fmt.Errorf("failed to get branches: %w", err)
 		}

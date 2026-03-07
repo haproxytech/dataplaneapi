@@ -44,7 +44,7 @@ func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ 
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 
@@ -104,7 +104,7 @@ func (d DeleteFCGIAppHandlerImpl) Handle(params fcgi_app.DeleteFCGIAppParams, _ 
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 
@@ -224,7 +224,7 @@ func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, 
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 

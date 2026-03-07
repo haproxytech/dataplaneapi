@@ -96,14 +96,14 @@ func getOldMergeRequestPipelines(apiURL, projectID, mrIID, token string) ([]pipe
 	}
 
 	url := fmt.Sprintf("%s/projects/%s/merge_requests/%s/pipelines", apiURL, projectID, mrIID)
-	req, err := http.NewRequest("GET", url, nil) //nolint:noctx,usestdlibvars
+	req, err := http.NewRequest("GET", url, nil) //nolint:noctx,usestdlibvars,gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("PRIVATE-TOKEN", token) //nolint:canonicalheader
 
 	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return nil, err
 	}
@@ -132,14 +132,14 @@ func getOldMergeRequestPipelines(apiURL, projectID, mrIID, token string) ([]pipe
 
 func cancelPipeline(apiURL, projectID string, pipelineID int, token string) error {
 	url := fmt.Sprintf("%s/projects/%s/pipelines/%d/cancel", apiURL, projectID, pipelineID)
-	req, err := http.NewRequest("POST", url, nil) //nolint:noctx,usestdlibvars
+	req, err := http.NewRequest("POST", url, nil) //nolint:noctx,usestdlibvars,gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return err
 	}
 	req.Header.Set("PRIVATE-TOKEN", token) //nolint:canonicalheader
 
 	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := client.Do(req) //nolint:gosec // URL constructed from trusted CI environment variables
 	if err != nil {
 		return err
 	}

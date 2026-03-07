@@ -31,7 +31,6 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
-	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 const (
@@ -94,7 +93,7 @@ func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 		var port *int64
 
 		if parsedPort > 0 {
-			port = misc.Int64P(parsedPort)
+			port = new(int64(parsedPort))
 		}
 
 		servers = append(servers, configuration.ServiceServer{
