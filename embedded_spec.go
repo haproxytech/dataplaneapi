@@ -23921,7 +23921,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -32278,6 +32278,10 @@ func init() {
         "busy_polling": {
           "type": "boolean"
         },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "max_spread_checks": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -34375,7 +34379,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "target_server": "www"
       }
     },
@@ -76690,7 +76694,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "index": 0,
         "name": "test_backend"
       }
@@ -84890,6 +84894,10 @@ func init() {
         "busy_polling": {
           "type": "boolean"
         },
+        "fd_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "max_spread_checks": {
           "type": "integer",
           "minimum": 0,
@@ -87012,7 +87020,7 @@ func init() {
       "additionalProperties": false,
       "example": {
         "cond": "if",
-        "cond_test": "{ req_ssl_sni -i www.example.com }",
+        "cond_test": "{ req.ssl_sni -i www.example.com }",
         "target_server": "www"
       }
     },
