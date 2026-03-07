@@ -96,7 +96,7 @@ func (h *CreateBindHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 		return bind.NewCreateBindFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := bindTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := bindTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewCreateBindFrontendDefault(int(*e.Code)).WithPayload(e)
@@ -148,7 +148,7 @@ func (h *DeleteBindHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 		return bind.NewDeleteBindFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := bindTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := bindTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewDeleteBindFrontendDefault(int(*e.Code)).WithPayload(e)
@@ -186,7 +186,7 @@ func (h *GetBindHandlerImpl) Handle(parentType cnconstants.CnParentType, params 
 		return bind.NewGetBindFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := bindTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := bindTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetBindFrontendDefault(int(*e.Code)).WithPayload(e)
@@ -212,7 +212,7 @@ func (h *GetAllBindHandlerImpl) Handle(parentType cnconstants.CnParentType, para
 		return bind.NewGetAllBindFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := bindTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := bindTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetAllBindFrontendDefault(int(*e.Code)).WithPayload(e)
@@ -255,7 +255,7 @@ func (h *ReplaceBindHandlerImpl) Handle(parentType cnconstants.CnParentType, par
 		return bind.NewReplaceBindFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := bindTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := bindTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewReplaceBindFrontendDefault(int(*e.Code)).WithPayload(e)

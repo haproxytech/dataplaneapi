@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/models"
@@ -29,8 +31,8 @@ func (c CreateQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParent
 
 	if t != "" && *params.ForceReload {
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
-			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+			Message: new("Both force_reload and transaction specified, specify only one"),
+			Code:    new(int64(http.StatusBadRequest)),
 		}
 		return quic_initial_rule.NewCreateQUICInitialRuleFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -80,8 +82,8 @@ func (d DeleteQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParent
 
 	if t != "" && *params.ForceReload {
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
-			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+			Message: new("Both force_reload and transaction specified, specify only one"),
+			Code:    new(int64(http.StatusBadRequest)),
 		}
 		return quic_initial_rule.NewDeleteQUICInitialRuleFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -183,8 +185,8 @@ func (r ReplaceQUICInitialRuleHandlerImpl) Handle(parentType cnconstants.CnParen
 
 	if t != "" && *params.ForceReload {
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
-			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+			Message: new("Both force_reload and transaction specified, specify only one"),
+			Code:    new(int64(http.StatusBadRequest)),
 		}
 		return quic_initial_rule.NewReplaceQUICInitialRuleFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
