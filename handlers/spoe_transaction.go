@@ -141,7 +141,7 @@ func (h *SpoeTransactionsGetAllSpoeTransactionHandlerImpl) Handle(params spoe_tr
 		return spoe_transactions.NewGetAllSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	var ms models.SpoeTransactions
-	if *ts != nil && len(*ts) > 0 {
+	if len(*ts) > 0 {
 		for _, t := range *ts {
 			m := &models.SpoeTransaction{
 				Version: t.Version,

@@ -228,22 +228,9 @@ func GetHTTPStatusFromErr(err error) int {
 
 func SetError(code int, msg string) *models.Error {
 	return &models.Error{
-		Code:    Int64P(code),
-		Message: StringP(msg),
+		Code:    new(int64(code)),
+		Message: new(msg),
 	}
-}
-
-func StringP(s string) *string {
-	return &s
-}
-
-func Int64P(i int) *int64 {
-	i64 := int64(i)
-	return &i64
-}
-
-func PtrTo[T any](v T) *T {
-	return &v
 }
 
 // extractEnvVar extracts and returns env variable from HAProxy variable

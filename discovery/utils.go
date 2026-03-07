@@ -21,7 +21,6 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
 	"github.com/haproxytech/client-native/v6/models"
-	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 const (
@@ -42,10 +41,10 @@ func ValidateAWSData(data *models.AwsRegion, useValidation bool) error {
 		return err
 	}
 	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < minimumServerSlotsBase {
-		data.ServerSlotsBase = misc.Int64P(10)
+		data.ServerSlotsBase = new(int64(10))
 	}
 	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP(models.AwsRegionServerSlotsGrowthTypeExponential)
+		data.ServerSlotsGrowthType = new(models.AwsRegionServerSlotsGrowthTypeExponential)
 	}
 	if *data.ServerSlotsGrowthType == models.AwsRegionServerSlotsGrowthTypeLinear && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < minimumServerSlotsBase) {
 		data.ServerSlotsGrowthIncrement = minimumServerSlotsBase
@@ -67,10 +66,10 @@ func ValidateConsulData(data *models.Consul, useValidation bool) error {
 		return err
 	}
 	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < minimumServerSlotsBase {
-		data.ServerSlotsBase = misc.Int64P(minimumServerSlotsBase)
+		data.ServerSlotsBase = new(int64(minimumServerSlotsBase))
 	}
 	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP(models.ConsulServerSlotsGrowthTypeLinear)
+		data.ServerSlotsGrowthType = new(models.ConsulServerSlotsGrowthTypeLinear)
 	}
 	if *data.ServerSlotsGrowthType == models.ConsulServerSlotsGrowthTypeLinear && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < minimumServerSlotsBase) {
 		data.ServerSlotsGrowthIncrement = minimumServerSlotsBase
