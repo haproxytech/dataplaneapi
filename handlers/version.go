@@ -29,7 +29,7 @@ type ConfigurationGetConfigurationVersionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *ConfigurationGetConfigurationVersionHandlerImpl) Handle(params configuration.GetConfigurationVersionParams, principal interface{}) middleware.Responder {
+func (h *ConfigurationGetConfigurationVersionHandlerImpl) Handle(params configuration.GetConfigurationVersionParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID

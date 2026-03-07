@@ -54,7 +54,7 @@ type ReplacePeerEntryHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreatePeerEntryHandlerImpl) Handle(params peer_entry.CreatePeerEntryParams, principal interface{}) middleware.Responder {
+func (h *CreatePeerEntryHandlerImpl) Handle(params peer_entry.CreatePeerEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreatePeerEntryHandlerImpl) Handle(params peer_entry.CreatePeerEntryPar
 }
 
 // Handle executing the request and returning a response
-func (h *DeletePeerEntryHandlerImpl) Handle(params peer_entry.DeletePeerEntryParams, principal interface{}) middleware.Responder {
+func (h *DeletePeerEntryHandlerImpl) Handle(params peer_entry.DeletePeerEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -148,7 +148,7 @@ func (h *DeletePeerEntryHandlerImpl) Handle(params peer_entry.DeletePeerEntryPar
 }
 
 // Handle executing the request and returning a response
-func (h *GetPeerEntryHandlerImpl) Handle(params peer_entry.GetPeerEntryParams, principal interface{}) middleware.Responder {
+func (h *GetPeerEntryHandlerImpl) Handle(params peer_entry.GetPeerEntryParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -169,7 +169,7 @@ func (h *GetPeerEntryHandlerImpl) Handle(params peer_entry.GetPeerEntryParams, p
 }
 
 // Handle executing the request and returning a response
-func (h *GetPeerEntriesHandlerImpl) Handle(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
+func (h *GetPeerEntriesHandlerImpl) Handle(params peer_entry.GetPeerEntriesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -190,7 +190,7 @@ func (h *GetPeerEntriesHandlerImpl) Handle(params peer_entry.GetPeerEntriesParam
 }
 
 // Handle executing the request and returning a response
-func (h *ReplacePeerEntryHandlerImpl) Handle(params peer_entry.ReplacePeerEntryParams, principal interface{}) middleware.Responder {
+func (h *ReplacePeerEntryHandlerImpl) Handle(params peer_entry.ReplacePeerEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v5"
 	"github.com/haproxytech/client-native/v5/models"
@@ -15,7 +17,7 @@ type CreateHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.CreateHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.CreateHTTPAfterResponseRuleParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -28,8 +30,8 @@ func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respons
 
 	if t != "" && *params.ForceReload {
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
-			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+			Message: new("Both force_reload and transaction specified, specify only one"),
+			Code:    new(int64(http.StatusBadRequest)),
 		}
 		return http_after_response_rule.NewCreateHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -66,7 +68,7 @@ type DeleteHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.DeleteHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.DeleteHTTPAfterResponseRuleParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -79,8 +81,8 @@ func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respons
 
 	if t != "" && *params.ForceReload {
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
-			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+			Message: new("Both force_reload and transaction specified, specify only one"),
+			Code:    new(int64(http.StatusBadRequest)),
 		}
 		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -116,7 +118,7 @@ type GetHTTPAfterResponseRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRuleParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -142,7 +144,7 @@ type GetHTTPAfterResponseRulesHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRulesParams, _ interface{}) middleware.Responder {
+func (g GetHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRulesParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -169,7 +171,7 @@ type ReplaceHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRuleParams, _ any) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -182,8 +184,8 @@ func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respon
 
 	if t != "" && *params.ForceReload {
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
-			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+			Message: new("Both force_reload and transaction specified, specify only one"),
+			Code:    new(int64(http.StatusBadRequest)),
 		}
 		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}

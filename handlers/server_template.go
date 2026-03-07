@@ -54,7 +54,7 @@ type ReplaceServerTemplateHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateServerTemplateHandlerImpl) Handle(params server_template.CreateServerTemplateParams, principal interface{}) middleware.Responder {
+func (h *CreateServerTemplateHandlerImpl) Handle(params server_template.CreateServerTemplateParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateServerTemplateHandlerImpl) Handle(params server_template.CreateSe
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteServerTemplateHandlerImpl) Handle(params server_template.DeleteServerTemplateParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerTemplateHandlerImpl) Handle(params server_template.DeleteServerTemplateParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteServerTemplateHandlerImpl) Handle(params server_template.DeleteSe
 }
 
 // Handle executing the request and returning a response
-func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTemplateParams, principal interface{}) middleware.Responder {
+func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTemplateParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTe
 }
 
 // Handle executing the request and returning a response
-func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerTemplatesParams, principal interface{}) middleware.Responder {
+func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerTemplatesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -194,7 +194,7 @@ func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerT
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceServerTemplateHandlerImpl) Handle(params server_template.ReplaceServerTemplateParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerTemplateHandlerImpl) Handle(params server_template.ReplaceServerTemplateParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

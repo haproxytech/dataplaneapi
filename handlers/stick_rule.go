@@ -54,7 +54,7 @@ type ReplaceStickRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
+func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRulePar
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
+func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRulePar
 }
 
 // Handle executing the request and returning a response
-func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, principal interface{}) middleware.Responder {
+func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 }
 
 // Handle executing the request and returning a response
-func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams, principal interface{}) middleware.Responder {
+func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -194,7 +194,7 @@ func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams,
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceStickRuleHandlerImpl) Handle(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
+func (h *ReplaceStickRuleHandlerImpl) Handle(params stick_rule.ReplaceStickRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

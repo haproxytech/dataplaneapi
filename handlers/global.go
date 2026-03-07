@@ -37,7 +37,7 @@ type ReplaceGlobalHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal interface{}) middleware.Responder {
+func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -58,7 +58,7 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
+func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

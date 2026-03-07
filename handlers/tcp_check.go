@@ -54,7 +54,7 @@ type ReplaceTCPCheckHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""
@@ -107,7 +107,7 @@ func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""
@@ -160,7 +160,7 @@ func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, principal interface{}) middleware.Responder {
+func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, principal any) middleware.Responder {
 	t := ""
 	pName := ""
 	if params.ParentName != nil {
@@ -187,7 +187,7 @@ func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, prin
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, principal interface{}) middleware.Responder {
+func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, principal any) middleware.Responder {
 	t := ""
 	pName := ""
 	if params.ParentName != nil {
@@ -216,7 +216,7 @@ func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, pr
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""

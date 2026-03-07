@@ -70,7 +70,7 @@ func serverTypeParams(backend *string, parentType *string, parentName *string) (
 }
 
 // Handle executing the request and returning a response
-func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, principal interface{}) middleware.Responder {
+func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -153,7 +153,7 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -207,7 +207,7 @@ func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, princ
 }
 
 // Handle executing the request and returning a response
-func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal interface{}) middleware.Responder {
+func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -234,7 +234,7 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal interface{}) middleware.Responder {
+func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -264,7 +264,7 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

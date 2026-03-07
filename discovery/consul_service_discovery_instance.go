@@ -65,7 +65,7 @@ type consulInstance struct {
 	discoveryConfig *ServiceDiscoveryInstance
 	prevIndexes     map[string]uint64
 	update          chan struct{}
-	logFields       map[string]interface{}
+	logFields       map[string]any
 	timeout         time.Duration
 	prevEnabled     bool
 }
@@ -298,7 +298,7 @@ func (c *consulInstance) logDebug(message string) {
 	log.WithFields(c.logFields, log.DebugLevel, message)
 }
 
-func (c *consulInstance) logErrorf(format string, args ...interface{}) {
+func (c *consulInstance) logErrorf(format string, args ...any) {
 	log.WithFieldsf(c.logFields, log.ErrorLevel, format, args...)
 }
 
@@ -324,7 +324,7 @@ func (c *consulInstance) queryHealthService(se string, params *queryParams) ([]*
 	return services, meta, nil
 }
 
-func (c *consulInstance) doConsulQuery(method string, path string, params *queryParams, resp interface{}) (*queryMetadata, error) {
+func (c *consulInstance) doConsulQuery(method string, path string, params *queryParams, resp any) (*queryMetadata, error) {
 	mode := "http://"
 	if c.params.Mode != nil {
 		mode = *c.params.Mode + "://"

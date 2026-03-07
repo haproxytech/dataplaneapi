@@ -85,7 +85,7 @@ func RecoverMiddleware(logger *log.Logger) func(h http.Handler) http.Handler {
 				if err := recover(); err != nil {
 					frames := callers()
 
-					fields := make(map[string]interface{})
+					fields := make(map[string]any)
 					fields["stack_trace"] = frames.String()
 					logger.WithFieldsf(fields, log.ErrorLevel, "Panic %v", err)
 

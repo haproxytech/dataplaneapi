@@ -54,7 +54,7 @@ type ReplaceLogForwardHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateLogForwardHandlerImpl) Handle(params log_forward.CreateLogForwardParams, principal interface{}) middleware.Responder {
+func (h *CreateLogForwardHandlerImpl) Handle(params log_forward.CreateLogForwardParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreateLogForwardHandlerImpl) Handle(params log_forward.CreateLogForward
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteLogForwardHandlerImpl) Handle(params log_forward.DeleteLogForwardParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogForwardHandlerImpl) Handle(params log_forward.DeleteLogForwardParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteLogForwardHandlerImpl) Handle(params log_forward.DeleteLogForward
 }
 
 // Handle executing the request and returning a response
-func (h *GetLogForwardHandlerImpl) Handle(params log_forward.GetLogForwardParams, principal interface{}) middleware.Responder {
+func (h *GetLogForwardHandlerImpl) Handle(params log_forward.GetLogForwardParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetLogForwardHandlerImpl) Handle(params log_forward.GetLogForwardParams
 }
 
 // Handle executing the request and returning a response
-func (h *GetLogForwardsHandlerImpl) Handle(params log_forward.GetLogForwardsParams, principal interface{}) middleware.Responder {
+func (h *GetLogForwardsHandlerImpl) Handle(params log_forward.GetLogForwardsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -191,7 +191,7 @@ func (h *GetLogForwardsHandlerImpl) Handle(params log_forward.GetLogForwardsPara
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceLogForwardHandlerImpl) Handle(params log_forward.ReplaceLogForwardParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogForwardHandlerImpl) Handle(params log_forward.ReplaceLogForwardParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

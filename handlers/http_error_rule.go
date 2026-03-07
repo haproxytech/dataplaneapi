@@ -54,7 +54,7 @@ type ReplaceHTTPErrorRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""
@@ -106,7 +106,7 @@ func (h *CreateHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.CreateHTT
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""
@@ -157,7 +157,7 @@ func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.DeleteHTT
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleParams, principal any) middleware.Responder {
 	t := ""
 	pName := ""
 	if params.TransactionID != nil {
@@ -182,7 +182,7 @@ func (h *GetHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.GetHTTPError
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRulesParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRulesParams, principal any) middleware.Responder {
 	t := ""
 	pName := ""
 	if params.TransactionID != nil {
@@ -210,7 +210,7 @@ func (h *GetHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.GetHTTPErro
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""

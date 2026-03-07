@@ -54,7 +54,7 @@ type ReplaceHTTPCheckHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPCheckHandlerImpl) Handle(params http_check.CreateHTTPCheckParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPCheckHandlerImpl) Handle(params http_check.CreateHTTPCheckParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""
@@ -106,7 +106,7 @@ func (h *CreateHTTPCheckHandlerImpl) Handle(params http_check.CreateHTTPCheckPar
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPCheckHandlerImpl) Handle(params http_check.DeleteHTTPCheckParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPCheckHandlerImpl) Handle(params http_check.DeleteHTTPCheckParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""
@@ -157,7 +157,7 @@ func (h *DeleteHTTPCheckHandlerImpl) Handle(params http_check.DeleteHTTPCheckPar
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPCheckHandlerImpl) Handle(params http_check.GetHTTPCheckParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPCheckHandlerImpl) Handle(params http_check.GetHTTPCheckParams, principal any) middleware.Responder {
 	t := ""
 	pName := ""
 	if params.TransactionID != nil {
@@ -182,7 +182,7 @@ func (h *GetHTTPCheckHandlerImpl) Handle(params http_check.GetHTTPCheckParams, p
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPChecksHandlerImpl) Handle(params http_check.GetHTTPChecksParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPChecksHandlerImpl) Handle(params http_check.GetHTTPChecksParams, principal any) middleware.Responder {
 	t := ""
 	pName := ""
 	if params.TransactionID != nil {
@@ -210,7 +210,7 @@ func (h *GetHTTPChecksHandlerImpl) Handle(params http_check.GetHTTPChecksParams,
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPCheckHandlerImpl) Handle(params http_check.ReplaceHTTPCheckParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPCheckHandlerImpl) Handle(params http_check.ReplaceHTTPCheckParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	pName := ""

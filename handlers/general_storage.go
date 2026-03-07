@@ -37,7 +37,7 @@ type StorageCreateStorageGeneralFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.CreateStorageGeneralFileParams, principal interface{}) middleware.Responder {
+func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.CreateStorageGeneralFileParams, principal any) middleware.Responder {
 	file, ok := params.FileUpload.(*runtime.File)
 	if !ok {
 		return storage.NewCreateStorageGeneralFileBadRequest()
@@ -71,7 +71,7 @@ type StorageGetAllStorageGeneralFilesHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *StorageGetAllStorageGeneralFilesHandlerImpl) Handle(params storage.GetAllStorageGeneralFilesParams, principal interface{}) middleware.Responder {
+func (h *StorageGetAllStorageGeneralFilesHandlerImpl) Handle(params storage.GetAllStorageGeneralFilesParams, principal any) middleware.Responder {
 	gs, err := h.Client.GeneralStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -102,7 +102,7 @@ type StorageGetOneStorageGeneralFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageGetOneStorageGeneralFileHandlerImpl) Handle(params storage.GetOneStorageGeneralFileParams, principal interface{}) middleware.Responder {
+func (h *StorageGetOneStorageGeneralFileHandlerImpl) Handle(params storage.GetOneStorageGeneralFileParams, principal any) middleware.Responder {
 	gs, err := h.Client.GeneralStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -130,7 +130,7 @@ type StorageDeleteStorageGeneralFileHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *StorageDeleteStorageGeneralFileHandlerImpl) Handle(params storage.DeleteStorageGeneralFileParams, principal interface{}) middleware.Responder {
+func (h *StorageDeleteStorageGeneralFileHandlerImpl) Handle(params storage.DeleteStorageGeneralFileParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -181,7 +181,7 @@ type StorageReplaceStorageGeneralFileHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h *StorageReplaceStorageGeneralFileHandlerImpl) Handle(params storage.ReplaceStorageGeneralFileParams, principal interface{}) middleware.Responder {
+func (h *StorageReplaceStorageGeneralFileHandlerImpl) Handle(params storage.ReplaceStorageGeneralFileParams, principal any) middleware.Responder {
 	gs, err := h.Client.GeneralStorage()
 	if err != nil {
 		e := misc.HandleError(err)

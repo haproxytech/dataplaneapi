@@ -128,7 +128,7 @@ func (g PProf) Command(cmd []string) (response []byte, err error) {
 				}
 			}()
 
-			return []byte(fmt.Sprintf("pprof web started on port %s with duration of %s", cmd[3], sleepTime)), nil
+			return fmt.Appendf(nil, "pprof web started on port %s with duration of %s", cmd[3], sleepTime), nil
 		case "stop":
 			if stopWebServer != nil {
 				stopWebServer()
@@ -184,7 +184,7 @@ func (g PProf) Command(cmd []string) (response []byte, err error) {
 				}
 			}()
 
-			return []byte(fmt.Sprintf("CPU Profile with duration of %s", sleepTime)), nil
+			return fmt.Appendf(nil, "CPU Profile with duration of %s", sleepTime), nil
 		case "stop":
 			if stopCPUProfiling == nil {
 				return []byte(""), errors.New("CPU Profile not running")

@@ -34,7 +34,7 @@ type GetMapsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
+func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal any) middleware.Responder {
 	mapList := []*models.Map{}
 
 	runtime, err := h.Client.Runtime()
@@ -71,7 +71,7 @@ type GetMapHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
+func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -94,7 +94,7 @@ type ClearMapHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
+func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principal any) middleware.Responder {
 	forceDelete := false
 	if params.ForceDelete != nil {
 		forceDelete = *params.ForceDelete
@@ -132,7 +132,7 @@ type ShowMapHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
+func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -154,7 +154,7 @@ type AddMapEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
+func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -186,7 +186,7 @@ type MapsAddPayloadRuntimeMapHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *MapsAddPayloadRuntimeMapHandlerImpl) Handle(params maps.AddPayloadRuntimeMapParams, principal interface{}) middleware.Responder {
+func (h *MapsAddPayloadRuntimeMapHandlerImpl) Handle(params maps.AddPayloadRuntimeMapParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -218,7 +218,7 @@ type GetRuntimeMapEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryParams, principal interface{}) middleware.Responder {
+func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -240,7 +240,7 @@ type ReplaceRuntimeMapEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
+func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMapEntryParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -277,7 +277,7 @@ type DeleteRuntimeMapEntryHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h *DeleteRuntimeMapEntryHandlerImpl) Handle(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
+func (h *DeleteRuntimeMapEntryHandlerImpl) Handle(params maps.DeleteRuntimeMapEntryParams, principal any) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)

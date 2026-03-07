@@ -54,7 +54,7 @@ type ReplaceLogTargetHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
+func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -116,7 +116,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
+func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -178,7 +178,7 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 }
 
 // Handle executing the request and returning a response
-func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -212,7 +212,7 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 }
 
 // Handle executing the request and returning a response
-func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
+func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -249,7 +249,7 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
+func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

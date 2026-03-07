@@ -64,7 +64,7 @@ type CommitTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *StartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
+func (h *StartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -79,7 +79,7 @@ func (h *StartTransactionHandlerImpl) Handle(params transactions.StartTransactio
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
+func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -89,7 +89,7 @@ func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransact
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -98,7 +98,7 @@ func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransact
 }
 
 // Handle executing the request and returning a response
-func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
+func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionParams, principal any) middleware.Responder {
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -108,7 +108,7 @@ func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPar
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
@@ -117,7 +117,7 @@ func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPar
 }
 
 // Handle executing the request and returning a response
-func (h *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
+func (h *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsParams, principal any) middleware.Responder {
 	s := ""
 	if params.Status != nil {
 		s = *params.Status
@@ -138,7 +138,7 @@ func (h *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsP
 }
 
 // Handle executing the request and returning a response
-func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
+func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal any) middleware.Responder {
 	h.Mutex.Lock()
 	defer h.Mutex.Unlock()
 
@@ -155,7 +155,7 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 	if transaction, err = configuration.GetTransaction(params.ID); err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -181,7 +181,7 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -231,7 +231,7 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 }
 
 // Handle executes the decorated Handler and, in case of successful creation, increase the counter if this is
-func (r RateLimitedStartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
+func (r RateLimitedStartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal any) middleware.Responder {
 	if err := r.TransactionCounter.LimitReached(); err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewStartTransactionDefault(int(*e.Code)).WithPayload(e)

@@ -54,7 +54,7 @@ type ReplaceGroupHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateGroupHandlerImpl) Handle(params group.CreateGroupParams, principal interface{}) middleware.Responder {
+func (h *CreateGroupHandlerImpl) Handle(params group.CreateGroupParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateGroupHandlerImpl) Handle(params group.CreateGroupParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteGroupHandlerImpl) Handle(params group.DeleteGroupParams, principal interface{}) middleware.Responder {
+func (h *DeleteGroupHandlerImpl) Handle(params group.DeleteGroupParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -156,7 +156,7 @@ func (h *DeleteGroupHandlerImpl) Handle(params group.DeleteGroupParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *GetGroupHandlerImpl) Handle(params group.GetGroupParams, principal interface{}) middleware.Responder {
+func (h *GetGroupHandlerImpl) Handle(params group.GetGroupParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -182,7 +182,7 @@ func (h *GetGroupHandlerImpl) Handle(params group.GetGroupParams, principal inte
 }
 
 // Handle executing the request and returning a response
-func (h *GetGroupsHandlerImpl) Handle(params group.GetGroupsParams, principal interface{}) middleware.Responder {
+func (h *GetGroupsHandlerImpl) Handle(params group.GetGroupsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -214,7 +214,7 @@ func (h *GetGroupsHandlerImpl) Handle(params group.GetGroupsParams, principal in
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceGroupHandlerImpl) Handle(params group.ReplaceGroupParams, principal interface{}) middleware.Responder {
+func (h *ReplaceGroupHandlerImpl) Handle(params group.ReplaceGroupParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

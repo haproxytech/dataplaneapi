@@ -29,7 +29,7 @@ type SpoeGetSpoeConfigurationVersionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *SpoeGetSpoeConfigurationVersionHandlerImpl) Handle(params spoe.GetSpoeConfigurationVersionParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetSpoeConfigurationVersionHandlerImpl) Handle(params spoe.GetSpoeConfigurationVersionParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID

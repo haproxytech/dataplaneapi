@@ -12,7 +12,7 @@ type GetHealthHandlerImpl struct {
 	HAProxy haproxy.IReloadAgent
 }
 
-func (h *GetHealthHandlerImpl) Handle(health.GetHealthParams, interface{}) middleware.Responder {
+func (h *GetHealthHandlerImpl) Handle(health.GetHealthParams, any) middleware.Responder {
 	data := models.Health{}
 	status, err := h.HAProxy.Status()
 	if err == nil {

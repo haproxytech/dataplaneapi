@@ -177,7 +177,7 @@ func handleDeprecatedBackendFields(method string, payload *models.Backend, onDis
 }
 
 // Handle executing the request and returning a response
-func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
+func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -231,7 +231,7 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
+func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -278,7 +278,7 @@ func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, pr
 }
 
 // Handle executing the request and returning a response
-func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principal interface{}) middleware.Responder {
+func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -303,7 +303,7 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 }
 
 // Handle executing the request and returning a response
-func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, principal interface{}) middleware.Responder {
+func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -330,7 +330,7 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

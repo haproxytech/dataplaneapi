@@ -54,7 +54,7 @@ type ReplacePeerHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal interface{}) middleware.Responder {
+func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal interface{}) middleware.Responder {
+func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal interface{}) middleware.Responder {
+func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 }
 
 // Handle executing the request and returning a response
-func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principal interface{}) middleware.Responder {
+func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID

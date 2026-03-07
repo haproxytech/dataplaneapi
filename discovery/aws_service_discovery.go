@@ -64,7 +64,7 @@ func (a awsServiceDiscovery) AddNode(id string, params ServiceDiscoveryParams) (
 }
 
 func (a awsServiceDiscovery) GetNode(id string) (params ServiceDiscoveryParams, err error) {
-	var i interface{}
+	var i any
 	if i, err = a.services.Read(id); err != nil {
 		return params, err
 	}
@@ -88,7 +88,7 @@ func (a awsServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryParams
 	if !ok {
 		return errors.New("expected *models.AwsRegion")
 	}
-	return a.services.Update(id, func(item interface{}) (err error) {
+	return a.services.Update(id, func(item any) (err error) {
 		ai := item.(*awsInstance)
 
 		if err = ai.updateTimeout(*newParams.RetryTimeout); err != nil {

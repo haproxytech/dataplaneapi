@@ -54,7 +54,7 @@ type ReplaceNameserverHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateNameserverHandlerImpl) Handle(params nameserver.CreateNameserverParams, principal interface{}) middleware.Responder {
+func (h *CreateNameserverHandlerImpl) Handle(params nameserver.CreateNameserverParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -100,7 +100,7 @@ func (h *CreateNameserverHandlerImpl) Handle(params nameserver.CreateNameserverP
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteNameserverHandlerImpl) Handle(params nameserver.DeleteNameserverParams, principal interface{}) middleware.Responder {
+func (h *DeleteNameserverHandlerImpl) Handle(params nameserver.DeleteNameserverParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -147,7 +147,7 @@ func (h *DeleteNameserverHandlerImpl) Handle(params nameserver.DeleteNameserverP
 }
 
 // Handle executing the request and returning a response
-func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams, principal interface{}) middleware.Responder {
+func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -168,7 +168,7 @@ func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams,
 }
 
 // Handle executing the request and returning a response
-func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParams, principal interface{}) middleware.Responder {
+func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -189,7 +189,7 @@ func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParam
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceNameserverHandlerImpl) Handle(params nameserver.ReplaceNameserverParams, principal interface{}) middleware.Responder {
+func (h *ReplaceNameserverHandlerImpl) Handle(params nameserver.ReplaceNameserverParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

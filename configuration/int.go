@@ -40,7 +40,7 @@ func (s *AtomicInt) String() string {
 	return strconv.Itoa(s.Load())
 }
 
-func (s *AtomicInt) UnmarshalYAML(unmarshal func(interface{}) error) error {
+func (s *AtomicInt) UnmarshalYAML(unmarshal func(any) error) error {
 	var buf int
 	err := unmarshal(&buf)
 	if err != nil {
@@ -51,6 +51,6 @@ func (s *AtomicInt) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
-func (s AtomicInt) MarshalYAML() (interface{}, error) {
+func (s AtomicInt) MarshalYAML() (any, error) {
 	return s.Load(), nil
 }

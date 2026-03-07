@@ -54,7 +54,7 @@ type ReplaceTCPResponseRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.CreateTCPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Creat
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.DeleteTCPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.DeleteTCPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Delet
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -169,7 +169,7 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPRe
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRulesParams, principal interface{}) middleware.Responder {
+func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRulesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -193,7 +193,7 @@ func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPR
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

@@ -54,7 +54,7 @@ type ReplaceHTTPResponseRuleHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.CreateHTTPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *CreateHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.CreateHTTPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreateHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.Cre
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.DeleteHTTPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *DeleteHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.DeleteHTTPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.Del
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.GetHTT
 }
 
 // Handle executing the request and returning a response
-func (h *GetHTTPResponseRulesHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRulesParams, principal interface{}) middleware.Responder {
+func (h *GetHTTPResponseRulesHandlerImpl) Handle(params http_response_rule.GetHTTPResponseRulesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -194,7 +194,7 @@ func (h *GetHTTPResponseRulesHandlerImpl) Handle(params http_response_rule.GetHT
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
+func (h *ReplaceHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.ReplaceHTTPResponseRuleParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

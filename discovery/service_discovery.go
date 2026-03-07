@@ -24,7 +24,7 @@ import (
 )
 
 // ServiceDiscoveryParams configuration for a specific service discovery
-type ServiceDiscoveryParams interface{}
+type ServiceDiscoveryParams any
 
 // ServiceDiscovery represents the required methods for a service discovery
 type ServiceDiscovery interface {

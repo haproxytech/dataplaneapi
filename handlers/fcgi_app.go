@@ -29,7 +29,7 @@ type CreateFCGIAppHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ interface{}) middleware.Responder {
+func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ any) middleware.Responder {
 	var t string
 	var v int64
 
@@ -44,7 +44,7 @@ func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ 
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 
@@ -83,7 +83,7 @@ type DeleteFCGIAppHandlerImpl struct {
 	Client      client_native.HAProxyClient
 }
 
-func (d DeleteFCGIAppHandlerImpl) Handle(params fcgi_app.DeleteFCGIAppParams, _ interface{}) middleware.Responder {
+func (d DeleteFCGIAppHandlerImpl) Handle(params fcgi_app.DeleteFCGIAppParams, _ any) middleware.Responder {
 	var t string
 	var v int64
 
@@ -98,7 +98,7 @@ func (d DeleteFCGIAppHandlerImpl) Handle(params fcgi_app.DeleteFCGIAppParams, _ 
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 
@@ -137,7 +137,7 @@ type GetFCGIAppHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetFCGIAppHandlerImpl) Handle(params fcgi_app.GetFCGIAppParams, _ interface{}) middleware.Responder {
+func (g GetFCGIAppHandlerImpl) Handle(params fcgi_app.GetFCGIAppParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -165,7 +165,7 @@ type GetFCGIAppsHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetFCGIAppsHandlerImpl) Handle(params fcgi_app.GetFCGIAppsParams, _ interface{}) middleware.Responder {
+func (g GetFCGIAppsHandlerImpl) Handle(params fcgi_app.GetFCGIAppsParams, _ any) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -194,7 +194,7 @@ type ReplaceFCGIAppHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, _ interface{}) middleware.Responder {
+func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, _ any) middleware.Responder {
 	var t string
 	var v int64
 
@@ -210,7 +210,7 @@ func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, 
 		code := misc.ErrHTTPBadRequest
 
 		e := &models.Error{
-			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
+			Message: new("Both force_reload and transaction specified, specify only one"),
 			Code:    &code,
 		}
 

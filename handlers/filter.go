@@ -54,7 +54,7 @@ type ReplaceFilterHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
+func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, princ
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
+func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -148,7 +148,7 @@ func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, princ
 }
 
 // Handle executing the request and returning a response
-func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal interface{}) middleware.Responder {
+func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -169,7 +169,7 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal interface{}) middleware.Responder {
+func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -193,7 +193,7 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
+func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

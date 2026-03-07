@@ -37,7 +37,7 @@ type GetReloadsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (rh *GetReloadHandlerImpl) Handle(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
+func (rh *GetReloadHandlerImpl) Handle(params reloads.GetReloadParams, principal any) middleware.Responder {
 	r := rh.ReloadAgent.GetReload(params.ID)
 	if r == nil {
 		msg := fmt.Sprintf("Reload with ID %s does not exist", params.ID)
@@ -52,7 +52,7 @@ func (rh *GetReloadHandlerImpl) Handle(params reloads.GetReloadParams, principal
 }
 
 // Handle executing the request and returning a response
-func (rh *GetReloadsHandlerImpl) Handle(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
+func (rh *GetReloadsHandlerImpl) Handle(params reloads.GetReloadsParams, principal any) middleware.Responder {
 	rs := rh.ReloadAgent.GetReloads()
 	return reloads.NewGetReloadsOK().WithPayload(rs)
 }

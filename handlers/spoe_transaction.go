@@ -31,7 +31,7 @@ type SpoeTransactionsStartSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
+func (h *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -62,7 +62,7 @@ type SpoeTransactionsDeleteSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
+func (h *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -88,7 +88,7 @@ type SpoeTransactionsGetSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
+func (h *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -119,7 +119,7 @@ type SpoeTransactionsGetSpoeTransactionsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
+func (h *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -141,7 +141,7 @@ func (h *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_tran
 		return spoe_transactions.NewGetSpoeTransactionsDefault(int(*e.Code)).WithPayload(e)
 	}
 	var ms models.SpoeTransactions
-	if *ts != nil && len(*ts) > 0 {
+	if len(*ts) > 0 {
 		for _, t := range *ts {
 			m := &models.SpoeTransaction{
 				Version: t.Version,
@@ -161,7 +161,7 @@ type SpoeTransactionsCommitSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
+func (h *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal any) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)

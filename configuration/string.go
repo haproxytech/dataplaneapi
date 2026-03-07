@@ -39,7 +39,7 @@ func (s *AtomicString) String() string {
 	return s.Load()
 }
 
-func (s *AtomicString) UnmarshalYAML(unmarshal func(interface{}) error) error {
+func (s *AtomicString) UnmarshalYAML(unmarshal func(any) error) error {
 	var buf string
 	err := unmarshal(&buf)
 	if err != nil {
@@ -50,6 +50,6 @@ func (s *AtomicString) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
-func (s AtomicString) MarshalYAML() (interface{}, error) {
+func (s AtomicString) MarshalYAML() (any, error) {
 	return s.Load(), nil
 }

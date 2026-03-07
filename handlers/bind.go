@@ -69,7 +69,7 @@ func bindTypeParams(frontend *string, parentType *string, parentName *string) (p
 }
 
 // Handle executing the request and returning a response
-func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal interface{}) middleware.Responder {
+func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -121,7 +121,7 @@ func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
+func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -173,7 +173,7 @@ func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal i
 }
 
 // Handle executing the request and returning a response
-func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interface{}) middleware.Responder {
+func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -199,7 +199,7 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 }
 
 // Handle executing the request and returning a response
-func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal interface{}) middleware.Responder {
+func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -228,7 +228,7 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
+func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

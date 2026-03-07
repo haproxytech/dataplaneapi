@@ -139,10 +139,7 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 		maxNo = l
 	}
 
-	maxRandom := 10
-	if maxNo < 10 {
-		maxRandom = maxNo
-	}
+	maxRandom := min(10, maxNo)
 
 	for range maxRandom {
 		// There's no need for strong number generation, here, just need for performance

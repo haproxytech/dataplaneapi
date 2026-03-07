@@ -48,7 +48,7 @@ type ReplaceMailerEntryHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateMailerEntryHandlerImpl) Handle(params mailer_entry.CreateMailerEntryParams, principal interface{}) middleware.Responder {
+func (h *CreateMailerEntryHandlerImpl) Handle(params mailer_entry.CreateMailerEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -95,7 +95,7 @@ func (h *CreateMailerEntryHandlerImpl) Handle(params mailer_entry.CreateMailerEn
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteMailerEntryHandlerImpl) Handle(params mailer_entry.DeleteMailerEntryParams, principal interface{}) middleware.Responder {
+func (h *DeleteMailerEntryHandlerImpl) Handle(params mailer_entry.DeleteMailerEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -142,7 +142,7 @@ func (h *DeleteMailerEntryHandlerImpl) Handle(params mailer_entry.DeleteMailerEn
 }
 
 // Handle executing the request and returning a response
-func (h *GetMailerEntryHandlerImpl) Handle(params mailer_entry.GetMailerEntryParams, principal interface{}) middleware.Responder {
+func (h *GetMailerEntryHandlerImpl) Handle(params mailer_entry.GetMailerEntryParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -163,7 +163,7 @@ func (h *GetMailerEntryHandlerImpl) Handle(params mailer_entry.GetMailerEntryPar
 }
 
 // Handle executing the request and returning a response
-func (h *GetMailerEntriesHandlerImpl) Handle(params mailer_entry.GetMailerEntriesParams, principal interface{}) middleware.Responder {
+func (h *GetMailerEntriesHandlerImpl) Handle(params mailer_entry.GetMailerEntriesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -184,7 +184,7 @@ func (h *GetMailerEntriesHandlerImpl) Handle(params mailer_entry.GetMailerEntrie
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceMailerEntryHandlerImpl) Handle(params mailer_entry.ReplaceMailerEntryParams, principal interface{}) middleware.Responder {
+func (h *ReplaceMailerEntryHandlerImpl) Handle(params mailer_entry.ReplaceMailerEntryParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

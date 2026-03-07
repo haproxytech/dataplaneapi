@@ -37,7 +37,7 @@ type ReplaceDefaultsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -58,7 +58,7 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, princ
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -110,7 +110,7 @@ type GetDefaultsSectionsHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetDefaultsSectionsHandlerImpl) Handle(params defaults.GetDefaultsSectionsParams, principal interface{}) middleware.Responder {
+func (h GetDefaultsSectionsHandlerImpl) Handle(params defaults.GetDefaultsSectionsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -134,7 +134,7 @@ type GetDefaultsSectionHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetDefaultsSectionHandlerImpl) Handle(params defaults.GetDefaultsSectionParams, principal interface{}) middleware.Responder {
+func (h GetDefaultsSectionHandlerImpl) Handle(params defaults.GetDefaultsSectionParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -159,7 +159,7 @@ type CreateDefaultsSectionHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h CreateDefaultsSectionHandlerImpl) Handle(params defaults.CreateDefaultsSectionParams, principal interface{}) middleware.Responder {
+func (h CreateDefaultsSectionHandlerImpl) Handle(params defaults.CreateDefaultsSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -211,7 +211,7 @@ type ReplaceDefaultsSectionHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h ReplaceDefaultsSectionHandlerImpl) Handle(params defaults.ReplaceDefaultsSectionParams, principal interface{}) middleware.Responder {
+func (h ReplaceDefaultsSectionHandlerImpl) Handle(params defaults.ReplaceDefaultsSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -262,7 +262,7 @@ type DeleteDefaultsSectionHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (h DeleteDefaultsSectionHandlerImpl) Handle(params defaults.DeleteDefaultsSectionParams, principal interface{}) middleware.Responder {
+func (h DeleteDefaultsSectionHandlerImpl) Handle(params defaults.DeleteDefaultsSectionParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

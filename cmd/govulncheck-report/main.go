@@ -70,17 +70,14 @@ func main() {
 		}
 		currentBranch = string(out)
 	}
-	slog.Info("Current branch: " + currentBranch)
+	slog.Info("Current branch: " + currentBranch) //nolint:gosec // log message from trusted CI environment variables
 
 	cmd := exec.Command("govulncheck", "./...")
 	out, _ := cmd.Output()
 
 	vulnMessage := string(out)
 	fmt.Println(vulnMessage)
-	noVuln := false
-	if !strings.Contains(vulnMessage, "Vulnerability #") {
-		noVuln = true
-	}
+	noVuln := !strings.Contains(vulnMessage, "Vulnerability #")
 
 	if currentBranch == "" {
 		if strings.Contains(vulnMessage, "Vulnerability #") {
@@ -138,9 +135,9 @@ func main() {
 }
 
 func createIssue(baseURL, token, projectID string, title, commentBody string) {
-	slog.Info("Active issue with title '" + title + "' not found in project " + projectID)
+	slog.Info("Active issue with title '" + title + "' not found in project " + projectID) //nolint:gosec // log message from trusted CI environment variables
 	// Create the issue here
-	issueData := map[string]interface{}{
+	issueData := map[string]any{
 		"title":       title,
 		"description": commentBody,
 		"labels":      "bot,critical",
@@ -188,7 +185,7 @@ func closeTheIssue(baseURL, token, projectID string, issueIID int, commentBody s
 	addCommentToIssue(baseURL, token, projectID, issueIID, commentBody)
 
 	client := &http.Client{}
-	issueData := map[string]interface{}{
+	issueData := map[string]any{
 		"state_event": "close",
 	}
 	issueDataBytes, err := json.Marshal(issueData)
@@ -230,7 +227,7 @@ func closeTheIssue(baseURL, token, projectID string, issueIID int, commentBody s
 
 func addCommentToIssue(baseURL, token, projectID string, issueIID int, commentBody string) {
 	client := &http.Client{}
-	noteData := map[string]interface{}{
+	noteData := map[string]any{
 		"body": commentBody,
 	}
 	noteDataBytes, err := json.Marshal(noteData)

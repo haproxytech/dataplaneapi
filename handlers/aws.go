@@ -33,7 +33,7 @@ type CreateAWSHandlerImpl struct {
 	UseValidation   bool
 }
 
-func (c CreateAWSHandlerImpl) Handle(params service_discovery.CreateAWSRegionParams, i interface{}) middleware.Responder {
+func (c CreateAWSHandlerImpl) Handle(params service_discovery.CreateAWSRegionParams, i any) middleware.Responder {
 	var err error
 	handleError := func(err error) *service_discovery.CreateAWSRegionDefault {
 		e := misc.HandleError(err)
@@ -73,7 +73,7 @@ type GetAWSRegionHandlerImpl struct {
 	Discovery sc.ServiceDiscoveries
 }
 
-func (g GetAWSRegionHandlerImpl) Handle(params service_discovery.GetAWSRegionParams, i interface{}) middleware.Responder {
+func (g GetAWSRegionHandlerImpl) Handle(params service_discovery.GetAWSRegionParams, i any) middleware.Responder {
 	handleError := func(err error) *service_discovery.GetAWSRegionDefault {
 		e := misc.HandleError(err)
 		return service_discovery.NewGetAWSRegionDefault(int(*e.Code)).WithPayload(e)
@@ -94,7 +94,7 @@ type GetAWSRegionsHandlerImpl struct {
 	Discovery sc.ServiceDiscoveries
 }
 
-func (g GetAWSRegionsHandlerImpl) Handle(params service_discovery.GetAWSRegionsParams, i interface{}) middleware.Responder {
+func (g GetAWSRegionsHandlerImpl) Handle(params service_discovery.GetAWSRegionsParams, i any) middleware.Responder {
 	regions, err := getAWSRegions(g.Discovery)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -109,7 +109,7 @@ type ReplaceAWSRegionHandlerImpl struct {
 	UseValidation   bool
 }
 
-func (r ReplaceAWSRegionHandlerImpl) Handle(params service_discovery.ReplaceAWSRegionParams, i interface{}) middleware.Responder {
+func (r ReplaceAWSRegionHandlerImpl) Handle(params service_discovery.ReplaceAWSRegionParams, i any) middleware.Responder {
 	handleError := func(err error) *service_discovery.ReplaceAWSRegionDefault {
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceAWSRegionDefault(int(*e.Code)).WithPayload(e)
@@ -137,7 +137,7 @@ type DeleteAWSRegionHandlerImpl struct {
 	PersistCallback func([]*models.AwsRegion) error
 }
 
-func (d DeleteAWSRegionHandlerImpl) Handle(params service_discovery.DeleteAWSRegionParams, i interface{}) middleware.Responder {
+func (d DeleteAWSRegionHandlerImpl) Handle(params service_discovery.DeleteAWSRegionParams, i any) middleware.Responder {
 	handleError := func(err error) *service_discovery.DeleteAWSRegionDefault {
 		e := misc.HandleError(err)
 		return service_discovery.NewDeleteAWSRegionDefault(int(*e.Code)).WithPayload(e)

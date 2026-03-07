@@ -63,7 +63,7 @@ var groupParents = map[string]string{
 	"log_targets": "log",
 }
 
-var itemDefaults = map[string]interface{}{
+var itemDefaults = map[string]any{
 	"port":              80,
 	"listen_limit":      1024,
 	"tls_host":          "null",
@@ -116,7 +116,7 @@ type ParseData struct {
 
 func readServerData(filePath string, pd *ParseData, structName string, attName string, groupName string, isList bool) {
 	typeStruct := fmt.Sprintf("type %s struct {", structName)
-	dat, err := os.ReadFile(filePath)
+	dat, err := os.ReadFile(filePath) //nolint:gosec // paths from trusted build tool arguments
 	if err != nil {
 		log.Panic(err)
 	}
@@ -208,8 +208,8 @@ func stripAtomic(str string) string {
 	if len(str) == 0 {
 		return ""
 	}
-	if strings.HasPrefix(str, "Atomic") {
-		return strings.ToLower(strings.TrimPrefix(str, "Atomic"))
+	if s, found := strings.CutPrefix(str, "Atomic"); found {
+		return strings.ToLower(s)
 	}
 	return str
 }
@@ -345,7 +345,7 @@ func main() {
 	}
 	tmpl = tmpl.Funcs(funcMap)
 	filePath = path.Join(dir, "configuration", "configuration_generated.go")
-	f, err := os.Create(filePath)
+	f, err := os.Create(filePath) //nolint:gosec // paths from trusted build tool arguments
 	if err != nil {
 		log.Panic(err)
 	}
@@ -363,7 +363,7 @@ func main() {
 	}
 	tmpl = tmpl.Funcs(funcMap)
 	filePath = path.Join(dir, "dataplaneapi_generated.go")
-	f, err = os.Create(filePath)
+	f, err = os.Create(filePath) //nolint:gosec // paths from trusted build tool arguments
 	if err != nil {
 		log.Panic(err)
 	}
@@ -381,7 +381,7 @@ func main() {
 	}
 	tmpl = tmpl.Funcs(funcMap)
 	filePath = path.Join(dir, "configuration/examples/example-full.yaml")
-	f, err = os.Create(filePath)
+	f, err = os.Create(filePath) //nolint:gosec // paths from trusted build tool arguments
 	if err != nil {
 		log.Panic(err)
 	}
@@ -471,7 +471,7 @@ func processLine(line string) (Attribute, error) {
 }
 
 func fmtFile(filename string) {
-	cmd := exec.Command("gofmt", "-s", "-w", filename)
+	cmd := exec.Command("gofmt", "-s", "-w", filename) //nolint:gosec // paths from trusted build tool arguments
 	err := cmd.Run()
 	if err != nil {
 		log.Fatalf("cmd.Run() failed with %s\n", err)

@@ -54,7 +54,7 @@ type ReplaceACLHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal interface{}) middleware.Responder {
+func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
+func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -148,7 +148,7 @@ func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal inte
 }
 
 // Handle executing the request and returning a response
-func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{}) middleware.Responder {
+func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 }
 
 // Handle executing the request and returning a response
-func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interface{}) middleware.Responder {
+func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -198,7 +198,7 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
+func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

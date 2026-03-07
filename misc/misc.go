@@ -117,17 +117,17 @@ func HandleContainerGetError(err error) *models.Error {
 
 // DiscoverChildPaths return children models.Endpoints given path
 func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, error) {
-	var m map[string]interface{}
+	var m map[string]any
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(spec, &m)
 	if err != nil {
 		return nil, err
 	}
 	es := make(models.Endpoints, 0, 1)
-	paths := m["paths"].(map[string]interface{})
+	paths := m["paths"].(map[string]any)
 	for key, value := range paths {
-		v := value.(map[string]interface{})
-		if g, ok := v["get"].(map[string]interface{}); ok {
+		v := value.(map[string]any)
+		if g, ok := v["get"].(map[string]any); ok {
 			title := ""
 			if titleInterface, ok := g["summary"]; ok && titleInterface != nil {
 				title = titleInterface.(string)
@@ -223,18 +223,9 @@ func GetHTTPStatusFromErr(err error) int {
 
 func SetError(code int, msg string) *models.Error {
 	return &models.Error{
-		Code:    Int64P(code),
-		Message: StringP(msg),
+		Code:    new(int64(code)),
+		Message: new(msg),
 	}
-}
-
-func StringP(s string) *string {
-	return &s
-}
-
-func Int64P(i int) *int64 {
-	i64 := int64(i)
-	return &i64
 }
 
 // extractEnvVar extracts and returns env variable from HAProxy variable

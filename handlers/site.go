@@ -54,7 +54,7 @@ type ReplaceSiteHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
+func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -101,7 +101,7 @@ func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal 
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
+func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -148,7 +148,7 @@ func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal 
 }
 
 // Handle executing the request and returning a response
-func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interface{}) middleware.Responder {
+func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -169,7 +169,7 @@ func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interf
 }
 
 // Handle executing the request and returning a response
-func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal interface{}) middleware.Responder {
+func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -193,7 +193,7 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceSiteHandlerImpl) Handle(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
+func (h *ReplaceSiteHandlerImpl) Handle(params sites.ReplaceSiteParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {

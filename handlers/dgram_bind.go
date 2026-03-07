@@ -54,7 +54,7 @@ type ReplaceDgramBindHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *CreateDgramBindHandlerImpl) Handle(params dgram_bind.CreateDgramBindParams, principal interface{}) middleware.Responder {
+func (h *CreateDgramBindHandlerImpl) Handle(params dgram_bind.CreateDgramBindParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -102,7 +102,7 @@ func (h *CreateDgramBindHandlerImpl) Handle(params dgram_bind.CreateDgramBindPar
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteDgramBindHandlerImpl) Handle(params dgram_bind.DeleteDgramBindParams, principal interface{}) middleware.Responder {
+func (h *DeleteDgramBindHandlerImpl) Handle(params dgram_bind.DeleteDgramBindParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -149,7 +149,7 @@ func (h *DeleteDgramBindHandlerImpl) Handle(params dgram_bind.DeleteDgramBindPar
 }
 
 // Handle executing the request and returning a response
-func (h *GetDgramBindHandlerImpl) Handle(params dgram_bind.GetDgramBindParams, principal interface{}) middleware.Responder {
+func (h *GetDgramBindHandlerImpl) Handle(params dgram_bind.GetDgramBindParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -170,7 +170,7 @@ func (h *GetDgramBindHandlerImpl) Handle(params dgram_bind.GetDgramBindParams, p
 }
 
 // Handle executing the request and returning a response
-func (h *GetDgramBindsHandlerImpl) Handle(params dgram_bind.GetDgramBindsParams, principal interface{}) middleware.Responder {
+func (h *GetDgramBindsHandlerImpl) Handle(params dgram_bind.GetDgramBindsParams, principal any) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -191,7 +191,7 @@ func (h *GetDgramBindsHandlerImpl) Handle(params dgram_bind.GetDgramBindsParams,
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceDgramBindHandlerImpl) Handle(params dgram_bind.ReplaceDgramBindParams, principal interface{}) middleware.Responder {
+func (h *ReplaceDgramBindHandlerImpl) Handle(params dgram_bind.ReplaceDgramBindParams, principal any) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
