@@ -99,7 +99,7 @@ func (h *CreateServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 		return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := serverTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
@@ -187,7 +187,7 @@ func (h *DeleteServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 		return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := serverTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
@@ -227,7 +227,7 @@ func (h *GetServerHandlerImpl) Handle(parentType cnconstants.CnParentType, param
 		return server.NewGetServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := serverTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetServerBackendDefault(int(*e.Code)).WithPayload(e)
@@ -254,7 +254,7 @@ func (h *GetAllServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 		return server.NewGetAllServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := serverTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetAllServerBackendDefault(int(*e.Code)).WithPayload(e)
@@ -298,7 +298,7 @@ func (h *ReplaceServerHandlerImpl) Handle(parentType cnconstants.CnParentType, p
 		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
+	pType, pName, err := serverTypeParams(nil, new(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)

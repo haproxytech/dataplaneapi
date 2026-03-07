@@ -190,7 +190,7 @@ func (h *StorageReplaceStorageSSLCrtListFileHandlerImpl) Handle(params storage.R
 		File:        filename,
 		Description: "managed certificate list",
 		StorageName: filepath.Base(filename),
-		Size:        misc.Int64P(len(params.Data)),
+		Size:        new(int64(len(params.Data))),
 	}
 
 	skipReload := false

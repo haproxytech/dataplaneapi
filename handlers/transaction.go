@@ -89,7 +89,7 @@ func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransact
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -108,7 +108,7 @@ func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPar
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
@@ -155,7 +155,7 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 	if transaction, err = configuration.GetTransaction(params.ID); err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -172,7 +172,7 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
-			e.Code = misc.Int64P(404)
+			e.Code = new(int64(404))
 			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
 		}
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)

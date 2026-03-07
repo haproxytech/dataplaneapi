@@ -29,7 +29,6 @@ import (
 	"github.com/haproxytech/client-native/v6/models"
 
 	"github.com/haproxytech/dataplaneapi/log"
-	"github.com/haproxytech/dataplaneapi/misc"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -184,7 +183,7 @@ func (c *consulInstance) convertToServers(nodes []*serviceEntry) []configuration
 				Address: node.Service.Address,
 			}
 			if node.Service.Port > 0 {
-				ss.Port = misc.Int64P(node.Service.Port)
+				ss.Port = new(int64(node.Service.Port))
 			}
 			servers = append(servers, ss)
 		} else {
@@ -192,7 +191,7 @@ func (c *consulInstance) convertToServers(nodes []*serviceEntry) []configuration
 				Address: node.Node.Address,
 			}
 			if node.Service.Port > 0 {
-				ss.Port = misc.Int64P(node.Service.Port)
+				ss.Port = new(int64(node.Service.Port))
 			}
 			servers = append(servers, ss)
 		}
