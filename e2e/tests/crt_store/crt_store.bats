@@ -50,36 +50,36 @@ load 'utils/_helpers'
   assert_equal "$SC" "200"
   assert_equal "$_STORE_NAME" "$(get_json_path "$BODY" .[0].name)"
 
-  resource_post "$_CRT_LOAD_PATH" "data/post_entry1.json" "crt_store=$_STORE_NAME"
+  resource_post "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads" "data/post_entry1.json"
   assert_equal "$SC" "202"
-  resource_post "$_CRT_LOAD_PATH" "data/post_entry2.json" "crt_store=$_STORE_NAME"
+  resource_post "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads" "data/post_entry2.json"
   assert_equal "$SC" "202"
 
-  resource_get "$_CRT_LOAD_PATH/c1.pem" "crt_store=$_STORE_NAME"
+  resource_get "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads/c1.pem"
   assert_equal "$SC" "200"
   assert_equal "c1.pem" "$(get_json_path "$BODY" .certificate)"
   assert_equal "k1.pem" "$(get_json_path "$BODY" .key)"
   assert_equal "disabled" "$(get_json_path "$BODY" .ocsp_update)"
 
-  resource_get "$_CRT_LOAD_PATH" "crt_store=$_STORE_NAME"
+  resource_get "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads"
   assert_equal "$SC" "200"
   assert_equal "2" "$(get_json_path "$BODY" '.|length')"
   assert_equal "c1.pem" "$(get_json_path "$BODY" .[0].certificate)"
   assert_equal "c2.pem" "$(get_json_path "$BODY" .[1].certificate)"
 
-  resource_put "$_CRT_LOAD_PATH/c2.pem" "data/put_entry.json" \
+  resource_put "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads/c2.pem" "data/put_entry.json" \
     "crt_store=$_STORE_NAME" "force_reload=true"
   assert_equal "$SC" "202"
-  resource_get "$_CRT_LOAD_PATH/c2.pem" "crt_store=$_STORE_NAME"
+  resource_get "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads/c2.pem"
   assert_equal "c2.pem" "$(get_json_path "$BODY" .certificate)"
   assert_equal "disabled" "$(get_json_path "$BODY" .ocsp_update)"
   assert_equal "example.com" "$(get_json_path "$BODY" .alias)"
 
-  resource_delete "$_CRT_LOAD_PATH/c1.pem" "crt_store=$_STORE_NAME" "force_reload=true"
-  assert_equal "$SC" "202"
-  resource_delete "$_CRT_LOAD_PATH/c2.pem" "crt_store=$_STORE_NAME" "force_reload=true"
-  assert_equal "$SC" "202"
-  resource_get "$_CRT_LOAD_PATH/c2.pem" "crt_store=$_STORE_NAME"
+  resource_delete "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads/c1.pem" "force_reload=true"
+  assert_equal "$SC" "204"
+  resource_delete "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads/c2.pem" "force_reload=true"
+  assert_equal "$SC" "204"
+  resource_get "$_CRT_STORE_PATH/$_STORE_NAME/crt_loads/c2.pem"
   assert_equal "$SC" "404"
 
   resource_delete "$_CRT_STORE_PATH/$_STORE_NAME" "force_reload=true"

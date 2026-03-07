@@ -41,3 +41,4 @@ allowed:
   - dns
   - newcert
   - uid
+  - url
