@@ -45,7 +45,7 @@ func NewReplaceCrtLoad(ctx *middleware.Context, handler ReplaceCrtLoadHandler) *
 }
 
 /*
-	ReplaceCrtLoad swagger:route PUT /services/haproxy/configuration/crt_loads/{certificate} CrtLoad replaceCrtLoad
+	ReplaceCrtLoad swagger:route PUT /services/haproxy/configuration/crt_stores/{crt_store}/crt_loads/{certificate} CrtLoad replaceCrtLoad
 
 # Replace a certificate load entry
 
