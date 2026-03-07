@@ -39,6 +39,7 @@ load 'utils/_helpers'
   resource_put "$_RUNTIME_BACKEND_BASE_PATH/$PARENT_NAME/servers/server_01" "data/transient.json"
 	assert_equal "$SC" 200
   assert_equal "$(get_json_path "$BODY" '.name')" "server_01"
+  assert_equal "$(get_json_path "$BODY" '.weight')" "100"
 }
 
 @test "servers: Return one server runtime settings" {

@@ -1,4 +1,5 @@
 {
   "admin_state": "ready",
-  "operational_state": "up"
+  "operational_state": "up",
+  "weight": 100
 }
