@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -37,9 +38,13 @@ const (
 )
 
 type HAProxyEventListener struct {
-	listener  *runtime.EventListener
-	client    clientnative.HAProxyClient // for storage only
-	rt        runtime.Runtime
+	mu       sync.Mutex
+	listener *runtime.EventListener
+	client   clientnative.HAProxyClient // for storage only
+	rt       runtime.Runtime
+	// done is closed to signal the listen goroutine to exit.
+	// A new channel is created each time a new goroutine is started.
+	done      chan struct{}
 	stop      atomic.Bool
 	lastEvent time.Time
 }
@@ -76,6 +81,7 @@ func ListenHAProxyEvents(ctx context.Context, client clientnative.HAProxyClient)
 		client:   client,
 		listener: el,
 		rt:       rt,
+		done:     make(chan struct{}),
 	}
 
 	go h.listen(ctx)
@@ -92,20 +98,27 @@ func (h *HAProxyEventListener) Reconfigure(ctx context.Context, rt runtime.Runti
 	}
 
 	if rt.SocketPath() == h.rt.SocketPath() {
-		// no need to restart the listener
+		h.mu.Lock()
 		h.rt = rt
+		h.mu.Unlock()
 		return nil
 	}
 
-	h.Reset()
+	// Signal the old goroutine to stop and wait for it to exit.
+	h.stopAndWait()
+
+	h.mu.Lock()
 	h.rt = rt
+	h.done = make(chan struct{})
 	h.stop.Store(false)
+	h.mu.Unlock()
+
 	go h.listen(ctx)
 
 	return nil
 }
 
-func (h *HAProxyEventListener) Reset() {
+func (h *HAProxyEventListener) resetLocked() {
 	if h.listener != nil {
 		if err := h.listener.Close(); err != nil {
 			log.Warning(err)
@@ -114,11 +127,18 @@ func (h *HAProxyEventListener) Reset() {
 	}
 }
 
-func (h *HAProxyEventListener) Stop() error {
+// stopAndWait signals the listen goroutine to stop and waits for it to exit.
+func (h *HAProxyEventListener) stopAndWait() {
 	h.stop.Store(true)
-	if h.listener != nil {
-		return h.listener.Close()
-	}
+	h.mu.Lock()
+	h.resetLocked()
+	h.mu.Unlock()
+	// Wait for the goroutine to acknowledge the stop.
+	<-h.done
+}
+
+func (h *HAProxyEventListener) Stop() error {
+	h.stopAndWait()
 	return nil
 }
 
@@ -136,40 +156,68 @@ func newHAProxyEventListener(socketPath string) (*runtime.EventListener, error) 
 	return el, nil
 }
 
+const maxRetryBackoff = 60 * time.Second
+
 func (h *HAProxyEventListener) listen(ctx context.Context) {
+	defer close(h.done)
+
 	var err error
 	retryAfter := 100 * time.Millisecond
+	loggedDisconnect := false
 
 	for {
 		if h.stop.Load() {
-			// Stop requested.
-			h.Reset()
+			h.mu.Lock()
+			h.resetLocked()
+			h.mu.Unlock()
 			return
 		}
-		if h.listener == nil {
-			h.listener, err = newHAProxyEventListener(h.rt.SocketPath())
+
+		h.mu.Lock()
+		needsConnect := h.listener == nil
+		h.mu.Unlock()
+
+		if needsConnect {
+			var el *runtime.EventListener
+			el, err = newHAProxyEventListener(h.rt.SocketPath())
 			if err != nil {
-				// Try again.
-				log.Warning(err)
-				time.Sleep(retryAfter)
+				if !loggedDisconnect {
+					log.Warningf("event listener disconnected, reconnecting: %v", err)
+					loggedDisconnect = true
+				} else {
+					log.Debugf("event listener reconnect attempt: %v", err)
+				}
+				select {
+				case <-time.After(retryAfter):
+				case <-ctx.Done():
+					return
+				}
 				retryAfter *= 2
-				if retryAfter == 51200*time.Millisecond {
-					// Give up after 10 iterations.
+				if retryAfter >= maxRetryBackoff {
+					log.Warning("event listener giving up reconnection attempts")
 					h.stop.Store(true)
 				}
 				continue
 			}
+
+			h.mu.Lock()
+			h.listener = el
+			h.mu.Unlock()
+
+			retryAfter = 100 * time.Millisecond
+			loggedDisconnect = false
+			log.Debugf("event listener reconnected to: %s", h.rt.SocketPath())
 		}
 
 		for {
 			ev, err := h.listener.Listen(ctx)
 			if err != nil {
-				// EOF errors usually happen when HAProxy restarts, do not log.
 				if !errors.Is(err, io.EOF) {
-					log.Warning(err)
+					log.Debugf("event listener error: %v", err)
 				}
-				// Reset the connection.
-				h.Reset()
+				h.mu.Lock()
+				h.resetLocked()
+				h.mu.Unlock()
 				break
 			}
 
