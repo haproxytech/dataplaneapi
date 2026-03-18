@@ -116,7 +116,10 @@ func (h *HAProxyEventListener) Reset() {
 
 func (h *HAProxyEventListener) Stop() error {
 	h.stop.Store(true)
-	return h.listener.Close()
+	if h.listener != nil {
+		return h.listener.Close()
+	}
+	return nil
 }
 
 func newHAProxyEventListener(socketPath string) (*runtime.EventListener, error) {
