@@ -28334,6 +28334,15 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "tcp_ss": {
+          "description": "Sets the TCP Save SYN option for all incoming connections instantiated from this listening socket",
+          "type": "integer",
+          "enum": [
+            1,
+            2,
+            3
+          ]
+        },
         "tcp_user_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -88193,6 +88202,15 @@ func init() {
         "tcp_md5sig": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "tcp_ss": {
+          "description": "Sets the TCP Save SYN option for all incoming connections instantiated from this listening socket",
+          "type": "integer",
+          "enum": [
+            1,
+            2,
+            3
+          ]
         },
         "tcp_user_timeout": {
           "type": "integer",
