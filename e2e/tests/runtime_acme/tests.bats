@@ -30,7 +30,8 @@ _RUNTIME_ACME_PATH="/services/haproxy/runtime/acme"
 @test "acme_runtime: Renew a certificate" {
     haproxy_version_ge "3.3" || skip
 
-    cert_name="/var/lib/haproxy/haproxy.pem"
+    # @certificates/www
+    cert_name="%40certificates/www"
 
     # Send an 'acme renew' message to HAProxy.
     run dpa_curl PUT "$_RUNTIME_ACME_PATH?certificate=$cert_name"
@@ -53,7 +54,8 @@ _RUNTIME_ACME_PATH="/services/haproxy/runtime/acme"
     timeout=8 elapsed=0 inc=1 found=false
     while ((elapsed < timeout)); do
         sleep $inc && elapsed=$((elapsed + inc))
-        if dpa_docker_exec 'ls -l /etc/haproxy/ssl/haproxy.pem'; then
+        if ! dpa_diff_docker_file /etc/haproxy/ssl/haproxy.pem data/container/usr/local/etc/haproxy/ssl/haproxy.pem
+        then
             found=true
             break
         fi
@@ -64,7 +66,7 @@ _RUNTIME_ACME_PATH="/services/haproxy/runtime/acme"
 @test "acme_runtime: dns-01 challenge" {
     haproxy_version_ge "3.3" || skip
 
-    cert_name="/var/lib/haproxy/haproxy2.pem"
+    cert_name="/etc/haproxy/ssl/haproxy2.pem"
 
     run dpa_curl PUT "$_RUNTIME_ACME_PATH?certificate=$cert_name"
 	assert_success
@@ -74,7 +76,8 @@ _RUNTIME_ACME_PATH="/services/haproxy/runtime/acme"
     timeout=20 elapsed=0 inc=2 found=false
     while ((elapsed < timeout)); do
         sleep $inc && elapsed=$((elapsed + inc))
-        if dpa_docker_exec 'ls -l /etc/haproxy/ssl/haproxy2.pem'; then
+        if ! dpa_diff_docker_file /etc/haproxy/ssl/haproxy2.pem data/container/usr/local/etc/haproxy/ssl/haproxy2.pem
+        then
             found=true
             break
         fi
