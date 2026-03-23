@@ -74,25 +74,28 @@ func (h *HAProxyEventListener) handleAcmeNewCertEvent(args string) {
 		return
 	}
 
-	// Do not use the certificate name in args as a storage name.
-	// It could be an alias, or the user could have split keys and certs storage.
+	// The only argument is the certificate name, which could be a "virtual"
+	// name like "@store/www1" in case of a crt-store.
+	crtName := args
 
-	crt, err := h.rt.ShowCertificate(args)
+	// Use "show ssl cert" to get the real filename of the certificate.
+	crt, err := h.rt.ShowCertificate(crtName)
 	if err != nil {
 		log.Errorf("events: acme newcert %s: %s", args, err.Error())
 		return
 	}
 
-	storage, err := h.client.SSLCertStorage()
+	// Use "dump ssl cert" to get the certificate contents in PEM format.
+	// This command only works on sockets with level "admin"!
+	pem, err := h.rt.DumpCertificate(crtName)
 	if err != nil {
-		log.Error(err)
+		log.Errorf("events: acme newcert %s: dump cert: %s", args, err.Error())
 		return
 	}
 
-	// 'dump ssl cert' can only be issued on sockets with level "admin".
-	pem, err := h.rt.DumpCertificate(crt.StorageName)
+	storage, err := h.client.SSLCertStorage()
 	if err != nil {
-		log.Errorf("events: acme newcert %s: dump cert: %s", args, err.Error())
+		log.Errorf("events: acme newcert %s: %s", args, err.Error())
 		return
 	}
 
@@ -115,7 +118,7 @@ func (h *HAProxyEventListener) handleAcmeNewCertEvent(args string) {
 		return
 	}
 
-	log.Debugf("events: OK: acme newcert %s => %s", args, crt.StorageName)
+	log.Debugf("events: OK: acme newcert %s => %s", args, storageName)
 }
 
 // HAProxy needs dpapi to solve a dns-01 challenge.

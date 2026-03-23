@@ -161,7 +161,6 @@ const maxRetryBackoff = 60 * time.Second
 func (h *HAProxyEventListener) listen(ctx context.Context) {
 	defer close(h.done)
 
-	var err error
 	retryAfter := 100 * time.Millisecond
 	loggedDisconnect := false
 
@@ -178,8 +177,7 @@ func (h *HAProxyEventListener) listen(ctx context.Context) {
 		h.mu.Unlock()
 
 		if needsConnect {
-			var el *runtime.EventListener
-			el, err = newHAProxyEventListener(h.rt.SocketPath())
+			el, err := newHAProxyEventListener(h.rt.SocketPath())
 			if err != nil {
 				if !loggedDisconnect {
 					log.Warningf("event listener disconnected, reconnecting: %v", err)
