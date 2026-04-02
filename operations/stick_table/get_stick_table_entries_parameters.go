@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // NewGetStickTableEntriesParams creates a new GetStickTableEntriesParams object
@@ -52,10 +53,12 @@ type GetStickTableEntriesParams struct {
 	*/
 	Count *int64
 	/*A list of filters in format data.<type> <operator> <value> separated by comma
+	  Pattern: ^[^\r\n;#]+$
 	  In: query
 	*/
 	Filter *string
 	/*Key which we want the entries for
+	  Pattern: ^[^\r\n;#]+$
 	  In: query
 	*/
 	Key *string
@@ -65,6 +68,7 @@ type GetStickTableEntriesParams struct {
 	Offset *int64
 	/*Parent name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ParentName string
@@ -149,6 +153,20 @@ func (o *GetStickTableEntriesParams) bindFilter(rawData []string, hasKey bool, f
 	}
 	o.Filter = &raw
 
+	if err := o.validateFilter(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateFilter carries on validations for parameter Filter
+func (o *GetStickTableEntriesParams) validateFilter(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("filter", "query", *o.Filter, `^[^\r\n;#]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -166,6 +184,20 @@ func (o *GetStickTableEntriesParams) bindKey(rawData []string, hasKey bool, form
 		return nil
 	}
 	o.Key = &raw
+
+	if err := o.validateKey(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateKey carries on validations for parameter Key
+func (o *GetStickTableEntriesParams) validateKey(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("key", "query", *o.Key, `^[^\r\n;#]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -203,6 +235,20 @@ func (o *GetStickTableEntriesParams) bindParentName(rawData []string, hasKey boo
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ParentName = raw
+
+	if err := o.validateParentName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentName carries on validations for parameter ParentName
+func (o *GetStickTableEntriesParams) validateParentName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("parent_name", "path", o.ParentName, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

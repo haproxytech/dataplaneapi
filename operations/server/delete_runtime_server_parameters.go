@@ -26,6 +26,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 )
 
 // NewDeleteRuntimeServerParams creates a new DeleteRuntimeServerParams object
@@ -47,11 +48,13 @@ type DeleteRuntimeServerParams struct {
 
 	/*Server name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
 	/*Parent name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ParentName string
@@ -92,6 +95,20 @@ func (o *DeleteRuntimeServerParams) bindName(rawData []string, hasKey bool, form
 	// Parameter is provided by construction from the route
 	o.Name = raw
 
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *DeleteRuntimeServerParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -105,6 +122,20 @@ func (o *DeleteRuntimeServerParams) bindParentName(rawData []string, hasKey bool
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ParentName = raw
+
+	if err := o.validateParentName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentName carries on validations for parameter ParentName
+func (o *DeleteRuntimeServerParams) validateParentName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("parent_name", "path", o.ParentName, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

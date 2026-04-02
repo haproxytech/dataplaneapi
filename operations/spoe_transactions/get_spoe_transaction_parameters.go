@@ -26,6 +26,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 )
 
 // NewGetSpoeTransactionParams creates a new GetSpoeTransactionParams object
@@ -52,6 +53,7 @@ type GetSpoeTransactionParams struct {
 	ID string
 	/*Parent name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ParentName string
@@ -105,6 +107,20 @@ func (o *GetSpoeTransactionParams) bindParentName(rawData []string, hasKey bool,
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ParentName = raw
+
+	if err := o.validateParentName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentName carries on validations for parameter ParentName
+func (o *GetSpoeTransactionParams) validateParentName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("parent_name", "path", o.ParentName, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

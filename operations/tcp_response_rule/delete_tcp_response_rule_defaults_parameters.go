@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // NewDeleteTCPResponseRuleDefaultsParams creates a new DeleteTCPResponseRuleDefaultsParams object
@@ -66,6 +67,7 @@ type DeleteTCPResponseRuleDefaultsParams struct {
 	Index int64
 	/*Parent name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ParentName string
@@ -173,6 +175,20 @@ func (o *DeleteTCPResponseRuleDefaultsParams) bindParentName(rawData []string, h
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ParentName = raw
+
+	if err := o.validateParentName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentName carries on validations for parameter ParentName
+func (o *DeleteTCPResponseRuleDefaultsParams) validateParentName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("parent_name", "path", o.ParentName, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -55,6 +55,7 @@ type GetCrlParams struct {
 	Index *int64
 	/*CRL file name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
@@ -133,6 +134,20 @@ func (o *GetCrlParams) bindName(rawData []string, hasKey bool, formats strfmt.Re
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *GetCrlParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

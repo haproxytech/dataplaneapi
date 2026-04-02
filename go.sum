@@ -175,8 +175,8 @@ github.com/googleapis/gax-go/v2 v2.14.1 h1:hb0FFeiPaQskmvakKu5EbCbpntQn48jyHuvrk
 github.com/googleapis/gax-go/v2 v2.14.1/go.mod h1:Hb/NubMaVM88SrNkvl8X/o8XWwDJEPqouaLeN2IUxoA=
 github.com/haproxytech/client-native/v5 v5.1.15 h1:oMqyDlh+vL3yRKiaapc6SESetCIir/Of3F75vtpG1Nk=
 github.com/haproxytech/client-native/v5 v5.1.15/go.mod h1:6eT7/KOsczPHFE/op1TDwfo0jQAsMffl7PuXkKJ+Mt0=
-github.com/haproxytech/client-native/v6 v6.2.10 h1:9lGmVSDWhTpr+T0Nti+pi1Qpnk3F/WV7SnkqzLAMiyc=
-github.com/haproxytech/client-native/v6 v6.2.10/go.mod h1:ua8VYkXs605okf4tpNIiXcrzWz5duhFk8CqjIUyA4zY=
+github.com/haproxytech/client-native/v6 v6.2.12 h1:f0mj0AHK0jDH1J3gRSyrTLdw/mttx9Xy7LETh5uVZWs=
+github.com/haproxytech/client-native/v6 v6.2.12/go.mod h1:ua8VYkXs605okf4tpNIiXcrzWz5duhFk8CqjIUyA4zY=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/hashicorp/go-cleanhttp v0.5.2 h1:035FKYIWjmULyFRBKPs8TBQoi0x6d9G4xc9neXJWAZQ=

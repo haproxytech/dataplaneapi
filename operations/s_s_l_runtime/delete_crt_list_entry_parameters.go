@@ -50,6 +50,7 @@ type DeleteCrtListEntryParams struct {
 
 	/*SSL cert entry name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	CertFile string
@@ -60,6 +61,7 @@ type DeleteCrtListEntryParams struct {
 	LineNumber *int64
 	/*SSL crt list name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Name string
@@ -113,6 +115,20 @@ func (o *DeleteCrtListEntryParams) bindCertFile(rawData []string, hasKey bool, f
 		return err
 	}
 	o.CertFile = raw
+
+	if err := o.validateCertFile(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateCertFile carries on validations for parameter CertFile
+func (o *DeleteCrtListEntryParams) validateCertFile(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("cert_file", "query", o.CertFile, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -171,6 +187,20 @@ func (o *DeleteCrtListEntryParams) bindName(rawData []string, hasKey bool, forma
 		return err
 	}
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *DeleteCrtListEntryParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "query", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
