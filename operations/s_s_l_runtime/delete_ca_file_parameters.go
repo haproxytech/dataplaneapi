@@ -26,6 +26,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 )
 
 // NewDeleteCaFileParams creates a new DeleteCaFileParams object
@@ -47,6 +48,7 @@ type DeleteCaFileParams struct {
 
 	/*SSL CA file name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
@@ -81,6 +83,20 @@ func (o *DeleteCaFileParams) bindName(rawData []string, hasKey bool, formats str
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *DeleteCaFileParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

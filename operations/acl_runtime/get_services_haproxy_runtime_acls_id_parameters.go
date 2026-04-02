@@ -26,6 +26,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 )
 
 // NewGetServicesHaproxyRuntimeAclsIDParams creates a new GetServicesHaproxyRuntimeAclsIDParams object
@@ -47,6 +48,7 @@ type GetServicesHaproxyRuntimeAclsIDParams struct {
 
 	/*ACL file entry ID
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ID string
@@ -81,6 +83,20 @@ func (o *GetServicesHaproxyRuntimeAclsIDParams) bindID(rawData []string, hasKey 
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ID = raw
+
+	if err := o.validateID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateID carries on validations for parameter ID
+func (o *GetServicesHaproxyRuntimeAclsIDParams) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("id", "path", o.ID, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

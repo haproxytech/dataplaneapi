@@ -29,6 +29,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 )
 
 // ReplaceCertMaxParseMemory sets the maximum size in bytes for
@@ -62,6 +63,7 @@ type ReplaceCertParams struct {
 	FileUpload io.ReadCloser
 	/*SSL certificate name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
@@ -121,6 +123,20 @@ func (o *ReplaceCertParams) bindName(rawData []string, hasKey bool, formats strf
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *ReplaceCertParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -49,6 +49,7 @@ type RenewAcmeCertificateParams struct {
 
 	/*Certificate file name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Certificate string
@@ -92,6 +93,20 @@ func (o *RenewAcmeCertificateParams) bindCertificate(rawData []string, hasKey bo
 		return err
 	}
 	o.Certificate = raw
+
+	if err := o.validateCertificate(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateCertificate carries on validations for parameter Certificate
+func (o *RenewAcmeCertificateParams) validateCertificate(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("certificate", "query", o.Certificate, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

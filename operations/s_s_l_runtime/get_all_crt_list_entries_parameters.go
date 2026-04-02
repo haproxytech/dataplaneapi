@@ -49,6 +49,7 @@ type GetAllCrtListEntriesParams struct {
 
 	/*SSL crt-list filename
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Name string
@@ -92,6 +93,20 @@ func (o *GetAllCrtListEntriesParams) bindName(rawData []string, hasKey bool, for
 		return err
 	}
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *GetAllCrtListEntriesParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "query", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

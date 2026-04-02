@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // NewDeleteSpoeMessageParams creates a new DeleteSpoeMessageParams object
@@ -54,6 +55,7 @@ type DeleteSpoeMessageParams struct {
 	Name string
 	/*Parent name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ParentName string
@@ -137,6 +139,20 @@ func (o *DeleteSpoeMessageParams) bindParentName(rawData []string, hasKey bool, 
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ParentName = raw
+
+	if err := o.validateParentName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentName carries on validations for parameter ParentName
+func (o *DeleteSpoeMessageParams) validateParentName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("parent_name", "path", o.ParentName, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
