@@ -21850,6 +21850,7 @@ func init() {
         "summary": "Return an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL file entry ID",
             "name": "id",
@@ -21997,6 +21998,7 @@ func init() {
             "$ref": "#/parameters/parent_name"
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -22036,6 +22038,7 @@ func init() {
             "$ref": "#/parameters/parent_name"
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -22091,6 +22094,7 @@ func init() {
         "operationId": "renewAcmeCertificate",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Certificate file name",
             "name": "certificate",
@@ -22188,6 +22192,7 @@ func init() {
         "operationId": "getRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -22222,6 +22227,7 @@ func init() {
         "operationId": "replaceRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -22267,6 +22273,7 @@ func init() {
         "operationId": "deleteRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -22360,6 +22367,7 @@ func init() {
         "operationId": "getOneRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -22391,6 +22399,7 @@ func init() {
         "operationId": "addPayloadRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -22437,6 +22446,7 @@ func init() {
         "operationId": "clearRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -22554,6 +22564,7 @@ func init() {
         "operationId": "getRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -22588,6 +22599,7 @@ func init() {
         "operationId": "replaceRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -22649,6 +22661,7 @@ func init() {
         "operationId": "deleteRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -22754,6 +22767,7 @@ func init() {
         "operationId": "getCaFile",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -22788,6 +22802,7 @@ func init() {
         "operationId": "setCaFile",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -22823,6 +22838,7 @@ func init() {
         "operationId": "deleteCaFile",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -22859,6 +22875,7 @@ func init() {
         "operationId": "addCaEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -22903,6 +22920,7 @@ func init() {
         "operationId": "getCaEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -23008,6 +23026,7 @@ func init() {
         "operationId": "getCert",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL certificate name",
             "name": "name",
@@ -23039,6 +23058,7 @@ func init() {
         "operationId": "replaceCert",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL certificate name",
             "name": "name",
@@ -23074,6 +23094,7 @@ func init() {
         "operationId": "deleteCert",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL certificate name",
             "name": "name",
@@ -23169,6 +23190,7 @@ func init() {
         "operationId": "getCrl",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "CRL file name",
             "name": "name",
@@ -23211,6 +23233,7 @@ func init() {
         "operationId": "replaceCrl",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "CRL file name",
             "name": "name",
@@ -23247,6 +23270,7 @@ func init() {
         "operationId": "deleteCrl",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "CRL file name",
             "name": "name",
@@ -23304,6 +23328,7 @@ func init() {
         "operationId": "getAllCrtListEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL crt-list filename",
             "name": "name",
@@ -23335,6 +23360,7 @@ func init() {
         "operationId": "addCrtListEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL crt-list filename",
             "name": "name",
@@ -23374,6 +23400,7 @@ func init() {
         "operationId": "deleteCrtListEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL crt list name",
             "name": "name",
@@ -23381,6 +23408,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL cert entry name",
             "name": "cert_file",
@@ -23443,6 +23471,7 @@ func init() {
         "operationId": "getStickTable",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "name",
@@ -23479,12 +23508,14 @@ func init() {
             "$ref": "#/parameters/parent_name"
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
             "name": "filter",
             "in": "query"
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "Key which we want the entries for",
             "name": "key",
@@ -23541,7 +23572,8 @@ func init() {
                   "$ref": "#/definitions/stick_table_entry"
                 },
                 "key": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^[^\\r\\n;#]+$"
                 }
               }
             }
@@ -42848,6 +42880,7 @@ func init() {
       "in": "query"
     },
     "parent_name": {
+      "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
       "type": "string",
       "description": "Parent name",
       "name": "parent_name",
@@ -44921,6 +44954,7 @@ func init() {
         "operationId": "getAllAclBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -44977,6 +45011,7 @@ func init() {
         "operationId": "replaceAllAclBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45076,6 +45111,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45145,6 +45181,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45254,6 +45291,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45363,6 +45401,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45441,6 +45480,7 @@ func init() {
         "operationId": "getAllFilterBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45491,6 +45531,7 @@ func init() {
         "operationId": "replaceAllFilterBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45590,6 +45631,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45659,6 +45701,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45768,6 +45811,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45877,6 +45921,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -45955,6 +46000,7 @@ func init() {
         "operationId": "getAllHTTPAfterResponseRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46005,6 +46051,7 @@ func init() {
         "operationId": "replaceAllHTTPAfterResponseRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46104,6 +46151,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46173,6 +46221,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46282,6 +46331,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46391,6 +46441,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46469,6 +46520,7 @@ func init() {
         "operationId": "getAllHTTPCheckBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46519,6 +46571,7 @@ func init() {
         "operationId": "replaceAllHTTPCheckBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46618,6 +46671,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46687,6 +46741,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46796,6 +46851,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46905,6 +46961,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -46983,6 +47040,7 @@ func init() {
         "operationId": "getAllHTTPErrorRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47033,6 +47091,7 @@ func init() {
         "operationId": "replaceAllHTTPErrorRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47132,6 +47191,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47201,6 +47261,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47310,6 +47371,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47419,6 +47481,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47497,6 +47560,7 @@ func init() {
         "operationId": "getAllHTTPRequestRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47547,6 +47611,7 @@ func init() {
         "operationId": "replaceAllHTTPRequestRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47646,6 +47711,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47715,6 +47781,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47824,6 +47891,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -47933,6 +48001,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48011,6 +48080,7 @@ func init() {
         "operationId": "getAllHTTPResponseRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48061,6 +48131,7 @@ func init() {
         "operationId": "replaceAllHTTPResponseRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48160,6 +48231,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48229,6 +48301,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48338,6 +48411,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48447,6 +48521,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48525,6 +48600,7 @@ func init() {
         "operationId": "getAllLogTargetBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48575,6 +48651,7 @@ func init() {
         "operationId": "replaceAllLogTargetBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48674,6 +48751,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48743,6 +48821,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48852,6 +48931,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -48961,6 +49041,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49039,6 +49120,7 @@ func init() {
         "operationId": "getServerSwitchingRules",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49089,6 +49171,7 @@ func init() {
         "operationId": "replaceServerSwitchingRules",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49188,6 +49271,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49257,6 +49341,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49366,6 +49451,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49475,6 +49561,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49553,6 +49640,7 @@ func init() {
         "operationId": "getServerTemplates",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49603,6 +49691,7 @@ func init() {
         "operationId": "createServerTemplate",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49714,6 +49803,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49783,6 +49873,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49892,6 +49983,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -49970,6 +50062,7 @@ func init() {
         "operationId": "getAllServerBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50020,6 +50113,7 @@ func init() {
         "operationId": "createServerBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50131,6 +50225,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50200,6 +50295,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50309,6 +50405,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50387,6 +50484,7 @@ func init() {
         "operationId": "getStickRules",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50437,6 +50535,7 @@ func init() {
         "operationId": "replaceStickRules",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50536,6 +50635,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50605,6 +50705,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50714,6 +50815,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50823,6 +50925,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50901,6 +51004,7 @@ func init() {
         "operationId": "getAllTCPCheckBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -50951,6 +51055,7 @@ func init() {
         "operationId": "replaceAllTCPCheckBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51050,6 +51155,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51119,6 +51225,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51228,6 +51335,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51337,6 +51445,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51415,6 +51524,7 @@ func init() {
         "operationId": "getAllTCPRequestRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51465,6 +51575,7 @@ func init() {
         "operationId": "replaceAllTCPRequestRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51564,6 +51675,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51633,6 +51745,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51742,6 +51855,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51851,6 +51965,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51929,6 +52044,7 @@ func init() {
         "operationId": "getAllTCPResponseRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -51979,6 +52095,7 @@ func init() {
         "operationId": "replaceAllTCPResponseRuleBackend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -52078,6 +52195,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -52147,6 +52265,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -52256,6 +52375,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -52365,6 +52485,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54179,6 +54300,7 @@ func init() {
         "operationId": "getAllAclDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54235,6 +54357,7 @@ func init() {
         "operationId": "replaceAllAclDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54334,6 +54457,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54403,6 +54527,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54512,6 +54637,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54621,6 +54747,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54699,6 +54826,7 @@ func init() {
         "operationId": "getAllHTTPAfterResponseRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54749,6 +54877,7 @@ func init() {
         "operationId": "replaceAllHTTPAfterResponseRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54848,6 +54977,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -54917,6 +55047,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55026,6 +55157,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55135,6 +55267,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55213,6 +55346,7 @@ func init() {
         "operationId": "getAllHTTPCheckDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55263,6 +55397,7 @@ func init() {
         "operationId": "replaceAllHTTPCheckDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55362,6 +55497,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55431,6 +55567,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55540,6 +55677,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55649,6 +55787,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55727,6 +55866,7 @@ func init() {
         "operationId": "getAllHTTPErrorRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55777,6 +55917,7 @@ func init() {
         "operationId": "replaceAllHTTPErrorRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55876,6 +56017,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -55945,6 +56087,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56054,6 +56197,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56163,6 +56307,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56241,6 +56386,7 @@ func init() {
         "operationId": "getAllHTTPRequestRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56291,6 +56437,7 @@ func init() {
         "operationId": "replaceAllHTTPRequestRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56390,6 +56537,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56459,6 +56607,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56568,6 +56717,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56677,6 +56827,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56755,6 +56906,7 @@ func init() {
         "operationId": "getAllHTTPResponseRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56805,6 +56957,7 @@ func init() {
         "operationId": "replaceAllHTTPResponseRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56904,6 +57057,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -56973,6 +57127,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57082,6 +57237,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57191,6 +57347,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57269,6 +57426,7 @@ func init() {
         "operationId": "getAllLogTargetDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57319,6 +57477,7 @@ func init() {
         "operationId": "replaceAllLogTargetDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57418,6 +57577,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57487,6 +57647,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57596,6 +57757,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57705,6 +57867,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57783,6 +57946,7 @@ func init() {
         "operationId": "getAllQUICInitialRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57833,6 +57997,7 @@ func init() {
         "operationId": "replaceAllQUICInitialRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -57932,6 +58097,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58001,6 +58167,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58110,6 +58277,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58219,6 +58387,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58297,6 +58466,7 @@ func init() {
         "operationId": "getAllTCPCheckDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58347,6 +58517,7 @@ func init() {
         "operationId": "replaceAllTCPCheckDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58446,6 +58617,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58515,6 +58687,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58624,6 +58797,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58733,6 +58907,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58811,6 +58986,7 @@ func init() {
         "operationId": "getAllTCPRequestRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58861,6 +59037,7 @@ func init() {
         "operationId": "replaceAllTCPRequestRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -58960,6 +59137,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59029,6 +59207,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59138,6 +59317,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59247,6 +59427,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59325,6 +59506,7 @@ func init() {
         "operationId": "getAllTCPResponseRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59375,6 +59557,7 @@ func init() {
         "operationId": "replaceAllTCPResponseRuleDefaults",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59474,6 +59657,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59543,6 +59727,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59652,6 +59837,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -59761,6 +59947,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -60249,6 +60436,7 @@ func init() {
         "operationId": "getAllAclFCGIApp",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -60305,6 +60493,7 @@ func init() {
         "operationId": "replaceAllAclFCGIApp",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -60404,6 +60593,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -60473,6 +60663,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -60582,6 +60773,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -60691,6 +60883,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61179,6 +61372,7 @@ func init() {
         "operationId": "getAllAclFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61235,6 +61429,7 @@ func init() {
         "operationId": "replaceAllAclFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61334,6 +61529,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61403,6 +61599,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61512,6 +61709,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61621,6 +61819,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61699,6 +61898,7 @@ func init() {
         "operationId": "getBackendSwitchingRules",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61749,6 +61949,7 @@ func init() {
         "operationId": "replaceBackendSwitchingRules",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61848,6 +62049,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -61917,6 +62119,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62026,6 +62229,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62135,6 +62339,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62213,6 +62418,7 @@ func init() {
         "operationId": "getAllBindFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62263,6 +62469,7 @@ func init() {
         "operationId": "createBindFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62374,6 +62581,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62443,6 +62651,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62552,6 +62761,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62630,6 +62840,7 @@ func init() {
         "operationId": "getDeclareCaptures",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62680,6 +62891,7 @@ func init() {
         "operationId": "replaceDeclareCaptures",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62779,6 +62991,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62848,6 +63061,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -62957,6 +63171,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63066,6 +63281,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63144,6 +63360,7 @@ func init() {
         "operationId": "getAllFilterFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63194,6 +63411,7 @@ func init() {
         "operationId": "replaceAllFilterFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63293,6 +63511,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63362,6 +63581,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63471,6 +63691,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63580,6 +63801,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63658,6 +63880,7 @@ func init() {
         "operationId": "getAllHTTPAfterResponseRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63708,6 +63931,7 @@ func init() {
         "operationId": "replaceAllHTTPAfterResponseRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63807,6 +64031,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63876,6 +64101,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -63985,6 +64211,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64094,6 +64321,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64172,6 +64400,7 @@ func init() {
         "operationId": "getAllHTTPErrorRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64222,6 +64451,7 @@ func init() {
         "operationId": "replaceAllHTTPErrorRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64321,6 +64551,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64390,6 +64621,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64499,6 +64731,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64608,6 +64841,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64686,6 +64920,7 @@ func init() {
         "operationId": "getAllHTTPRequestRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64736,6 +64971,7 @@ func init() {
         "operationId": "replaceAllHTTPRequestRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64835,6 +65071,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -64904,6 +65141,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65013,6 +65251,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65122,6 +65361,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65200,6 +65440,7 @@ func init() {
         "operationId": "getAllHTTPResponseRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65250,6 +65491,7 @@ func init() {
         "operationId": "replaceAllHTTPResponseRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65349,6 +65591,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65418,6 +65661,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65527,6 +65771,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65636,6 +65881,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65714,6 +65960,7 @@ func init() {
         "operationId": "getAllLogTargetFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65764,6 +66011,7 @@ func init() {
         "operationId": "replaceAllLogTargetFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65863,6 +66111,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -65932,6 +66181,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66041,6 +66291,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66150,6 +66401,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66228,6 +66480,7 @@ func init() {
         "operationId": "getAllQUICInitialRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66278,6 +66531,7 @@ func init() {
         "operationId": "replaceAllQUICInitialRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66377,6 +66631,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66446,6 +66701,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66555,6 +66811,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66664,6 +66921,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66742,6 +67000,7 @@ func init() {
         "operationId": "getAllSSLFrontUses",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66792,6 +67051,7 @@ func init() {
         "operationId": "createSSLFrontUse",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66903,6 +67163,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -66972,6 +67233,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67081,6 +67343,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67159,6 +67422,7 @@ func init() {
         "operationId": "getAllTCPRequestRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67209,6 +67473,7 @@ func init() {
         "operationId": "replaceAllTCPRequestRuleFrontend",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67308,6 +67573,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67377,6 +67643,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67486,6 +67753,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -67595,6 +67863,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69491,6 +69760,7 @@ func init() {
         "operationId": "getAllBindLogForward",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69541,6 +69811,7 @@ func init() {
         "operationId": "createBindLogForward",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69652,6 +69923,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69721,6 +69993,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69830,6 +70103,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69908,6 +70182,7 @@ func init() {
         "operationId": "getDgramBinds",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -69958,6 +70233,7 @@ func init() {
         "operationId": "createDgramBind",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70069,6 +70345,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70138,6 +70415,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70247,6 +70525,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70325,6 +70604,7 @@ func init() {
         "operationId": "getAllLogTargetLogForward",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70375,6 +70655,7 @@ func init() {
         "operationId": "replaceAllLogTargetLogForward",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70474,6 +70755,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70543,6 +70825,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70652,6 +70935,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -70761,6 +71045,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73193,6 +73478,7 @@ func init() {
         "operationId": "getAllBindPeer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73243,6 +73529,7 @@ func init() {
         "operationId": "createBindPeer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73354,6 +73641,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73423,6 +73711,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73532,6 +73821,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73610,6 +73900,7 @@ func init() {
         "operationId": "getAllLogTargetPeer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73660,6 +73951,7 @@ func init() {
         "operationId": "replaceAllLogTargetPeer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73759,6 +74051,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73828,6 +74121,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -73937,6 +74231,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74046,6 +74341,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74124,6 +74420,7 @@ func init() {
         "operationId": "getAllServerPeer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74174,6 +74471,7 @@ func init() {
         "operationId": "createServerPeer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74285,6 +74583,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74354,6 +74653,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74463,6 +74763,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74541,6 +74842,7 @@ func init() {
         "operationId": "getTables",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74591,6 +74893,7 @@ func init() {
         "operationId": "createTable",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74702,6 +75005,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74771,6 +75075,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -74880,6 +75185,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -76363,6 +76669,7 @@ func init() {
         "operationId": "getAllServerRing",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -76413,6 +76720,7 @@ func init() {
         "operationId": "createServerRing",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -76524,6 +76832,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -76593,6 +76902,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -76702,6 +77012,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78200,6 +78511,7 @@ func init() {
         "summary": "Return an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL file entry ID",
             "name": "id",
@@ -78253,6 +78565,7 @@ func init() {
         "summary": "Return an ACL entries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78314,6 +78627,7 @@ func init() {
         "operationId": "addPayloadRuntimeACL",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78373,6 +78687,7 @@ func init() {
         "summary": "Add entry to an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78446,6 +78761,7 @@ func init() {
         "summary": "Return an ACL entry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78453,6 +78769,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -78516,6 +78833,7 @@ func init() {
         "summary": "Delete an ACL entry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78523,6 +78841,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -78623,6 +78942,7 @@ func init() {
         "operationId": "renewAcmeCertificate",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Certificate file name",
             "name": "certificate",
@@ -78671,6 +78991,7 @@ func init() {
         "operationId": "getAllRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78708,6 +79029,7 @@ func init() {
         "operationId": "addRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78791,6 +79113,7 @@ func init() {
         "operationId": "getRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -78798,6 +79121,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78847,6 +79171,7 @@ func init() {
         "operationId": "replaceRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -78854,6 +79179,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -78923,6 +79249,7 @@ func init() {
         "operationId": "deleteRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -78930,6 +79257,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -79074,6 +79402,7 @@ func init() {
         "operationId": "getOneRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -79123,6 +79452,7 @@ func init() {
         "operationId": "addPayloadRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -79187,6 +79517,7 @@ func init() {
         "operationId": "clearRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -79248,6 +79579,7 @@ func init() {
         "operationId": "showRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -79297,6 +79629,7 @@ func init() {
         "operationId": "addMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -79375,6 +79708,7 @@ func init() {
         "operationId": "getRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -79382,6 +79716,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -79431,6 +79766,7 @@ func init() {
         "operationId": "replaceRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -79438,6 +79774,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -79523,6 +79860,7 @@ func init() {
         "operationId": "deleteRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -79530,6 +79868,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -79686,6 +80025,7 @@ func init() {
         "operationId": "getCaFile",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -79738,6 +80078,7 @@ func init() {
         "operationId": "setCaFile",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -79791,6 +80132,7 @@ func init() {
         "operationId": "deleteCaFile",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -79845,6 +80187,7 @@ func init() {
         "operationId": "addCaEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -79907,6 +80250,7 @@ func init() {
         "operationId": "getCaEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL CA file name",
             "name": "name",
@@ -80067,6 +80411,7 @@ func init() {
         "operationId": "getCert",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL certificate name",
             "name": "name",
@@ -80107,6 +80452,7 @@ func init() {
         "operationId": "replaceCert",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL certificate name",
             "name": "name",
@@ -80160,6 +80506,7 @@ func init() {
         "operationId": "deleteCert",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL certificate name",
             "name": "name",
@@ -80309,6 +80656,7 @@ func init() {
         "operationId": "getCrl",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "CRL file name",
             "name": "name",
@@ -80369,6 +80717,7 @@ func init() {
         "operationId": "replaceCrl",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "CRL file name",
             "name": "name",
@@ -80423,6 +80772,7 @@ func init() {
         "operationId": "deleteCrl",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "CRL file name",
             "name": "name",
@@ -80507,6 +80857,7 @@ func init() {
         "operationId": "getAllCrtListEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL crt-list filename",
             "name": "name",
@@ -80547,6 +80898,7 @@ func init() {
         "operationId": "addCrtListEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL crt-list filename",
             "name": "name",
@@ -80613,6 +80965,7 @@ func init() {
         "operationId": "deleteCrtListEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL crt list name",
             "name": "name",
@@ -80620,6 +80973,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "SSL cert entry name",
             "name": "cert_file",
@@ -80718,6 +81072,7 @@ func init() {
         "operationId": "getStickTable",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "name",
@@ -80769,6 +81124,7 @@ func init() {
         "operationId": "getStickTableEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -80776,12 +81132,14 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
             "name": "filter",
             "in": "query"
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "Key which we want the entries for",
             "name": "key",
@@ -80830,6 +81188,7 @@ func init() {
         "operationId": "setStickTableEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -80851,7 +81210,8 @@ func init() {
                   "$ref": "#/definitions/stick_table_entry"
                 },
                 "key": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^[^\\r\\n;#]+$"
                 }
               }
             }
@@ -81515,6 +81875,7 @@ func init() {
         "operationId": "getAllSpoeScope",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -81565,6 +81926,7 @@ func init() {
         "operationId": "createSpoeScope",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -81650,6 +82012,7 @@ func init() {
         "operationId": "getSpoeScope",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -81719,6 +82082,7 @@ func init() {
         "operationId": "deleteSpoeScope",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -81788,6 +82152,7 @@ func init() {
         "operationId": "getAllSpoeAgent",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -81845,6 +82210,7 @@ func init() {
         "operationId": "createSpoeAgent",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -81937,6 +82303,7 @@ func init() {
         "operationId": "getSpoeAgent",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82013,6 +82380,7 @@ func init() {
         "operationId": "replaceSpoeAgent",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82110,6 +82478,7 @@ func init() {
         "operationId": "deleteSpoeAgent",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82186,6 +82555,7 @@ func init() {
         "operationId": "getAllSpoeGroup",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82243,6 +82613,7 @@ func init() {
         "operationId": "createSpoeGroup",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82335,6 +82706,7 @@ func init() {
         "operationId": "getSpoeGroup",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82411,6 +82783,7 @@ func init() {
         "operationId": "replaceSpoeGroup",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82508,6 +82881,7 @@ func init() {
         "operationId": "deleteSpoeGroup",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82584,6 +82958,7 @@ func init() {
         "operationId": "getAllSpoeMessage",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82641,6 +83016,7 @@ func init() {
         "operationId": "createSpoeMessage",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82733,6 +83109,7 @@ func init() {
         "operationId": "getSpoeMessage",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82809,6 +83186,7 @@ func init() {
         "operationId": "replaceSpoeMessage",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82906,6 +83284,7 @@ func init() {
         "operationId": "deleteSpoeMessage",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -82985,6 +83364,7 @@ func init() {
         "operationId": "getAllSpoeTransaction",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -83035,6 +83415,7 @@ func init() {
         "operationId": "startSpoeTransaction",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -83099,6 +83480,7 @@ func init() {
         "operationId": "getSpoeTransaction",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -83155,6 +83537,7 @@ func init() {
         "operationId": "commitSpoeTransaction",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -83242,6 +83625,7 @@ func init() {
         "operationId": "deleteSpoeTransaction",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -83304,6 +83688,7 @@ func init() {
             "in": "query"
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
@@ -102426,6 +102811,7 @@ func init() {
       "in": "query"
     },
     "parent_name": {
+      "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
       "type": "string",
       "description": "Parent name",
       "name": "parent_name",

@@ -26,6 +26,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 )
 
 // NewDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams creates a new DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams object
@@ -47,11 +48,13 @@ type DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams struct {
 
 	/*File entry ID
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ID string
 	/*Parent name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ParentName string
@@ -92,6 +95,20 @@ func (o *DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams) bindID(rawDa
 	// Parameter is provided by construction from the route
 	o.ID = raw
 
+	if err := o.validateID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateID carries on validations for parameter ID
+func (o *DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("id", "path", o.ID, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -105,6 +122,20 @@ func (o *DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams) bindParentNa
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ParentName = raw
+
+	if err := o.validateParentName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentName carries on validations for parameter ParentName
+func (o *DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams) validateParentName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("parent_name", "path", o.ParentName, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
