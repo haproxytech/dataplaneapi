@@ -52,6 +52,7 @@ type AddRuntimeServerParams struct {
 
 	/*Parent backend name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Backend string
@@ -123,6 +124,20 @@ func (o *AddRuntimeServerParams) bindBackend(rawData []string, hasKey bool, form
 		return err
 	}
 	o.Backend = raw
+
+	if err := o.validateBackend(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateBackend carries on validations for parameter Backend
+func (o *AddRuntimeServerParams) validateBackend(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("backend", "query", o.Backend, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

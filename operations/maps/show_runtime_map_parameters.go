@@ -49,6 +49,7 @@ type ShowRuntimeMapParams struct {
 
 	/*Mapfile attribute storage_name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Map string
@@ -92,6 +93,20 @@ func (o *ShowRuntimeMapParams) bindMap(rawData []string, hasKey bool, formats st
 		return err
 	}
 	o.Map = raw
+
+	if err := o.validateMap(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateMap carries on validations for parameter Map
+func (o *ShowRuntimeMapParams) validateMap(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("map", "query", o.Map, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

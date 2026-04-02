@@ -49,11 +49,13 @@ type GetRuntimeMapEntryParams struct {
 
 	/*Map id
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ID string
 	/*Mapfile attribute storage_name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Map string
@@ -96,6 +98,20 @@ func (o *GetRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, formats
 	// Parameter is provided by construction from the route
 	o.ID = raw
 
+	if err := o.validateID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateID carries on validations for parameter ID
+func (o *GetRuntimeMapEntryParams) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("id", "path", o.ID, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -116,6 +132,20 @@ func (o *GetRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, format
 		return err
 	}
 	o.Map = raw
+
+	if err := o.validateMap(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateMap carries on validations for parameter Map
+func (o *GetRuntimeMapEntryParams) validateMap(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("map", "query", o.Map, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

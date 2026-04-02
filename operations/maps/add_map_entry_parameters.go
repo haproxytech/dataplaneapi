@@ -70,6 +70,7 @@ type AddMapEntryParams struct {
 	ForceSync *bool
 	/*Mapfile attribute storage_name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Map string
@@ -165,6 +166,20 @@ func (o *AddMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfm
 		return err
 	}
 	o.Map = raw
+
+	if err := o.validateMap(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateMap carries on validations for parameter Map
+func (o *AddMapEntryParams) validateMap(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("map", "query", o.Map, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

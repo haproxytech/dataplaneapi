@@ -49,11 +49,13 @@ type GetRuntimeServerParams struct {
 
 	/*Parent backend name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Backend string
 	/*Server name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
@@ -103,6 +105,20 @@ func (o *GetRuntimeServerParams) bindBackend(rawData []string, hasKey bool, form
 	}
 	o.Backend = raw
 
+	if err := o.validateBackend(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateBackend carries on validations for parameter Backend
+func (o *GetRuntimeServerParams) validateBackend(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("backend", "query", o.Backend, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -116,6 +132,20 @@ func (o *GetRuntimeServerParams) bindName(rawData []string, hasKey bool, formats
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *GetRuntimeServerParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

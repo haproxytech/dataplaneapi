@@ -52,6 +52,7 @@ type PostServicesHaproxyRuntimeACLFileEntriesParams struct {
 
 	/*ACL ID
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	ACLID string
@@ -123,6 +124,20 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) bindACLID(rawData []str
 		return err
 	}
 	o.ACLID = raw
+
+	if err := o.validateACLID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateACLID carries on validations for parameter ACLID
+func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) validateACLID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("acl_id", "query", o.ACLID, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

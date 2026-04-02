@@ -52,6 +52,7 @@ type ReplaceRuntimeServerParams struct {
 
 	/*Parent backend name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	Backend string
@@ -62,6 +63,7 @@ type ReplaceRuntimeServerParams struct {
 	Data *models.RuntimeServer
 	/*Server name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
@@ -134,6 +136,20 @@ func (o *ReplaceRuntimeServerParams) bindBackend(rawData []string, hasKey bool, 
 	}
 	o.Backend = raw
 
+	if err := o.validateBackend(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateBackend carries on validations for parameter Backend
+func (o *ReplaceRuntimeServerParams) validateBackend(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("backend", "query", o.Backend, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -147,6 +163,20 @@ func (o *ReplaceRuntimeServerParams) bindName(rawData []string, hasKey bool, for
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *ReplaceRuntimeServerParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

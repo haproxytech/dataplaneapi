@@ -49,11 +49,13 @@ type DeleteServicesHaproxyRuntimeACLFileEntriesIDParams struct {
 
 	/*ACL ID
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	ACLID string
 	/*File entry ID
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	ID string
@@ -103,6 +105,20 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDParams) bindACLID(rawData [
 	}
 	o.ACLID = raw
 
+	if err := o.validateACLID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateACLID carries on validations for parameter ACLID
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDParams) validateACLID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("acl_id", "query", o.ACLID, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -116,6 +132,20 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDParams) bindID(rawData []st
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.ID = raw
+
+	if err := o.validateID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateID carries on validations for parameter ID
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDParams) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("id", "path", o.ID, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }

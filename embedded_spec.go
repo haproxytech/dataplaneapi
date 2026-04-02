@@ -12454,6 +12454,7 @@ func init() {
         "summary": "Return an ACL entries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -12488,6 +12489,7 @@ func init() {
         "operationId": "addPayloadRuntimeACL",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -12529,6 +12531,7 @@ func init() {
         "summary": "Add entry to an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -12575,6 +12578,7 @@ func init() {
         "summary": "Return an ACL entry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -12582,6 +12586,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -12618,6 +12623,7 @@ func init() {
         "summary": "Delete an ACL entry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -12625,6 +12631,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -12683,6 +12690,7 @@ func init() {
         "summary": "Return an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL file entry ID",
             "name": "id",
@@ -12773,6 +12781,7 @@ func init() {
         "operationId": "getOneRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -12804,6 +12813,7 @@ func init() {
         "operationId": "addPayloadRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -12850,6 +12860,7 @@ func init() {
         "operationId": "clearRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -12893,6 +12904,7 @@ func init() {
         "operationId": "showRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -12924,6 +12936,7 @@ func init() {
         "operationId": "addMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -12975,6 +12988,7 @@ func init() {
         "operationId": "getRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -12982,6 +12996,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -13013,6 +13028,7 @@ func init() {
         "operationId": "replaceRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -13020,6 +13036,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -13078,6 +13095,7 @@ func init() {
         "operationId": "deleteRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -13085,6 +13103,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -13122,6 +13141,7 @@ func init() {
         "operationId": "getRuntimeServers",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -13150,6 +13170,7 @@ func init() {
         "operationId": "addRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -13197,6 +13218,7 @@ func init() {
         "operationId": "getRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -13204,6 +13226,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -13235,6 +13258,7 @@ func init() {
         "operationId": "replaceRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -13242,6 +13266,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -13284,6 +13309,7 @@ func init() {
         "operationId": "deleteRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -13291,6 +13317,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -13324,6 +13351,7 @@ func init() {
         "operationId": "getStickTableEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "stick_table",
@@ -13338,12 +13366,14 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
             "name": "filter",
             "in": "query"
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "Key which we want the entries for",
             "name": "key",
@@ -13383,6 +13413,7 @@ func init() {
         "operationId": "setStickTableEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "stick_table",
@@ -13411,7 +13442,8 @@ func init() {
                   "$ref": "#/definitions/stick_table_entry"
                 },
                 "key": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^[^\\r\\n;#]+$"
                 }
               }
             }
@@ -13466,6 +13498,7 @@ func init() {
         "operationId": "getStickTable",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "name",
@@ -48758,6 +48791,7 @@ func init() {
         "summary": "Return an ACL entries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -48819,6 +48853,7 @@ func init() {
         "operationId": "addPayloadRuntimeACL",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -48878,6 +48913,7 @@ func init() {
         "summary": "Add entry to an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -48951,6 +48987,7 @@ func init() {
         "summary": "Return an ACL entry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -48958,6 +48995,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -49021,6 +49059,7 @@ func init() {
         "summary": "Delete an ACL entry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL ID",
             "name": "acl_id",
@@ -49028,6 +49067,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "File entry ID",
             "name": "id",
@@ -49122,6 +49162,7 @@ func init() {
         "summary": "Return an ACL file",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "ACL file entry ID",
             "name": "id",
@@ -49257,6 +49298,7 @@ func init() {
         "operationId": "getOneRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -49306,6 +49348,7 @@ func init() {
         "operationId": "addPayloadRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -49370,6 +49413,7 @@ func init() {
         "operationId": "clearRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map file name",
             "name": "name",
@@ -49431,6 +49475,7 @@ func init() {
         "operationId": "showRuntimeMap",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -49480,6 +49525,7 @@ func init() {
         "operationId": "addMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -49558,6 +49604,7 @@ func init() {
         "operationId": "getRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -49565,6 +49612,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -49614,6 +49662,7 @@ func init() {
         "operationId": "replaceRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -49621,6 +49670,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -49706,6 +49756,7 @@ func init() {
         "operationId": "deleteRuntimeMapEntry",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Map id",
             "name": "id",
@@ -49713,6 +49764,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Mapfile attribute storage_name",
             "name": "map",
@@ -49768,6 +49820,7 @@ func init() {
         "operationId": "getRuntimeServers",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -49805,6 +49858,7 @@ func init() {
         "operationId": "addRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -49888,6 +49942,7 @@ func init() {
         "operationId": "getRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -49895,6 +49950,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -49944,6 +50000,7 @@ func init() {
         "operationId": "replaceRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -49951,6 +50008,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -50020,6 +50078,7 @@ func init() {
         "operationId": "deleteRuntimeServer",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Server name",
             "name": "name",
@@ -50027,6 +50086,7 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
@@ -50087,6 +50147,7 @@ func init() {
         "operationId": "getStickTableEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "stick_table",
@@ -50101,12 +50162,14 @@ func init() {
             "required": true
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
             "name": "filter",
             "in": "query"
           },
           {
+            "pattern": "^[^\\r\\n;#]+$",
             "type": "string",
             "description": "Key which we want the entries for",
             "name": "key",
@@ -50155,6 +50218,7 @@ func init() {
         "operationId": "setStickTableEntries",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "stick_table",
@@ -50183,7 +50247,8 @@ func init() {
                   "$ref": "#/definitions/stick_table_entry"
                 },
                 "key": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^[^\\r\\n;#]+$"
                 }
               }
             }
@@ -50256,6 +50321,7 @@ func init() {
         "operationId": "getStickTable",
         "parameters": [
           {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
             "type": "string",
             "description": "Stick table name",
             "name": "name",

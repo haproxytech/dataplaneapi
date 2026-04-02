@@ -103,6 +103,7 @@ type SetStickTableEntriesBody struct {
 
 	// key
 	// Required: true
+	// Pattern: ^[^\r\n;#]+$
 	Key *string `json:"key"`
 }
 
@@ -147,6 +148,10 @@ func (o *SetStickTableEntriesBody) validateDataType(formats strfmt.Registry) err
 func (o *SetStickTableEntriesBody) validateKey(formats strfmt.Registry) error {
 
 	if err := validate.Required("stick_table_entry"+"."+"key", "body", o.Key); err != nil {
+		return err
+	}
+
+	if err := validate.Pattern("stick_table_entry"+"."+"key", "body", *o.Key, `^[^\r\n;#]+$`); err != nil {
 		return err
 	}
 

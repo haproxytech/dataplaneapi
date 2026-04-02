@@ -55,6 +55,7 @@ type SetStickTableEntriesParams struct {
 	Process int64
 	/*Stick table name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: query
 	*/
 	StickTable string
@@ -150,6 +151,20 @@ func (o *SetStickTableEntriesParams) bindStickTable(rawData []string, hasKey boo
 		return err
 	}
 	o.StickTable = raw
+
+	if err := o.validateStickTable(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateStickTable carries on validations for parameter StickTable
+func (o *SetStickTableEntriesParams) validateStickTable(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("stick_table", "query", o.StickTable, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
