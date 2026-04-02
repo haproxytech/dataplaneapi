@@ -29,6 +29,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -69,6 +70,7 @@ type AddPayloadRuntimeMapParams struct {
 	ForceSync *bool
 	/*Map file name
 	  Required: true
+	  Pattern: ^[^\r\n<>*;$#&{}"]+$
 	  In: path
 	*/
 	Name string
@@ -157,6 +159,20 @@ func (o *AddPayloadRuntimeMapParams) bindName(rawData []string, hasKey bool, for
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	if err := o.validateName(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateName carries on validations for parameter Name
+func (o *AddPayloadRuntimeMapParams) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("name", "path", o.Name, `^[^\r\n<>*;$#&{}"]+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
