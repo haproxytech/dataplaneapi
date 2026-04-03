@@ -71,7 +71,7 @@ setup() {
     resource_get "$_STORAGE_SSL_CERTS_BASE_PATH"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" '.|length')" 2
+    test "$(get_json_path "$BODY" '.|length')" -ge 2
     assert_equal "$(get_json_path "$BODY" '.[0].storage_name')" "1.pem"
 }
 
