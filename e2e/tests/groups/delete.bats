@@ -34,8 +34,8 @@ load 'utils/_helpers'
 }
 
 @test "groups: Delete a group that is assigned to an existing user" {
-  # resource_delete "$_GROUPS_BASE_PATH/virus" "userlist=delete_test&force_reload=true"
-  # assert_equal "$SC" 400
+  resource_delete "$_GROUPS_BASE_PATH/virus" "userlist=delete_test&force_reload=true"
+  assert_equal "$SC" 400
 }
 
 @test "groups: Delete a non existing group" {
