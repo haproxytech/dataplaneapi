@@ -23,6 +23,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/libdns/libdns"
 	"github.com/miekg/dns"
 )
@@ -36,7 +37,7 @@ const (
 
 // DNSProvider defines the operations required for dns-01 challenges.
 type DNSProvider interface {
-	libdns.RecordAppender
+	libdns.RecordSetter
 	libdns.RecordDeleter
 }
 
@@ -82,7 +83,7 @@ func (s *DNS01Solver) Present(ctx context.Context, domain, zone, keyAuth string)
 		zone = rooted(zone)
 	}
 
-	results, err := s.provider.AppendRecords(ctx, zone, []libdns.Record{rec})
+	results, err := s.provider.SetRecords(ctx, zone, []libdns.Record{rec})
 	if err != nil {
 		return fmt.Errorf("adding temporary record for zone %q: %w", zone, err)
 	}
@@ -123,7 +124,10 @@ func (s *DNS01Solver) Wait(ctx context.Context, domain, zone, keyAuth string) er
 	checkAuthoritativeServers := len(s.Resolvers) == 0
 	resolvers := RecursiveNameservers(s.Resolvers)
 
-	absName := strings.Trim(domain, ".")
+	log.Debugf("events: acme deploy: %s: using DNS resolvers %v, check authoritative servers=%v",
+		domain, resolvers, checkAuthoritativeServers)
+
+	absName := "_acme-challenge." + strings.Trim(domain, ".")
 
 	var err error
 	start := time.Now()

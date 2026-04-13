@@ -250,8 +250,10 @@ func (h *HAProxyEventListener) handleAcmeDeployEvent(ctx context.Context, args s
 	solver.PropagationDelay = getEnvDuration("DPAPI_ACME_PROPAGDELAY_SEC", 0)
 	solver.PropagationTimeout = getEnvDuration("DPAPI_ACME_PROPAGTIMEOUT_SEC", time.Hour)
 
+	log.Debugf("events: acme deploy: %s: using DNS provider %s", domainName, provider)
+
 	var zone string
-	if solver.PropagationTimeout != -1 {
+	if solver.PropagationTimeout == -1 {
 		zone = acme.GuessZone(domainName)
 	} else {
 		zone, err = acme.FindZoneByFQDN(ctx, domainName, acme.RecursiveNameservers(nil))
@@ -260,11 +262,18 @@ func (h *HAProxyEventListener) handleAcmeDeployEvent(ctx context.Context, args s
 		log.Errorf("events: acme deploy: failed to find root zone for '%s': %s", domainName, err.Error())
 		return
 	}
+
+	log.Debugf("events: acme deploy: %s: found DNS zone: %q", domainName, zone)
+
 	err = solver.Present(ctx, domainName, zone, keyAuth)
 	if err != nil {
 		log.Errorf("events: acme deploy: DNS solver: %s", err.Error())
 		return
 	}
+
+	log.Debugf("events: acme deploy: %s: record created, waiting for propagation. Timeout: %s",
+		domainName, solver.PropagationTimeout.String())
+
 	// Wait for DNS propagation and cleanup.
 	err = solver.Wait(ctx, domainName, zone, keyAuth)
 	// Remove the challenge in 10m if Wait() was successful. This should be
