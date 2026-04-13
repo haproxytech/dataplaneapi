@@ -28,6 +28,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/miekg/dns"
 )
 
@@ -142,6 +143,8 @@ func checkDNSPropagation(ctx context.Context, fqdn string, recType uint16, expec
 		}
 		populateNameserverPorts(authoritativeServers)
 		resolvers = authoritativeServers
+		log.Debugf("events: acme deploy: %s: using DNS resolvers %v, check authoritative servers=%v",
+			fqdn, resolvers, checkAuthoritativeServers)
 	}
 
 	return checkAuthoritativeNss(ctx, fqdn, recType, expectedValue, resolvers)
@@ -172,6 +175,9 @@ func checkAuthoritativeNss(ctx context.Context, fqdn string, recType uint16, exp
 					record := strings.Join(txt.Txt, "")
 					if record == expectedValue {
 						return true, nil
+					} else {
+						log.Debugf("events: acme deploy: %s: TXT record mismatch! Expected %q, Got %q",
+							fqdn, expectedValue, record)
 					}
 				}
 			case dns.TypeCNAME:
@@ -221,6 +227,7 @@ func updateDomainWithCName(r *dns.Msg, fqdn string) string {
 	for _, rr := range r.Answer {
 		if cn, ok := rr.(*dns.CNAME); ok {
 			if cn.Hdr.Name == fqdn {
+				log.Debugf("events: acme deploy: %s: updated FQDN with CNAME value: %q", fqdn, cn.Target)
 				return cn.Target
 			}
 		}
