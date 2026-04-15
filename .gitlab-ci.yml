@@ -17,7 +17,7 @@ pipelines-check:
   stage: bots
   needs: []
   image:
-    name: $CI_REGISTRY_GO/docker:$DOCKER_VERSION-go$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
@@ -29,7 +29,7 @@ mr-backport-question:
   stage: bots
   needs: []
   image:
-    name: $CI_REGISTRY_GO/docker:$DOCKER_VERSION-go$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [ "" ]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
@@ -60,7 +60,7 @@ diff:
 diff-spec-parent:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
   tags:
     - go
@@ -77,7 +77,7 @@ golangci-lint:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
   tags:
     - go
@@ -92,7 +92,7 @@ gofumpt:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
   image:
-    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
   tags:
     - go
@@ -297,7 +297,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
   tags:
     - go
@@ -312,7 +312,7 @@ build:
 test:
   stage: test
   image:
-    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [ "" ]
   tags:
     - go
@@ -355,7 +355,7 @@ govulncheck:
   stage: checks
   needs: []
   image:
-    name: $CI_REGISTRY_GO/docker:$DOCKER_VERSION-go$GO_VERSION
+    name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [ "" ]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'schedule' && $SCHEDULE_TYPE == 'daily'
