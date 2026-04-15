@@ -11,6 +11,7 @@ variables:
   BATS_VERSION: v1.10.0
   GO_VERSION: "1.26"
   DOCKER_VERSION: "29.1"
+  JUNIT_FILE: "junit-report.xml"
 
 pipelines-check:
   stage: bots
@@ -100,15 +101,195 @@ gofumpt:
     - test -z "$(git diff 2> /dev/null)" || exit 'Go code not formatted, issue \`make gofumpt\` and commit the result'
 commit-policy:
   stage: lint
+  needs: []
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
-    name: $CI_REGISTRY_GO/commit-check:5.5.0
+    name: $CI_REGISTRY_GO/commit-check:latest
     entrypoint: [""]
   tags:
     - go
   script:
     - /check
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
+check-dependencies:
+  stage: lint
+  allow_failure: true
+  needs: []
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  image:
+    name: $CI_REGISTRY_GO/golang:latest-alpine
+    entrypoint: [""]
+  tags:
+    - go
+  script:
+    - |
+      git fetch origin ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
+      # skip check if all go.mod changes are from Gopher Bot
+      BOT_COMMITS=$(git log --author="noreply-gopher@haproxy.com" --format='%H' origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}..HEAD -- go.mod || true)
+      ALL_COMMITS=$(git log --format='%H' origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}..HEAD -- go.mod || true)
+      if [ -n "$ALL_COMMITS" ] && [ "$BOT_COMMITS" = "$ALL_COMMITS" ]; then
+        echo "All go.mod changes are from Gopher Bot, skipping."
+        junit-report add --status=ok --file="go.mod" --message="go.mod changes from Gopher Bot, skipped" --description="go.mod dependency check skipped"
+        exit 0
+      fi
+      NEW_DEPS=$(git diff origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}...HEAD -- go.mod \
+        | grep -E '^\+\s' \
+        | grep -v '^\+\+\+' \
+        | grep -v '^\+\s*\/\/' \
+        || true)
+      if [ -n "$NEW_DEPS" ]; then
+        echo "New dependencies detected in go.mod:"
+        echo "$NEW_DEPS"
+        junit-report add --status=failed --file="go.mod" --message="new dependencies added to go.mod" --description="$(printf "The following dependencies were added:\n\n%s" "$NEW_DEPS")"
+        exit 1
+      else
+        echo "No new dependencies added to go.mod."
+        junit-report add --status=ok --file="go.mod" --message="no new dependencies added to go.mod" --description="go.mod dependency check passed"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
+check-committer:
+  stage: lint
+  allow_failure: true
+  needs: []
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  image:
+    name: $CI_REGISTRY_GO/golang:latest-alpine
+    entrypoint: [ "" ]
+  tags:
+    - go
+  script:
+    - |
+      git fetch origin ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
+      BAD_EMAILS=""
+      for COMMIT in $(git log --format='%H' origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}..HEAD); do
+        EMAIL=$(git log -1 --format='%ae' "$COMMIT")
+        MSG=$(git log -1 --format='%s' "$COMMIT")
+        case "$EMAIL" in
+          *@haproxy.com) ;;
+          *)
+            SHORT=$(echo "$COMMIT" | cut -c1-8)
+            BAD_EMAILS="${BAD_EMAILS}${SHORT} ${MSG} (${EMAIL})\n"
+            junit-report add --status=failed --file="$EMAIL" --message="$EMAIL: $MSG" --description="$(printf "committer email not @haproxy.com\n\n%s\n%s" "$MSG" "$EMAIL")"
+            ;;
+        esac
+      done
+      CO_AUTHORED=""
+      ASSISTED=""
+      SIGNED_OFF=""
+      for COMMIT in $(git log --format='%H' origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}..HEAD); do
+        BODY=$(git log -1 --format='%b' "$COMMIT")
+        MSG=$(git log -1 --format='%s' "$COMMIT")
+        MATCHED=$(echo "$BODY" | grep -i 'Co-authored-by' || true)
+        if [ -n "$MATCHED" ]; then
+          SHORT=$(echo "$COMMIT" | cut -c1-8)
+          CO_AUTHORED="${CO_AUTHORED}${SHORT} ${MSG}\n$(echo "$MATCHED" | sed 's/^/  /')\n"
+          junit-report add --status=failed --file="co-authored-by" --message="$MSG" --description="$(printf "commit contains Co-authored-by trailer\n\n%s\n%s" "$MSG" "$MATCHED")"
+        fi
+        MATCHED=$(echo "$BODY" | grep -i 'Assisted-by' || true)
+        if [ -n "$MATCHED" ]; then
+          SHORT=$(echo "$COMMIT" | cut -c1-8)
+          ASSISTED="${ASSISTED}${SHORT} ${MSG}\n$(echo "$MATCHED" | sed 's/^/  /')\n"
+          junit-report add --status=failed --file="assisted-by" --message="$MSG" --description="$(printf "commit contains Assisted-by trailer\n\n%s\n%s" "$MSG" "$MATCHED")"
+        fi
+        MATCHED=$(echo "$BODY" | grep -i 'Signed-off-by' || true)
+        if [ -n "$MATCHED" ]; then
+          SHORT=$(echo "$COMMIT" | cut -c1-8)
+          SIGNED_OFF="${SIGNED_OFF}${SHORT} ${MSG}\n$(echo "$MATCHED" | sed 's/^/  /')\n"
+          junit-report add --status=failed --file="signed-off-by" --message="$MSG" --description="$(printf "commit contains Signed-off-by trailer\n\n%s\n%s" "$MSG" "$MATCHED")"
+        fi
+      done
+      FAILED=""
+      if [ -n "$BAD_EMAILS" ]; then
+        echo "The following committer emails are not @haproxy.com:"
+        printf "$BAD_EMAILS"
+        FAILED=1
+      else
+        echo "All committer emails end with @haproxy.com."
+        junit-report add --status=ok --file=committer-email --description="all emails valid" --message="All committer emails end with @haproxy.com."
+      fi
+      if [ -n "$CO_AUTHORED" ]; then
+        echo "The following commits contain Co-authored-by:"
+        printf "$CO_AUTHORED"
+        FAILED=1
+      else
+        echo "No commits contain Co-authored-by."
+        junit-report add --status=ok --file=co-authored-by --description="no co-authored-by found" --message="No commits contain Co-authored-by."
+      fi
+      if [ -n "$ASSISTED" ]; then
+        echo "The following commits contain Assisted-by:"
+        printf "$ASSISTED"
+        FAILED=1
+      else
+        echo "No commits contain Assisted-by."
+        junit-report add --status=ok --file=assisted-by --description="no assisted-by found" --message="No commits contain Assisted-by."
+      fi
+      if [ -n "$SIGNED_OFF" ]; then
+        echo "The following commits contain Signed-off-by:"
+        printf "$SIGNED_OFF"
+        FAILED=1
+      else
+        echo "No commits contain Signed-off-by."
+        junit-report add --status=ok --file=signed-off-by --description="no signed-off-by found" --message="No commits contain Signed-off-by."
+      fi
+      if [ -n "$FAILED" ]; then
+        exit 1
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
+check-large-files:
+  stage: lint
+  needs: []
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  image:
+    name: $CI_REGISTRY_GO/golang:latest-alpine
+    entrypoint: [""]
+  tags:
+    - go
+  script:
+    # List all files in the latest commit that are larger than 1MB
+    - |
+      git fetch origin ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
+      git diff --name-only origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}..HEAD | while read file; do
+        if [ -f "$file" ] && [ $(stat -c%s "$file") -gt 1048576 ]; then
+          echo "$file"
+        fi
+      done > large_files.txt
+
+    # Fail the job if any file is larger than 1MB
+    - |
+      if [ -s large_files.txt ]; then
+        echo "The following files exceed 1MB:"
+        cat large_files.txt
+        junit-report add --status=failed --file=large-files --message="large files found" --description="$(cat large_files.txt)"
+        exit 1
+      else
+        echo "No large files found in the latest commit."
+        junit-report add --status=ok --file=large-files --message="commit clean" --description="No large files found in the latest commit."
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 
 build:
   stage: build
