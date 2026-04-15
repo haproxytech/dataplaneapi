@@ -25,6 +25,19 @@ pipelines-check:
     - go
   script:
     - go run cmd/gitlab-mr-pipelines/main.go
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="pipelines check passed"
+      else
+        junit-report add --status=failed --message="pipelines check failed"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 mr-backport-question:
   stage: bots
   needs: []
@@ -37,6 +50,19 @@ mr-backport-question:
     - go
   script:
     - go run cmd/gitlab-mr-checker/main.go
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="backport check passed"
+      else
+        junit-report add --status=failed --message="backport check failed"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 diff:
   stage: lint
   image:
@@ -71,11 +97,21 @@ diff-spec-parent:
     - make generate-parent-aliases
     - test -z "$(git diff 2> /dev/null)" || exit "Parent aliases are not generated, issue \`make generate-parent-aliases\` and commit the result"
     - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Parent aliases created untracked files, cannot proceed"
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="parent aliases diff is clean"
+      else
+        junit-report add --status=failed --message="parent aliases not generated" --description="$(git diff)"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 golangci-lint:
   stage: lint
-  artifacts:
-    paths:
-      - build
   image:
     name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
@@ -86,6 +122,20 @@ golangci-lint:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="linting passed successfully"
+      else
+        junit-report add --status=failed --message="linting failed"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - build
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 gofumpt:
   stage: lint
   rules:
@@ -99,6 +149,19 @@ gofumpt:
   script:
     - make gofumpt
     - test -z "$(git diff 2> /dev/null)" || exit 'Go code not formatted, issue \`make gofumpt\` and commit the result'
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="format check passed successfully"
+      else
+        junit-report add --status=failed --message="go code not formatted" --description="$(git diff)"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 commit-policy:
   stage: lint
   needs: []
@@ -293,9 +356,6 @@ check-large-files:
 
 build:
   stage: build
-  artifacts:
-    paths:
-      - build
   image:
     name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
@@ -308,6 +368,20 @@ build:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="build passed successfully"
+      else
+        junit-report add --status=failed --message="build failed"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - build
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 
 test:
   stage: test
@@ -323,6 +397,19 @@ test:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: "$CI_PROJECT_NAMESPACE == 'haproxy-controller' && $CI_PIPELINE_SOURCE == 'push'"
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="tests passed successfully"
+      else
+        junit-report add --status=failed --message="tests failed"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 
 .e2e:
   stage: e2e
@@ -372,6 +459,19 @@ govulncheck:
     - govulncheck -version
     - go mod tidy
     - go run cmd/govulncheck-report/main.go
+  after_script:
+    - |
+      if [ "$CI_JOB_STATUS" == "success" ]; then
+        junit-report add --status=ok --message="govulncheck passed"
+      else
+        junit-report add --status=failed --message="govulncheck found vulnerabilities"
+      fi
+  artifacts:
+    when: on_failure
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 
 HAProxy_3.4:
   extends: .e2e
