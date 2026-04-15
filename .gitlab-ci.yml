@@ -65,6 +65,7 @@ mr-backport-question:
       junit: junit-report.xml
 diff:
   stage: lint
+  needs: [pipelines-check]
   image:
     name: $CI_REGISTRY_GO/docker:$DOCKER_VERSION-go$GO_VERSION
     entrypoint: [""]
@@ -85,6 +86,7 @@ diff:
     - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Specification generation created untracked files, cannot proceed"
 diff-spec-parent:
   stage: lint
+  needs: [pipelines-check]
   image:
     name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
@@ -112,6 +114,7 @@ diff-spec-parent:
       junit: junit-report.xml
 golangci-lint:
   stage: lint
+  needs: [pipelines-check]
   image:
     name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
@@ -138,6 +141,7 @@ golangci-lint:
       junit: junit-report.xml
 gofumpt:
   stage: lint
+  needs: [pipelines-check]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
@@ -164,7 +168,7 @@ gofumpt:
       junit: junit-report.xml
 commit-policy:
   stage: lint
-  needs: []
+  needs: [pipelines-check]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
@@ -183,7 +187,7 @@ commit-policy:
 check-dependencies:
   stage: lint
   allow_failure: true
-  needs: []
+  needs: [pipelines-check]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
@@ -225,7 +229,7 @@ check-dependencies:
 check-committer:
   stage: lint
   allow_failure: true
-  needs: []
+  needs: [pipelines-check]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
@@ -318,7 +322,7 @@ check-committer:
       junit: junit-report.xml
 check-large-files:
   stage: lint
-  needs: []
+  needs: [pipelines-check]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
@@ -356,6 +360,7 @@ check-large-files:
 
 build:
   stage: build
+  needs: []
   image:
     name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [""]
@@ -376,15 +381,14 @@ build:
         junit-report add --status=failed --message="build failed"
       fi
   artifacts:
-    when: on_failure
     paths:
       - build
-      - junit-report.xml
     reports:
       junit: junit-report.xml
 
 test:
   stage: test
+  needs: [pipelines-check]
   image:
     name: $CI_REGISTRY_GO/golang:latest-alpine
     entrypoint: [ "" ]
@@ -413,6 +417,7 @@ test:
 
 .e2e:
   stage: e2e
+  needs: [pipelines-check, build]
   artifacts:
     paths:
       - build
