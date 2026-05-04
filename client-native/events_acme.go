@@ -228,18 +228,29 @@ func (h *HAProxyEventListener) handleAcmeDeployEvent(ctx context.Context, args s
 	}
 
 	domainName := status.Identifier.Value
+	ttl := acme.DefaultTTL
 
 	// Merge the acme-vars
 	vars := make(map[string]any, 8)
 	for _, line := range acmeArgs {
 		hmap := configuration.ParseAcmeVars(line)
 		for k, v := range hmap {
-			vars[k] = v
+			if k == "ttl" {
+				sec, err := parseSeconds(v)
+				if err != nil {
+					log.Errorf("events: acme deploy: failed to parse ttl from acme-vars: %s", err.Error())
+					continue
+				}
+				ttl = sec
+				log.Debugf("events: acme deploy: using custom TTL value: %d seconds", ttl)
+			} else {
+				vars[k] = v
+			}
 		}
 	}
 
 	// Solve the DNS challenge.
-	solver, err := acme.NewDNS01Solver(provider, vars)
+	solver, err := acme.NewDNS01Solver(provider, vars, ttl)
 	if err != nil {
 		log.Errorf("events: acme deploy: DNS provider: %s", err.Error())
 		return
@@ -318,9 +329,20 @@ func getEnvDuration(name string, def time.Duration) time.Duration {
 		// special case to disable waiting for propagation
 		return -1
 	}
-	num, err := strconv.Atoi(str)
+	sec, err := parseSeconds(str)
 	if err != nil {
 		return def
 	}
-	return time.Duration(num) * time.Second
+	return sec
+}
+
+func parseSeconds(s string) (time.Duration, error) {
+	num, err := strconv.Atoi(s)
+	if err != nil {
+		return 0, err
+	}
+	if num < 0 {
+		return 0, errors.New("negative number")
+	}
+	return time.Duration(num) * time.Second, nil
 }
