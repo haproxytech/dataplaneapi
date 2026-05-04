@@ -30,7 +30,7 @@ import (
 
 const (
 	// TTL of the temporary DNS record used for DNS-01 validation.
-	DefaultTTL = 30 * time.Second
+	DefaultTTL = 60 * time.Second
 	// Typical negative response TTL defined in the SOA.
 	defaultDNSPropagationTimeout = 300 * time.Second
 )
