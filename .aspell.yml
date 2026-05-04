@@ -211,6 +211,7 @@ allowed:
   - tls
   - tooltip
   - tsconfig
+  - ttl
   - txt
   - typings
   - ubuntu
