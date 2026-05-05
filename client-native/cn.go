@@ -26,7 +26,8 @@ var (
 )
 
 func ConfigureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) (configuration.Configuration, error) {
-	confClient, err := configuration.New(context.Background(),
+	confClient, err := configuration.New(
+		context.Background(),
 		configuration_options.ConfigurationFile(haproxyOptions.ConfigFile),
 		configuration_options.HAProxyBin(haproxyOptions.HAProxy),
 		configuration_options.Backups(haproxyOptions.BackupsNumber),
