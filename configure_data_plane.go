@@ -994,7 +994,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 
 	// middlewares
 	var adpts []adapters.Adapter
-	adpts = append(adpts,
+	adpts = append(
+		adpts,
 		cors.New(cors.Options{
 			AllowedOrigins: []string{"*"},
 			AllowedMethods: []string{
