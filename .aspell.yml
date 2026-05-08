@@ -9,6 +9,7 @@ allowed:
   - Gitlab
   - env
   - failsafe
+  - gofumpt
   - golang
   - mkdir
   - WORKDIR
