@@ -21846,7 +21846,7 @@ func init() {
       }
     },
     "backend": {
-      "description": "Backend with all it's children resources",
+      "description": "Backend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -23919,7 +23919,7 @@ func init() {
       ]
     },
     "defaults": {
-      "description": "Defaults with all it's children resources",
+      "description": "Defaults with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -24943,7 +24943,7 @@ func init() {
       }
     },
     "fcgiApp": {
-      "description": "App with all it's children resources",
+      "description": "App with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -25431,7 +25431,7 @@ func init() {
       "x-display-name": "ForwardFor"
     },
     "frontend": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -25809,7 +25809,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}]+$"
         },
         "logasap": {
           "type": "string",
@@ -25986,7 +25986,7 @@ func init() {
       }
     },
     "global": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -26465,7 +26465,7 @@ func init() {
       "properties": {
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "users": {
@@ -29334,7 +29334,7 @@ func init() {
       }
     },
     "log_forward": {
-      "description": "LogForward with all it's children resources",
+      "description": "LogForward with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -29652,7 +29652,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_]+$",
+          "pattern": "^[A-Za-z0-9-_${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -29664,7 +29664,7 @@ func init() {
       }
     },
     "mailers_section": {
-      "description": "MailersSection with all it's children resources",
+      "description": "MailersSection with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -29830,7 +29830,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -30661,7 +30661,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -30676,7 +30676,7 @@ func init() {
       }
     },
     "peer_section": {
-      "description": "Peer Section with all it's children resources",
+      "description": "Peer Section with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -31272,7 +31272,7 @@ func init() {
       }
     },
     "resolver": {
-      "description": "Resolver with all it's children resources",
+      "description": "Resolver with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -31391,7 +31391,7 @@ func init() {
       "x-go-name": "ReturnHeader"
     },
     "ring": {
-      "description": "Ring with all it's children resources",
+      "description": "Ring with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -33370,13 +33370,16 @@ func init() {
       "title": "SSL File",
       "properties": {
         "algorithm": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "authority_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "domains": {
           "type": "string",
@@ -33384,7 +33387,8 @@ func init() {
           "readOnly": true
         },
         "file": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "ip_addresses": {
           "type": "string",
@@ -33414,10 +33418,12 @@ func init() {
           "type": "string"
         },
         "sha1_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "sha256_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "size": {
           "description": "File size in bytes.",
@@ -33426,16 +33432,20 @@ func init() {
           "readOnly": true
         },
         "storage_name": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_alternative_names": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -36124,13 +36134,13 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         }
       }
     },
     "userlist": {
-      "description": "Userlist with all it's children resources",
+      "description": "Userlist with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -72411,7 +72421,7 @@ func init() {
       }
     },
     "backend": {
-      "description": "Backend with all it's children resources",
+      "description": "Backend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -74407,7 +74417,7 @@ func init() {
       ]
     },
     "defaults": {
-      "description": "Defaults with all it's children resources",
+      "description": "Defaults with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -75411,7 +75421,7 @@ func init() {
       }
     },
     "fcgiApp": {
-      "description": "App with all it's children resources",
+      "description": "App with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -75899,7 +75909,7 @@ func init() {
       "x-display-name": "ForwardFor"
     },
     "frontend": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -76281,7 +76291,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}]+$"
         },
         "logasap": {
           "type": "string",
@@ -76459,7 +76469,7 @@ func init() {
       }
     },
     "global": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -76853,7 +76863,7 @@ func init() {
       "properties": {
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "users": {
@@ -79725,7 +79735,7 @@ func init() {
       }
     },
     "log_forward": {
-      "description": "LogForward with all it's children resources",
+      "description": "LogForward with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -80017,7 +80027,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_]+$",
+          "pattern": "^[A-Za-z0-9-_${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -80029,7 +80039,7 @@ func init() {
       }
     },
     "mailers_section": {
-      "description": "MailersSection with all it's children resources",
+      "description": "MailersSection with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -80196,7 +80206,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -81027,7 +81037,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -81042,7 +81052,7 @@ func init() {
       }
     },
     "peer_section": {
-      "description": "Peer Section with all it's children resources",
+      "description": "Peer Section with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -81639,7 +81649,7 @@ func init() {
       }
     },
     "resolver": {
-      "description": "Resolver with all it's children resources",
+      "description": "Resolver with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -81766,7 +81776,7 @@ func init() {
       "x-go-name": "ReturnHeader"
     },
     "ring": {
-      "description": "Ring with all it's children resources",
+      "description": "Ring with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -83697,13 +83707,16 @@ func init() {
       "title": "SSL File",
       "properties": {
         "algorithm": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "authority_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "domains": {
           "type": "string",
@@ -83711,7 +83724,8 @@ func init() {
           "readOnly": true
         },
         "file": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "ip_addresses": {
           "type": "string",
@@ -83741,10 +83755,12 @@ func init() {
           "type": "string"
         },
         "sha1_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "sha256_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "size": {
           "description": "File size in bytes.",
@@ -83753,16 +83769,20 @@ func init() {
           "readOnly": true
         },
         "storage_name": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_alternative_names": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -86385,13 +86405,13 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         }
       }
     },
     "userlist": {
-      "description": "Userlist with all it's children resources",
+      "description": "Userlist with all its children resources",
       "type": "object",
       "allOf": [
         {
