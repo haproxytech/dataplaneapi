@@ -51,6 +51,7 @@ allowed:
 - frontends
 - github
 - gitlab
+- gofumpt
 - golang
 - golangci
 - gorm
