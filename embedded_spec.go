@@ -26620,12 +26620,29 @@ func init() {
           "x-omitempty": true
         },
         "challenge": {
-          "description": "ACME challenge type. Only http-01 and dns-01 are supported.",
+          "description": "ACME challenge type.",
           "type": "string",
           "enum": [
             "http-01",
-            "dns-01"
+            "dns-01",
+            "dns-persist-01"
           ]
+        },
+        "challenge_ready": {
+          "description": "How to wait for the DNS propagation: either wait for a CLI event on\nthe runtime socket (useful with dataplaneapi), or let HAProxy query\nthe DNS TXT record by itself using the default resolvers, or both,\nor none at all.\n",
+          "type": "array",
+          "maxItems": 2,
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "cli",
+              "dns",
+              "none"
+            ]
+          },
+          "x-omitempty": true
         },
         "contact": {
           "description": "Contact email for the ACME account",
@@ -26640,6 +26657,20 @@ func init() {
           "type": "string",
           "pattern": "^https://[^\\s]+$",
           "x-nullable": false
+        },
+        "dns_delay": {
+          "description": "Delay before the first DNS resolution attempt and between retries.",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "dns_timeout": {
+          "description": "Timeout before DNS propagation check fails when using 'dns' in 'challenge_ready'.",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": true,
+          "x-nullable": true
         },
         "keytype": {
           "description": "Type of key to generate",
@@ -26823,7 +26854,7 @@ func init() {
       }
     },
     "backend": {
-      "description": "Backend with all it's children resources",
+      "description": "Backend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -29199,7 +29230,7 @@ func init() {
       ]
     },
     "defaults": {
-      "description": "Defaults with all it's children resources",
+      "description": "Defaults with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -30340,7 +30371,7 @@ func init() {
       }
     },
     "fcgi_app": {
-      "description": "App with all it's children resources",
+      "description": "App with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -30838,7 +30869,7 @@ func init() {
       "x-display-name": "ForwardFor"
     },
     "frontend": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -31264,7 +31295,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}]+$"
         },
         "logasap": {
           "type": "string",
@@ -31446,7 +31477,7 @@ func init() {
       }
     },
     "global": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -32027,7 +32058,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "users": {
@@ -34938,7 +34969,7 @@ func init() {
       }
     },
     "log_forward": {
-      "description": "LogForward with all it's children resources",
+      "description": "LogForward with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -35377,7 +35408,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_]+$",
+          "pattern": "^[A-Za-z0-9-_${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -35389,7 +35420,7 @@ func init() {
       }
     },
     "mailers_section": {
-      "description": "MailersSection with all it's children resources",
+      "description": "MailersSection with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -35565,7 +35596,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -36401,7 +36432,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -36416,7 +36447,7 @@ func init() {
       }
     },
     "peer_section": {
-      "description": "Peer Section with all it's children resources",
+      "description": "Peer Section with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -37086,7 +37117,7 @@ func init() {
       }
     },
     "resolver": {
-      "description": "Resolver with all it's children resources",
+      "description": "Resolver with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -37210,7 +37241,7 @@ func init() {
       "x-go-name": "ReturnHeader"
     },
     "ring": {
-      "description": "Ring with all it's children resources",
+      "description": "Ring with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -39394,21 +39425,26 @@ func init() {
       "title": "SSL File",
       "properties": {
         "algorithm": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "authority_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "chain_issuer": {
           "type": "string",
-          "x-omitempty": true
+          "x-omitempty": true,
+          "readOnly": true
         },
         "chain_subject": {
           "type": "string",
-          "x-omitempty": true
+          "x-omitempty": true,
+          "readOnly": true
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "domains": {
           "type": "string",
@@ -39416,7 +39452,8 @@ func init() {
           "readOnly": true
         },
         "file": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "ip_addresses": {
           "type": "string",
@@ -39446,10 +39483,12 @@ func init() {
           "type": "string"
         },
         "sha1_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "sha256_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "size": {
           "description": "File size in bytes.",
@@ -39464,16 +39503,20 @@ func init() {
           "readOnly": true
         },
         "storage_name": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_alternative_names": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -42140,6 +42183,12 @@ func init() {
           "x-display-name": "Buffer Size",
           "x-size": true
         },
+        "bufsize_large": {
+          "description": "Size in bytes of large buffers. By default, support for large buffers is not enabled.",
+          "type": "integer",
+          "x-nullable": true,
+          "x-size": true
+        },
         "bufsize_small": {
           "description": "Size of small buffers (for memory-restrained situations)",
           "type": "integer",
@@ -42250,6 +42299,11 @@ func init() {
           "x-display-name": "Lua Maximum Memory Usage",
           "x-nullable": true
         },
+        "openlibs": {
+          "description": "Selects which Lua standard libraries are loaded. Accepts \"all\", \"none\", or a comma-separated list of: table, io, os, string, math, utf8, package, debug.",
+          "type": "string",
+          "x-display-name": "Lua Open Libraries"
+        },
         "service_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -42284,9 +42338,20 @@ func init() {
             "disabled"
           ]
         },
+        "cli_max_payload_size": {
+          "description": "Maximum size in bytes allowed for the payload passed to a command on the CLI",
+          "type": "integer",
+          "x-display-name": "CLI Maximum Payload Size",
+          "x-nullable": true,
+          "x-size": true
+        },
         "comp_maxlevel": {
           "type": "integer",
           "x-display-name": "Maximum Compression Level"
+        },
+        "defaults_purge": {
+          "type": "boolean",
+          "x-display-name": "Force deletion of defaults section after parsing to save memory"
         },
         "disable_fast_forward": {
           "type": "boolean",
@@ -42331,6 +42396,14 @@ func init() {
           "x-display-name": "CPU Usage Kill glitched Connections",
           "x-nullable": true
         },
+        "h1_be_glitches_threshold": {
+          "type": "integer",
+          "x-display-name": "Number of connection glitches before killing the connection with the backend"
+        },
+        "h1_fe_glitches_threshold": {
+          "type": "integer",
+          "x-display-name": "Number of connection glitches before killing the connection with the frontend"
+        },
         "h1_zero_copy_fwd_recv": {
           "description": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer",
           "type": "string",
@@ -42360,6 +42433,10 @@ func init() {
           "description": "Maximum number of concurrent streams per outgoing connection",
           "type": "integer"
         },
+        "h2_be_max_frames_at_once": {
+          "description": "Maximum number of HTTP/2 incoming frames processed at once on a backend connection",
+          "type": "integer"
+        },
         "h2_be_rxbuf": {
           "description": "HTTP/2 receive buffer size for outgoing connections",
           "type": "integer",
@@ -42377,6 +42454,14 @@ func init() {
         },
         "h2_fe_max_concurrent_streams": {
           "description": "Maximum number of concurrent streams per incoming connection",
+          "type": "integer"
+        },
+        "h2_fe_max_frames_at_once": {
+          "description": "Maximum number of HTTP/2 incoming frames processed at once on a frontend connection",
+          "type": "integer"
+        },
+        "h2_fe_max_rst_at_once": {
+          "description": "Maximum number of HTTP/2 incoming RST_STREAM frames processed at once on a frontend connection",
           "type": "integer"
         },
         "h2_fe_max_total_streams": {
@@ -42399,6 +42484,15 @@ func init() {
           "type": "integer",
           "x-display-name": "HTTP/2 Initial Window Size",
           "x-nullable": true
+        },
+        "h2_log_errors": {
+          "description": "Level of HTTP/2 demultiplexer errors that will generate a log",
+          "type": "string",
+          "enum": [
+            "none",
+            "connection",
+            "stream"
+          ]
         },
         "h2_max_concurrent_streams": {
           "type": "integer",
@@ -42600,6 +42694,12 @@ func init() {
           "x-nullable": true,
           "x-size": true
         },
+        "frontend_stream_max_total": {
+          "description": "Maximum number of requests handled by a single QUIC frontend connection before graceful shutdown",
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Stream Max Total",
+          "x-nullable": true
+        },
         "max_frame_loss": {
           "type": "integer",
           "x-display-name": "QUIC Max Limit for Frame Loss",
@@ -42646,6 +42746,14 @@ func init() {
           "type": "integer",
           "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
           "x-nullable": true
+        },
+        "certificate_compression": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "disabled"
+          ],
+          "x-display-name": "Force SSL compression off, or let the SSL library decide"
         },
         "ctx_cache_size": {
           "type": "integer",
@@ -42772,13 +42880,13 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         }
       }
     },
     "userlist": {
-      "description": "Userlist with all it's children resources",
+      "description": "Userlist with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -86880,12 +86988,29 @@ func init() {
           "x-omitempty": true
         },
         "challenge": {
-          "description": "ACME challenge type. Only http-01 and dns-01 are supported.",
+          "description": "ACME challenge type.",
           "type": "string",
           "enum": [
             "http-01",
-            "dns-01"
+            "dns-01",
+            "dns-persist-01"
           ]
+        },
+        "challenge_ready": {
+          "description": "How to wait for the DNS propagation: either wait for a CLI event on\nthe runtime socket (useful with dataplaneapi), or let HAProxy query\nthe DNS TXT record by itself using the default resolvers, or both,\nor none at all.\n",
+          "type": "array",
+          "maxItems": 2,
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "cli",
+              "dns",
+              "none"
+            ]
+          },
+          "x-omitempty": true
         },
         "contact": {
           "description": "Contact email for the ACME account",
@@ -86900,6 +87025,20 @@ func init() {
           "type": "string",
           "pattern": "^https://[^\\s]+$",
           "x-nullable": false
+        },
+        "dns_delay": {
+          "description": "Delay before the first DNS resolution attempt and between retries.",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "dns_timeout": {
+          "description": "Timeout before DNS propagation check fails when using 'dns' in 'challenge_ready'.",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": true,
+          "x-nullable": true
         },
         "keytype": {
           "description": "Type of key to generate",
@@ -87083,7 +87222,7 @@ func init() {
       }
     },
     "backend": {
-      "description": "Backend with all it's children resources",
+      "description": "Backend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -89385,7 +89524,7 @@ func init() {
       ]
     },
     "defaults": {
-      "description": "Defaults with all it's children resources",
+      "description": "Defaults with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -90506,7 +90645,7 @@ func init() {
       }
     },
     "fcgi_app": {
-      "description": "App with all it's children resources",
+      "description": "App with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -91004,7 +91143,7 @@ func init() {
       "x-display-name": "ForwardFor"
     },
     "frontend": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -91434,7 +91573,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}]+$"
         },
         "logasap": {
           "type": "string",
@@ -91617,7 +91756,7 @@ func init() {
       }
     },
     "global": {
-      "description": "Frontend with all it's children resources",
+      "description": "Frontend with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -92085,7 +92224,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "users": {
@@ -94999,7 +95138,7 @@ func init() {
       }
     },
     "log_forward": {
-      "description": "LogForward with all it's children resources",
+      "description": "LogForward with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -95412,7 +95551,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_]+$",
+          "pattern": "^[A-Za-z0-9-_${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -95424,7 +95563,7 @@ func init() {
       }
     },
     "mailers_section": {
-      "description": "MailersSection with all it's children resources",
+      "description": "MailersSection with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -95601,7 +95740,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -96437,7 +96576,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         },
         "port": {
@@ -96452,7 +96591,7 @@ func init() {
       }
     },
     "peer_section": {
-      "description": "Peer Section with all it's children resources",
+      "description": "Peer Section with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -97123,7 +97262,7 @@ func init() {
       }
     },
     "resolver": {
-      "description": "Resolver with all it's children resources",
+      "description": "Resolver with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -97255,7 +97394,7 @@ func init() {
       "x-go-name": "ReturnHeader"
     },
     "ring": {
-      "description": "Ring with all it's children resources",
+      "description": "Ring with all its children resources",
       "type": "object",
       "allOf": [
         {
@@ -99413,21 +99552,26 @@ func init() {
       "title": "SSL File",
       "properties": {
         "algorithm": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "authority_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "chain_issuer": {
           "type": "string",
-          "x-omitempty": true
+          "x-omitempty": true,
+          "readOnly": true
         },
         "chain_subject": {
           "type": "string",
-          "x-omitempty": true
+          "x-omitempty": true,
+          "readOnly": true
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "domains": {
           "type": "string",
@@ -99435,7 +99579,8 @@ func init() {
           "readOnly": true
         },
         "file": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "ip_addresses": {
           "type": "string",
@@ -99465,10 +99610,12 @@ func init() {
           "type": "string"
         },
         "sha1_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "sha256_finger_print": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "size": {
           "description": "File size in bytes.",
@@ -99483,16 +99630,20 @@ func init() {
           "readOnly": true
         },
         "storage_name": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_alternative_names": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "subject_key_id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -102061,6 +102212,12 @@ func init() {
           "x-display-name": "Buffer Size",
           "x-size": true
         },
+        "bufsize_large": {
+          "description": "Size in bytes of large buffers. By default, support for large buffers is not enabled.",
+          "type": "integer",
+          "x-nullable": true,
+          "x-size": true
+        },
         "bufsize_small": {
           "description": "Size of small buffers (for memory-restrained situations)",
           "type": "integer",
@@ -102172,6 +102329,11 @@ func init() {
           "x-display-name": "Lua Maximum Memory Usage",
           "x-nullable": true
         },
+        "openlibs": {
+          "description": "Selects which Lua standard libraries are loaded. Accepts \"all\", \"none\", or a comma-separated list of: table, io, os, string, math, utf8, package, debug.",
+          "type": "string",
+          "x-display-name": "Lua Open Libraries"
+        },
         "service_timeout": {
           "type": "integer",
           "minimum": 0,
@@ -102209,9 +102371,20 @@ func init() {
             "disabled"
           ]
         },
+        "cli_max_payload_size": {
+          "description": "Maximum size in bytes allowed for the payload passed to a command on the CLI",
+          "type": "integer",
+          "x-display-name": "CLI Maximum Payload Size",
+          "x-nullable": true,
+          "x-size": true
+        },
         "comp_maxlevel": {
           "type": "integer",
           "x-display-name": "Maximum Compression Level"
+        },
+        "defaults_purge": {
+          "type": "boolean",
+          "x-display-name": "Force deletion of defaults section after parsing to save memory"
         },
         "disable_fast_forward": {
           "type": "boolean",
@@ -102257,6 +102430,16 @@ func init() {
           "x-display-name": "CPU Usage Kill glitched Connections",
           "x-nullable": true
         },
+        "h1_be_glitches_threshold": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Number of connection glitches before killing the connection with the backend"
+        },
+        "h1_fe_glitches_threshold": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Number of connection glitches before killing the connection with the frontend"
+        },
         "h1_zero_copy_fwd_recv": {
           "description": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer",
           "type": "string",
@@ -102286,6 +102469,10 @@ func init() {
           "description": "Maximum number of concurrent streams per outgoing connection",
           "type": "integer"
         },
+        "h2_be_max_frames_at_once": {
+          "description": "Maximum number of HTTP/2 incoming frames processed at once on a backend connection",
+          "type": "integer"
+        },
         "h2_be_rxbuf": {
           "description": "HTTP/2 receive buffer size for outgoing connections",
           "type": "integer",
@@ -102303,6 +102490,14 @@ func init() {
         },
         "h2_fe_max_concurrent_streams": {
           "description": "Maximum number of concurrent streams per incoming connection",
+          "type": "integer"
+        },
+        "h2_fe_max_frames_at_once": {
+          "description": "Maximum number of HTTP/2 incoming frames processed at once on a frontend connection",
+          "type": "integer"
+        },
+        "h2_fe_max_rst_at_once": {
+          "description": "Maximum number of HTTP/2 incoming RST_STREAM frames processed at once on a frontend connection",
           "type": "integer"
         },
         "h2_fe_max_total_streams": {
@@ -102325,6 +102520,15 @@ func init() {
           "type": "integer",
           "x-display-name": "HTTP/2 Initial Window Size",
           "x-nullable": true
+        },
+        "h2_log_errors": {
+          "description": "Level of HTTP/2 demultiplexer errors that will generate a log",
+          "type": "string",
+          "enum": [
+            "none",
+            "connection",
+            "stream"
+          ]
         },
         "h2_max_concurrent_streams": {
           "type": "integer",
@@ -102529,6 +102733,12 @@ func init() {
           "x-nullable": true,
           "x-size": true
         },
+        "frontend_stream_max_total": {
+          "description": "Maximum number of requests handled by a single QUIC frontend connection before graceful shutdown",
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Stream Max Total",
+          "x-nullable": true
+        },
         "max_frame_loss": {
           "type": "integer",
           "x-display-name": "QUIC Max Limit for Frame Loss",
@@ -102576,6 +102786,14 @@ func init() {
           "type": "integer",
           "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
           "x-nullable": true
+        },
+        "certificate_compression": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "disabled"
+          ],
+          "x-display-name": "Force SSL compression off, or let the SSL library decide"
         },
         "ctx_cache_size": {
           "type": "integer",
@@ -102703,13 +102921,13 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}]+$",
           "x-nullable": false
         }
       }
     },
     "userlist": {
-      "description": "Userlist with all it's children resources",
+      "description": "Userlist with all its children resources",
       "type": "object",
       "allOf": [
         {
