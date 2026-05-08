@@ -103,6 +103,7 @@ allowed:
   - gpc
   - gpt
   - gptstr
+  - grpc
   - hapee
   - haproxy
   - healthcheck
