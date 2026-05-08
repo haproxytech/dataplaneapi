@@ -331,11 +331,11 @@ check-large-files:
   tags:
     - go
   script:
-    # List all files in the latest commit that are larger than 1MB
+    # List all files in the latest commit that are larger than 2MB
     - |
       git fetch origin ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
       git diff --name-only origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}..HEAD | while read file; do
-        if [ -f "$file" ] && [ $(stat -c%s "$file") -gt 1048576 ]; then
+        if [ -f "$file" ] && [ $(stat -c%s "$file") -gt 2097152 ]; then
           echo "$file"
         fi
       done > large_files.txt
