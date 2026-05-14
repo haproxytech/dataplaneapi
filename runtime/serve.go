@@ -36,6 +36,9 @@ func serve(comm *Commands, conn net.Conn) {
 
 	cmd := strings.Fields(string(data))
 	c, ok := comm.Get(cmd[0])
+	if len(cmd) < 1 {
+		cmd = []string{"help"}
+	}
 	if cmd[0] == "exit" {
 		return
 	}
