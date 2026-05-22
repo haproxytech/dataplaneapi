@@ -25809,7 +25809,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -26465,7 +26465,7 @@ func init() {
       "properties": {
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -29652,7 +29652,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -29830,7 +29830,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -30661,7 +30661,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -36134,7 +36134,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
@@ -76291,7 +76291,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -76863,7 +76863,7 @@ func init() {
       "properties": {
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -80027,7 +80027,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -80206,7 +80206,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -81037,7 +81037,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -86405,7 +86405,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
