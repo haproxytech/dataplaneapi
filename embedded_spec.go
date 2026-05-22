@@ -26613,9 +26613,8 @@ func init() {
           }
         },
         "bits": {
-          "description": "Number of bits to generate an RSA certificate",
+          "description": "Number of bits used when generating an RSA certificate. Ignored when keytype is ECDSA (curves is used instead).",
           "type": "integer",
-          "minimum": 1024,
           "x-nullable": true,
           "x-omitempty": true
         },
@@ -86672,9 +86671,8 @@ func init() {
           }
         },
         "bits": {
-          "description": "Number of bits to generate an RSA certificate",
+          "description": "Number of bits used when generating an RSA certificate. Ignored when keytype is ECDSA (curves is used instead).",
           "type": "integer",
-          "minimum": 1024,
           "x-nullable": true,
           "x-omitempty": true
         },

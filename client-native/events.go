@@ -68,7 +68,7 @@ func ListenHAProxyEvents(ctx context.Context, client clientnative.HAProxyClient)
 		return nil, err
 	}
 	// v3.2+
-	if version.Major < 3 || (version.Major == 3 && version.Minor < 2) {
+	if version.Major() < 3 || (version.Major() == 3 && version.Minor() < 2) {
 		return nil, ErrOldVersion
 	}
 
