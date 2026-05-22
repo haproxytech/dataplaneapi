@@ -12738,6 +12738,260 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/frontends/{parent_name}/force_be_switches": {
+      "get": {
+        "description": "Returns all force-be-switch rules configured on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Return an array of force-be-switch rules",
+        "operationId": "getAllForceBeSwitches",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/force_be_switches"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new force-be-switch rule on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Add a new force-be-switch rule",
+        "operationId": "createForceBeSwitch",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ForceBeSwitch created",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/force_be_switches/{index}": {
+      "get": {
+        "description": "Returns a single force-be-switch rule by its index on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Return one force-be-switch rule",
+        "operationId": "getForceBeSwitch",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ForceBeSwitch index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a force-be-switch rule by its index on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Replace a force-be-switch rule",
+        "operationId": "replaceForceBeSwitch",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ForceBeSwitch index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ForceBeSwitch replaced",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a force-be-switch rule by its index on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Delete a force-be-switch rule",
+        "operationId": "deleteForceBeSwitch",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ForceBeSwitch index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "ForceBeSwitch deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules": {
       "get": {
         "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
@@ -26613,9 +26867,8 @@ func init() {
           }
         },
         "bits": {
-          "description": "Number of bits to generate an RSA certificate",
+          "description": "Number of bits used when generating an RSA certificate. Ignored when keytype is ECDSA (curves is used instead).",
           "type": "integer",
-          "minimum": 1024,
           "x-nullable": true,
           "x-omitempty": true
         },
@@ -26693,6 +26946,10 @@ func init() {
           "description": "ACME provider's name",
           "type": "string",
           "x-nullable": false
+        },
+        "profile": {
+          "description": "Request a specific certificate profile from the CA by including a 'profile'\nfield in the newOrder request (draft-ietf-acme-profiles). Profile names\nare CA-specific short identifiers (e.g. 'classic', 'shortlived').\n",
+          "type": "string"
         },
         "reuse_key": {
           "description": "Try to reuse the private key instead of generating a new one.",
@@ -26870,6 +27127,10 @@ func init() {
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -27657,6 +27918,9 @@ func init() {
         "use_fcgi_app": {
           "type": "string",
           "x-display-name": "FastCGI application"
+        },
+        "use_small_buffers": {
+          "$ref": "#/definitions/use_small_buffers"
         }
       },
       "additionalProperties": false,
@@ -30009,6 +30273,9 @@ func init() {
         "unique_id_header": {
           "type": "string",
           "x-display-name": "Unique ID header"
+        },
+        "use_small_buffers": {
+          "$ref": "#/definitions/use_small_buffers"
         }
       },
       "additionalProperties": false
@@ -30786,6 +31053,16 @@ func init() {
             }
           }
         },
+        "trace_max_fwd": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Max Forward",
+          "x-nullable": true
+        },
         "trace_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -30820,6 +31097,8 @@ func init() {
             "bwlim-out",
             "cache",
             "compression",
+            "comp-req",
+            "comp-res",
             "fcgi-app",
             "spoe",
             "trace"
@@ -30834,6 +31113,46 @@ func init() {
         "type": "trace"
       }
     },
+    "filter_sequence": {
+      "description": "Specifies in which order filters declared on the proxy should be executed\nfor the request or response path. Corresponds to the HAProxy filter-sequence directive.\n",
+      "type": "object",
+      "title": "Filter Sequence",
+      "required": [
+        "direction",
+        "filters"
+      ],
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response"
+          ],
+          "x-display-name": "Direction"
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-display-name": "Filters"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter_sequences": {
+      "description": "HAProxy filter sequences array (corresponds to filter-sequence directive)",
+      "type": "array",
+      "title": "Filter Sequences Array",
+      "items": {
+        "$ref": "#/definitions/filter_sequence"
+      }
+    },
     "filters": {
       "description": "HAProxy filters array (corresponds to filter directive)",
       "type": "array",
@@ -30841,6 +31160,48 @@ func init() {
       "items": {
         "$ref": "#/definitions/filter"
       }
+    },
+    "force_be_switch": {
+      "description": "Allow content switching to select a backend instance even if it is\ndisabled or unpublished. May appear multiple times on a frontend.\n",
+      "type": "object",
+      "title": "Force Backend Switch Rule",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "x-go-name": "ForceBeSwitch"
+    },
+    "force_be_switches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/force_be_switch"
+      },
+      "x-go-name": "ForceBeSwitches",
+      "x-omitempty": true
     },
     "forwardfor": {
       "type": "object",
@@ -30898,6 +31259,14 @@ func init() {
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "force_be_switch_list": {
+              "x-go-name": "ForceBeSwitchList",
+              "$ref": "#/definitions/force_be_switches"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -31295,7 +31664,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -31514,6 +31883,36 @@ func init() {
         "cluster_secret": {
           "type": "string",
           "x-display-name": "Cluster Secret"
+        },
+        "cpu_affinity": {
+          "description": "Defines how threads are bound to cpus. Mirrors the HAProxy 3.4 cpu-affinity directive.\n",
+          "type": "object",
+          "required": [
+            "affinity"
+          ],
+          "properties": {
+            "affinity": {
+              "type": "string",
+              "enum": [
+                "per-core",
+                "per-group",
+                "auto",
+                "per-thread",
+                "per-ccx"
+              ],
+              "x-display-name": "Affinity"
+            },
+            "argument": {
+              "description": "Optional argument used together with the per-group affinity.",
+              "type": "string",
+              "enum": [
+                "auto",
+                "loose"
+              ],
+              "x-display-name": "Argument"
+            }
+          },
+          "x-display-name": "CPU Affinity"
         },
         "cpu_maps": {
           "type": "array",
@@ -31804,6 +32203,13 @@ func init() {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
         },
+        "max_threads_per_group": {
+          "description": "Defines the maximum number of threads in a thread group. The minimum value is\n1 and the maximum value is 64 on 64-bit systems (32 on 32-bit systems).\n",
+          "type": "integer",
+          "minimum": 1,
+          "x-display-name": "Max Threads Per Group",
+          "x-nullable": true
+        },
         "metadata": {
           "additionalProperties": {
             "type": "object"
@@ -31951,6 +32357,15 @@ func init() {
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
         },
+        "stats_calculate_max_counters": {
+          "description": "Activates or deactivates the calculation of stats max counters.\nDefaults to enabled in HAProxy.\n",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Stats Calculate Max Counters"
+        },
         "stats_file": {
           "type": "string"
         },
@@ -32058,7 +32473,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -32201,6 +32616,20 @@ func init() {
             "property": "acl_name"
           }
         },
+        "hdr_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-headers-bin",
+                "del-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Expression"
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -32234,7 +32663,8 @@ func init() {
           "x-dependency": {
             "type": {
               "value": [
-                "del-header"
+                "del-header",
+                "del-headers-bin"
               ]
             }
           },
@@ -32256,6 +32686,18 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
+        "hdr_prefix": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "add-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Prefix"
+        },
         "log_level": {
           "type": "string",
           "enum": [
@@ -32275,6 +32717,15 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "map_file": {
           "type": "string",
@@ -32412,10 +32863,12 @@ func init() {
           "type": "string",
           "enum": [
             "add-header",
+            "add-headers-bin",
             "allow",
             "capture",
             "del-acl",
             "del-header",
+            "del-headers-bin",
             "del-map",
             "replace-header",
             "replace-value",
@@ -32426,6 +32879,7 @@ func init() {
             "sc-set-gpt",
             "sc-set-gpt0",
             "set-header",
+            "set-headers-bin",
             "set-log-level",
             "set-map",
             "set-status",
@@ -33300,6 +33754,20 @@ func init() {
           },
           "x-display-name": "Standard HAProxy expression"
         },
+        "hdr_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-headers-bin",
+                "del-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Expression"
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -33333,7 +33801,8 @@ func init() {
           "x-dependency": {
             "type": {
               "value": [
-                "del-header"
+                "del-header",
+                "del-headers-bin"
               ]
             }
           },
@@ -33354,6 +33823,18 @@ func init() {
             }
           },
           "x-display-name": "Header Name"
+        },
+        "hdr_prefix": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "add-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Prefix"
         },
         "hint_format": {
           "type": "string",
@@ -33396,6 +33877,15 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "lua_action": {
           "type": "string",
@@ -33856,9 +34346,12 @@ func init() {
         "timeout_type": {
           "type": "string",
           "enum": [
+            "client",
+            "connect",
+            "queue",
             "server",
-            "tunnel",
-            "client"
+            "tarpit",
+            "tunnel"
           ],
           "x-dependency": {
             "type": {
@@ -33914,12 +34407,14 @@ func init() {
           "enum": [
             "add-acl",
             "add-header",
+            "add-headers-bin",
             "allow",
             "auth",
             "cache-use",
             "capture",
             "del-acl",
             "del-header",
+            "del-headers-bin",
             "del-map",
             "deny",
             "disable-l7-retry",
@@ -33950,6 +34445,7 @@ func init() {
             "set-fc-mark",
             "set-fc-tos",
             "set-header",
+            "set-headers-bin",
             "set-log-level",
             "set-map",
             "set-mark",
@@ -34234,6 +34730,20 @@ func init() {
           },
           "x-display-name": "Standard HAProxy expression"
         },
+        "hdr_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-headers-bin",
+                "del-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Expression"
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -34267,7 +34777,8 @@ func init() {
           "x-dependency": {
             "type": {
               "value": [
-                "del-header"
+                "del-header",
+                "del-headers-bin"
               ]
             }
           },
@@ -34289,6 +34800,18 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
+        "hdr_prefix": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "add-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Prefix"
+        },
         "log_level": {
           "type": "string",
           "enum": [
@@ -34308,6 +34831,15 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "lua_action": {
           "type": "string",
@@ -34659,9 +35191,12 @@ func init() {
         "timeout_type": {
           "type": "string",
           "enum": [
+            "client",
+            "connect",
+            "queue",
             "server",
-            "tunnel",
-            "client"
+            "tarpit",
+            "tunnel"
           ],
           "x-dependency": {
             "type": {
@@ -34717,11 +35252,13 @@ func init() {
           "enum": [
             "add-acl",
             "add-header",
+            "add-headers-bin",
             "allow",
             "cache-store",
             "capture",
             "del-acl",
             "del-header",
+            "del-headers-bin",
             "del-map",
             "deny",
             "lua",
@@ -34740,6 +35277,7 @@ func init() {
             "set-fc-mark",
             "set-fc-tos",
             "set-header",
+            "set-headers-bin",
             "set-log-level",
             "set-map",
             "set-mark",
@@ -35408,7 +35946,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -35596,7 +36134,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -36432,7 +36970,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -38479,6 +39017,26 @@ func init() {
           },
           "x-omitempty": true
         },
+        "quic-cc-algo": {
+          "type": "string",
+          "enum": [
+            "cubic",
+            "newreno",
+            "bbr",
+            "nocc"
+          ]
+        },
+        "quic_cc_algo_max_window": {
+          "type": "integer",
+          "maximum": 4194304,
+          "minimum": 10,
+          "x-default-unit": "k",
+          "x-dependency": {
+            "quic-cc-algo": null
+          },
+          "x-nullable": true,
+          "x-size": true
+        },
         "redir": {
           "type": "string",
           "x-display-name": "Prefix"
@@ -40239,6 +40797,10 @@ func init() {
           "x-nullable": true,
           "x-omitempty": false
         },
+        "stats_show_version": {
+          "type": "boolean",
+          "x-display-name": "Stats Show Version"
+        },
         "stats_uri_prefix": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -41236,6 +41798,15 @@ func init() {
             }
           }
         },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
+        },
         "lua_action": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -41824,6 +42395,15 @@ func init() {
               "value": "content"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "lua_action": {
           "type": "string",
@@ -42852,6 +43432,35 @@ func init() {
         }
       }
     },
+    "use_small_buffers": {
+      "description": "Enables support for small buffers for the given categories.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "check": {
+          "type": "boolean",
+          "x-display-name": "Check"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "l7_retries": {
+          "type": "boolean",
+          "x-display-name": "L7 Retries"
+        },
+        "queue": {
+          "type": "boolean",
+          "x-display-name": "Queue"
+        }
+      },
+      "x-display-name": "Use Small Buffers"
+    },
     "user": {
       "description": "HAProxy userlist user",
       "type": "object",
@@ -42880,7 +43489,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
@@ -63950,6 +64559,428 @@ func init() {
           },
           "204": {
             "description": "Filter deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/force_be_switches": {
+      "get": {
+        "description": "Returns all force-be-switch rules configured on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Return an array of force-be-switch rules",
+        "operationId": "getAllForceBeSwitches",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/force_be_switches"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new force-be-switch rule on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Add a new force-be-switch rule",
+        "operationId": "createForceBeSwitch",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ForceBeSwitch created",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/force_be_switches/{index}": {
+      "get": {
+        "description": "Returns a single force-be-switch rule by its index on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Return one force-be-switch rule",
+        "operationId": "getForceBeSwitch",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ForceBeSwitch index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a force-be-switch rule by its index on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Replace a force-be-switch rule",
+        "operationId": "replaceForceBeSwitch",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ForceBeSwitch index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ForceBeSwitch replaced",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/force_be_switch"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a force-be-switch rule by its index on the specified frontend.",
+        "tags": [
+          "ForceBeSwitch"
+        ],
+        "summary": "Delete a force-be-switch rule",
+        "operationId": "deleteForceBeSwitch",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ForceBeSwitch index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "ForceBeSwitch deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -86144,6 +87175,36 @@ func init() {
         }
       }
     },
+    "GlobalBaseCPUAffinity": {
+      "description": "Defines how threads are bound to cpus. Mirrors the HAProxy 3.4 cpu-affinity directive.\n",
+      "type": "object",
+      "required": [
+        "affinity"
+      ],
+      "properties": {
+        "affinity": {
+          "type": "string",
+          "enum": [
+            "per-core",
+            "per-group",
+            "auto",
+            "per-thread",
+            "per-ccx"
+          ],
+          "x-display-name": "Affinity"
+        },
+        "argument": {
+          "description": "Optional argument used together with the per-group affinity.",
+          "type": "string",
+          "enum": [
+            "auto",
+            "loose"
+          ],
+          "x-display-name": "Argument"
+        }
+      },
+      "x-display-name": "CPU Affinity"
+    },
     "GlobalBaseCPUMapsItems0": {
       "type": "object",
       "required": [
@@ -86981,9 +88042,8 @@ func init() {
           }
         },
         "bits": {
-          "description": "Number of bits to generate an RSA certificate",
+          "description": "Number of bits used when generating an RSA certificate. Ignored when keytype is ECDSA (curves is used instead).",
           "type": "integer",
-          "minimum": 1024,
           "x-nullable": true,
           "x-omitempty": true
         },
@@ -87061,6 +88121,10 @@ func init() {
           "description": "ACME provider's name",
           "type": "string",
           "x-nullable": false
+        },
+        "profile": {
+          "description": "Request a specific certificate profile from the CA by including a 'profile'\nfield in the newOrder request (draft-ietf-acme-profiles). Profile names\nare CA-specific short identifiers (e.g. 'classic', 'shortlived').\n",
+          "type": "string"
         },
         "reuse_key": {
           "description": "Try to reuse the private key instead of generating a new one.",
@@ -87238,6 +88302,10 @@ func init() {
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -87985,6 +89053,9 @@ func init() {
         "use_fcgi_app": {
           "type": "string",
           "x-display-name": "FastCGI application"
+        },
+        "use_small_buffers": {
+          "$ref": "#/definitions/use_small_buffers"
         }
       },
       "additionalProperties": false,
@@ -90313,6 +91384,9 @@ func init() {
         "unique_id_header": {
           "type": "string",
           "x-display-name": "Unique ID header"
+        },
+        "use_small_buffers": {
+          "$ref": "#/definitions/use_small_buffers"
         }
       },
       "additionalProperties": false
@@ -91060,6 +92134,16 @@ func init() {
             }
           }
         },
+        "trace_max_fwd": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Max Forward",
+          "x-nullable": true
+        },
         "trace_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -91094,6 +92178,8 @@ func init() {
             "bwlim-out",
             "cache",
             "compression",
+            "comp-req",
+            "comp-res",
             "fcgi-app",
             "spoe",
             "trace"
@@ -91108,6 +92194,46 @@ func init() {
         "type": "trace"
       }
     },
+    "filter_sequence": {
+      "description": "Specifies in which order filters declared on the proxy should be executed\nfor the request or response path. Corresponds to the HAProxy filter-sequence directive.\n",
+      "type": "object",
+      "title": "Filter Sequence",
+      "required": [
+        "direction",
+        "filters"
+      ],
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response"
+          ],
+          "x-display-name": "Direction"
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-display-name": "Filters"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter_sequences": {
+      "description": "HAProxy filter sequences array (corresponds to filter-sequence directive)",
+      "type": "array",
+      "title": "Filter Sequences Array",
+      "items": {
+        "$ref": "#/definitions/filter_sequence"
+      }
+    },
     "filters": {
       "description": "HAProxy filters array (corresponds to filter directive)",
       "type": "array",
@@ -91115,6 +92241,48 @@ func init() {
       "items": {
         "$ref": "#/definitions/filter"
       }
+    },
+    "force_be_switch": {
+      "description": "Allow content switching to select a backend instance even if it is\ndisabled or unpublished. May appear multiple times on a frontend.\n",
+      "type": "object",
+      "title": "Force Backend Switch Rule",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "x-go-name": "ForceBeSwitch"
+    },
+    "force_be_switches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/force_be_switch"
+      },
+      "x-go-name": "ForceBeSwitches",
+      "x-omitempty": true
     },
     "forwardfor": {
       "type": "object",
@@ -91172,6 +92340,14 @@ func init() {
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "force_be_switch_list": {
+              "x-go-name": "ForceBeSwitchList",
+              "$ref": "#/definitions/force_be_switches"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -91573,7 +92749,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -91794,6 +92970,36 @@ func init() {
         "cluster_secret": {
           "type": "string",
           "x-display-name": "Cluster Secret"
+        },
+        "cpu_affinity": {
+          "description": "Defines how threads are bound to cpus. Mirrors the HAProxy 3.4 cpu-affinity directive.\n",
+          "type": "object",
+          "required": [
+            "affinity"
+          ],
+          "properties": {
+            "affinity": {
+              "type": "string",
+              "enum": [
+                "per-core",
+                "per-group",
+                "auto",
+                "per-thread",
+                "per-ccx"
+              ],
+              "x-display-name": "Affinity"
+            },
+            "argument": {
+              "description": "Optional argument used together with the per-group affinity.",
+              "type": "string",
+              "enum": [
+                "auto",
+                "loose"
+              ],
+              "x-display-name": "Argument"
+            }
+          },
+          "x-display-name": "CPU Affinity"
         },
         "cpu_maps": {
           "type": "array",
@@ -92034,6 +93240,13 @@ func init() {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
         },
+        "max_threads_per_group": {
+          "description": "Defines the maximum number of threads in a thread group. The minimum value is\n1 and the maximum value is 64 on 64-bit systems (32 on 32-bit systems).\n",
+          "type": "integer",
+          "minimum": 1,
+          "x-display-name": "Max Threads Per Group",
+          "x-nullable": true
+        },
         "metadata": {
           "additionalProperties": {
             "type": "object"
@@ -92131,6 +93344,15 @@ func init() {
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
         },
+        "stats_calculate_max_counters": {
+          "description": "Activates or deactivates the calculation of stats max counters.\nDefaults to enabled in HAProxy.\n",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Stats Calculate Max Counters"
+        },
         "stats_file": {
           "type": "string"
         },
@@ -92224,7 +93446,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -92367,6 +93589,20 @@ func init() {
             "property": "acl_name"
           }
         },
+        "hdr_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-headers-bin",
+                "del-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Expression"
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -92400,7 +93636,8 @@ func init() {
           "x-dependency": {
             "type": {
               "value": [
-                "del-header"
+                "del-header",
+                "del-headers-bin"
               ]
             }
           },
@@ -92422,6 +93659,18 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
+        "hdr_prefix": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "add-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Prefix"
+        },
         "log_level": {
           "type": "string",
           "enum": [
@@ -92441,6 +93690,15 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "map_file": {
           "type": "string",
@@ -92578,10 +93836,12 @@ func init() {
           "type": "string",
           "enum": [
             "add-header",
+            "add-headers-bin",
             "allow",
             "capture",
             "del-acl",
             "del-header",
+            "del-headers-bin",
             "del-map",
             "replace-header",
             "replace-value",
@@ -92592,6 +93852,7 @@ func init() {
             "sc-set-gpt",
             "sc-set-gpt0",
             "set-header",
+            "set-headers-bin",
             "set-log-level",
             "set-map",
             "set-status",
@@ -93467,6 +94728,20 @@ func init() {
           },
           "x-display-name": "Standard HAProxy expression"
         },
+        "hdr_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-headers-bin",
+                "del-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Expression"
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -93500,7 +94775,8 @@ func init() {
           "x-dependency": {
             "type": {
               "value": [
-                "del-header"
+                "del-header",
+                "del-headers-bin"
               ]
             }
           },
@@ -93521,6 +94797,18 @@ func init() {
             }
           },
           "x-display-name": "Header Name"
+        },
+        "hdr_prefix": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "add-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Prefix"
         },
         "hint_format": {
           "type": "string",
@@ -93563,6 +94851,15 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "lua_action": {
           "type": "string",
@@ -94023,9 +95320,12 @@ func init() {
         "timeout_type": {
           "type": "string",
           "enum": [
+            "client",
+            "connect",
+            "queue",
             "server",
-            "tunnel",
-            "client"
+            "tarpit",
+            "tunnel"
           ],
           "x-dependency": {
             "type": {
@@ -94081,12 +95381,14 @@ func init() {
           "enum": [
             "add-acl",
             "add-header",
+            "add-headers-bin",
             "allow",
             "auth",
             "cache-use",
             "capture",
             "del-acl",
             "del-header",
+            "del-headers-bin",
             "del-map",
             "deny",
             "disable-l7-retry",
@@ -94117,6 +95419,7 @@ func init() {
             "set-fc-mark",
             "set-fc-tos",
             "set-header",
+            "set-headers-bin",
             "set-log-level",
             "set-map",
             "set-mark",
@@ -94402,6 +95705,20 @@ func init() {
           },
           "x-display-name": "Standard HAProxy expression"
         },
+        "hdr_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-headers-bin",
+                "del-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Expression"
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -94435,7 +95752,8 @@ func init() {
           "x-dependency": {
             "type": {
               "value": [
-                "del-header"
+                "del-header",
+                "del-headers-bin"
               ]
             }
           },
@@ -94457,6 +95775,18 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
+        "hdr_prefix": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "add-headers-bin",
+                "set-headers-bin"
+              ]
+            }
+          },
+          "x-display-name": "Binary Headers Prefix"
+        },
         "log_level": {
           "type": "string",
           "enum": [
@@ -94476,6 +95806,15 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "lua_action": {
           "type": "string",
@@ -94827,9 +96166,12 @@ func init() {
         "timeout_type": {
           "type": "string",
           "enum": [
+            "client",
+            "connect",
+            "queue",
             "server",
-            "tunnel",
-            "client"
+            "tarpit",
+            "tunnel"
           ],
           "x-dependency": {
             "type": {
@@ -94885,11 +96227,13 @@ func init() {
           "enum": [
             "add-acl",
             "add-header",
+            "add-headers-bin",
             "allow",
             "cache-store",
             "capture",
             "del-acl",
             "del-header",
+            "del-headers-bin",
             "del-map",
             "deny",
             "lua",
@@ -94908,6 +96252,7 @@ func init() {
             "set-fc-mark",
             "set-fc-tos",
             "set-header",
+            "set-headers-bin",
             "set-log-level",
             "set-map",
             "set-mark",
@@ -95551,7 +96896,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -95740,7 +97085,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -96576,7 +97921,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -98649,6 +99994,26 @@ func init() {
           },
           "x-omitempty": true
         },
+        "quic-cc-algo": {
+          "type": "string",
+          "enum": [
+            "cubic",
+            "newreno",
+            "bbr",
+            "nocc"
+          ]
+        },
+        "quic_cc_algo_max_window": {
+          "type": "integer",
+          "maximum": 4194304,
+          "minimum": 10,
+          "x-default-unit": "k",
+          "x-dependency": {
+            "quic-cc-algo": null
+          },
+          "x-nullable": true,
+          "x-size": true
+        },
         "redir": {
           "type": "string",
           "x-display-name": "Prefix"
@@ -100329,6 +101694,10 @@ func init() {
           "x-nullable": true,
           "x-omitempty": false
         },
+        "stats_show_version": {
+          "type": "boolean",
+          "x-display-name": "Stats Show Version"
+        },
         "stats_uri_prefix": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -101265,6 +102634,15 @@ func init() {
             }
           }
         },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
+        },
         "lua_action": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -101853,6 +103231,15 @@ func init() {
               "value": "content"
             }
           }
+        },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
         },
         "lua_action": {
           "type": "string",
@@ -102893,6 +104280,35 @@ func init() {
         }
       }
     },
+    "use_small_buffers": {
+      "description": "Enables support for small buffers for the given categories.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "check": {
+          "type": "boolean",
+          "x-display-name": "Check"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "l7_retries": {
+          "type": "boolean",
+          "x-display-name": "L7 Retries"
+        },
+        "queue": {
+          "type": "boolean",
+          "x-display-name": "Queue"
+        }
+      },
+      "x-display-name": "Use Small Buffers"
+    },
     "user": {
       "description": "HAProxy userlist user",
       "type": "object",
@@ -102921,7 +104337,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
