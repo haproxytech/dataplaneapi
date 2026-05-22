@@ -26613,9 +26613,8 @@ func init() {
           }
         },
         "bits": {
-          "description": "Number of bits to generate an RSA certificate",
+          "description": "Number of bits used when generating an RSA certificate. Ignored when keytype is ECDSA (curves is used instead).",
           "type": "integer",
-          "minimum": 1024,
           "x-nullable": true,
           "x-omitempty": true
         },
@@ -31255,7 +31254,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -32018,7 +32017,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -35368,7 +35367,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -35556,7 +35555,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -36392,7 +36391,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -42775,7 +42774,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
@@ -86876,9 +86875,8 @@ func init() {
           }
         },
         "bits": {
-          "description": "Number of bits to generate an RSA certificate",
+          "description": "Number of bits used when generating an RSA certificate. Ignored when keytype is ECDSA (curves is used instead).",
           "type": "integer",
-          "minimum": 1024,
           "x-nullable": true,
           "x-omitempty": true
         },
@@ -91428,7 +91426,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -92079,7 +92077,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -95406,7 +95404,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -95595,7 +95593,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -96431,7 +96429,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -102709,7 +102707,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
