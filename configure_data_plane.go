@@ -30,6 +30,7 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
 	"github.com/getkin/kin-openapi/openapi3"
@@ -958,7 +959,7 @@ func canUseMasterSocketReload(conf *dataplaneapi_config.HAProxyConfiguration, cl
 		return false
 	}
 
-	return cn_runtime.IsBiggerOrEqual(&cn_runtime.HAProxyVersion{Major: 2, Minor: 7}, &currVersion)
+	return cn_runtime.IsBiggerOrEqual(&cn_runtime.HAProxyVersion{Version: semver.New(2, 7, 0, "", "")}, &currVersion)
 }
 
 func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) client_native.HAProxyClient {
