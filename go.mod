@@ -16,15 +16,12 @@ require (
 	github.com/dustinkirkland/golang-petname v0.0.0-20240428194347-eebcea082ee0
 	github.com/fsnotify/fsnotify v1.9.0
 	github.com/getkin/kin-openapi v0.133.0
+	github.com/go-chi/chi/v5 v5.3.0
 	github.com/go-openapi/errors v0.22.7
-	github.com/go-openapi/loads v0.23.3
 	github.com/go-openapi/runtime v0.29.0
-	github.com/go-openapi/spec v0.22.4
 	github.com/go-openapi/strfmt v0.26.2
-	github.com/go-openapi/swag v0.26.0
 	github.com/go-openapi/swag/cmdutils v0.26.0
-	github.com/go-openapi/swag/mangling v0.26.0
-	github.com/go-openapi/validate v0.25.2
+	github.com/go-openapi/swag/netutils v0.26.0
 	github.com/google/go-cmp v0.7.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
@@ -59,15 +56,18 @@ require (
 	github.com/maruel/panicparse/v2 v2.5.0
 	github.com/miekg/dns v1.1.64
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
+	github.com/oapi-codegen/runtime v1.4.1
 	github.com/rs/cors v1.11.1
 	github.com/rubyist/circuitbreaker v2.2.1+incompatible
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/automaxprocs v1.6.0
+	golang.org/x/mod v0.36.0
 	golang.org/x/net v0.55.0
 	golang.org/x/sys v0.45.0
 	gopkg.in/yaml.v2 v2.4.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -79,6 +79,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.1 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/dns/armdns v1.2.0 // indirect
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.4.2 // indirect
+	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.23 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.23 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.23 // indirect
@@ -104,15 +105,19 @@ require (
 	github.com/go-openapi/analysis v0.25.0 // indirect
 	github.com/go-openapi/jsonpointer v0.23.1 // indirect
 	github.com/go-openapi/jsonreference v0.21.5 // indirect
+	github.com/go-openapi/loads v0.23.3 // indirect
+	github.com/go-openapi/spec v0.22.4 // indirect
+	github.com/go-openapi/swag v0.26.0 // indirect
 	github.com/go-openapi/swag/conv v0.26.0 // indirect
 	github.com/go-openapi/swag/fileutils v0.26.0 // indirect
 	github.com/go-openapi/swag/jsonname v0.26.0 // indirect
 	github.com/go-openapi/swag/jsonutils v0.26.0 // indirect
 	github.com/go-openapi/swag/loading v0.26.0 // indirect
-	github.com/go-openapi/swag/netutils v0.26.0 // indirect
+	github.com/go-openapi/swag/mangling v0.26.0 // indirect
 	github.com/go-openapi/swag/stringutils v0.26.0 // indirect
 	github.com/go-openapi/swag/typeutils v0.26.0 // indirect
 	github.com/go-openapi/swag/yamlutils v0.26.0 // indirect
+	github.com/go-openapi/validate v0.25.2 // indirect
 	github.com/go-resty/resty/v2 v2.16.5 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/gofrs/flock v0.13.0 // indirect
@@ -121,6 +126,7 @@ require (
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
 	github.com/googleapis/gax-go/v2 v2.14.1 // indirect
+	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/haproxytech/client-native/v5 v5.1.15 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/haproxytech/go-method-gen v0.1.2 // indirect
@@ -162,7 +168,6 @@ require (
 	go.opentelemetry.io/otel/trace v1.39.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/crypto v0.52.0 // indirect
-	golang.org/x/mod v0.36.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/text v0.37.0 // indirect
@@ -173,6 +178,5 @@ require (
 	google.golang.org/grpc v1.79.3 // indirect
 	google.golang.org/protobuf v1.36.10 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 	mvdan.cc/gofumpt v0.10.0 // indirect
 )
