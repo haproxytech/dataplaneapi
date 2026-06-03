@@ -11,6 +11,17 @@ BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
 GOLANGCI_LINT_VERSION=2.11.1
 CHECK_COMMIT=5.5.0
+OAPI_CODEGEN_VERSION=v2.7.0
+BIN_DIR=$(CURDIR)/bin
+OAPI_CODEGEN=$(BIN_DIR)/oapi-codegen
+
+.PHONY: install-oapi-codegen
+install-oapi-codegen:
+	@mkdir -p $(BIN_DIR)
+	@if [ ! -f $(OAPI_CODEGEN) ] || [ "$$($(OAPI_CODEGEN) --version | tail -n 1)" != "$(OAPI_CODEGEN_VERSION)" ]; then \
+		echo "Installing oapi-codegen $(OAPI_CODEGEN_VERSION)..."; \
+		GOBIN=$(BIN_DIR) go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@$(OAPI_CODEGEN_VERSION); \
+	fi
 
 all: update clean build
 
@@ -71,3 +82,9 @@ test:
 check-commit:
 	cd bin;CHECK_COMMIT=${CHECK_COMMIT} sh check-commit.sh
 	bin/check-commit
+
+SPECIFICATION_DIR=specification
+
+.PHONY: specification
+specification: install-oapi-codegen
+	go run ./cmd/generate/specification --spec-dir $(SPECIFICATION_DIR) --oapi-codegen $(OAPI_CODEGEN)
