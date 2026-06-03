@@ -54,22 +54,9 @@ diff:
     - SWAGGER_VERSION=$(curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $2}')
     - wget -q "https://github.com/go-swagger/go-swagger/releases/download/${SWAGGER_VERSION}/swagger_linux_amd64" -O /usr/local/bin/swagger && chmod +x /usr/local/bin/swagger
     - make generate-native
-    - test -z "$(git diff 2> /dev/null)" || exit "Specification is not generated, issue \`make generate\` and commit the result"
+    - make specification
+    - test -z "$(git diff 2> /dev/null)" || exit "Specification is not generated, issue \`make generate-native && make specification\` and commit the result"
     - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Specification generation created untracked files, cannot proceed"
-diff-spec-parent:
-  stage: lint
-  image:
-    name: $CI_REGISTRY_GO/golang:$GO_VERSION
-    entrypoint: [""]
-  tags:
-    - go
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_PIPELINE_SOURCE == 'push'
-  script:
-    - make generate-parent-aliases
-    - test -z "$(git diff 2> /dev/null)" || exit "Parent aliases are not generated, issue \`make generate-parent-aliases\` and commit the result"
-    - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Parent aliases created untracked files, cannot proceed"
 golangci-lint:
   stage: lint
   artifacts:
