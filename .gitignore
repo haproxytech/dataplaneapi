@@ -1,4 +1,4 @@
-build/
+/build/
 e2e/logs/
 vendor/
 cmd/dataplaneapi/*
@@ -6,6 +6,8 @@ cmd/dataplaneapi/*
 .test/
 bin/golangci-lint
 bin/check-commit
+bin/oapi-codegen
 
 # ignore Goland ide config
 .idea
+.claude
