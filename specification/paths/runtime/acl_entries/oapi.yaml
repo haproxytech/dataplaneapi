@@ -1,0 +1,179 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime ACL Entries
+servers:
+  - url: /v3
+components:
+  schemas:
+    acl_file_entry:
+      type: object
+      x-go-type: models.ACLFileEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    acl_files_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/acl_file_entry'
+      x-go-type: models.ACLFilesEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/acls/{parent_name}/entries:
+    get:
+      summary: Return ACL entries
+      description: Returns an ACL runtime setting using the runtime socket.
+      operationId: getAllRuntimeAclFileEntries
+      tags:
+        - ACL Runtime
+      parameters:
+        - name: parent_name
+          in: path
+          description: ACL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl_files_entries'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add entry to an ACL file
+      description: Adds an entry into the ACL file using the runtime socket.
+      operationId: createRuntimeAclFileEntry
+      tags:
+        - ACL Runtime
+      parameters:
+        - name: parent_name
+          in: path
+          description: ACL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acl_file_entry'
+      responses:
+        '201':
+          description: ACL entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl_file_entry'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Add a new ACL payload
+      description: Adds a new ACL payload.
+      operationId: addPayloadRuntimeACL
+      tags:
+        - ACL Runtime
+      parameters:
+        - name: parent_name
+          in: path
+          description: ACL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acl_files_entries'
+      responses:
+        '201':
+          description: ACL payload added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl_files_entries'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/runtime/acls/{parent_name}/entries/{id}:
+    get:
+      summary: Return an ACL entry
+      description: Returns the ACL entry by its ID using the runtime socket.
+      operationId: getRuntimeAclFileEntry
+      tags:
+        - ACL Runtime
+      parameters:
+        - name: parent_name
+          in: path
+          description: ACL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: File entry ID
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl_file_entry'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    delete:
+      summary: Delete an ACL entry
+      description: Deletes the entry from the ACL by its value using the runtime socket.
+      operationId: deleteRuntimeAclFileEntry
+      tags:
+        - ACL Runtime
+      parameters:
+        - name: parent_name
+          in: path
+          description: ACL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: File entry ID
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

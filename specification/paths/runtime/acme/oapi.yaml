@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime ACME
+servers:
+  - url: /v3
+components:
+  schemas:
+    acme_status:
+      type: array
+      items:
+        type: object
+      x-go-type: models.AcmeStatus
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/acme:
+    get:
+      summary: ACME Status
+      description: Returns the status of each managed ACME certificate.
+      operationId: getAcmeStatus
+      tags:
+        - AcmeRuntime
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_status'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Renew ACME certificate
+      description: Force renewal of an ACME certificate.
+      operationId: renewAcmeCertificate
+      tags:
+        - AcmeRuntime
+      parameters:
+        - name: certificate
+          in: query
+          description: Certificate file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Operation started
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

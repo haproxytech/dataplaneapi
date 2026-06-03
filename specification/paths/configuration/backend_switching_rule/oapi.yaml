@@ -1,0 +1,354 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Backend Switching Rule
+  description: An API for managing HAProxy Backend Switching Rule entries.
+servers:
+  - url: /v3
+components:
+  schemas:
+    backend_switching_rule:
+      type: object
+      x-go-type: models.BackendSwitchingRule
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    backend_switching_rules:
+      type: array
+      items:
+        $ref: '#/components/schemas/backend_switching_rule'
+      x-go-type: models.BackendSwitchingRules
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules:
+    get:
+      summary: Return an array of all Backend Switching Rules
+      description: Returns all Backend Switching Rules that are configured in specified frontend.
+      operationId: getBackendSwitchingRules
+      tags:
+        - BackendSwitchingRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rules'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a Backend Switching Rule list
+      description: Replaces a whole list of Backend Switching Rules with the list given in parameter for the specified frontend.
+      operationId: replaceBackendSwitchingRules
+      tags:
+        - BackendSwitchingRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/backend_switching_rules'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rules'
+        '200':
+          description: All Backend Switching Rules replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rules'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules/{index}:
+    get:
+      summary: Return one Backend Switching Rule
+      description: Returns one Backend Switching Rule configuration by its index in the specified frontend.
+      operationId: getBackendSwitchingRule
+      tags:
+        - BackendSwitchingRule
+      parameters:
+        - name: index
+          in: path
+          description: Backend Switching Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rule'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new Backend Switching Rule
+      description: Adds a new Backend Switching Rule in the specified frontend.
+      operationId: createBackendSwitchingRule
+      tags:
+        - BackendSwitchingRule
+      parameters:
+        - name: index
+          in: path
+          description: Backend Switching Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/backend_switching_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rule'
+        '201':
+          description: Backend Switching Rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rule'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Replace a Backend Switching Rule
+      description: Replaces a Backend Switching Rule configuration by its index in the specified frontend.
+      operationId: replaceBackendSwitchingRule
+      tags:
+        - BackendSwitchingRule
+      parameters:
+        - name: index
+          in: path
+          description: Backend Switching Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/backend_switching_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rule'
+        '200':
+          description: Backend Switching Rule replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend_switching_rule'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a Backend Switching Rule
+      description: Deletes a Backend Switching Rule configuration by its index from the specified frontend.
+      operationId: deleteBackendSwitchingRule
+      tags:
+        - BackendSwitchingRule
+      parameters:
+        - name: index
+          in: path
+          description: Backend Switching Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Backend Switching Rule deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

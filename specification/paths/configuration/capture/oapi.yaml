@@ -1,0 +1,354 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Capture
+  description: An API for managing HAProxy Declare Capture entries.
+servers:
+  - url: /v3
+components:
+  schemas:
+    capture:
+      type: object
+      x-go-type: models.Capture
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    captures:
+      type: array
+      items:
+        $ref: '#/components/schemas/capture'
+      x-go-type: models.Captures
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/frontends/{parent_name}/captures:
+    get:
+      summary: Return an array of all Declare Captures
+      description: Returns all Declare Captures that are configured in specified frontend.
+      operationId: getDeclareCaptures
+      tags:
+        - DeclareCapture
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/captures'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a Declare Capture list
+      description: Replaces a whole list of Declare Captures with the list given in parameter for the specified frontend.
+      operationId: replaceDeclareCaptures
+      tags:
+        - DeclareCapture
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/captures'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/captures'
+        '200':
+          description: All Declare Captures replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/captures'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/captures/{index}:
+    get:
+      summary: Return one Declare Capture
+      description: Returns one Declare Capture configuration by its index in the specified frontend.
+      operationId: getDeclareCapture
+      tags:
+        - DeclareCapture
+      parameters:
+        - name: index
+          in: path
+          description: Capture Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/capture'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new Declare Capture
+      description: Adds a new Declare Capture in the specified frontend.
+      operationId: createDeclareCapture
+      tags:
+        - DeclareCapture
+      parameters:
+        - name: index
+          in: path
+          description: Capture Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/capture'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/capture'
+        '201':
+          description: Declare Capture created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/capture'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Replace a Declare Capture
+      description: Replaces a Declare Capture configuration by its index in the specified frontend.
+      operationId: replaceDeclareCapture
+      tags:
+        - DeclareCapture
+      parameters:
+        - name: index
+          in: path
+          description: Capture Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/capture'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/capture'
+        '200':
+          description: Declare Capture replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/capture'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a Declare Capture
+      description: Deletes a Declare Capture configuration by its index from the specified frontend.
+      operationId: deleteDeclareCapture
+      tags:
+        - DeclareCapture
+      parameters:
+        - name: index
+          in: path
+          description: Capture Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent frontend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Declare Capture deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Info
+servers:
+  - url: /v3
+components:
+  schemas:
+    info:
+      type: object
+      x-go-type: models.Info
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /info:
+    get:
+      summary: Return API, hardware and OS information
+      description: Return API, hardware and OS information
+      operationId: getInfo
+      tags:
+        - Information
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/info'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

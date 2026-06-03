@@ -1,0 +1,362 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - ACL
+  description: An API for managing HAProxy ACL lines.
+servers:
+  - url: /v3
+components:
+  schemas:
+    acl:
+      type: object
+      x-go-type: models.ACL
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    acls:
+      type: array
+      items:
+        $ref: '#/components/schemas/acl'
+      x-go-type: models.Acls
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+{{ range parents }}
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/acls:
+    get:
+      summary: Return an array of all ACL lines
+      description: Returns all ACL lines that are configured in specified {{ .ParentType }}.
+      operationId: getAllAcl{{ .ParentType }}
+      tags:
+        - ACL
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: acl_name
+          in: query
+          description: ACL name
+          required: false
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acls'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace an ACL list
+      description: Replaces a whole list of ACLs with the list given in parameter for the specified {{ .ParentType }}.
+      operationId: replaceAllAcl{{ .ParentType }}
+      tags:
+        - ACL
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acls'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acls'
+        '200':
+          description: All ACL lines replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acls'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/acls/{index}:
+    get:
+      summary: Return one ACL line
+      description: Returns one ACL line configuration by its index in the specified {{ .ParentType }}.
+      operationId: getAcl{{ .ParentType }}
+      tags:
+        - ACL
+      parameters:
+        - name: index
+          in: path
+          description: ACL line Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new ACL line
+      description: Adds a new ACL line of the specified type in the specified {{ .ParentType }}.
+      operationId: createAcl{{ .ParentType }}
+      tags:
+        - ACL
+      parameters:
+        - name: index
+          in: path
+          description: ACL line Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acl'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl'
+        '201':
+          description: ACL line created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Replace a ACL line
+      description: Replaces a ACL line configuration by its index in the specified {{ .ParentType }}.
+      operationId: replaceAcl{{ .ParentType }}
+      tags:
+        - ACL
+      parameters:
+        - name: index
+          in: path
+          description: ACL line Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acl'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl'
+        '200':
+          description: ACL line replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a ACL line
+      description: Deletes a ACL line configuration by its index from the specified {{ .ParentType }}.
+      operationId: deleteAcl{{ .ParentType }}
+      tags:
+        - ACL
+      parameters:
+        - name: index
+          in: path
+          description: ACL line Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: ACL line deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+{{ end }}

@@ -1,0 +1,142 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime SSL CRT Lists
+servers:
+  - url: /v3
+components:
+  schemas:
+    ssl_crt_list:
+      type: object
+      x-go-type: models.SslCrtList
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crt_lists:
+      type: array
+      items:
+        $ref: '#/components/schemas/ssl_crt_list'
+      x-go-type: models.SslCrtLists
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crt_list_entry:
+      type: object
+      x-go-type: models.SslCrtListEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crt_list_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/ssl_crt_list_entry'
+      x-go-type: models.SslCrtListEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/ssl_crt_lists:
+    get:
+      summary: Get the list of all crt-list files
+      description: Returns an array of crt-list file descriptions from runtime.
+      operationId: getAllCrtLists
+      tags:
+        - SSLRuntime
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_lists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/runtime/ssl_crt_lists/entries:
+    get:
+      summary: Get all the entries inside a crt-list
+      description: Returns an array of entries present inside the given crt-list file. Their index can be used to delete them.
+      operationId: getAllCrtListEntries
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: query
+          description: SSL crt-list filename
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_entries'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add an entry into a crt-list
+      description: Appends an entry to the given crt-list using the runtime socket.
+      operationId: addCrtListEntry
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: query
+          description: SSL crt-list filename
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ssl_crt_list_entry'
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete an entry from a crt-list
+      description: Deletes a single entry from the given crt-list using the runtime socket.
+      operationId: deleteCrtListEntry
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: query
+          description: SSL crt list name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: cert_file
+          in: query
+          description: SSL cert entry name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: line_number
+          in: query
+          description: The line number where the entry is located, in case several entries share the same certificate.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            nullable: true
+            # Keep the pointer so the handler can distinguish an omitted line number from 0.
+            x-go-type-skip-optional-pointer: false
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

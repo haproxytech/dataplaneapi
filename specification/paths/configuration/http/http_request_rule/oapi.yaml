@@ -1,0 +1,356 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - HTTP Request Rule
+  description: An API for managing HAProxy HTTP Request Rules.
+servers:
+  - url: /v3
+components:
+  schemas:
+    http_request_rule:
+      type: object
+      x-go-type: models.HTTPRequestRule
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    http_request_rules:
+      type: array
+      items:
+        $ref: '#/components/schemas/http_request_rule'
+      x-go-type: models.HTTPRequestRules
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+{{ range parents }}
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/http_request_rules:
+    get:
+      summary: Return an array of all HTTP Request Rules
+      description: Returns all HTTP Request Rules that are configured in specified {{ .ParentType }}.
+      operationId: getAllHTTPRequestRule{{ .ParentType }}
+      tags:
+        - HTTPRequestRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rules'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace an HTTP Request Rule list
+      description: Replaces a whole list of HTTP Request Rules with the list given in parameter for the specified {{ .ParentType }}.
+      operationId: replaceAllHTTPRequestRule{{ .ParentType }}
+      tags:
+        - HTTPRequestRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_request_rules'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rules'
+        '200':
+          description: All HTTP Request Rules replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rules'
+        '400':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/http_request_rules/{index}:
+    get:
+      summary: Return one HTTP Request Rule
+      description: Returns one HTTP Request Rule configuration by its index in the specified {{ .ParentType }}.
+      operationId: getHTTPRequestRule{{ .ParentType }}
+      tags:
+        - HTTPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: HTTP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rule'
+        '404':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new HTTP Request Rule
+      description: Adds a new HTTP Request Rule of the specified type in the specified {{ .ParentType }}.
+      operationId: createHTTPRequestRule{{ .ParentType }}
+      tags:
+        - HTTPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: HTTP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_request_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rule'
+        '201':
+          description: HTTP Request Rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rule'
+        '409':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Replace a HTTP Request Rule
+      description: Replaces a HTTP Request Rule configuration by its index in the specified {{ .ParentType }}.
+      operationId: replaceHTTPRequestRule{{ .ParentType }}
+      tags:
+        - HTTPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: HTTP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_request_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rule'
+        '200':
+          description: HTTP Request Rule replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_request_rule'
+        '400':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a HTTP Request Rule
+      description: Deletes a HTTP Request Rule configuration by its index from the specified {{ .ParentType }}.
+      operationId: deleteHTTPRequestRule{{ .ParentType }}
+      tags:
+        - HTTPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: HTTP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: HTTP Request Rule deleted
+        '404':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+{{ end }}

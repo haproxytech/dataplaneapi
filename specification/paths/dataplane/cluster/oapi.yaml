@@ -1,0 +1,151 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Cluster
+servers:
+  - url: /v3
+components:
+  schemas:
+    cluster_settings:
+      type: object
+      x-go-type: models.ClusterSettings
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /cluster:
+    get:
+      summary: Return cluster data
+      description: Returns cluster data
+      operationId: getCluster
+      tags:
+        - Cluster
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cluster_settings'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Post cluster settings
+      description: Post cluster settings
+      operationId: postCluster
+      tags:
+        - Cluster
+      parameters:
+        - name: configuration
+          in: query
+          description: In case of moving to single mode do we keep or clean configuration
+          required: false
+          schema:
+            type: string
+            enum: [keep]
+        - name: advertised_address
+          in: query
+          description: Force the advertised address when joining a cluster
+          required: false
+          schema:
+            type: string
+        - name: advertised_port
+          in: query
+          description: Force the advertised port when joining a cluster
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 65535
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cluster_settings'
+      responses:
+        '200':
+          description: Cluster settings changed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cluster_settings'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Edit cluster settings
+      description: Edit cluster settings
+      operationId: editCluster
+      tags:
+        - Cluster
+      parameters:
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cluster_settings'
+      responses:
+        '200':
+          description: Cluster settings changed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cluster_settings'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete cluster settings
+      description: Delete cluster settings and move the node back to single mode
+      operationId: deleteCluster
+      tags:
+        - Cluster
+      parameters:
+        - name: configuration
+          in: query
+          description: In case of moving to single mode do we keep or clean configuration
+          required: false
+          schema:
+            type: string
+            enum: [keep]
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cluster settings deleted and node moved to single mode
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /cluster/certificate:
+    post:
+      summary: Initiates a certificate refresh
+      description: Initiates a certificate refresh
+      operationId: initiateCertificateRefresh
+      tags:
+        - Cluster
+      responses:
+        '200':
+          description: refresh activated
+        '403':
+          description: refresh not possible
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

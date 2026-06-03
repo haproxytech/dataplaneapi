@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime Process Info
+servers:
+  - url: /v3
+components:
+  schemas:
+    process_info:
+      type: object
+      x-go-type: models.ProcessInfo
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/info:
+    get:
+      summary: Return HAProxy process information
+      description: Return HAProxy process information
+      operationId: getHaproxyProcessInfo
+      tags:
+        - Information
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/process_info'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

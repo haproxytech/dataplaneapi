@@ -1,0 +1,57 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Stats
+servers:
+  - url: /v3
+components:
+  schemas:
+    native_stats:
+      type: object
+      x-go-type: models.NativeStats
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/stats/native:
+    get:
+      summary: Gets stats
+      description: Getting stats from the HAProxy.
+      operationId: getStats
+      tags:
+        - Stats
+      parameters:
+        - name: type
+          in: query
+          description: Object type to get stats for (one of frontend, backend, server)
+          required: false
+          schema:
+            type: string
+            enum: [frontend, backend, server]
+        - name: name
+          in: query
+          description: Object name to get stats for
+          required: false
+          schema:
+            type: string
+        - name: parent
+          in: query
+          description: Object parent name to get stats for, in case the object is a server
+          required: false
+          schema:
+            type: string
+          x-dependency:
+            query.type: server
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/native_stats'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/native_stats'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

@@ -1,0 +1,187 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Transactions
+servers:
+  - url: /v3
+components:
+  schemas:
+    transaction:
+      type: object
+      x-go-type: models.Transaction
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    transactions:
+      type: array
+      items:
+        $ref: '#/components/schemas/transaction'
+      x-go-type: models.Transactions
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/transactions:
+    get:
+      summary: Return list of HAProxy configuration transactions.
+      description: Returns a list of HAProxy configuration transactions. Transactions can be filtered by their status.
+      operationId: getTransactions
+      tags:
+        - Transactions
+      parameters:
+        - name: status
+          in: query
+          description: Filter by transaction status
+          required: false
+          schema:
+            type: string
+            enum: [failed, in_progress]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Start a new transaction
+      description: Starts a new transaction and returns it's id
+      operationId: startTransaction
+      tags:
+        - Transactions
+      parameters:
+        - name: version
+          in: query
+          description: Configuration version on which to work on
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Transaction started
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '429':
+          description: Too many open transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/transactions/{id}:
+    get:
+      summary: Return one HAProxy configuration transactions
+      description: Returns one HAProxy configuration transactions.
+      operationId: getTransaction
+      tags:
+        - Transactions
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Commit transaction
+      description: Commit transaction, execute all operations in transaction and return msg
+      operationId: commitTransaction
+      tags:
+        - Transactions
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id
+          required: true
+          schema:
+            type: string
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '200':
+          description: Transaction successfully committed
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        '406':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotAcceptable'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    delete:
+      summary: Delete a transaction
+      description: Deletes a transaction.
+      operationId: deleteTransaction
+      tags:
+        - Transactions
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Transaction deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

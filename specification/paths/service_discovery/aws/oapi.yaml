@@ -1,0 +1,142 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Service Discovery AWS
+servers:
+  - url: /v3
+components:
+  schemas:
+    awsRegion:
+      type: object
+      x-go-type: models.AwsRegion
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    awsRegions:
+      type: array
+      items:
+        $ref: '#/components/schemas/awsRegion'
+      x-go-type: models.AwsRegions
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /service_discovery/aws:
+    get:
+      summary: Return an array of all configured AWS regions
+      description: Return all configured AWS regions.
+      operationId: getAWSRegions
+      tags:
+        - ServiceDiscovery
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/awsRegions'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new AWS region
+      description: |-
+        Add a new AWS region.
+        Credentials are not required in case Dataplane API is running in an EC2 instance with proper IAM role attached.
+      operationId: createAWSRegion
+      tags:
+        - ServiceDiscovery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/awsRegion'
+      responses:
+        '201':
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/awsRegion'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /service_discovery/aws/{id}:
+    get:
+      summary: Return an AWS region
+      description: Return one AWS Region configuration by it's id.
+      operationId: getAWSRegion
+      tags:
+        - ServiceDiscovery
+      parameters:
+        - name: id
+          in: path
+          description: AWS region id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/awsRegion'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace an AWS region
+      description: Replace an AWS region configuration by its id.
+      operationId: replaceAWSRegion
+      tags:
+        - ServiceDiscovery
+      parameters:
+        - name: id
+          in: path
+          description: AWS Region ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/awsRegion'
+      responses:
+        '200':
+          description: Resource updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/awsRegion'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete an AWS region
+      description: Delete an AWS region configuration by it's id.
+      operationId: deleteAWSRegion
+      tags:
+        - ServiceDiscovery
+      parameters:
+        - name: id
+          in: path
+          description: AWS region ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Resource deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

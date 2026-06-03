@@ -1,0 +1,140 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Service Discovery Consul
+servers:
+  - url: /v3
+components:
+  schemas:
+    consul:
+      type: object
+      x-go-type: models.Consul
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    consuls:
+      type: array
+      items:
+        $ref: '#/components/schemas/consul'
+      x-go-type: models.Consuls
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /service_discovery/consul:
+    get:
+      summary: Return an array of all configured Consul servers
+      description: Returns all configured Consul servers.
+      operationId: getConsuls
+      tags:
+        - ServiceDiscovery
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consuls'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new Consul server
+      description: Adds a new Consul server.
+      operationId: createConsul
+      tags:
+        - ServiceDiscovery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/consul'
+      responses:
+        '201':
+          description: Consul created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consul'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /service_discovery/consul/{id}:
+    get:
+      summary: Return one Consul server
+      description: Returns one Consul server configuration by it's id.
+      operationId: getConsul
+      tags:
+        - ServiceDiscovery
+      parameters:
+        - name: id
+          in: path
+          description: Consul server id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consul'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a Consul server
+      description: Replaces a Consul server configuration by it's id.
+      operationId: replaceConsul
+      tags:
+        - ServiceDiscovery
+      parameters:
+        - name: id
+          in: path
+          description: Consul Index
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/consul'
+      responses:
+        '200':
+          description: Consul server replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consul'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a Consul server
+      description: Deletes a Consul server configuration by it's id.
+      operationId: deleteConsul
+      tags:
+        - ServiceDiscovery
+      parameters:
+        - name: id
+          in: path
+          description: Consul server Index
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Consul server deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

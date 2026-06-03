@@ -1,0 +1,12 @@
+package: http_errors_section
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output: handlers/configuration/http_errors_section/http_errors_section.gen.go
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer: true
+  prefer-skip-optional-pointer-with-omitzero: true
+import-mapping:
+  ../../../models/common/responses/models.yaml: "-"

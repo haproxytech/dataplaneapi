@@ -1,0 +1,12 @@
+package: ssl_front_use
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output: handlers/configuration/ssl_front_use/ssl_front_use.gen.go
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer: true
+  prefer-skip-optional-pointer-with-omitzero: true
+import-mapping:
+  ../../../models/common/responses/models.yaml: "-"

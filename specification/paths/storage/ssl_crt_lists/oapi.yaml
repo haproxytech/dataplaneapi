@@ -1,0 +1,348 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Storage SSL CRT Lists
+servers:
+  - url: /v3
+components:
+  schemas:
+    ssl_crt_list_file:
+      type: object
+      x-go-type: models.SslCrtListFile
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crt_list_files:
+      type: array
+      items:
+        $ref: '#/components/schemas/ssl_crt_list_file'
+      x-go-type: models.SslCrtListFiles
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crt_list_entry:
+      type: object
+      x-go-type: models.SslCrtListEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crt_list_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/ssl_crt_list_entry'
+      x-go-type: models.SslCrtListEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/storage/ssl_crt_lists:
+    get:
+      summary: Return all available certificate lists on disk
+      description: Returns all available certificate lists on disk.
+      operationId: getAllStorageSSLCrtListFiles
+      tags:
+        - Storage
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_files'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Create a certificate list
+      description: Creates a certificate list.
+      operationId: createStorageSSLCrtListFile
+      tags:
+        - Storage
+      parameters:
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: The certificate list to upload
+      responses:
+        '201':
+          description: Certificate list created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_file'
+        '202':
+          description: Certificate list created requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_file'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/storage/ssl_crt_lists/{name}:
+    get:
+      summary: Return one certificate list from disk
+      description: Returns one certificate list from disk.
+      operationId: getOneStorageSSLCrtListFile
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: Certificate list name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a certificate lists on disk
+      description: Replaces a certificate list on disk.
+      operationId: replaceStorageSSLCrtListFile
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: Certificate list name
+          required: true
+          schema:
+            type: string
+        - name: skip_reload
+          in: query
+          description: If set, no reload will be initiated after config change
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Certificate list replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_file'
+        '202':
+          description: Certificate list replaced and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_file'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a certificate list from disk
+      description: Deletes a certificate list from disk.
+      operationId: deleteStorageSSLCrtListFile
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: Certificate list name
+          required: true
+          schema:
+            type: string
+        - name: skip_reload
+          in: query
+          description: If set, no reload will be initiated after config change
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Certificate list deleted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Certificate list deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/storage/ssl_crt_lists/{name}/entries:
+    get:
+      summary: Returns all the entries in a CrtList
+      description: Returns all the entries in a certificate list.
+      operationId: getStorageSSLCrtListEntries
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: SSL crt-list file
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_entries'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Creates a new entry in a CrtList
+      description: Creates a new entry in a certificate list.
+      operationId: createStorageSSLCrtListEntry
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: SSL crt-list file
+          required: true
+          schema:
+            type: string
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ssl_crt_list_entry'
+      responses:
+        '201':
+          description: New entry added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crt_list_entry'
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Deletes an entry from CrtList file
+      description: Deletes an entry from a certificate list.
+      operationId: deleteStorageSSLCrtListEntry
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: SSL crt list name
+          required: true
+          schema:
+            type: string
+        - name: certificate
+          in: query
+          description: SSL certificate filename
+          required: true
+          schema:
+            type: string
+        - name: line_number
+          in: query
+          description: The line number in the crt-list
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Successful operation
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

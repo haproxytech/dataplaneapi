@@ -1,0 +1,356 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - TCP Request Rule
+  description: An API for managing HAProxy TCP Request Rules.
+servers:
+  - url: /v3
+components:
+  schemas:
+    tcp_request_rule:
+      type: object
+      x-go-type: models.TCPRequestRule
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    tcp_request_rules:
+      type: array
+      items:
+        $ref: '#/components/schemas/tcp_request_rule'
+      x-go-type: models.TCPRequestRules
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+{{ range parents }}
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/tcp_request_rules:
+    get:
+      summary: Return an array of all TCP Request Rules
+      description: Returns all TCP Request Rules that are configured in specified {{ .ParentType }}.
+      operationId: getAllTCPRequestRule{{ .ParentType }}
+      tags:
+        - TCPRequestRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rules'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a TCP Request Rule list
+      description: Replaces a whole list of TCP Request Rules with the list given in parameter for the specified {{ .ParentType }}.
+      operationId: replaceAllTCPRequestRule{{ .ParentType }}
+      tags:
+        - TCPRequestRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tcp_request_rules'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rules'
+        '200':
+          description: All TCP Request Rules replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rules'
+        '400':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/tcp_request_rules/{index}:
+    get:
+      summary: Return one TCP Request Rule
+      description: Returns one TCP Request Rule configuration by its index in the specified {{ .ParentType }}.
+      operationId: getTCPRequestRule{{ .ParentType }}
+      tags:
+        - TCPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: TCP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rule'
+        '404':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new TCP Request Rule
+      description: Adds a new TCP Request Rule of the specified type in the specified {{ .ParentType }}.
+      operationId: createTCPRequestRule{{ .ParentType }}
+      tags:
+        - TCPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: TCP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tcp_request_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rule'
+        '201':
+          description: TCP Request Rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rule'
+        '409':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Replace a TCP Request Rule
+      description: Replaces a TCP Request Rule configuration by its index in the specified {{ .ParentType }}.
+      operationId: replaceTCPRequestRule{{ .ParentType }}
+      tags:
+        - TCPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: TCP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tcp_request_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rule'
+        '200':
+          description: TCP Request Rule replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_request_rule'
+        '400':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a TCP Request Rule
+      description: Deletes a TCP Request Rule configuration by its index from the specified {{ .ParentType }}.
+      operationId: deleteTCPRequestRule{{ .ParentType }}
+      tags:
+        - TCPRequestRule
+      parameters:
+        - name: index
+          in: path
+          description: TCP Request Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: TCP Request Rule deleted
+        '404':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+{{ end }}

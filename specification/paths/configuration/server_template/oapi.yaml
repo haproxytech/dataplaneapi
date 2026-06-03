@@ -1,0 +1,286 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Server Template
+  description: An API for managing HAProxy Server Template entries.
+servers:
+  - url: /v3
+components:
+  schemas:
+    server_template:
+      type: object
+      x-go-type: models.ServerTemplate
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    server_templates:
+      type: array
+      items:
+        $ref: '#/components/schemas/server_template'
+      x-go-type: models.ServerTemplates
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/backends/{parent_name}/server_templates:
+    get:
+      summary: Return an array of server templates
+      description: Returns all server templates that are configured in specified backend.
+      operationId: getServerTemplates
+      tags:
+        - ServerTemplate
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent backend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_templates'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new server template
+      description: Adds a new server template in the specified backend.
+      operationId: createServerTemplate
+      tags:
+        - ServerTemplate
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent backend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/server_template'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_template'
+        '201':
+          description: Server Template created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_template'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/server_templates/{prefix}:
+    get:
+      summary: Return one server template
+      description: Returns one server template configuration by its prefix in the specified backend.
+      operationId: getServerTemplate
+      tags:
+        - ServerTemplate
+      parameters:
+        - name: prefix
+          in: path
+          description: Server template prefix
+          required: true
+          schema:
+            type: string
+        - name: parent_name
+          in: path
+          description: Parent backend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_template'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a server template
+      description: Replaces a server template configuration by its prefix in the specified backend.
+      operationId: replaceServerTemplate
+      tags:
+        - ServerTemplate
+      parameters:
+        - name: prefix
+          in: path
+          description: Server template prefix
+          required: true
+          schema:
+            type: string
+        - name: parent_name
+          in: path
+          description: Parent backend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/server_template'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_template'
+        '200':
+          description: Server Template replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_template'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a server template
+      description: Deletes a server template configuration by its prefix from the specified backend.
+      operationId: deleteServerTemplate
+      tags:
+        - ServerTemplate
+      parameters:
+        - name: prefix
+          in: path
+          description: Server template prefix
+          required: true
+          schema:
+            type: string
+        - name: parent_name
+          in: path
+          description: Parent backend name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Server Template deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

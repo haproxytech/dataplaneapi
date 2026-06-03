@@ -1,0 +1,37 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Configuration Version
+  description: An API for getting the HAProxy configuration version.
+servers:
+  - url: /v3
+paths:
+  /services/haproxy/configuration/version:
+    get:
+      summary: Return HAProxy configuration version
+      description: Returns the current HAProxy configuration file version.
+      operationId: getConfigurationVersion
+      tags:
+        - Configuration
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: integer
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

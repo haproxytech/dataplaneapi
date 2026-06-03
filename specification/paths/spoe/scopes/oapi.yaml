@@ -1,0 +1,183 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - SPOE Scopes
+servers:
+  - url: /v3
+components:
+  schemas:
+    spoe_scope:
+      type: string
+      x-go-type: models.SpoeScope
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    spoe_scopes:
+      type: array
+      items:
+        $ref: '#/components/schemas/spoe_scope'
+      x-go-type: models.SpoeScopes
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/spoe/spoe_files/{parent_name}/scopes:
+    get:
+      summary: Return an array of spoe scopes
+      description: Returns an array of all configured spoe scopes.
+      operationId: getAllSpoeScope
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_scopes'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new spoe scope
+      description: Adds a new spoe scope.
+      operationId: createSpoeScope
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/spoe_scope'
+      responses:
+        '201':
+          description: Spoe scope created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_scope'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{name}:
+    get:
+      summary: Return one SPOE scope
+      description: Returns one SPOE scope in one SPOE file.
+      operationId: getSpoeScope
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: name
+          in: path
+          description: Spoe scope
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_scope'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    delete:
+      summary: Delete a SPOE scope
+      description: Deletes a SPOE scope from the configuration file.
+      operationId: deleteSpoeScope
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Spoe scope deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

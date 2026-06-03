@@ -1,0 +1,143 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Discovery
+servers:
+  - url: /v3
+components:
+  schemas:
+    endpoints:
+      type: array
+      items:
+        type: object
+      x-go-type: models.Endpoints
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /:
+    get:
+      summary: Return list of root endpoints
+      description: Returns a list of root endpoints.
+      operationId: getAPIEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services:
+    get:
+      summary: Return list of service endpoints
+      description: Returns a list of API managed services endpoints.
+      operationId: getServicesEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy:
+    get:
+      summary: Return list of HAProxy related endpoints
+      description: Returns a list of HAProxy related endpoints.
+      operationId: getHaproxyEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/stats:
+    get:
+      summary: Return list of HAProxy stats endpoints
+      description: Returns a list of HAProxy stats endpoints.
+      operationId: getStatsEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/configuration:
+    get:
+      summary: Return list of HAProxy advanced configuration endpoints
+      description: Returns a list of endpoints to be used for advanced configuration of HAProxy objects.
+      operationId: getConfigurationEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/runtime:
+    get:
+      summary: Return list of HAProxy advanced runtime endpoints
+      description: Returns a list of endpoints to be used for advanced runtime settings of HAProxy objects.
+      operationId: getRuntimeEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/storage:
+    get:
+      summary: Return list of HAProxy storage endpoints
+      description: Returns a list of endpoints that use HAProxy storage for persistency, e.g. maps, ssl certificates...
+      operationId: getStorageEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/spoe:
+    get:
+      summary: Return list of HAProxy SPOE endpoints
+      description: Returns a list of endpoints to be used for SPOE settings of HAProxy.
+      operationId: getSpoeEndpoints
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpoints'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

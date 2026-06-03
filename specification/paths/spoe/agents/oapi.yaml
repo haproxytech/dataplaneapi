@@ -1,0 +1,265 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - SPOE Agents
+servers:
+  - url: /v3
+components:
+  schemas:
+    spoe_agent:
+      type: object
+      x-go-type: models.SpoeAgent
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    spoe_agents:
+      type: array
+      items:
+        $ref: '#/components/schemas/spoe_agent'
+      x-go-type: models.SpoeAgents
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/agents:
+    get:
+      summary: Return an array of spoe agents in one scope
+      description: Returns an array of all configured spoe agents in one scope.
+      operationId: getAllSpoeAgent
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_agents'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new spoe agent to scope
+      description: Adds a new spoe agent to the spoe scope.
+      operationId: createSpoeAgent
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/spoe_agent'
+      responses:
+        '201':
+          description: Spoe agent created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_agent'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/agents/{name}:
+    get:
+      summary: Return a spoe agent
+      description: Returns one spoe agent configuration in one SPOE scope.
+      operationId: getSpoeAgent
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Spoe agent name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_agent'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a SPOE agent
+      description: Replaces a SPOE agent configuration in one SPOE scope.
+      operationId: replaceSpoeAgent
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Spoe agent name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/spoe_agent'
+      responses:
+        '200':
+          description: Spoe agent replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_agent'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a SPOE agent
+      description: Deletes a SPOE agent from the configuration in one SPOE scope.
+      operationId: deleteSpoeAgent
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Spoe agent name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Spoe agent deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

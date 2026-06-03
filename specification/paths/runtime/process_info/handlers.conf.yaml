@@ -1,0 +1,12 @@
+package: process_info
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output: handlers/runtime/process_info/process_info.gen.go
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer: true
+  prefer-skip-optional-pointer-with-omitzero: true
+import-mapping:
+  ../../../models/common/responses/models.yaml: "-"
