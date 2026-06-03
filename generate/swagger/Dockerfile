@@ -11,7 +11,6 @@ WORKDIR /data
 ARG UID
 ARG GID
 COPY script.sh /generate/swagger/script.sh
-COPY templates /generate/swagger/templates
 VOLUME ["/data"]
 
 RUN apk add bash jq && sed -i "s/999/99/" /etc/group &&  \
