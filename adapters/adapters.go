@@ -22,9 +22,11 @@ import (
 	"strconv"
 	"strings"
 
+	openapi_middleware "github.com/go-openapi/runtime/middleware"
 	clientnative "github.com/haproxytech/client-native/v6"
-	"github.com/haproxytech/client-native/v6/configuration"
+	cn_configuration "github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/client-native/v6/models"
+	dapi_configuration "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 
@@ -121,7 +123,7 @@ func ApacheLogMiddleware(logger *log.ACLLogger) Adapter {
 
 type serverWriter struct {
 	w             http.ResponseWriter
-	client        configuration.Configuration
+	client        cn_configuration.Configuration
 	transactionID string
 	wroteHeader   bool
 }
@@ -153,6 +155,7 @@ func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 			configuration, err := client.Configuration()
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusNotImplemented)
+				return
 			}
 			sw := serverWriter{
 				w:             w,
@@ -165,7 +168,7 @@ func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 	}
 }
 
-func fetchConfgVersion(client configuration.Configuration, transactionID string) (string, error) {
+func fetchConfgVersion(client cn_configuration.Configuration, transactionID string) (string, error) {
 	var v int64
 	var err error
 	if transactionID == "" {
@@ -180,4 +183,46 @@ func fetchConfgVersion(client configuration.Configuration, transactionID string)
 		return strconv.FormatInt(v, 10), nil
 	}
 	return "", err
+}
+
+// BasicAuthMiddleware enforces HTTP Basic authentication on every request.
+// When skip is true (mTLS with a CA certificate is active) all requests pass through.
+func BasicAuthMiddleware(skip bool) Adapter {
+	return func(h http.Handler) http.Handler {
+		if skip {
+			return h
+		}
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			user, pass, ok := r.BasicAuth()
+			if !ok {
+				writeUnauthorized(w, "missing or invalid authorization")
+				return
+			}
+			if _, err := dapi_configuration.AuthenticateUser(user, pass); err != nil {
+				writeUnauthorized(w, err.Error())
+				return
+			}
+			h.ServeHTTP(w, r)
+		})
+	}
+}
+
+// SpecDocsMiddleware serves the raw OpenAPI v2 document at /swagger.json and a Redoc
+// documentation UI at {basePath}/docs, both without authentication, matching the
+// behavior of the previous go-swagger server. All other requests pass through.
+func SpecDocsMiddleware(swaggerJSON []byte, basePath, title string) Adapter {
+	return func(h http.Handler) http.Handler {
+		return openapi_middleware.Spec("", swaggerJSON,
+			openapi_middleware.Redoc(openapi_middleware.RedocOpts{BasePath: basePath, Title: title}, h))
+	}
+}
+
+func writeUnauthorized(w http.ResponseWriter, msg string) {
+	w.Header().Set("WWW-Authenticate", `Basic realm="API"`)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusUnauthorized)
+	code := int64(http.StatusUnauthorized)
+	e := &models.Error{Code: &code, Message: &msg}
+	b, _ := e.MarshalJSON()
+	_, _ = w.Write(b)
 }
