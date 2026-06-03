@@ -1,0 +1,12 @@
+package: backend
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output: handlers/configuration/backend/backend.gen.go
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer: true
+  prefer-skip-optional-pointer-with-omitzero: true
+import-mapping:
+  ../../../models/common/responses/models.yaml: "-"

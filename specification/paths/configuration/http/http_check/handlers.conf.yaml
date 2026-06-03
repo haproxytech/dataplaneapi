@@ -1,0 +1,12 @@
+package: http_check
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output: handlers/configuration/http/http_check/http_check.gen.go
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer: true
+  prefer-skip-optional-pointer-with-omitzero: true
+import-mapping:
+  ../../../../models/common/responses/models.yaml: "-"

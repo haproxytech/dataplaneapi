@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime Stick Tables
+servers:
+  - url: /v3
+components:
+  schemas:
+    stick_table:
+      type: object
+      x-go-type: models.StickTable
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    stick_tables:
+      type: array
+      items:
+        $ref: '#/components/schemas/stick_table'
+      x-go-type: models.StickTables
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/stick_tables:
+    get:
+      summary: Return Stick Tables
+      description: Returns an array of all stick tables.
+      operationId: getStickTables
+      tags:
+        - StickTable
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stick_tables'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/runtime/stick_tables/{name}:
+    get:
+      summary: Return Stick Table
+      description: Returns one stick table from runtime.
+      operationId: getStickTable
+      tags:
+        - StickTable
+      parameters:
+        - name: name
+          in: path
+          description: Stick table name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stick_table'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

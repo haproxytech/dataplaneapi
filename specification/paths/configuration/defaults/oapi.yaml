@@ -1,0 +1,352 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Defaults
+  description: An API for managing HAProxy defaults section configurations.
+servers:
+  - url: /v3
+components:
+  schemas:
+    defaults:
+      type: object
+      x-go-type: models.Defaults
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    defaults_sections:
+      type: array
+      items:
+        $ref: '#/components/schemas/defaults'
+      x-go-type: models.DefaultsSections
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/defaults:
+    get:
+      summary: Return an array of defaults sections
+      description: Returns an array of all configured defaults sections.
+      operationId: getDefaultsSections
+      tags:
+        - Defaults
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults_sections'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a defaults section
+      description: Adds a new defaults section to the configuration file.
+      operationId: addDefaultsSection
+      tags:
+        - Defaults
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/defaults'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '201':
+          description: Defaults section created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Add a defaults section
+      description: Adds a new defaults section to the configuration file.
+      operationId: createDefaultsSection
+      deprecated: true
+      tags:
+        - Defaults
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/defaults'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '201':
+          description: Defaults section created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+
+  /services/haproxy/configuration/defaults/{name}:
+    get:
+      summary: Return a defaults section
+      description: Returns one defaults section configuration by its name.
+      operationId: getDefaultsSection
+      tags:
+        - Defaults
+      parameters:
+        - name: name
+          in: path
+          description: Defaults section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a defaults section
+      description: Replaces a defaults section configuration by its name.
+      operationId: replaceDefaultsSection
+      tags:
+        - Defaults
+      parameters:
+        - name: name
+          in: path
+          description: Defaults section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/defaults'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '200':
+          description: Defaults section replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/defaults'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a defaults section
+      description: Deletes a defaults section from the configuration by its name.
+      operationId: deleteDefaultsSection
+      tags:
+        - Defaults
+      parameters:
+        - name: name
+          in: path
+          description: Defaults section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Defaults section deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

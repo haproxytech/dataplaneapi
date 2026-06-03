@@ -1,0 +1,209 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime Map Entries
+servers:
+  - url: /v3
+components:
+  schemas:
+    map_entry:
+      type: object
+      x-go-type: models.MapEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    map_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/map_entry'
+      x-go-type: models.MapEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/maps/{parent_name}/entries:
+    get:
+      summary: Return one map runtime entries
+      description: Returns an array of all entries in a given runtime map file.
+      operationId: showRuntimeMap
+      tags:
+        - Maps
+      parameters:
+        - name: parent_name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_entries'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Adds an entry into the map file
+      description: Adds an entry into the map file.
+      operationId: addMapEntry
+      tags:
+        - Maps
+      parameters:
+        - name: parent_name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: force_sync
+          in: query
+          description: If true, immediately syncs changes to disk
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_entry'
+      responses:
+        '201':
+          description: Map entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_entry'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/runtime/maps/{parent_name}/entries/{id}:
+    get:
+      summary: Return one map runtime setting
+      description: Returns one map runtime setting by it's id.
+      operationId: getRuntimeMapEntry
+      tags:
+        - Maps
+      parameters:
+        - name: parent_name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: Map id
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_entry'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace the value corresponding to each id in a map
+      description: Replaces the value corresponding to each id in a map.
+      operationId: replaceRuntimeMapEntry
+      tags:
+        - Maps
+      parameters:
+        - name: parent_name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: Map id
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: force_sync
+          in: query
+          description: If true, immediately syncs changes to disk
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+                  description: Map value
+      responses:
+        '200':
+          description: Map value replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_entry'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Deletes all the map entries from the map by its id
+      description: Delete all the map entries from the map by its id.
+      operationId: deleteRuntimeMapEntry
+      tags:
+        - Maps
+      parameters:
+        - name: parent_name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: Map id
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: force_sync
+          in: query
+          description: If true, immediately syncs changes to disk
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '204':
+          description: Map key/value deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

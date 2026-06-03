@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Health
+servers:
+  - url: /v3
+components:
+  schemas:
+    health:
+      type: object
+      x-go-type: models.Health
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /health:
+    get:
+      summary: Return managed services health
+      description: Return managed services health
+      operationId: getHealth
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

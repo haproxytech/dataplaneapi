@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Storage General Files
+servers:
+  - url: /v3
+components:
+  schemas:
+    general_file:
+      type: object
+      x-go-type: models.GeneralFile
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    general_files:
+      type: array
+      items:
+        $ref: '#/components/schemas/general_file'
+      x-go-type: models.GeneralFiles
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/storage/general:
+    get:
+      summary: Return a list of all managed general use files
+      description: Returns a list of all managed general use files
+      operationId: getAllStorageGeneralFiles
+      tags:
+        - Storage
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/general_files'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Creates a managed storage general use file with contents
+      description: Creates a managed storage general use file with contents.
+      operationId: createStorageGeneralFile
+      tags:
+        - Storage
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: application/octet-stream
+            schema:
+              type: object
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: General use file content
+      responses:
+        '201':
+          description: General use file created with its contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/general_file'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/storage/general/{name}:
+    get:
+      summary: Return the contents of one managed general use file from disk
+      description: Returns the contents of one managed general use file from disk
+      operationId: getOneStorageGeneralFile
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: General use file storage_name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace contents of a managed general use file on disk
+      description: Replaces the contents of a managed general use file on disk
+      operationId: replaceStorageGeneralFile
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: General use file storage_name
+          required: true
+          schema:
+            type: string
+        - name: skip_reload
+          in: query
+          description: If set, no reload will be initiated after config change
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: application/octet-stream
+            schema:
+              type: object
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: General use file content
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: General use file replaced
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+    delete:
+      summary: Deletes a managed general use file from disk
+      description: Deletes a managed general use file from disk.
+      operationId: deleteStorageGeneralFile
+      tags:
+        - Storage
+      parameters:
+        - name: name
+          in: path
+          description: General use file storage_name
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: General use file deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

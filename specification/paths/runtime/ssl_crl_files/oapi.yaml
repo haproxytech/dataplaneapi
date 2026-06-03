@@ -1,0 +1,163 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime SSL CRL Files
+servers:
+  - url: /v3
+components:
+  schemas:
+    ssl_crl_entries:
+      type: array
+      items:
+        type: object
+      x-go-type: models.SslCrlEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_crls:
+      type: array
+      items:
+        type: object
+      x-go-type: models.SslCrls
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/ssl_crl_files:
+    get:
+      summary: Return an array of all the CRL files
+      description: Returns all the certificate revocation list files using the runtime socket.
+      operationId: getAllCrl
+      tags:
+        - SSLRuntime
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crls'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Create a new CRL file
+      description: Creates a new CRL file with its contents using the runtime socket.
+      operationId: createCrl
+      tags:
+        - SSLRuntime
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: CRL file
+      responses:
+        '201':
+          description: CRL file created
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/runtime/ssl_crl_files/{name}:
+    get:
+      summary: Get the contents of a CRL file
+      description: Returns one or all entries in a CRL file using the runtime socket.
+      operationId: getCrl
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: CRL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: index
+          in: query
+          description: Entry index to return. Starts at 1. If not provided, all entries are returned.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            nullable: true
+            # Keep the pointer so the handler can distinguish an omitted index from 0.
+            x-go-type-skip-optional-pointer: false
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_crl_entries'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace the contents of a CRL file
+      description: Replaces the contents of a CRL file using the runtime socket.
+      operationId: replaceCrl
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: CRL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: CRL file contents
+      responses:
+        '200':
+          description: File modified
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+    delete:
+      summary: Delete a CRL file
+      description: Deletes a CRL file using the runtime socket.
+      operationId: deleteCrl
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: CRL file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '204':
+          description: File deleted
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

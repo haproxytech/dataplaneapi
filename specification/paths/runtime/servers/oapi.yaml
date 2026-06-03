@@ -1,0 +1,189 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime Servers
+servers:
+  - url: /v3
+components:
+  schemas:
+    runtime_server:
+      type: object
+      x-go-type: models.RuntimeServer
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    runtime_servers:
+      type: array
+      items:
+        $ref: '#/components/schemas/runtime_server'
+      x-go-type: models.RuntimeServers
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    runtime_add_server:
+      type: object
+      x-go-type: models.RuntimeAddServer
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/backends/{parent_name}/servers:
+    get:
+      summary: Return an array of runtime servers' settings
+      description: Returns an array of all servers' runtime settings.
+      operationId: getAllRuntimeServer
+      tags:
+        - Server
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtime_servers'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Adds a new server to a backend
+      description: Adds a new server to the specified backend
+      operationId: addRuntimeServer
+      tags:
+        - Server
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/runtime_add_server'
+      responses:
+        '201':
+          description: Server added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtime_add_server'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/runtime/backends/{parent_name}/servers/{name}:
+    get:
+      summary: Return one server runtime settings
+      description: Returns one server runtime settings by it's name in the specified backend.
+      operationId: getRuntimeServer
+      tags:
+        - Server
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: name
+          in: path
+          description: Server name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtime_server'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace server transient settings
+      description: Replaces a server transient settings by it's name in the specified backend.
+      operationId: replaceRuntimeServer
+      tags:
+        - Server
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: name
+          in: path
+          description: Server name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/runtime_server'
+      responses:
+        '200':
+          description: Server transient settings replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtime_server'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Deletes a server from a backend
+      description: Deletes a server from the specified backend
+      operationId: deleteRuntimeServer
+      tags:
+        - Server
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: name
+          in: path
+          description: Server name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '204':
+          description: Server deleted
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

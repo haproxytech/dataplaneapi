@@ -1,0 +1,159 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Raw Configuration
+  description: An API for managing HAProxy raw configuration.
+servers:
+  - url: /v3
+paths:
+  /services/haproxy/configuration/raw:
+    get:
+      summary: Return HAProxy configuration as a plain text
+      description: Returns HAProxy configuration file in plain text format.
+      operationId: getHAProxyConfiguration
+      tags:
+        - Configuration
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Cluster-Version:
+              description: Cluster configuration version
+              schema:
+                type: string
+            Configuration-Checksum:
+              description: Configuration file md5 checksum
+              schema:
+                type: string
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Push new haproxy configuration
+      description: Push a new haproxy configuration file in plain text format.
+      operationId: postHAProxyConfiguration
+      tags:
+        - Configuration
+      parameters:
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: skip_version
+          in: query
+          description: If set, no version check will be done and the pushed configuration will be applied directly.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: skip_reload
+          in: query
+          description: If set, HAProxy will not be reloaded after the configuration is pushed.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: only_validate
+          in: query
+          description: If set, the configuration will only be validated and not applied.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-Runtime-Actions
+          in: header
+          description: List of runtime actions to execute after the configuration is applied.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Cluster-Version:
+              description: Cluster configuration version
+              schema:
+                type: string
+            Configuration-Checksum:
+              description: Configuration file md5 checksum
+              schema:
+                type: string
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+        '201':
+          description: New HAProxy configuration pushed
+          headers:
+            Cluster-Version:
+              description: Cluster configuration version
+              schema:
+                type: string
+            Configuration-Checksum:
+              description: Configuration file md5 checksum
+              schema:
+                type: string
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad request
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data

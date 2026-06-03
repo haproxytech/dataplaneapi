@@ -1,0 +1,38 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - SPOE Version
+servers:
+  - url: /v3
+paths:
+  /services/haproxy/spoe/{parent_name}/version:
+    get:
+      summary: Return a SPOE configuration version
+      description: Returns SPOE configuration version.
+      operationId: getSpoeConfigurationVersion
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SPOE configuration version
+          content:
+            application/json:
+              schema:
+                type: integer
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

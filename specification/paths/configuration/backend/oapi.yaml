@@ -1,0 +1,280 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Backend
+  description: An API for managing HAProxy backend configurations.
+servers:
+  - url: /v3
+components:
+  schemas:
+    backend:
+      type: object
+      x-go-type: models.Backend
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    backends:
+      type: array
+      items:
+        $ref: '#/components/schemas/backend'
+      x-go-type: models.Backends
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/backends:
+    get:
+      summary: Return an array of backends
+      description: Returns an array of all configured backends.
+      operationId: getBackends
+      tags:
+        - Backend
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backends'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a backend
+      description: Adds a new backend to the configuration file.
+      operationId: createBackend
+      tags:
+        - Backend
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/backend'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend'
+        '201':
+          description: Backend created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+
+  /services/haproxy/configuration/backends/{name}:
+    get:
+      summary: Return a backend
+      description: Returns one backend configuration by its name.
+      operationId: getBackend
+      tags:
+        - Backend
+      parameters:
+        - name: name
+          in: path
+          description: Backend name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a backend
+      description: Replaces a backend configuration by its name.
+      operationId: replaceBackend
+      tags:
+        - Backend
+      parameters:
+        - name: name
+          in: path
+          description: Backend name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/backend'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend'
+        '200':
+          description: Backend replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backend'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a backend
+      description: Deletes a backend from the configuration by its name.
+      operationId: deleteBackend
+      tags:
+        - Backend
+      parameters:
+        - name: name
+          in: path
+          description: Backend name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Backend deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

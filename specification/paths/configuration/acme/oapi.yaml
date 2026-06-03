@@ -1,0 +1,252 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - ACME Provider
+  description: An API for managing HAProxy ACME provider configurations.
+servers:
+  - url: /v3
+components:
+  schemas:
+    acme_provider:
+      type: object
+      x-go-type: models.AcmeProvider
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    acme_providers:
+      type: array
+      items:
+        $ref: '#/components/schemas/acme_provider'
+      x-go-type: models.AcmeProviders
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/acme:
+    get:
+      summary: Return an array of ACME providers
+      description: Returns an array of all configured ACME providers.
+      operationId: getAcmeProviders
+      tags:
+        - Acme
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_providers'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add an ACME provider
+      description: Adds a new ACME provider to the configuration file.
+      operationId: createAcmeProvider
+      tags:
+        - Acme
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acme_provider'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_provider'
+        '201':
+          description: ACME provider created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_provider'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+
+  /services/haproxy/configuration/acme/{name}:
+    get:
+      summary: Return an ACME provider
+      description: Returns one ACME provider configuration by its name.
+      operationId: getAcmeProvider
+      tags:
+        - Acme
+      parameters:
+        - name: name
+          in: path
+          description: ACME provider name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_provider'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace an ACME provider
+      description: Replaces an ACME provider configuration by its name.
+      operationId: editAcmeProvider
+      tags:
+        - Acme
+      parameters:
+        - name: name
+          in: path
+          description: ACME provider name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acme_provider'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_provider'
+        '200':
+          description: ACME provider replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acme_provider'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete an ACME provider
+      description: Deletes an ACME provider from the configuration by its name.
+      operationId: deleteAcmeProvider
+      tags:
+        - Acme
+      parameters:
+        - name: name
+          in: path
+          description: ACME provider name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: ACME provider deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

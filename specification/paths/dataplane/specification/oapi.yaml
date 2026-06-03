@@ -1,0 +1,38 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Specification
+servers:
+  - url: /v3
+paths:
+  /specification:
+    get:
+      summary: Data Plane API Specification
+      description: Return Data Plane API OpenAPI specification
+      operationId: getSpecification
+      tags:
+        - Specification
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /specification_openapiv3:
+    get:
+      summary: Data Plane API v3 Specification
+      description: Return Data Plane API OpenAPI v3 specification
+      operationId: getOpenapiv3Specification
+      tags:
+        - SpecificationOpenapiv3
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

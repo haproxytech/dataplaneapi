@@ -1,0 +1,201 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - SPOE Transactions
+servers:
+  - url: /v3
+components:
+  schemas:
+    spoe_transaction:
+      type: object
+      x-go-type: models.SpoeTransaction
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    spoe_transactions:
+      type: array
+      items:
+        $ref: '#/components/schemas/spoe_transaction'
+      x-go-type: models.SpoeTransactions
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/spoe/spoe_files/{parent_name}/transactions:
+    get:
+      summary: Return list of SPOE configuration transactions.
+      description: Returns a list of SPOE configuration transactions. Transactions can be filtered by their status.
+      operationId: getAllSpoeTransaction
+      tags:
+        - SpoeTransactions
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: status
+          in: query
+          description: Filter by transaction status
+          required: false
+          schema:
+            type: string
+            enum: [failed, in_progress]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_transactions'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Start a new transaction
+      description: Starts a new transaction and returns it's id
+      operationId: startSpoeTransaction
+      tags:
+        - SpoeTransactions
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: version
+          in: query
+          description: Configuration version on which to work on
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Transaction started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_transaction'
+        '429':
+          description: Too many open transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/spoe/spoe_files/{parent_name}/transactions/{id}:
+    get:
+      summary: Return one SPOE configuration transactions
+      description: Returns one SPOE configuration transactions.
+      operationId: getSpoeTransaction
+      tags:
+        - SpoeTransactions
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: Transaction id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_transaction'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Commit transaction
+      description: Commit transaction, execute all operations in transaction and return msg
+      operationId: commitSpoeTransaction
+      tags:
+        - SpoeTransactions
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: Transaction id
+          required: true
+          schema:
+            type: string
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_transaction'
+        '200':
+          description: Transaction successfully committed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_transaction'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    delete:
+      summary: Delete a transaction
+      description: Deletes a transaction.
+      operationId: deleteSpoeTransaction
+      tags:
+        - SpoeTransactions
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: id
+          in: path
+          description: Transaction id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Transaction deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

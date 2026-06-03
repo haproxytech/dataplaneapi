@@ -1,0 +1,230 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime SSL CA Files
+servers:
+  - url: /v3
+components:
+  schemas:
+    ssl_ca_file:
+      type: object
+      x-go-type: models.SslCaFile
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_ca_files:
+      type: array
+      items:
+        $ref: '#/components/schemas/ssl_ca_file'
+      x-go-type: models.SslCaFiles
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_certificate:
+      type: object
+      x-go-type: models.SslCertificate
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/ssl_ca_files:
+    get:
+      summary: Return an array of all SSL CA files
+      description: Returns all SSL CA files using the runtime socket.
+      operationId: getAllCaFiles
+      tags:
+        - SSLRuntime
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_ca_files'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Creates a new SSL CA file
+      description: Creates a new SSL CA file using the runtime socket.
+      operationId: createCaFile
+      tags:
+        - SSLRuntime
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: CA certificate file
+      responses:
+        '201':
+          description: SSL CA file created
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/runtime/ssl_ca_files/{name}:
+    get:
+      summary: Return an SSL CA file
+      description: Returns an SSL CA file by name using the runtime socket.
+      operationId: getCaFile
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL CA file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_ca_file'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Update the contents of a CA file
+      description: Replace the contents of a CA file using the runtime socket.
+      operationId: setCaFile
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL CA file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: SSL CA payload added
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+    delete:
+      summary: Deletes a CA file
+      description: Deletes a CA file
+      operationId: deleteCaFile
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL CA file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '204':
+          description: SSL CA deleted
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/runtime/ssl_ca_files/{name}/entries:
+    post:
+      summary: Add a certificate to a CA file
+      description: Adds an entry to an existing CA file using the runtime socket.
+      operationId: addCaEntry
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL CA file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: Payload of the cert entry
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_certificate'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/runtime/ssl_ca_files/{name}/entries/{index}:
+    get:
+      summary: Return an SSL CA file cert entry
+      description: Returns an SSL CA file cert entry.
+      operationId: getCaEntry
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL CA file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: index
+          in: path
+          description: SSL CA file index
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_certificate'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

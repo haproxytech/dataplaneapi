@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime ACL Files
+servers:
+  - url: /v3
+components:
+  schemas:
+    acl_file:
+      type: object
+      x-go-type: models.ACLFile
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    acl_files:
+      type: array
+      items:
+        $ref: '#/components/schemas/acl_file'
+      x-go-type: models.ACLFiles
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/acls:
+    get:
+      summary: Return an array of all ACL files
+      description: Returns all ACL files using the runtime socket.
+      operationId: getAllRuntimeAclFiles
+      tags:
+        - ACL Runtime
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl_files'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/runtime/acls/{id}:
+    get:
+      summary: Return an ACL file
+      description: Returns an ACL file by id using the runtime socket.
+      operationId: getRuntimeAclFile
+      tags:
+        - ACL Runtime
+      parameters:
+        - name: id
+          in: path
+          description: ACL file entry ID
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/acl_file'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

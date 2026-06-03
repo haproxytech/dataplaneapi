@@ -1,0 +1,119 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - SPOE Files
+servers:
+  - url: /v3
+components:
+  schemas:
+    spoe_files:
+      type: array
+      items:
+        type: string
+      x-go-type: models.SpoeFiles
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/spoe/spoe_files:
+    get:
+      summary: Return all available SPOE files
+      description: Returns all available SPOE files.
+      operationId: getAllSpoeFiles
+      tags:
+        - Spoe
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_files'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Creates SPOE file with its entries
+      description: Creates SPOE file with its entries.
+      operationId: createSpoe
+      tags:
+        - Spoe
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: The spoe file to upload
+      responses:
+        '201':
+          description: SPOE file created with its entries
+          content:
+            application/json:
+              schema:
+                type: string
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/spoe/spoe_files/{name}:
+    get:
+      summary: Return one SPOE file
+      description: Returns one SPOE file.
+      operationId: getOneSpoeFile
+      tags:
+        - Spoe
+      parameters:
+        - name: name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    delete:
+      summary: Delete SPOE file
+      description: Deletes SPOE file.
+      operationId: deleteSpoeFile
+      tags:
+        - Spoe
+      parameters:
+        - name: name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: SPOE file deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

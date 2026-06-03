@@ -1,0 +1,148 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime SSL Certificates
+servers:
+  - url: /v3
+components:
+  schemas:
+    ssl_certificate:
+      type: object
+      x-go-type: models.SslCertificate
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    ssl_certificates:
+      type: array
+      items:
+        $ref: '#/components/schemas/ssl_certificate'
+      x-go-type: models.SslCertificates
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/ssl_certs:
+    get:
+      summary: Return a list of SSL certificate files
+      description: Returns certificate files descriptions from runtime.
+      operationId: getAllCerts
+      tags:
+        - SSLRuntime
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_certificates'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Create a new SSL certificate file
+      description: Creates a new SSL certificate file using the runtime socket.
+      operationId: createCert
+      tags:
+        - SSLRuntime
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+                  description: Certificate file
+      responses:
+        '201':
+          description: Certificate created
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+  /services/haproxy/runtime/ssl_certs/{name}:
+    get:
+      summary: Return one structured certificate
+      description: Returns one structured certificate using the runtime socket.
+      operationId: getCert
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL certificate name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssl_certificate'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace the contents of a certificate
+      description: Sets a certificate payload using the runtime socket.
+      operationId: replaceCert
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL certificate name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file_upload:
+                contentType: text/plain
+            schema:
+              type: object
+              required:
+                - file_upload
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File updated
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: file_upload
+    delete:
+      summary: Delete a certificate
+      description: Deletes a certificate using the runtime socket.
+      operationId: deleteCert
+      tags:
+        - SSLRuntime
+      parameters:
+        - name: name
+          in: path
+          description: SSL certificate name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '204':
+          description: File deleted
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

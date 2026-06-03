@@ -1,0 +1,107 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime Stick Table Entries
+servers:
+  - url: /v3
+components:
+  schemas:
+    stick_table_entry:
+      type: object
+      x-go-type: models.StickTableEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    stick_table_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/stick_table_entry'
+      x-go-type: models.StickTableEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/stick_tables/{parent_name}/entries:
+    get:
+      summary: Return Stick Table Entries
+      description: Returns an array of all entries in a given stick tables.
+      operationId: getStickTableEntries
+      tags:
+        - StickTable
+      parameters:
+        - name: parent_name
+          in: path
+          description: Stick table name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: filter
+          in: query
+          description: A list of filters in format data.<type> <operator> <value> separated by comma
+          required: false
+          schema:
+            type: string
+            pattern: '^[^\r\n;#]+$'
+        - name: key
+          in: query
+          description: Key which we want the entries for
+          required: false
+          schema:
+            type: string
+            pattern: '^[^\r\n;#]+$'
+        - name: count
+          in: query
+          description: Max number of entries to be returned for pagination
+          required: false
+          schema:
+            type: integer
+            # Keep the pointer so the handler can distinguish an omitted count
+            # (return all entries from offset) from an explicit count=0 (empty page).
+            x-go-type-skip-optional-pointer: false
+        - name: offset
+          in: query
+          description: Offset which indicates how many items we skip in pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stick_table_entries'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Set Entry to Stick Table
+      description: Create or update a stick-table entry in the table.
+      operationId: setStickTableEntries
+      tags:
+        - StickTable
+      parameters:
+        - name: parent_name
+          in: path
+          description: Stick table name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+                - data_type
+              properties:
+                key:
+                  type: string
+                  pattern: '^[^\r\n;#]+$'
+                data_type:
+                  $ref: '#/components/schemas/stick_table_entry'
+      responses:
+        '204':
+          description: Successful operation
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: stick_table_entry

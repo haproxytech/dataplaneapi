@@ -1,0 +1,484 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Peers
+  description: An API for managing HAProxy peer section and peer entry configurations.
+servers:
+  - url: /v3
+components:
+  schemas:
+    peer_section:
+      type: object
+      x-go-type: models.PeerSection
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    peer_sections:
+      type: array
+      items:
+        $ref: '#/components/schemas/peer_section'
+      x-go-type: models.PeerSections
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    peer_entry:
+      type: object
+      x-go-type: models.PeerEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    peer_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/peer_entry'
+      x-go-type: models.PeerEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/configuration/peer_section:
+    get:
+      summary: Return an array of peer sections
+      description: Returns an array of all configured peer sections.
+      operationId: getPeerSections
+      tags:
+        - Peer
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_sections'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a peer section
+      description: Adds a new peer section to the configuration file.
+      operationId: createPeer
+      tags:
+        - Peer
+      parameters:
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/peer_section'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_section'
+        '201':
+          description: Peer section created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_section'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+
+  /services/haproxy/configuration/peer_section/{name}:
+    get:
+      summary: Return a peer section
+      description: Returns one peer section configuration by its name.
+      operationId: getPeerSection
+      tags:
+        - Peer
+      parameters:
+        - name: name
+          in: path
+          description: Peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: full_section
+          in: query
+          description: Indicates if the action affects the specified child resources as well
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_section'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    delete:
+      summary: Delete a peer section
+      description: Deletes a peer section from the configuration by its name.
+      operationId: deletePeer
+      tags:
+        - Peer
+      parameters:
+        - name: name
+          in: path
+          description: Peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Peer section deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+
+  /services/haproxy/configuration/peer_entries:
+    get:
+      summary: Return an array of peer entries
+      description: Returns an array of all peer entries belonging to the specified peer section.
+      operationId: getPeerEntries
+      tags:
+        - PeerEntry
+      parameters:
+        - name: peer_section
+          in: query
+          description: Parent peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_entries'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a peer entry
+      description: Adds a new peer entry to the specified peer section.
+      operationId: createPeerEntry
+      tags:
+        - PeerEntry
+      parameters:
+        - name: peer_section
+          in: query
+          description: Parent peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/peer_entry'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_entry'
+        '201':
+          description: Peer entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_entry'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+
+  /services/haproxy/configuration/peer_entries/{name}:
+    get:
+      summary: Return a peer entry
+      description: Returns one peer entry from the specified peer section by name.
+      operationId: getPeerEntry
+      tags:
+        - PeerEntry
+      parameters:
+        - name: name
+          in: path
+          description: Peer entry name
+          required: true
+          schema:
+            type: string
+        - name: peer_section
+          in: query
+          description: Parent peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_entry'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a peer entry
+      description: Replaces a peer entry in the specified peer section by name.
+      operationId: replacePeerEntry
+      tags:
+        - PeerEntry
+      parameters:
+        - name: name
+          in: path
+          description: Peer entry name
+          required: true
+          schema:
+            type: string
+        - name: peer_section
+          in: query
+          description: Parent peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/peer_entry'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_entry'
+        '200':
+          description: Peer entry replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peer_entry'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a peer entry
+      description: Deletes a peer entry from the specified peer section by name.
+      operationId: deletePeerEntry
+      tags:
+        - PeerEntry
+      parameters:
+        - name: name
+          in: path
+          description: Peer entry name
+          required: true
+          schema:
+            type: string
+        - name: peer_section
+          in: query
+          description: Parent peer section name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Peer entry deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

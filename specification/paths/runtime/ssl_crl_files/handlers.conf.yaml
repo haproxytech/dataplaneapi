@@ -1,0 +1,12 @@
+package: ssl_crl_files
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output: handlers/runtime/ssl_crl_files/ssl_crl_files.gen.go
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer: true
+  prefer-skip-optional-pointer-with-omitzero: true
+import-mapping:
+  ../../../models/common/responses/models.yaml: "-"

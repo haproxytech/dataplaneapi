@@ -1,0 +1,157 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Runtime Maps
+servers:
+  - url: /v3
+components:
+  schemas:
+    map:
+      type: object
+      x-go-type: models.Map
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    maps:
+      type: array
+      items:
+        $ref: '#/components/schemas/map'
+      x-go-type: models.Maps
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    map_entry:
+      type: object
+      x-go-type: models.MapEntry
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    map_entries:
+      type: array
+      items:
+        $ref: '#/components/schemas/map_entry'
+      x-go-type: models.MapEntries
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/runtime/maps:
+    get:
+      summary: Return runtime map files
+      description: Returns runtime map files.
+      operationId: getAllRuntimeMapFiles
+      tags:
+        - Maps
+      parameters:
+        - name: include_unmanaged
+          in: query
+          description: If true, also show unmanaged map files loaded in haproxy
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/maps'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/runtime/maps/{name}:
+    get:
+      summary: Return one runtime map file
+      description: Returns one runtime map file.
+      operationId: getOneRuntimeMap
+      tags:
+        - Maps
+      parameters:
+        - name: name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Add a new map payload
+      description: Adds a new map payload.
+      operationId: addPayloadRuntimeMap
+      tags:
+        - Maps
+      parameters:
+        - name: name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: force_sync
+          in: query
+          description: If true, immediately syncs changes to disk
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_entries'
+      responses:
+        '201':
+          description: Map payload added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_entries'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Remove all map entries from the map file
+      description: Remove all map entries from the map file.
+      operationId: clearRuntimeMap
+      tags:
+        - Maps
+      parameters:
+        - name: name
+          in: path
+          description: Map file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: forceDelete
+          in: query
+          description: If true, deletes file from disk
+          required: false
+          schema:
+            type: boolean
+        - name: force_sync
+          in: query
+          description: If true, immediately syncs changes to disk
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '204':
+          description: All map entries deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

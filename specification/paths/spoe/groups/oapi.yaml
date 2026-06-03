@@ -1,0 +1,265 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - SPOE Groups
+servers:
+  - url: /v3
+components:
+  schemas:
+    spoe_group:
+      type: object
+      x-go-type: models.SpoeGroup
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    spoe_groups:
+      type: array
+      items:
+        $ref: '#/components/schemas/spoe_group'
+      x-go-type: models.SpoeGroups
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/groups:
+    get:
+      summary: Return an array of SPOE groups
+      description: Returns an array of all configured SPOE groups in one SPOE scope.
+      operationId: getAllSpoeGroup
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_groups'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new SPOE groups
+      description: Adds a new SPOE groups to the SPOE scope.
+      operationId: createSpoeGroup
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/spoe_group'
+      responses:
+        '201':
+          description: Spoe groups created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_group'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/groups/{name}:
+    get:
+      summary: Return a SPOE groups
+      description: Returns one SPOE groups configuration in one SPOE scope.
+      operationId: getSpoeGroup
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Spoe group name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Spoe configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_group'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a SPOE groups
+      description: Replaces a SPOE groups configuration in one SPOE scope.
+      operationId: replaceSpoeGroup
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Spoe group name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/spoe_group'
+      responses:
+        '200':
+          description: Spoe groups replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spoe_group'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a SPOE groups
+      description: Deletes a SPOE groups from the one SPOE scope.
+      operationId: deleteSpoeGroup
+      tags:
+        - Spoe
+      parameters:
+        - name: parent_name
+          in: path
+          description: SPOE file name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: scope_name
+          in: path
+          description: Spoe scope name
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Spoe group name
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Spoe group deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

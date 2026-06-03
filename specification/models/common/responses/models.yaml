@@ -1,0 +1,70 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Common responses
+  version: "3.0"
+  description: Common response types
+servers:
+  - url: /v3
+components:
+  schemas:
+    error:
+      type: object
+      x-go-type: models.Error
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+  responses:
+    DefaultError:
+      description: General Error
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    AlreadyExists:
+      description: The specified resource already exists
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+              $ref: '#/components/schemas/error'
+    NotAcceptable:
+      description: The specified resource cannot be handled
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    BadRequest:
+      description: Bad request
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    NotFound:
+      description: The specified resource was not found
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'

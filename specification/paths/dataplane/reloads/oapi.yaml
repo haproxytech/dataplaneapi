@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Reloads
+servers:
+  - url: /v3
+components:
+  schemas:
+    reload:
+      type: object
+      x-go-type: models.Reload
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    reloads:
+      type: array
+      items:
+        $ref: '#/components/schemas/reload'
+      x-go-type: models.Reloads
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+  /services/haproxy/reloads:
+    get:
+      summary: Return list of HAProxy Reloads.
+      description: Returns a list of HAProxy reloads.
+      operationId: getReloads
+      tags:
+        - Reloads
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reloads'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+  /services/haproxy/reloads/{id}:
+    get:
+      summary: Return one HAProxy reload status
+      description: Returns one HAProxy reload status.
+      operationId: getReload
+      tags:
+        - Reloads
+      parameters:
+        - name: id
+          in: path
+          description: Reload id
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}-\d{2}-\d+$'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reload'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
