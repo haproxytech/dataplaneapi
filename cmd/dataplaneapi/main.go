@@ -24,15 +24,11 @@ import (
 	"syscall"
 
 	_ "github.com/KimMachineGun/automemlimit"
-	loads "github.com/go-openapi/loads"
-	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/security"
 	"github.com/haproxytech/client-native/v6/models"
 	"github.com/haproxytech/client-native/v6/storage"
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"
-	"github.com/haproxytech/dataplaneapi/operations"
 	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
 	flags "github.com/jessevdk/go-flags"
 	"github.com/joho/godotenv"
@@ -80,32 +76,26 @@ func startRuntimeDebugServer() context.CancelFunc {
 	return cancelDebugServer
 }
 
-func startServer(cfg *configuration.Configuration, cancelDebugServer context.CancelFunc) (reload configuration.AtomicBool) { //nolint: maintidx
-	swaggerSpec, err := loads.Embedded(dataplaneapi.SwaggerJSON, dataplaneapi.FlatSwaggerJSON)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
+func startServer(cfg *configuration.Configuration, cancelDebugServer context.CancelFunc) (reload configuration.AtomicBool) {
 	dataplaneapi.BuildTime = BuildTime
 	dataplaneapi.Version = fmt.Sprintf("%s %s%s", GitTag, GitCommit, GitDirty)
 
-	api := operations.NewDataPlaneAPI(swaggerSpec)
-	server := dataplaneapi.NewServer(api)
+	server := dataplaneapi.NewServer()
+	server.Logger = log.Printf
 
 	parser := flags.NewParser(server, flags.Default)
 	parser.ShortDescription = "HAProxy Data Plane API"
 	parser.LongDescription = "API for editing and managing haproxy instances"
 
-	server.ConfigureFlags()
-	for _, optsGroup := range api.CommandLineOptionsGroups {
-		_, err = parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
+	for _, optsGroup := range dataplaneapi.GetCommandLineOptionsGroups() {
+		_, err := parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
 	}
 
+	var err error
 	_, err = parser.AddGroup("Show version", "Show build and version information", &cliOptions)
 	if err != nil {
 		fmt.Println(err)
@@ -220,18 +210,6 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 	err = cfg.Save()
 	if err != nil {
 		log.Fatalf("Error saving configuration: %s", err.Error())
-	}
-
-	// Applies when the Authorization header is set with the Basic scheme
-	api.BasicAuthAuth = configuration.AuthenticateUser
-	api.BasicAuthenticator = func(authentication security.UserPassAuthentication) runtime.Authenticator {
-		// if mTLS is enabled with backing Certificate Authority, skipping basic authentication
-		if len(server.TLSCACertificate) > 0 && server.TLSPort > 0 {
-			return runtime.AuthenticatorFunc(func(i any) (bool, any, error) {
-				return true, "", nil
-			})
-		}
-		return security.BasicAuthRealm("", authentication)
 	}
 
 	dataplaneapi.ContextHandler.Init()
