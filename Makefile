@@ -50,29 +50,6 @@ build:
 e2e: build
 	TESTNAME="$(TESTNAME)" TESTNUMBER=$(TESTNUMBER) TESTDESCRIPTION="$(TESTDESCRIPTION)" SKIP_CLEANUP=$(SKIP_CLEANUP) PREWIPE=$(PREWIPE) HAPROXY_VERSION=$(HAPROXY_VERSION) ./e2e/run.bash
 
-.PHONY: generate-parent-aliases_no_formatting
-generate-parent-aliases_no_formatting:
-	rm -f handlers/parent_*_generated.go
-	go run generate/parents/*.go
-
-.PHONY: generate-parent-aliases
-generate-parent-aliases: generate-parent-aliases_no_formatting gofumpt
-
-
-.PHONY: generate
-generate:
-	cd generate/swagger;docker build \
-		--build-arg SWAGGER_VERSION=${SWAGGER_VERSION} \
-		--build-arg UID=$(shell id -u) \
-		--build-arg GID=$(shell id -g) \
-		-t dataplaneapi-swagger-gen .
-	docker run --rm -v "$(shell pwd)":/data dataplaneapi-swagger-gen
-	generate/post_swagger.sh
-
-.PHONY: generate-native
-generate-native:
-	generate/swagger/script.sh
-	generate/post_swagger.sh
 
 .PHONY: test
 test:
@@ -88,3 +65,16 @@ SPECIFICATION_DIR=specification
 .PHONY: specification
 specification: install-oapi-codegen
 	go run ./cmd/generate/specification --spec-dir $(SPECIFICATION_DIR) --oapi-codegen $(OAPI_CODEGEN)
+
+.PHONY: generate
+generate:
+	cd generate/swagger;docker build \
+		--build-arg SWAGGER_VERSION=${SWAGGER_VERSION} \
+		--build-arg UID=$(shell id -u) \
+		--build-arg GID=$(shell id -g) \
+		-t dataplaneapi-swagger-gen .
+	docker run --rm -v "$(shell pwd)":/data dataplaneapi-swagger-gen
+
+.PHONY: generate-native
+generate-native:
+	generate/swagger/script.sh
