@@ -45,7 +45,7 @@ teardown() {
 @test "spoe_agents: Add a spoe agent" {
     PARENT_NAME="spoefile_example.cfg"
     SCOPE_NAME="%5Bip-reputation%5D"
-    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/agents" "data/post.json" "version=1"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/agents" "data/post.json"
     assert_equal "$SC" 201
 
     resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/agents/post_agent1"

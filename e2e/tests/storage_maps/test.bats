@@ -44,7 +44,7 @@ load 'utils/_helpers'
     assert dpa_docker_exec 'kill -s 12 1'
     sleep 1
 
-    resource_get "$_STORAGE_MAPS_BASE_PATH/"
+    resource_get "$_STORAGE_MAPS_BASE_PATH"
     assert_equal "$SC" 200
 
     assert_equal $(get_json_path "$BODY" '.|length') 1
