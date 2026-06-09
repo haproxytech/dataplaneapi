@@ -16,6 +16,7 @@
 #
 
 _RAW_BASE_PATH="/services/haproxy/configuration/raw"
+_RUNTIME_MAP_FILES_BASE_PATH="/services/haproxy/runtime/maps"
 
 # Identical to resource_post() but with the text/plain content type.
 function resource_post_text() {

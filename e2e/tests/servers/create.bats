@@ -45,7 +45,7 @@ load 'utils/_helpers'
   new_logs=$(dpa_docker_exec 'cat /var/log/dataplaneapi.log' | tail -n $new_logs_count)
 
   echo "$new_logs" # this will help debugging if the test fails
-  assert echo -e "$new_logs" | grep -q "backend test_backend: server test_server added though runtime"
+  assert echo -e "$new_logs" | grep -q "backend test_backend: server test_server added through runtime"
 }
 
 @test "servers: Add a new server to backend through runtime with parent_type/ parent_name" {
@@ -62,7 +62,7 @@ load 'utils/_helpers'
   new_logs=$(dpa_docker_exec 'cat /var/log/dataplaneapi.log' | tail -n $new_logs_count)
 
   echo "$new_logs" # this will help debugging if the test fails
-  assert echo -e "$new_logs" | grep -q "backend test_backend: server test_server added though runtime"
+  assert echo -e "$new_logs" | grep -q "backend test_backend: server test_server added through runtime"
 }
 
 @test "servers: Add a new server to peer" {
