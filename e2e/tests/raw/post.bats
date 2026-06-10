@@ -25,19 +25,19 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "raw: Post new configuration" {
-  resource_post "$_RAW_BASE_PATH" 'data/haproxy.cfg.json'
+  resource_post_text "$_RAW_BASE_PATH" 'data/haproxy.cfg'
   assert_equal "$SC" 202
 }
 
 @test "raw: Post new configuration incorrectly (bug 1219)" {
-  resource_post_text "$_RAW_BASE_PATH" 'data/haproxy.cfg.json'
+  resource_post_text "$_RAW_BASE_PATH" 'data/haproxy_no_newline.cfg'
   assert_equal "$SC" 400
   assert_equal "$(get_json_path "$BODY" '.message')" "invalid configuration: no newline character found"
 }
 
 
 @test "raw: Post new configuration with socket path changed" {
-    resource_post "$_RAW_BASE_PATH" 'data/haproxy_socket.cfg.json'
+  resource_post_text "$_RAW_BASE_PATH" 'data/haproxy_socket.cfg'
 	assert_equal "$SC" 202
 
 	resource_get "$_RAW_BASE_PATH" ""

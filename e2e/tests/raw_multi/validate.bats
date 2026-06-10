@@ -25,6 +25,6 @@ load '../../libs/version'
 _RAW_BASE_PATH="/services/haproxy/configuration/raw"
 
 @test "raw_multi: Validate a new configuration which depends on global.def" {
-  resource_post "$_RAW_BASE_PATH" 'data/haproxy.cfg.json' 'only_validate=1'
+  resource_post_text "$_RAW_BASE_PATH" 'data/haproxy.cfg' 'only_validate=1'
   assert_equal "$SC" 202
 }
