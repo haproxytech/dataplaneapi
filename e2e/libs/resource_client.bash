@@ -26,6 +26,20 @@ function resource_post() {
 	dpa_curl_status_body '$output'
 }
 
+# Identical to resource_post() but posts the raw file body with the
+# text/plain content type. --data-binary is used so newlines in the
+# config file are preserved (curl -d strips them).
+function resource_post_text() {
+  local endpoint="$1" data="@${BATS_TEST_DIRNAME}/$2" qs_params="$3"
+  resource_get "/services/haproxy/configuration/version"
+	version=${BODY}
+  run curl -m 10 -s -H 'content-type: text/plain' --user dataplaneapi:mypassword \
+    "-XPOST" -w "\n%{http_code}" --data-binary "${data}" \
+    "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}?$qs_params&version=$version"
+	assert_success
+	dpa_curl_status_body '$output'
+}
+
 function resource_post_no_data() {
 	local endpoint="$1"; shift
 	get_version
