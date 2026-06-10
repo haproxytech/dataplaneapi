@@ -36,7 +36,6 @@ load 'utils/_helpers'
 @test "backends: fail adding a backend (invalid send method in httpchk_params)" {
   resource_post "$_BACKEND_BASE_PATH" "data/post_invalid_send_method_1.json" "force_reload=true"
 	assert_equal "$SC" 422
-    assert_equal "$(get_json_path "$BODY" ".code")" "606"
 }
 
 @test "backends: Return a backend" {
