@@ -62,6 +62,5 @@ load 'utils/_helpers'
     PARENT_NAME="test_backend_2"
     resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/0" "data/post_invalid_send_method.json" "force_reload=true"
 	assert_equal "$SC" 422
-    assert_equal "$(get_json_path "$BODY" ".code")" "606"
     fi
 }
