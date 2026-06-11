@@ -151,7 +151,17 @@ func (h *HandlerImpl) ReplaceHTTPErrorsSection(w http.ResponseWriter, r *http.Re
 		respond.Error(w, err)
 		return
 	}
-	// Pre-migration behavior: editing an http-errors section never triggered a
-	// reload and always returned 200. Preserved here to avoid a breaking change.
-	respond.JSON(w, http.StatusOK, &data)
+	if params.TransactionId == "" {
+		if params.ForceReload {
+			if err = h.ReloadAgent.ForceReload(); err != nil {
+				respond.Error(w, err)
+				return
+			}
+			respond.JSON(w, http.StatusOK, &data)
+			return
+		}
+		respond.Accepted(w, h.ReloadAgent.Reload(), &data)
+		return
+	}
+	respond.JSON(w, http.StatusAccepted, &data)
 }
