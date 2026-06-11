@@ -134,6 +134,7 @@ allowed:
   - makefile
   - maxconn
   - mexchanger
+  - middleware
   - migrator
   - minimalistic
   - minsize
@@ -213,6 +214,7 @@ allowed:
   - userlists
   - utils
   - uweight
+  - validator
   - vfg
   - vite
   - vrrp
@@ -226,3 +228,4 @@ allowed:
   - rehaul
   - rebase
   - XXXX
+  - oapi
