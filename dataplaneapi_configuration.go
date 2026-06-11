@@ -25,7 +25,10 @@ import (
 	"github.com/haproxytech/dataplaneapi/misc"
 )
 
-func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //nolint: cyclop
+// SyncWithFileSettings is one flat assignment block per file setting; splitting
+// it up would only scatter the repetition, so the complexity linters are
+// silenced.
+func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //nolint:cyclop,maintidx
 	configStorage := cfg.GetStorageData()
 	// This is added to allow backward compatibility if no scheme is defined it defaults to specification schemes
 	// and recently we added https to specification for clarity, and then old configs without scheme in them would
@@ -52,6 +55,12 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //
 		s, err := units.FromHumanSize(*configStorage.Dataplaneapi.MaxHeaderSize)
 		if err == nil {
 			server.MaxHeaderSize = flagext.ByteSize(s)
+		}
+	}
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.MaxBodySize != nil && !misc.HasOSArg("", "max-body-size", "") {
+		s, err := units.FromHumanSize(*configStorage.Dataplaneapi.MaxBodySize)
+		if err == nil {
+			server.MaxBodySize = flagext.ByteSize(s)
 		}
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.SocketPath != nil && !misc.HasOSArg("", "socket-path", "") {

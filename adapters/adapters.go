@@ -207,6 +207,24 @@ func BasicAuthMiddleware(skip bool) Adapter {
 	}
 }
 
+// MaxBodySizeMiddleware caps every request body at maxSize bytes with
+// http.MaxBytesReader. The spec validator buffers the full body in memory
+// before handlers run, so without a cap a single oversized upload can exhaust
+// the process. A maxSize of 0 disables the limit.
+func MaxBodySizeMiddleware(maxSize int64) Adapter {
+	return func(h http.Handler) http.Handler {
+		if maxSize <= 0 {
+			return h
+		}
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.Body != nil {
+				r.Body = http.MaxBytesReader(w, r.Body, maxSize)
+			}
+			h.ServeHTTP(w, r)
+		})
+	}
+}
+
 // SpecDocsMiddleware serves the raw OpenAPI v2 document at /swagger.json and a Redoc
 // documentation UI at {basePath}/docs, both without authentication, matching the
 // behavior of the previous go-swagger server. All other requests pass through.

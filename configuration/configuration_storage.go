@@ -31,6 +31,7 @@ type configTypeDataplaneapi struct {
 	GracefulTimeout  *string                `yaml:"graceful_timeout,omitempty"`
 	ShowSystemInfo   *bool                  `yaml:"show_system_info,omitempty"`
 	MaxHeaderSize    *string                `yaml:"max_header_size,omitempty"`
+	MaxBodySize      *string                `yaml:"max_body_size,omitempty"`
 	SocketPath       *flags.Filename        `yaml:"socket_path,omitempty"`
 	DebugSocketPath  *string                `yaml:"debug_socket_path,omitempty"`
 	Host             *string                `yaml:"host,omitempty"`
