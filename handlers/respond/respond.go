@@ -16,6 +16,8 @@ package respond
 
 import (
 	"bytes"
+	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -109,6 +111,23 @@ func RuntimeError(w http.ResponseWriter, err error) {
 	code := int64(status)
 	msg := err.Error()
 	JSON(w, status, &models.Error{Code: &code, Message: &msg})
+}
+
+// MultipartError writes the error from parsing a multipart upload body. With
+// body validation excluded for multipart operations, the first read of the
+// body happens in the handler's ParseMultipartForm call, so an upload that
+// hit the server's max-body-size cap surfaces here as *http.MaxBytesError and
+// maps to 413, matching the validator's handling of buffered bodies. Any
+// other parse failure is a plain 400.
+func MultipartError(w http.ResponseWriter, err error) {
+	var maxBytesErr *http.MaxBytesError
+	if errors.As(err, &maxBytesErr) {
+		code := int64(http.StatusRequestEntityTooLarge)
+		msg := fmt.Sprintf("request body exceeds the maximum allowed size of %d bytes", maxBytesErr.Limit)
+		JSON(w, http.StatusRequestEntityTooLarge, &models.Error{Code: &code, Message: &msg})
+		return
+	}
+	BadRequest(w, err.Error())
 }
 
 // BadRequest writes a 400 response with msg as the error message.

@@ -65,6 +65,17 @@ func NewValidator(spec *openapi3.T) func(http.Handler) http.Handler {
 	filterOptions := &openapi3filter.Options{
 		ExcludeReadOnlyValidations: true,
 	}
+	// Multipart operations skip body validation entirely: openapi3filter buffers
+	// the whole body in memory to validate it (go-swagger streamed uploads to
+	// disk), and every multipart body in this API is a single opaque
+	// "file_upload" binary part with nothing to validate. The handlers'
+	// ParseMultipartForm/FormFile calls stream the upload and already reject a
+	// missing part. The Content-Type check that openapi3filter would have done
+	// (415) is preserved below.
+	multipartFilterOptions := &openapi3filter.Options{
+		ExcludeReadOnlyValidations: true,
+		ExcludeRequestBody:         true,
+	}
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			route, pathParams := findRoute(specRoutes, serverPrefix, r)
@@ -83,11 +94,24 @@ func NewValidator(spec *openapi3.T) func(http.Handler) http.Handler {
 				return
 			}
 
+			options := filterOptions
+			if content := requestBodyContent(route.Operation); content["multipart/form-data"] != nil {
+				ct, _, _ := strings.Cut(r.Header.Get("Content-Type"), ";")
+				// Media types are case-insensitive (RFC 9110); the spec's
+				// content keys are lowercase.
+				if content[strings.ToLower(strings.TrimSpace(ct))] == nil {
+					writeError(w, http.StatusUnsupportedMediaType,
+						fmt.Sprintf("%s %q", prefixInvalidCT, ct))
+					return
+				}
+				options = multipartFilterOptions
+			}
+
 			err := openapi3filter.ValidateRequest(r.Context(), &openapi3filter.RequestValidationInput{
 				Request:    r,
 				PathParams: pathParams,
 				Route:      route,
-				Options:    filterOptions,
+				Options:    options,
 			})
 			if err != nil {
 				statusCode, msg := normalizeValidationError(err, http.StatusBadRequest)
@@ -153,6 +177,15 @@ func responseContentTypes(op *openapi3.Operation) []string {
 	}
 	slices.Sort(out)
 	return out
+}
+
+// requestBodyContent returns the operation's declared request body content
+// map, or nil when the operation has no request body.
+func requestBodyContent(op *openapi3.Operation) openapi3.Content {
+	if op == nil || op.RequestBody == nil || op.RequestBody.Value == nil {
+		return nil
+	}
+	return op.RequestBody.Value.Content
 }
 
 // acceptable reports whether the Accept header allows at least one of the

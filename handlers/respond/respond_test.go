@@ -15,9 +15,13 @@
 package respond
 
 import (
+	"bytes"
 	stdjson "encoding/json"
+	"errors"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/go-chi/chi/v5"
@@ -80,6 +84,58 @@ func TestMethodNotAllowed(t *testing.T) {
 	}
 	if want := "method PATCH is not allowed for path /v3/info"; e.Message != want {
 		t.Errorf("body message = %q, want %q", e.Message, want)
+	}
+}
+
+// TestMultipartErrorBodyTooLarge runs a real multipart body through
+// ParseMultipartForm with a MaxBytesReader cap, mirroring the upload handlers
+// behind MaxBodySizeMiddleware, to verify the *http.MaxBytesError survives the
+// parse error chain and maps to 413.
+func TestMultipartErrorBodyTooLarge(t *testing.T) {
+	var buf bytes.Buffer
+	mp := multipart.NewWriter(&buf)
+	part, err := mp.CreateFormFile("file_upload", "test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = part.Write(bytes.Repeat([]byte("x"), 1024)); err != nil {
+		t.Fatal(err)
+	}
+	mp.Close()
+
+	rec := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/v3/files", &buf)
+	req.Header.Set("Content-Type", mp.FormDataContentType())
+	req.Body = http.MaxBytesReader(rec, req.Body, 64)
+
+	err = req.ParseMultipartForm(32 << 20)
+	if err == nil {
+		t.Fatal("ParseMultipartForm succeeded, want body-too-large error")
+	}
+	MultipartError(rec, err)
+
+	if rec.Code != http.StatusRequestEntityTooLarge {
+		t.Errorf("status = %d, want 413", rec.Code)
+	}
+	e := decodeErrorBody(t, rec)
+	if e.Code != http.StatusRequestEntityTooLarge {
+		t.Errorf("body code = %d, want 413", e.Code)
+	}
+	if want := "request body exceeds the maximum allowed size of 64 bytes"; e.Message != want {
+		t.Errorf("body message = %q, want %q", e.Message, want)
+	}
+}
+
+func TestMultipartErrorBadBody(t *testing.T) {
+	rec := httptest.NewRecorder()
+	MultipartError(rec, errors.New("multipart: boundary is empty"))
+
+	if rec.Code != http.StatusBadRequest {
+		t.Errorf("status = %d, want 400", rec.Code)
+	}
+	e := decodeErrorBody(t, rec)
+	if !strings.Contains(e.Message, "boundary is empty") {
+		t.Errorf("body message = %q, want the parse error", e.Message)
 	}
 }
 

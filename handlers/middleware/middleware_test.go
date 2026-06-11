@@ -15,6 +15,8 @@
 package middleware
 
 import (
+	"bytes"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -82,6 +84,26 @@ paths:
             application/json:
               schema:
                 type: object
+  /files:
+    post:
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file_upload]
+              properties:
+                file_upload:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
 `
 
 // newTestHandler mirrors the production setup: the validator wraps each
@@ -97,11 +119,21 @@ func newTestHandler(t *testing.T) http.Handler {
 	ok := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
+	// upload mirrors the production storage/runtime upload handlers: the
+	// validator must leave the multipart body unread so FormFile can stream it.
+	upload := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if _, _, err := r.FormFile("file_upload"); err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+	})
 	mw := NewValidator(spec)
 	sub := chi.NewRouter()
 	sub.Method(http.MethodGet, "/things", mw(ok))
 	sub.Method(http.MethodPost, "/things", mw(ok))
 	sub.Method(http.MethodGet, "/things/{id}", mw(ok))
+	sub.Method(http.MethodPost, "/files", mw(upload))
 	root := chi.NewRouter()
 	root.Mount("/v3", sub)
 	return root
@@ -153,6 +185,61 @@ func TestValidator(t *testing.T) {
 				t.Errorf("got status %d, want %d (body: %s)", rec.Code, tt.wantStatus, rec.Body.String())
 			}
 		})
+	}
+}
+
+// TestValidatorMultipart verifies that multipart operations skip body
+// validation (the body must remain unread for the handler to stream it) while
+// keeping the 415 check for undeclared content types.
+func TestValidatorMultipart(t *testing.T) {
+	h := newTestHandler(t)
+
+	var buf bytes.Buffer
+	mp := multipart.NewWriter(&buf)
+	part, err := mp.CreateFormFile("file_upload", "test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := part.Write([]byte("payload")); err != nil {
+		t.Fatal(err)
+	}
+	mp.Close()
+
+	req := httptest.NewRequest(http.MethodPost, "/v3/files", &buf)
+	req.Header.Set("Content-Type", mp.FormDataContentType())
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Errorf("multipart upload: got status %d, want 200 (body: %s)", rec.Code, rec.Body.String())
+	}
+
+	req = httptest.NewRequest(http.MethodPost, "/v3/files", strings.NewReader(`{}`))
+	req.Header.Set("Content-Type", "application/json")
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusUnsupportedMediaType {
+		t.Errorf("wrong content type: got status %d, want 415 (body: %s)", rec.Code, rec.Body.String())
+	}
+
+	// Media types are case-insensitive (RFC 9110): an uppercase Content-Type
+	// must not trip the 415 check.
+	buf.Reset()
+	mp = multipart.NewWriter(&buf)
+	part, err = mp.CreateFormFile("file_upload", "test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := part.Write([]byte("payload")); err != nil {
+		t.Fatal(err)
+	}
+	mp.Close()
+	req = httptest.NewRequest(http.MethodPost, "/v3/files", &buf)
+	req.Header.Set("Content-Type", strings.Replace(mp.FormDataContentType(),
+		"multipart/form-data", "Multipart/Form-Data", 1))
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Errorf("uppercase content type: got status %d, want 200 (body: %s)", rec.Code, rec.Body.String())
 	}
 }
 

@@ -80,7 +80,7 @@ func (h *HandlerImpl) GetAllStorageGeneralFiles(w http.ResponseWriter, r *http.R
 
 func (h *HandlerImpl) CreateStorageGeneralFile(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		respond.BadRequest(w, err.Error())
+		respond.MultipartError(w, err)
 		return
 	}
 	file, header, err := r.FormFile("file_upload")
@@ -178,7 +178,7 @@ func (h *HandlerImpl) GetOneStorageGeneralFile(w http.ResponseWriter, r *http.Re
 
 func (h *HandlerImpl) ReplaceStorageGeneralFile(w http.ResponseWriter, r *http.Request, name string, params ReplaceStorageGeneralFileParams) {
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		respond.BadRequest(w, err.Error())
+		respond.MultipartError(w, err)
 		return
 	}
 	file, _, err := r.FormFile("file_upload")
