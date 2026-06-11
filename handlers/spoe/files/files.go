@@ -62,7 +62,7 @@ func (h *HandlerImpl) GetAllSpoeFiles(w http.ResponseWriter, r *http.Request) {
 
 func (h *HandlerImpl) CreateSpoe(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		respond.BadRequest(w, err.Error())
+		respond.MultipartError(w, err)
 		return
 	}
 	file, header, err := r.FormFile("file_upload")

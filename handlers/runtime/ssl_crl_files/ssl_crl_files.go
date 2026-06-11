@@ -60,7 +60,7 @@ func (h *HandlerImpl) GetAllCrl(w http.ResponseWriter, r *http.Request) {
 
 func (h *HandlerImpl) CreateCrl(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		respond.BadRequest(w, err.Error())
+		respond.MultipartError(w, err)
 		return
 	}
 	file, header, err := r.FormFile("file_upload")
@@ -135,7 +135,7 @@ func (h *HandlerImpl) GetCrl(w http.ResponseWriter, r *http.Request, name string
 
 func (h *HandlerImpl) ReplaceCrl(w http.ResponseWriter, r *http.Request, name string) {
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		respond.BadRequest(w, err.Error())
+		respond.MultipartError(w, err)
 		return
 	}
 	file, _, err := r.FormFile("file_upload")

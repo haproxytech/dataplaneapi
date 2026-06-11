@@ -82,7 +82,7 @@ func (h *HandlerImpl) GetAllStorageSSLCertificates(w http.ResponseWriter, r *htt
 
 func (h *HandlerImpl) CreateStorageSSLCertificate(w http.ResponseWriter, r *http.Request, params CreateStorageSSLCertificateParams) {
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		respond.BadRequest(w, err.Error())
+		respond.MultipartError(w, err)
 		return
 	}
 	file, header, err := r.FormFile("file_upload")
