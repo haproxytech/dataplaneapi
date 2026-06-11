@@ -23,6 +23,7 @@ The configuration file is structured into several sections, each corresponding t
 | `graceful_timeout` | string | No | Sets the graceful shutdown timeout |
 | `show_system_info` | boolean | No | Enables or disables the display of system information on the info endpoint |
 | `max_header_size` | string | No | Defines the maximum header size for API requests |
+| `max_body_size` | string | No | Defines the maximum request body size the API will read; 0 means unlimited (defaults to 1GiB) |
 | `socket_path` | string | No | Specifies the path to the API's Unix socket |
 | `debug_socket_path` | string | No | Defines the path for the debugging command socket |
 | `host` | string | No | Sets the host address for the API |

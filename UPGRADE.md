@@ -36,6 +36,12 @@ changes were made intentionally:
   a bug that made the runtime branch unreachable, so this path always returned
   `202`. Clients should treat both `204` and `202` as success.
 
+- **Request bodies are capped at 1 GiB by default.** The old server read
+  request bodies without any size limit. Bodies exceeding the limit are
+  rejected with `413 Request Entity Too Large`. The limit is configurable via
+  `--max-body-size` (or `max_body_size` in the configuration file); `0`
+  disables it.
+
 - **Replacing acme providers, log profiles, crt-stores, mailers sections and
   http-errors sections now triggers a reload.** `PUT` on
   `/services/haproxy/configuration/acme/{name}`, `.../log_profiles/{name}`,

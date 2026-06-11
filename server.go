@@ -59,7 +59,7 @@ func NewServer() *Server {
 // ConfigureAPI configures the API and handlers.
 func (s *Server) ConfigureAPI() {
 	skipBasicAuth := len(s.TLSCACertificate) > 0 && s.TLSPort > 0
-	handler, shutdown := configureAPI(skipBasicAuth)
+	handler, shutdown := configureAPI(skipBasicAuth, int64(s.MaxBodySize))
 	s.handler = handler
 	s.serverShutdown = shutdown
 }
@@ -70,6 +70,7 @@ type Server struct {
 	CleanupTimeout   time.Duration    `long:"cleanup-timeout" description:"grace period for which to wait before killing idle connections" default:"10s"`
 	GracefulTimeout  time.Duration    `long:"graceful-timeout" description:"grace period for which to wait before shutting down the server" default:"15s"`
 	MaxHeaderSize    flagext.ByteSize `long:"max-header-size" description:"controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size of the request body." default:"1MiB"`
+	MaxBodySize      flagext.ByteSize `long:"max-body-size" description:"controls the maximum number of bytes the server will read from a request body before aborting the request. 0 means unlimited." default:"1GiB"`
 
 	SocketPath    flags.Filename `long:"socket-path" description:"the unix socket to listen on" default:"/var/run/data-plane.sock"`
 	domainSocketL net.Listener

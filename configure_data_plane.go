@@ -93,7 +93,7 @@ func GetCommandLineOptionsGroups() []cmdutils.CommandLineOptionsGroup {
 	}
 }
 
-func configureAPI(skipBasicAuth bool) (http.Handler, func()) { //nolint:maintidx
+func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) { //nolint:maintidx
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
 
@@ -258,7 +258,7 @@ func configureAPI(skipBasicAuth bool) (http.Handler, func()) { //nolint:maintidx
 		log.Warning("-- command socket failed to update cn client")
 	}
 
-	// Request flow: RecoverMiddleware → ApacheLog → ConfigVersion → CORS → SpecDocs → BasicAuth → chi router
+	// Request flow: RecoverMiddleware → ApacheLog → ConfigVersion → CORS → SpecDocs → BasicAuth → MaxBodySize → chi router
 	// This matches the go-swagger server's ordering: ConfigVersion sits outside
 	// CORS and auth so the Configuration-Version header is present on 401 and
 	// CORS preflight responses too, and SpecDocs sits in front of BasicAuth so
@@ -266,6 +266,7 @@ func configureAPI(skipBasicAuth bool) (http.Handler, func()) { //nolint:maintidx
 	var adpts []adapters.Adapter
 	adpts = append(
 		adpts,
+		adapters.MaxBodySizeMiddleware(maxBodySize),
 		adapters.BasicAuthMiddleware(skipBasicAuth),
 		adapters.SpecDocsMiddleware(SwaggerJSON, "/v3", "HAProxy Data Plane API"),
 		cors.New(cors.Options{

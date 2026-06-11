@@ -155,3 +155,20 @@ func TestValidator(t *testing.T) {
 		})
 	}
 }
+
+// TestValidatorBodyTooLarge verifies that a body hitting the MaxBodySize cap
+// while the validator buffers it surfaces as 413 instead of a generic 400.
+func TestValidatorBodyTooLarge(t *testing.T) {
+	h := newTestHandler(t)
+	limited := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		r.Body = http.MaxBytesReader(w, r.Body, 8)
+		h.ServeHTTP(w, r)
+	})
+	req := httptest.NewRequest(http.MethodPost, "/v3/things", strings.NewReader(`{"name":"too long for the limit"}`))
+	req.Header.Set("Content-Type", "application/json")
+	rec := httptest.NewRecorder()
+	limited.ServeHTTP(rec, req)
+	if rec.Code != http.StatusRequestEntityTooLarge {
+		t.Errorf("got status %d, want 413 (body: %s)", rec.Code, rec.Body.String())
+	}
+}
