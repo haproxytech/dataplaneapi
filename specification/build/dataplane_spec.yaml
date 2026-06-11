@@ -192,29 +192,11 @@ components:
           type: integer
           x-omitempty: true
         challenge:
-          description: ACME challenge type.
+          description: ACME challenge type. Only http-01 and dns-01 are supported.
           enum:
             - http-01
             - dns-01
-            - dns-persist-01
           type: string
-        challenge_ready:
-          description: |
-            How to wait for the DNS propagation: either wait for a CLI event on
-            the runtime socket (useful with dataplaneapi), or let HAProxy query
-            the DNS TXT record by itself using the default resolvers, or both,
-            or none at all.
-          items:
-            enum:
-              - cli
-              - dns
-              - none
-            type: string
-          maxItems: 2
-          minItems: 1
-          type: array
-          uniqueItems: true
-          x-omitempty: true
         contact:
           description: Contact email for the ACME account
           type: string
@@ -227,18 +209,6 @@ components:
             https://acme-staging-v02.api.letsencrypt.org/directory
           pattern: ^https://[^\s]+$
           type: string
-        dns_delay:
-          description: Delay before the first DNS resolution attempt and between retries.
-          nullable: true
-          type: integer
-          x-default-unit: s
-          x-duration: true
-        dns_timeout:
-          description: Timeout before DNS propagation check fails when using 'dns' in 'challenge_ready'.
-          nullable: true
-          type: integer
-          x-default-unit: s
-          x-duration: true
         keytype:
           description: Type of key to generate
           enum:
@@ -253,12 +223,6 @@ components:
             type: object
         name:
           description: ACME provider's name
-          type: string
-        profile:
-          description: |
-            Request a specific certificate profile from the CA by including a 'profile'
-            field in the newOrder request (draft-ietf-acme-profiles). Profile names
-            are CA-specific short identifiers (e.g. 'classic', 'shortlived').
           type: string
         reuse_key:
           description: Try to reuse the private key instead of generating a new one.
@@ -402,8 +366,6 @@ components:
               $ref: '#/components/schemas/acls'
             filter_list:
               $ref: '#/components/schemas/filters'
-            filter_sequence_list:
-              $ref: '#/components/schemas/filter_sequences'
             http_after_response_rule_list:
               $ref: '#/components/schemas/http_after_response_rules'
             http_check_list:
@@ -967,8 +929,6 @@ components:
         use_fcgi_app:
           type: string
           x-display-name: FastCGI application
-        use_small_buffers:
-          $ref: '#/components/schemas/use_small_buffers'
       required:
         - name
       title: Backend Base
@@ -1496,13 +1456,6 @@ components:
         tcp_md5sig:
           pattern: ^[^\s]+$
           type: string
-        tcp_ss:
-          description: Sets the TCP Save SYN option for all incoming connections instantiated from this listening socket
-          enum:
-            - 1
-            - 2
-            - 3
-          type: integer
         tcp_user_timeout:
           nullable: true
           type: integer
@@ -2707,8 +2660,6 @@ components:
         unique_id_header:
           type: string
           x-display-name: Unique ID header
-        use_small_buffers:
-          $ref: '#/components/schemas/use_small_buffers'
       required:
         - name
       title: Defaults Base
@@ -3326,13 +3277,6 @@ components:
           x-dependency:
             type:
               value: trace
-        trace_max_fwd:
-          nullable: true
-          type: integer
-          x-dependency:
-            type:
-              value: trace
-          x-display-name: Trace Max Forward
         trace_name:
           pattern: ^[^\s]+$
           type: string
@@ -3357,8 +3301,6 @@ components:
             - bwlim-out
             - cache
             - compression
-            - comp-req
-            - comp-res
             - fcgi-app
             - spoe
             - trace
@@ -3370,37 +3312,6 @@ components:
       x-go-type: models.Filter
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
-    filter_sequence:
-      additionalProperties: false
-      description: |
-        Specifies in which order filters declared on the proxy should be executed
-        for the request or response path. Corresponds to the HAProxy filter-sequence directive.
-      properties:
-        direction:
-          enum:
-            - request
-            - response
-          type: string
-          x-display-name: Direction
-        filters:
-          items:
-            type: string
-          type: array
-          x-display-name: Filters
-        metadata:
-          additionalProperties:
-            type: object
-      required:
-        - direction
-        - filters
-      title: Filter Sequence
-      type: object
-    filter_sequences:
-      description: HAProxy filter sequences array (corresponds to filter-sequence directive)
-      items:
-        $ref: '#/components/schemas/filter_sequence'
-      title: Filter Sequences Array
-      type: array
     filters:
       description: HAProxy filters array (corresponds to filter directive)
       items:
@@ -3410,44 +3321,6 @@ components:
       x-go-type: models.Filters
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
-    force_be_switch:
-      description: |
-        Allow content switching to select a backend instance even if it is
-        disabled or unpublished. May appear multiple times on a frontend.
-      properties:
-        cond:
-          enum:
-            - if
-            - unless
-          type: string
-          x-display-name: Condition
-        cond_test:
-          type: string
-          x-dependency:
-            cond:
-              required: true
-          x-display-name: Condition Test
-        metadata:
-          additionalProperties:
-            type: object
-      required:
-        - cond
-        - cond_test
-      title: Force Backend Switch Rule
-      type: object
-      x-go-name: ForceBeSwitch
-      x-go-type: models.ForceBeSwitch
-      x-go-type-import:
-        path: github.com/haproxytech/client-native/v6/models
-    force_be_switches:
-      items:
-        $ref: '#/components/schemas/force_be_switch'
-      type: array
-      x-go-name: ForceBeSwitches
-      x-go-type: models.ForceBeSwitches
-      x-go-type-import:
-        path: github.com/haproxytech/client-native/v6/models
-      x-omitempty: true
     forwardfor:
       properties:
         enabled:
@@ -3481,10 +3354,6 @@ components:
               $ref: '#/components/schemas/captures'
             filter_list:
               $ref: '#/components/schemas/filters'
-            filter_sequence_list:
-              $ref: '#/components/schemas/filter_sequences'
-            force_be_switch_list:
-              $ref: '#/components/schemas/force_be_switches'
             http_after_response_rule_list:
               $ref: '#/components/schemas/http_after_response_rules'
             http_error_rule_list:
@@ -3946,30 +3815,6 @@ components:
         cluster_secret:
           type: string
           x-display-name: Cluster Secret
-        cpu_affinity:
-          description: |
-            Defines how threads are bound to cpus. Mirrors the HAProxy 3.4 cpu-affinity directive.
-          properties:
-            affinity:
-              enum:
-                - per-core
-                - per-group
-                - auto
-                - per-thread
-                - per-ccx
-              type: string
-              x-display-name: Affinity
-            argument:
-              description: Optional argument used together with the per-group affinity.
-              enum:
-                - auto
-                - loose
-              type: string
-              x-display-name: Argument
-          required:
-            - affinity
-          type: object
-          x-display-name: CPU Affinity
         cpu_maps:
           items:
             properties:
@@ -4188,14 +4033,6 @@ components:
         master-worker:
           type: boolean
           x-display-name: Master Worker Mode
-        max_threads_per_group:
-          description: |
-            Defines the maximum number of threads in a thread group. The minimum value is
-            1 and the maximum value is 64 on 64-bit systems (32 on 32-bit systems).
-          minimum: 1
-          nullable: true
-          type: integer
-          x-display-name: Max Threads Per Group
         metadata:
           additionalProperties:
             type: object
@@ -4303,15 +4140,6 @@ components:
           type: integer
         ssl_options:
           $ref: '#/components/schemas/ssl_options'
-        stats_calculate_max_counters:
-          description: |
-            Activates or deactivates the calculation of stats max counters.
-            Defaults to enabled in HAProxy.
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-display-name: Stats Calculate Max Counters
         stats_file:
           type: string
         stats_maxconn:
@@ -4504,16 +4332,6 @@ components:
             freeFormat: true
             operation: getACLs
             property: acl_name
-        hdr_expr:
-          type: string
-          x-dependency:
-            type:
-              required: true
-              value:
-                - add-headers-bin
-                - del-headers-bin
-                - set-headers-bin
-          x-display-name: Binary Headers Expression
         hdr_format:
           type: string
           x-dependency:
@@ -4540,7 +4358,6 @@ components:
             type:
               value:
                 - del-header
-                - del-headers-bin
           x-display-name: Header Match Method
         hdr_name:
           type: string
@@ -4554,14 +4371,6 @@ components:
                 - set-header
                 - replace-value
           x-display-name: Header Name
-        hdr_prefix:
-          type: string
-          x-dependency:
-            type:
-              value:
-                - add-headers-bin
-                - set-headers-bin
-          x-display-name: Binary Headers Prefix
         log_level:
           enum:
             - emerg
@@ -4578,12 +4387,6 @@ components:
             type:
               required: true
               value: set-log-level
-        log_profile:
-          type: string
-          x-dependency:
-            type:
-              value: do-log
-          x-display-name: Log Profile
         map_file:
           pattern: ^[^\s]+$
           type: string
@@ -4679,12 +4482,10 @@ components:
         type:
           enum:
             - add-header
-            - add-headers-bin
             - allow
             - capture
             - del-acl
             - del-header
-            - del-headers-bin
             - del-map
             - replace-header
             - replace-value
@@ -4695,7 +4496,6 @@ components:
             - sc-set-gpt
             - sc-set-gpt0
             - set-header
-            - set-headers-bin
             - set-log-level
             - set-map
             - set-status
@@ -5340,16 +5140,6 @@ components:
                 - set-src-port
                 - set-retries
           x-display-name: Standard HAProxy expression
-        hdr_expr:
-          type: string
-          x-dependency:
-            type:
-              required: true
-              value:
-                - add-headers-bin
-                - del-headers-bin
-                - set-headers-bin
-          x-display-name: Binary Headers Expression
         hdr_format:
           type: string
           x-dependency:
@@ -5376,7 +5166,6 @@ components:
             type:
               value:
                 - del-header
-                - del-headers-bin
           x-display-name: Header Match Method
         hdr_name:
           type: string
@@ -5390,14 +5179,6 @@ components:
                 - set-header
                 - replace-value
           x-display-name: Header Name
-        hdr_prefix:
-          type: string
-          x-dependency:
-            type:
-              value:
-                - add-headers-bin
-                - set-headers-bin
-          x-display-name: Binary Headers Prefix
         hint_format:
           pattern: ^[^\s]+$
           type: string
@@ -5430,12 +5211,6 @@ components:
             type:
               required: true
               value: set-log-level
-        log_profile:
-          type: string
-          x-dependency:
-            type:
-              value: do-log
-          x-display-name: Log Profile
         lua_action:
           pattern: ^[^\s]+$
           type: string
@@ -5763,12 +5538,9 @@ components:
               value: set-timeout
         timeout_type:
           enum:
-            - client
-            - connect
-            - queue
             - server
-            - tarpit
             - tunnel
+            - client
           type: string
           x-dependency:
             type:
@@ -5808,14 +5580,12 @@ components:
           enum:
             - add-acl
             - add-header
-            - add-headers-bin
             - allow
             - auth
             - cache-use
             - capture
             - del-acl
             - del-header
-            - del-headers-bin
             - del-map
             - deny
             - disable-l7-retry
@@ -5846,7 +5616,6 @@ components:
             - set-fc-mark
             - set-fc-tos
             - set-header
-            - set-headers-bin
             - set-log-level
             - set-map
             - set-mark
@@ -6064,16 +5833,6 @@ components:
                 - set-fc-mark
                 - set-fc-tos
           x-display-name: Standard HAProxy expression
-        hdr_expr:
-          type: string
-          x-dependency:
-            type:
-              required: true
-              value:
-                - add-headers-bin
-                - del-headers-bin
-                - set-headers-bin
-          x-display-name: Binary Headers Expression
         hdr_format:
           type: string
           x-dependency:
@@ -6100,7 +5859,6 @@ components:
             type:
               value:
                 - del-header
-                - del-headers-bin
           x-display-name: Header Match Method
         hdr_name:
           type: string
@@ -6114,14 +5872,6 @@ components:
                 - set-header
                 - replace-value
           x-display-name: Header Name
-        hdr_prefix:
-          type: string
-          x-dependency:
-            type:
-              value:
-                - add-headers-bin
-                - set-headers-bin
-          x-display-name: Binary Headers Prefix
         log_level:
           enum:
             - emerg
@@ -6138,12 +5888,6 @@ components:
             type:
               required: true
               value: set-log-level
-        log_profile:
-          type: string
-          x-dependency:
-            type:
-              value: do-log
-          x-display-name: Log Profile
         lua_action:
           pattern: ^[^\s]+$
           type: string
@@ -6392,12 +6136,9 @@ components:
               value: set-timeout
         timeout_type:
           enum:
-            - client
-            - connect
-            - queue
             - server
-            - tarpit
             - tunnel
+            - client
           type: string
           x-dependency:
             type:
@@ -6437,13 +6178,11 @@ components:
           enum:
             - add-acl
             - add-header
-            - add-headers-bin
             - allow
             - cache-store
             - capture
             - del-acl
             - del-header
-            - del-headers-bin
             - del-map
             - deny
             - lua
@@ -6462,7 +6201,6 @@ components:
             - set-fc-mark
             - set-fc-tos
             - set-header
-            - set-headers-bin
             - set-log-level
             - set-map
             - set-mark
@@ -9337,22 +9075,6 @@ components:
             type: string
           type: array
           x-omitempty: true
-        quic-cc-algo:
-          enum:
-            - cubic
-            - newreno
-            - bbr
-            - nocc
-          type: string
-        quic_cc_algo_max_window:
-          maximum: 4.194304e+06
-          minimum: 10
-          nullable: true
-          type: integer
-          x-default-unit: k
-          x-dependency:
-            quic-cc-algo: null
-          x-size: true
         redir:
           type: string
           x-display-name: Prefix
@@ -10721,9 +10443,6 @@ components:
           pattern: ^[^\s]+$
           type: string
           x-omitempty: false
-        stats_show_version:
-          type: boolean
-          x-display-name: Stats Show Version
         stats_uri_prefix:
           pattern: ^[^\s]+$
           type: string
@@ -11477,12 +11196,6 @@ components:
               value: set-log-level
             type:
               value: content
-        log_profile:
-          type: string
-          x-dependency:
-            action:
-              value: do-log
-          x-display-name: Log Profile
         lua_action:
           pattern: ^[^\s]+$
           type: string
@@ -11910,12 +11623,6 @@ components:
               value: set-log-level
             type:
               value: content
-        log_profile:
-          type: string
-          x-dependency:
-            action:
-              value: do-log
-          x-display-name: Log Profile
         lua_action:
           pattern: ^[^\s]+$
           type: string
@@ -12184,11 +11891,6 @@ components:
           type: integer
           x-display-name: Buffer Size
           x-size: true
-        bufsize_large:
-          description: Size in bytes of large buffers. By default, support for large buffers is not enabled.
-          nullable: true
-          type: integer
-          x-size: true
         bufsize_small:
           description: Size of small buffers (for memory-restrained situations)
           minimum: 1
@@ -12278,10 +11980,6 @@ components:
           nullable: true
           type: integer
           x-display-name: Lua Maximum Memory Usage
-        openlibs:
-          description: 'Selects which Lua standard libraries are loaded. Accepts "all", "none", or a comma-separated list of: table, io, os, string, math, utf8, package, debug.'
-          type: string
-          x-display-name: Lua Open Libraries
         service_timeout:
           minimum: 0
           nullable: true
@@ -12312,18 +12010,9 @@ components:
             - enabled
             - disabled
           type: string
-        cli_max_payload_size:
-          description: Maximum size in bytes allowed for the payload passed to a command on the CLI
-          nullable: true
-          type: integer
-          x-display-name: CLI Maximum Payload Size
-          x-size: true
         comp_maxlevel:
           type: integer
           x-display-name: Maximum Compression Level
-        defaults_purge:
-          type: boolean
-          x-display-name: Force deletion of defaults section after parsing to save memory
         disable_fast_forward:
           type: boolean
           x-display-name: Disable fast-forwarding
@@ -12358,14 +12047,6 @@ components:
           nullable: true
           type: integer
           x-display-name: CPU Usage Kill glitched Connections
-        h1_be_glitches_threshold:
-          minimum: 0
-          type: integer
-          x-display-name: Number of connection glitches before killing the connection with the backend
-        h1_fe_glitches_threshold:
-          minimum: 0
-          type: integer
-          x-display-name: Number of connection glitches before killing the connection with the frontend
         h1_zero_copy_fwd_recv:
           description: enable or disable the zero-copy receives of data for the HTTP/1 multiplexer
           enum:
@@ -12388,9 +12069,6 @@ components:
         h2_be_max_concurrent_streams:
           description: Maximum number of concurrent streams per outgoing connection
           type: integer
-        h2_be_max_frames_at_once:
-          description: Maximum number of HTTP/2 incoming frames processed at once on a backend connection
-          type: integer
         h2_be_rxbuf:
           description: HTTP/2 receive buffer size for outgoing connections
           nullable: true
@@ -12405,12 +12083,6 @@ components:
           type: integer
         h2_fe_max_concurrent_streams:
           description: Maximum number of concurrent streams per incoming connection
-          type: integer
-        h2_fe_max_frames_at_once:
-          description: Maximum number of HTTP/2 incoming frames processed at once on a frontend connection
-          type: integer
-        h2_fe_max_rst_at_once:
-          description: Maximum number of HTTP/2 incoming RST_STREAM frames processed at once on a frontend connection
           type: integer
         h2_fe_max_total_streams:
           description: Maximum number of total streams processed per incoming HTTP/2 connection
@@ -12429,13 +12101,6 @@ components:
           nullable: true
           type: integer
           x-display-name: HTTP/2 Initial Window Size
-        h2_log_errors:
-          description: Level of HTTP/2 demultiplexer errors that will generate a log
-          enum:
-            - none
-            - connection
-            - stream
-          type: string
         h2_max_concurrent_streams:
           type: integer
           x-display-name: HTTP/2 Maximum Number of Concurrent Streams
@@ -12596,11 +12261,6 @@ components:
           type: integer
           x-display-name: QUIC Frontend Max Tx Memory
           x-size: true
-        frontend_stream_max_total:
-          description: Maximum number of requests handled by a single QUIC frontend connection before graceful shutdown
-          nullable: true
-          type: integer
-          x-display-name: QUIC Frontend Stream Max Total
         max_frame_loss:
           nullable: true
           type: integer
@@ -12638,12 +12298,6 @@ components:
           nullable: true
           type: integer
           x-display-name: SSL Maximum Size of Cipherlist Buffer
-        certificate_compression:
-          enum:
-            - auto
-            - disabled
-          type: string
-          x-display-name: Force SSL compression off, or let the SSL library decide
         ctx_cache_size:
           type: integer
           x-display-name: SSL Number of Certificates in Cache
@@ -12721,27 +12375,6 @@ components:
           type: integer
           x-display-name: Zlib Window Size
       type: object
-    use_small_buffers:
-      description: Enables support for small buffers for the given categories.
-      properties:
-        check:
-          type: boolean
-          x-display-name: Check
-        enabled:
-          enum:
-            - enabled
-            - disabled
-          type: string
-        l7_retries:
-          type: boolean
-          x-display-name: L7 Retries
-        queue:
-          type: boolean
-          x-display-name: Queue
-      required:
-        - enabled
-      type: object
-      x-display-name: Use Small Buffers
     user:
       description: HAProxy userlist user
       properties:
@@ -25315,260 +24948,6 @@ paths:
       summary: Replace a Filter
       tags:
         - Filter
-      x-codegen-request-body-name: data
-  /services/haproxy/configuration/frontends/{parent_name}/force_be_switches:
-    get:
-      description: Returns all force-be-switch rules configured on the specified frontend.
-      operationId: getAllForceBeSwitches
-      parameters:
-        - description: Parent name
-          in: path
-          name: parent_name
-          required: true
-          schema:
-            pattern: ^[^\r\n<>*;$#&{}"]+$
-            type: string
-        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
-          in: query
-          name: transaction_id
-          schema:
-            type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/force_be_switches'
-          description: Successful operation
-          headers:
-            Configuration-Version:
-              description: Configuration file version
-              schema:
-                type: string
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Return an array of force-be-switch rules
-      tags:
-        - ForceBeSwitch
-    post:
-      description: Adds a new force-be-switch rule on the specified frontend.
-      operationId: createForceBeSwitch
-      parameters:
-        - description: Parent name
-          in: path
-          name: parent_name
-          required: true
-          schema:
-            pattern: ^[^\r\n<>*;$#&{}"]+$
-            type: string
-        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
-          in: query
-          name: transaction_id
-          schema:
-            type: string
-        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
-          in: query
-          name: version
-          schema:
-            type: integer
-        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
-          in: query
-          name: force_reload
-          schema:
-            default: false
-            type: boolean
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/force_be_switch'
-        required: true
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/force_be_switch'
-          description: ForceBeSwitch created
-        "202":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/force_be_switch'
-          description: Configuration change accepted and reload requested
-          headers:
-            Reload-ID:
-              description: ID of the requested reload
-              schema:
-                type: string
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        "409":
-          $ref: '#/components/responses/AlreadyExists'
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Add a new force-be-switch rule
-      tags:
-        - ForceBeSwitch
-      x-codegen-request-body-name: data
-  /services/haproxy/configuration/frontends/{parent_name}/force_be_switches/{index}:
-    delete:
-      description: Deletes a force-be-switch rule by its index on the specified frontend.
-      operationId: deleteForceBeSwitch
-      parameters:
-        - description: ForceBeSwitch index (zero-based)
-          in: path
-          name: index
-          required: true
-          schema:
-            type: integer
-        - description: Parent name
-          in: path
-          name: parent_name
-          required: true
-          schema:
-            pattern: ^[^\r\n<>*;$#&{}"]+$
-            type: string
-        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
-          in: query
-          name: transaction_id
-          schema:
-            type: string
-        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
-          in: query
-          name: version
-          schema:
-            type: integer
-        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
-          in: query
-          name: force_reload
-          schema:
-            default: false
-            type: boolean
-      responses:
-        "202":
-          description: Configuration change accepted and reload requested
-          headers:
-            Reload-ID:
-              description: ID of the requested reload
-              schema:
-                type: string
-        "204":
-          description: ForceBeSwitch deleted
-        "404":
-          $ref: '#/components/responses/NotFound'
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Delete a force-be-switch rule
-      tags:
-        - ForceBeSwitch
-    get:
-      description: Returns a single force-be-switch rule by its index on the specified frontend.
-      operationId: getForceBeSwitch
-      parameters:
-        - description: ForceBeSwitch index (zero-based)
-          in: path
-          name: index
-          required: true
-          schema:
-            type: integer
-        - description: Parent name
-          in: path
-          name: parent_name
-          required: true
-          schema:
-            pattern: ^[^\r\n<>*;$#&{}"]+$
-            type: string
-        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
-          in: query
-          name: transaction_id
-          schema:
-            type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/force_be_switch'
-          description: Successful operation
-          headers:
-            Configuration-Version:
-              description: Configuration file version
-              schema:
-                type: string
-        "404":
-          $ref: '#/components/responses/NotFound'
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Return one force-be-switch rule
-      tags:
-        - ForceBeSwitch
-    put:
-      description: Replaces a force-be-switch rule by its index on the specified frontend.
-      operationId: replaceForceBeSwitch
-      parameters:
-        - description: ForceBeSwitch index (zero-based)
-          in: path
-          name: index
-          required: true
-          schema:
-            type: integer
-        - description: Parent name
-          in: path
-          name: parent_name
-          required: true
-          schema:
-            pattern: ^[^\r\n<>*;$#&{}"]+$
-            type: string
-        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
-          in: query
-          name: transaction_id
-          schema:
-            type: string
-        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
-          in: query
-          name: version
-          schema:
-            type: integer
-        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
-          in: query
-          name: force_reload
-          schema:
-            default: false
-            type: boolean
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/force_be_switch'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/force_be_switch'
-          description: ForceBeSwitch replaced
-        "202":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/force_be_switch'
-          description: Configuration change accepted and reload requested
-          headers:
-            Reload-ID:
-              description: ID of the requested reload
-              schema:
-                type: string
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Replace a force-be-switch rule
-      tags:
-        - ForceBeSwitch
       x-codegen-request-body-name: data
   /services/haproxy/configuration/frontends/{parent_name}/http_after_response_rules:
     get:
