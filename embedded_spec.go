@@ -16124,6 +16124,891 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/healthchecks": {
+      "get": {
+        "description": "Returns an array of all configured healthchecks.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Return an array of healthchecks",
+        "operationId": "getHealthChecks",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/healthchecks"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new healthcheck to the configuration file.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Add a healthcheck",
+        "operationId": "createHealthCheck",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HealthCheck created",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{name}": {
+      "get": {
+        "description": "Returns one healthcheck configuration by it's name.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Return a healthcheck",
+        "operationId": "getHealthCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "HealthCheck name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a healthcheck configuration by it's name.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Replace a healthcheck",
+        "operationId": "replaceHealthCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "HealthCheck name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HealthCheck replaced",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a healthcheck from the configuration by it's name.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Delete a healthcheck",
+        "operationId": "deleteHealthCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "HealthCheck name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HealthCheck deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/http_checks": {
+      "get": {
+        "description": "Returns all HTTP checks that are configured in specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return an array of HTTP checks",
+        "operationId": "getAllHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP checks with the list given in parameter",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Replace an HTTP checks list",
+        "operationId": "replaceAllHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All HTTP checks lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}": {
+      "get": {
+        "description": "Returns one HTTP check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return one HTTP check",
+        "operationId": "getHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Replace a HTTP check",
+        "operationId": "replaceHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP check replaced",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP check of the specified type in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Add a new HTTP check",
+        "operationId": "createHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP check created",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP check configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Delete a HTTP check",
+        "operationId": "deleteHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP check deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks": {
+      "get": {
+        "description": "Returns all TCP checks that are configured in specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return an array of TCP checks",
+        "operationId": "getAllTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of TCP Checks with the list given in parameter",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Replace an TCP Check list",
+        "operationId": "replaceAllTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TCP Check lines replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}": {
+      "get": {
+        "description": "Returns one TCP check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return one TCP check",
+        "operationId": "getTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Replace a TCP check",
+        "operationId": "replaceTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP check replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP check of the specified type in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Add a new TCP check",
+        "operationId": "createTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP check created",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP check configuration by it's index from the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Delete a TCP check",
+        "operationId": "deleteTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP check deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/http_errors_sections": {
       "get": {
         "description": "Returns an array of all configured http-error sections.",
@@ -32531,6 +33416,98 @@ func init() {
         }
       }
     },
+    "healthcheck": {
+      "description": "HealthCheck with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/healthcheck_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "http_check_list": {
+              "x-go-name": "HTTPCheckRuleList",
+              "$ref": "#/definitions/http_checks"
+            },
+            "tcp_check_list": {
+              "x-go-name": "TCPCheckRuleList",
+              "$ref": "#/definitions/tcp_checks"
+            }
+          }
+        }
+      ],
+      "x-go-name": "HealthCheck"
+    },
+    "healthcheck_base": {
+      "description": "HealthCheck with all it's children resources",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "httpchk_params": {
+          "x-dependency": {
+            "type": {
+              "value": "httpchk"
+            }
+          },
+          "$ref": "#/definitions/httpchk_params"
+        },
+        "mysql_check_params": {
+          "x-dependency": {
+            "type": {
+              "value": "mysql-check"
+            }
+          },
+          "$ref": "#/definitions/mysql_check_params"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "pgsql_check_params": {
+          "x-dependency": {
+            "type": {
+              "value": "pgsql-check"
+            }
+          },
+          "$ref": "#/definitions/pgsql_check_params"
+        },
+        "smtpchk_params": {
+          "x-dependency": {
+            "type": {
+              "value": "smtpchk"
+            }
+          },
+          "$ref": "#/definitions/smtpchk_params"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "httpchk",
+            "ldap-check",
+            "mysql-check",
+            "pgsql-check",
+            "redis-check",
+            "smtpchk",
+            "spop-check",
+            "ssl-hello-chk",
+            "tcp-check"
+          ]
+        }
+      },
+      "x-go-name": "HealthCheckBase"
+    },
+    "healthchecks": {
+      "description": "HAProxy healthchecks array",
+      "type": "array",
+      "title": "HealthChecks",
+      "items": {
+        "$ref": "#/definitions/healthcheck"
+      }
+    },
     "http_after_response_rule": {
       "description": "HAProxy HTTP after response rule configuration (corresponds to http-after-response directives)",
       "type": "object",
@@ -43774,6 +44751,9 @@ func init() {
     },
     {
       "name": "HTTPResponseRule"
+    },
+    {
+      "name": "HealthCheck"
     },
     {
       "name": "Information"
@@ -70097,6 +71077,1456 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/healthchecks": {
+      "get": {
+        "description": "Returns an array of all configured healthchecks.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Return an array of healthchecks",
+        "operationId": "getHealthChecks",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/healthchecks"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new healthcheck to the configuration file.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Add a healthcheck",
+        "operationId": "createHealthCheck",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HealthCheck created",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{name}": {
+      "get": {
+        "description": "Returns one healthcheck configuration by it's name.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Return a healthcheck",
+        "operationId": "getHealthCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "HealthCheck name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a healthcheck configuration by it's name.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Replace a healthcheck",
+        "operationId": "replaceHealthCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "HealthCheck name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HealthCheck replaced",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a healthcheck from the configuration by it's name.",
+        "tags": [
+          "HealthCheck"
+        ],
+        "summary": "Delete a healthcheck",
+        "operationId": "deleteHealthCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "HealthCheck name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HealthCheck deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/http_checks": {
+      "get": {
+        "description": "Returns all HTTP checks that are configured in specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return an array of HTTP checks",
+        "operationId": "getAllHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of HTTP checks with the list given in parameter",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Replace an HTTP checks list",
+        "operationId": "replaceAllHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All HTTP checks lines replaced",
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_checks"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}": {
+      "get": {
+        "description": "Returns one HTTP check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return one HTTP check",
+        "operationId": "getHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Replace a HTTP check",
+        "operationId": "replaceHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP check replaced",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP check of the specified type in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Add a new HTTP check",
+        "operationId": "createHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP check created",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP check configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Delete a HTTP check",
+        "operationId": "deleteHTTPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP check deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks": {
+      "get": {
+        "description": "Returns all TCP checks that are configured in specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return an array of TCP checks",
+        "operationId": "getAllTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of TCP Checks with the list given in parameter",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Replace an TCP Check list",
+        "operationId": "replaceAllTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TCP Check lines replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_checks"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}": {
+      "get": {
+        "description": "Returns one TCP check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return one TCP check",
+        "operationId": "getTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Replace a TCP check",
+        "operationId": "replaceTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP check replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP check of the specified type in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Add a new TCP check",
+        "operationId": "createTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP check created",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP check configuration by it's index from the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Delete a TCP check",
+        "operationId": "deleteTCPCheckHealthcheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP check deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/http_errors_sections": {
       "get": {
         "description": "Returns an array of all configured http-error sections.",
@@ -93504,6 +95934,98 @@ func init() {
         }
       }
     },
+    "healthcheck": {
+      "description": "HealthCheck with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/healthcheck_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "http_check_list": {
+              "x-go-name": "HTTPCheckRuleList",
+              "$ref": "#/definitions/http_checks"
+            },
+            "tcp_check_list": {
+              "x-go-name": "TCPCheckRuleList",
+              "$ref": "#/definitions/tcp_checks"
+            }
+          }
+        }
+      ],
+      "x-go-name": "HealthCheck"
+    },
+    "healthcheck_base": {
+      "description": "HealthCheck with all it's children resources",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "httpchk_params": {
+          "x-dependency": {
+            "type": {
+              "value": "httpchk"
+            }
+          },
+          "$ref": "#/definitions/httpchk_params"
+        },
+        "mysql_check_params": {
+          "x-dependency": {
+            "type": {
+              "value": "mysql-check"
+            }
+          },
+          "$ref": "#/definitions/mysql_check_params"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "pgsql_check_params": {
+          "x-dependency": {
+            "type": {
+              "value": "pgsql-check"
+            }
+          },
+          "$ref": "#/definitions/pgsql_check_params"
+        },
+        "smtpchk_params": {
+          "x-dependency": {
+            "type": {
+              "value": "smtpchk"
+            }
+          },
+          "$ref": "#/definitions/smtpchk_params"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "httpchk",
+            "ldap-check",
+            "mysql-check",
+            "pgsql-check",
+            "redis-check",
+            "smtpchk",
+            "spop-check",
+            "ssl-hello-chk",
+            "tcp-check"
+          ]
+        }
+      },
+      "x-go-name": "HealthCheckBase"
+    },
+    "healthchecks": {
+      "description": "HAProxy healthchecks array",
+      "type": "array",
+      "title": "HealthChecks",
+      "items": {
+        "$ref": "#/definitions/healthcheck"
+      }
+    },
     "http_after_response_rule": {
       "description": "HAProxy HTTP after response rule configuration (corresponds to http-after-response directives)",
       "type": "object",
@@ -104622,6 +107144,9 @@ func init() {
     },
     {
       "name": "HTTPResponseRule"
+    },
+    {
+      "name": "HealthCheck"
     },
     {
       "name": "Information"

@@ -133,6 +133,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=SSLRuntime \
     --tags=Acme \
     --tags=AcmeRuntime \
+    --tags=HealthCheck \
     -r $SPEC_DIR/copyright.txt \
     --template-dir generate/swagger/templates
 

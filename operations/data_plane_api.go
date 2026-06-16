@@ -56,6 +56,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/global"
 	"github.com/haproxytech/dataplaneapi/operations/group"
 	"github.com/haproxytech/dataplaneapi/operations/health"
+	"github.com/haproxytech/dataplaneapi/operations/health_check"
 	"github.com/haproxytech/dataplaneapi/operations/http_after_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_check"
 	"github.com/haproxytech/dataplaneapi/operations/http_error_rule"
@@ -278,6 +279,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPCheckCreateHTTPCheckDefaultsHandler: http_check.CreateHTTPCheckDefaultsHandlerFunc(func(params http_check.CreateHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.CreateHTTPCheckDefaults has not yet been implemented")
 		}),
+		HTTPCheckCreateHTTPCheckHealthcheckHandler: http_check.CreateHTTPCheckHealthcheckHandlerFunc(func(params http_check.CreateHTTPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.CreateHTTPCheckHealthcheck has not yet been implemented")
+		}),
 		HTTPErrorRuleCreateHTTPErrorRuleBackendHandler: http_error_rule.CreateHTTPErrorRuleBackendHandlerFunc(func(params http_error_rule.CreateHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.CreateHTTPErrorRuleBackend has not yet been implemented")
 		}),
@@ -307,6 +311,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler: http_response_rule.CreateHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.CreateHTTPResponseRuleFrontend has not yet been implemented")
+		}),
+		HealthCheckCreateHealthCheckHandler: health_check.CreateHealthCheckHandlerFunc(func(params health_check.CreateHealthCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.CreateHealthCheck has not yet been implemented")
 		}),
 		LogForwardCreateLogForwardHandler: log_forward.CreateLogForwardHandlerFunc(func(params log_forward.CreateLogForwardParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.CreateLogForward has not yet been implemented")
@@ -418,6 +425,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPCheckCreateTCPCheckDefaultsHandler: tcp_check.CreateTCPCheckDefaultsHandlerFunc(func(params tcp_check.CreateTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.CreateTCPCheckDefaults has not yet been implemented")
+		}),
+		TCPCheckCreateTCPCheckHealthcheckHandler: tcp_check.CreateTCPCheckHealthcheckHandlerFunc(func(params tcp_check.CreateTCPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.CreateTCPCheckHealthcheck has not yet been implemented")
 		}),
 		TCPRequestRuleCreateTCPRequestRuleBackendHandler: tcp_request_rule.CreateTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRuleBackend has not yet been implemented")
@@ -548,6 +558,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPCheckDeleteHTTPCheckDefaultsHandler: http_check.DeleteHTTPCheckDefaultsHandlerFunc(func(params http_check.DeleteHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.DeleteHTTPCheckDefaults has not yet been implemented")
 		}),
+		HTTPCheckDeleteHTTPCheckHealthcheckHandler: http_check.DeleteHTTPCheckHealthcheckHandlerFunc(func(params http_check.DeleteHTTPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.DeleteHTTPCheckHealthcheck has not yet been implemented")
+		}),
 		HTTPErrorRuleDeleteHTTPErrorRuleBackendHandler: http_error_rule.DeleteHTTPErrorRuleBackendHandlerFunc(func(params http_error_rule.DeleteHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.DeleteHTTPErrorRuleBackend has not yet been implemented")
 		}),
@@ -577,6 +590,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler: http_response_rule.DeleteHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.DeleteHTTPResponseRuleFrontend has not yet been implemented")
+		}),
+		HealthCheckDeleteHealthCheckHandler: health_check.DeleteHealthCheckHandlerFunc(func(params health_check.DeleteHealthCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.DeleteHealthCheck has not yet been implemented")
 		}),
 		LogForwardDeleteLogForwardHandler: log_forward.DeleteLogForwardHandlerFunc(func(params log_forward.DeleteLogForwardParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.DeleteLogForward has not yet been implemented")
@@ -697,6 +713,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPCheckDeleteTCPCheckDefaultsHandler: tcp_check.DeleteTCPCheckDefaultsHandlerFunc(func(params tcp_check.DeleteTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.DeleteTCPCheckDefaults has not yet been implemented")
+		}),
+		TCPCheckDeleteTCPCheckHealthcheckHandler: tcp_check.DeleteTCPCheckHealthcheckHandlerFunc(func(params tcp_check.DeleteTCPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.DeleteTCPCheckHealthcheck has not yet been implemented")
 		}),
 		TCPRequestRuleDeleteTCPRequestRuleBackendHandler: tcp_request_rule.DeleteTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRuleBackend has not yet been implemented")
@@ -833,6 +852,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPCheckGetAllHTTPCheckDefaultsHandler: http_check.GetAllHTTPCheckDefaultsHandlerFunc(func(params http_check.GetAllHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.GetAllHTTPCheckDefaults has not yet been implemented")
 		}),
+		HTTPCheckGetAllHTTPCheckHealthcheckHandler: http_check.GetAllHTTPCheckHealthcheckHandlerFunc(func(params http_check.GetAllHTTPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.GetAllHTTPCheckHealthcheck has not yet been implemented")
+		}),
 		HTTPErrorRuleGetAllHTTPErrorRuleBackendHandler: http_error_rule.GetAllHTTPErrorRuleBackendHandlerFunc(func(params http_error_rule.GetAllHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.GetAllHTTPErrorRuleBackend has not yet been implemented")
 		}),
@@ -937,6 +959,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPCheckGetAllTCPCheckDefaultsHandler: tcp_check.GetAllTCPCheckDefaultsHandlerFunc(func(params tcp_check.GetAllTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.GetAllTCPCheckDefaults has not yet been implemented")
+		}),
+		TCPCheckGetAllTCPCheckHealthcheckHandler: tcp_check.GetAllTCPCheckHealthcheckHandlerFunc(func(params tcp_check.GetAllTCPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.GetAllTCPCheckHealthcheck has not yet been implemented")
 		}),
 		TCPRequestRuleGetAllTCPRequestRuleBackendHandler: tcp_request_rule.GetAllTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.GetAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetAllTCPRequestRuleBackend has not yet been implemented")
@@ -1082,6 +1107,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPCheckGetHTTPCheckDefaultsHandler: http_check.GetHTTPCheckDefaultsHandlerFunc(func(params http_check.GetHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.GetHTTPCheckDefaults has not yet been implemented")
 		}),
+		HTTPCheckGetHTTPCheckHealthcheckHandler: http_check.GetHTTPCheckHealthcheckHandlerFunc(func(params http_check.GetHTTPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.GetHTTPCheckHealthcheck has not yet been implemented")
+		}),
 		HTTPErrorRuleGetHTTPErrorRuleBackendHandler: http_error_rule.GetHTTPErrorRuleBackendHandlerFunc(func(params http_error_rule.GetHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.GetHTTPErrorRuleBackend has not yet been implemented")
 		}),
@@ -1123,6 +1151,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HealthGetHealthHandler: health.GetHealthHandlerFunc(func(params health.GetHealthParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation health.GetHealth has not yet been implemented")
+		}),
+		HealthCheckGetHealthCheckHandler: health_check.GetHealthCheckHandlerFunc(func(params health_check.GetHealthCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.GetHealthCheck has not yet been implemented")
+		}),
+		HealthCheckGetHealthChecksHandler: health_check.GetHealthChecksHandlerFunc(func(params health_check.GetHealthChecksParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.GetHealthChecks has not yet been implemented")
 		}),
 		InformationGetInfoHandler: information.GetInfoHandlerFunc(func(params information.GetInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation information.GetInfo has not yet been implemented")
@@ -1334,6 +1368,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPCheckGetTCPCheckDefaultsHandler: tcp_check.GetTCPCheckDefaultsHandlerFunc(func(params tcp_check.GetTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.GetTCPCheckDefaults has not yet been implemented")
 		}),
+		TCPCheckGetTCPCheckHealthcheckHandler: tcp_check.GetTCPCheckHealthcheckHandlerFunc(func(params tcp_check.GetTCPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.GetTCPCheckHealthcheck has not yet been implemented")
+		}),
 		TCPRequestRuleGetTCPRequestRuleBackendHandler: tcp_request_rule.GetTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRuleBackend has not yet been implemented")
 		}),
@@ -1436,6 +1473,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPCheckReplaceAllHTTPCheckDefaultsHandler: http_check.ReplaceAllHTTPCheckDefaultsHandlerFunc(func(params http_check.ReplaceAllHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.ReplaceAllHTTPCheckDefaults has not yet been implemented")
 		}),
+		HTTPCheckReplaceAllHTTPCheckHealthcheckHandler: http_check.ReplaceAllHTTPCheckHealthcheckHandlerFunc(func(params http_check.ReplaceAllHTTPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.ReplaceAllHTTPCheckHealthcheck has not yet been implemented")
+		}),
 		HTTPErrorRuleReplaceAllHTTPErrorRuleBackendHandler: http_error_rule.ReplaceAllHTTPErrorRuleBackendHandlerFunc(func(params http_error_rule.ReplaceAllHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.ReplaceAllHTTPErrorRuleBackend has not yet been implemented")
 		}),
@@ -1492,6 +1532,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPCheckReplaceAllTCPCheckDefaultsHandler: tcp_check.ReplaceAllTCPCheckDefaultsHandlerFunc(func(params tcp_check.ReplaceAllTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.ReplaceAllTCPCheckDefaults has not yet been implemented")
+		}),
+		TCPCheckReplaceAllTCPCheckHealthcheckHandler: tcp_check.ReplaceAllTCPCheckHealthcheckHandlerFunc(func(params tcp_check.ReplaceAllTCPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.ReplaceAllTCPCheckHealthcheck has not yet been implemented")
 		}),
 		TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler: tcp_request_rule.ReplaceAllTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceAllTCPRequestRuleBackend has not yet been implemented")
@@ -1586,6 +1629,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPCheckReplaceHTTPCheckDefaultsHandler: http_check.ReplaceHTTPCheckDefaultsHandlerFunc(func(params http_check.ReplaceHTTPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.ReplaceHTTPCheckDefaults has not yet been implemented")
 		}),
+		HTTPCheckReplaceHTTPCheckHealthcheckHandler: http_check.ReplaceHTTPCheckHealthcheckHandlerFunc(func(params http_check.ReplaceHTTPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.ReplaceHTTPCheckHealthcheck has not yet been implemented")
+		}),
 		HTTPErrorRuleReplaceHTTPErrorRuleBackendHandler: http_error_rule.ReplaceHTTPErrorRuleBackendHandlerFunc(func(params http_error_rule.ReplaceHTTPErrorRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.ReplaceHTTPErrorRuleBackend has not yet been implemented")
 		}),
@@ -1615,6 +1661,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler: http_response_rule.ReplaceHTTPResponseRuleFrontendHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRuleFrontend has not yet been implemented")
+		}),
+		HealthCheckReplaceHealthCheckHandler: health_check.ReplaceHealthCheckHandlerFunc(func(params health_check.ReplaceHealthCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.ReplaceHealthCheck has not yet been implemented")
 		}),
 		LogForwardReplaceLogForwardHandler: log_forward.ReplaceLogForwardHandlerFunc(func(params log_forward.ReplaceLogForwardParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.ReplaceLogForward has not yet been implemented")
@@ -1723,6 +1772,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPCheckReplaceTCPCheckDefaultsHandler: tcp_check.ReplaceTCPCheckDefaultsHandlerFunc(func(params tcp_check.ReplaceTCPCheckDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.ReplaceTCPCheckDefaults has not yet been implemented")
+		}),
+		TCPCheckReplaceTCPCheckHealthcheckHandler: tcp_check.ReplaceTCPCheckHealthcheckHandlerFunc(func(params tcp_check.ReplaceTCPCheckHealthcheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.ReplaceTCPCheckHealthcheck has not yet been implemented")
 		}),
 		TCPRequestRuleReplaceTCPRequestRuleBackendHandler: tcp_request_rule.ReplaceTCPRequestRuleBackendHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRuleBackend has not yet been implemented")
@@ -1928,6 +1980,8 @@ type DataPlaneAPI struct {
 	HTTPCheckCreateHTTPCheckBackendHandler http_check.CreateHTTPCheckBackendHandler
 	// HTTPCheckCreateHTTPCheckDefaultsHandler sets the operation handler for the create HTTP check defaults operation
 	HTTPCheckCreateHTTPCheckDefaultsHandler http_check.CreateHTTPCheckDefaultsHandler
+	// HTTPCheckCreateHTTPCheckHealthcheckHandler sets the operation handler for the create HTTP check healthcheck operation
+	HTTPCheckCreateHTTPCheckHealthcheckHandler http_check.CreateHTTPCheckHealthcheckHandler
 	// HTTPErrorRuleCreateHTTPErrorRuleBackendHandler sets the operation handler for the create HTTP error rule backend operation
 	HTTPErrorRuleCreateHTTPErrorRuleBackendHandler http_error_rule.CreateHTTPErrorRuleBackendHandler
 	// HTTPErrorRuleCreateHTTPErrorRuleDefaultsHandler sets the operation handler for the create HTTP error rule defaults operation
@@ -1948,6 +2002,8 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleCreateHTTPResponseRuleDefaultsHandler http_response_rule.CreateHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler sets the operation handler for the create HTTP response rule frontend operation
 	HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler http_response_rule.CreateHTTPResponseRuleFrontendHandler
+	// HealthCheckCreateHealthCheckHandler sets the operation handler for the create health check operation
+	HealthCheckCreateHealthCheckHandler health_check.CreateHealthCheckHandler
 	// LogForwardCreateLogForwardHandler sets the operation handler for the create log forward operation
 	LogForwardCreateLogForwardHandler log_forward.CreateLogForwardHandler
 	// LogProfileCreateLogProfileHandler sets the operation handler for the create log profile operation
@@ -2022,6 +2078,8 @@ type DataPlaneAPI struct {
 	TCPCheckCreateTCPCheckBackendHandler tcp_check.CreateTCPCheckBackendHandler
 	// TCPCheckCreateTCPCheckDefaultsHandler sets the operation handler for the create TCP check defaults operation
 	TCPCheckCreateTCPCheckDefaultsHandler tcp_check.CreateTCPCheckDefaultsHandler
+	// TCPCheckCreateTCPCheckHealthcheckHandler sets the operation handler for the create TCP check healthcheck operation
+	TCPCheckCreateTCPCheckHealthcheckHandler tcp_check.CreateTCPCheckHealthcheckHandler
 	// TCPRequestRuleCreateTCPRequestRuleBackendHandler sets the operation handler for the create TCP request rule backend operation
 	TCPRequestRuleCreateTCPRequestRuleBackendHandler tcp_request_rule.CreateTCPRequestRuleBackendHandler
 	// TCPRequestRuleCreateTCPRequestRuleDefaultsHandler sets the operation handler for the create TCP request rule defaults operation
@@ -2108,6 +2166,8 @@ type DataPlaneAPI struct {
 	HTTPCheckDeleteHTTPCheckBackendHandler http_check.DeleteHTTPCheckBackendHandler
 	// HTTPCheckDeleteHTTPCheckDefaultsHandler sets the operation handler for the delete HTTP check defaults operation
 	HTTPCheckDeleteHTTPCheckDefaultsHandler http_check.DeleteHTTPCheckDefaultsHandler
+	// HTTPCheckDeleteHTTPCheckHealthcheckHandler sets the operation handler for the delete HTTP check healthcheck operation
+	HTTPCheckDeleteHTTPCheckHealthcheckHandler http_check.DeleteHTTPCheckHealthcheckHandler
 	// HTTPErrorRuleDeleteHTTPErrorRuleBackendHandler sets the operation handler for the delete HTTP error rule backend operation
 	HTTPErrorRuleDeleteHTTPErrorRuleBackendHandler http_error_rule.DeleteHTTPErrorRuleBackendHandler
 	// HTTPErrorRuleDeleteHTTPErrorRuleDefaultsHandler sets the operation handler for the delete HTTP error rule defaults operation
@@ -2128,6 +2188,8 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleDeleteHTTPResponseRuleDefaultsHandler http_response_rule.DeleteHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler sets the operation handler for the delete HTTP response rule frontend operation
 	HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler http_response_rule.DeleteHTTPResponseRuleFrontendHandler
+	// HealthCheckDeleteHealthCheckHandler sets the operation handler for the delete health check operation
+	HealthCheckDeleteHealthCheckHandler health_check.DeleteHealthCheckHandler
 	// LogForwardDeleteLogForwardHandler sets the operation handler for the delete log forward operation
 	LogForwardDeleteLogForwardHandler log_forward.DeleteLogForwardHandler
 	// LogProfileDeleteLogProfileHandler sets the operation handler for the delete log profile operation
@@ -2208,6 +2270,8 @@ type DataPlaneAPI struct {
 	TCPCheckDeleteTCPCheckBackendHandler tcp_check.DeleteTCPCheckBackendHandler
 	// TCPCheckDeleteTCPCheckDefaultsHandler sets the operation handler for the delete TCP check defaults operation
 	TCPCheckDeleteTCPCheckDefaultsHandler tcp_check.DeleteTCPCheckDefaultsHandler
+	// TCPCheckDeleteTCPCheckHealthcheckHandler sets the operation handler for the delete TCP check healthcheck operation
+	TCPCheckDeleteTCPCheckHealthcheckHandler tcp_check.DeleteTCPCheckHealthcheckHandler
 	// TCPRequestRuleDeleteTCPRequestRuleBackendHandler sets the operation handler for the delete TCP request rule backend operation
 	TCPRequestRuleDeleteTCPRequestRuleBackendHandler tcp_request_rule.DeleteTCPRequestRuleBackendHandler
 	// TCPRequestRuleDeleteTCPRequestRuleDefaultsHandler sets the operation handler for the delete TCP request rule defaults operation
@@ -2298,6 +2362,8 @@ type DataPlaneAPI struct {
 	HTTPCheckGetAllHTTPCheckBackendHandler http_check.GetAllHTTPCheckBackendHandler
 	// HTTPCheckGetAllHTTPCheckDefaultsHandler sets the operation handler for the get all HTTP check defaults operation
 	HTTPCheckGetAllHTTPCheckDefaultsHandler http_check.GetAllHTTPCheckDefaultsHandler
+	// HTTPCheckGetAllHTTPCheckHealthcheckHandler sets the operation handler for the get all HTTP check healthcheck operation
+	HTTPCheckGetAllHTTPCheckHealthcheckHandler http_check.GetAllHTTPCheckHealthcheckHandler
 	// HTTPErrorRuleGetAllHTTPErrorRuleBackendHandler sets the operation handler for the get all HTTP error rule backend operation
 	HTTPErrorRuleGetAllHTTPErrorRuleBackendHandler http_error_rule.GetAllHTTPErrorRuleBackendHandler
 	// HTTPErrorRuleGetAllHTTPErrorRuleDefaultsHandler sets the operation handler for the get all HTTP error rule defaults operation
@@ -2368,6 +2434,8 @@ type DataPlaneAPI struct {
 	TCPCheckGetAllTCPCheckBackendHandler tcp_check.GetAllTCPCheckBackendHandler
 	// TCPCheckGetAllTCPCheckDefaultsHandler sets the operation handler for the get all TCP check defaults operation
 	TCPCheckGetAllTCPCheckDefaultsHandler tcp_check.GetAllTCPCheckDefaultsHandler
+	// TCPCheckGetAllTCPCheckHealthcheckHandler sets the operation handler for the get all TCP check healthcheck operation
+	TCPCheckGetAllTCPCheckHealthcheckHandler tcp_check.GetAllTCPCheckHealthcheckHandler
 	// TCPRequestRuleGetAllTCPRequestRuleBackendHandler sets the operation handler for the get all TCP request rule backend operation
 	TCPRequestRuleGetAllTCPRequestRuleBackendHandler tcp_request_rule.GetAllTCPRequestRuleBackendHandler
 	// TCPRequestRuleGetAllTCPRequestRuleDefaultsHandler sets the operation handler for the get all TCP request rule defaults operation
@@ -2464,6 +2532,8 @@ type DataPlaneAPI struct {
 	HTTPCheckGetHTTPCheckBackendHandler http_check.GetHTTPCheckBackendHandler
 	// HTTPCheckGetHTTPCheckDefaultsHandler sets the operation handler for the get HTTP check defaults operation
 	HTTPCheckGetHTTPCheckDefaultsHandler http_check.GetHTTPCheckDefaultsHandler
+	// HTTPCheckGetHTTPCheckHealthcheckHandler sets the operation handler for the get HTTP check healthcheck operation
+	HTTPCheckGetHTTPCheckHealthcheckHandler http_check.GetHTTPCheckHealthcheckHandler
 	// HTTPErrorRuleGetHTTPErrorRuleBackendHandler sets the operation handler for the get HTTP error rule backend operation
 	HTTPErrorRuleGetHTTPErrorRuleBackendHandler http_error_rule.GetHTTPErrorRuleBackendHandler
 	// HTTPErrorRuleGetHTTPErrorRuleDefaultsHandler sets the operation handler for the get HTTP error rule defaults operation
@@ -2492,6 +2562,10 @@ type DataPlaneAPI struct {
 	InformationGetHaproxyProcessInfoHandler information.GetHaproxyProcessInfoHandler
 	// HealthGetHealthHandler sets the operation handler for the get health operation
 	HealthGetHealthHandler health.GetHealthHandler
+	// HealthCheckGetHealthCheckHandler sets the operation handler for the get health check operation
+	HealthCheckGetHealthCheckHandler health_check.GetHealthCheckHandler
+	// HealthCheckGetHealthChecksHandler sets the operation handler for the get health checks operation
+	HealthCheckGetHealthChecksHandler health_check.GetHealthChecksHandler
 	// InformationGetInfoHandler sets the operation handler for the get info operation
 	InformationGetInfoHandler information.GetInfoHandler
 	// LogForwardGetLogForwardHandler sets the operation handler for the get log forward operation
@@ -2632,6 +2706,8 @@ type DataPlaneAPI struct {
 	TCPCheckGetTCPCheckBackendHandler tcp_check.GetTCPCheckBackendHandler
 	// TCPCheckGetTCPCheckDefaultsHandler sets the operation handler for the get TCP check defaults operation
 	TCPCheckGetTCPCheckDefaultsHandler tcp_check.GetTCPCheckDefaultsHandler
+	// TCPCheckGetTCPCheckHealthcheckHandler sets the operation handler for the get TCP check healthcheck operation
+	TCPCheckGetTCPCheckHealthcheckHandler tcp_check.GetTCPCheckHealthcheckHandler
 	// TCPRequestRuleGetTCPRequestRuleBackendHandler sets the operation handler for the get TCP request rule backend operation
 	TCPRequestRuleGetTCPRequestRuleBackendHandler tcp_request_rule.GetTCPRequestRuleBackendHandler
 	// TCPRequestRuleGetTCPRequestRuleDefaultsHandler sets the operation handler for the get TCP request rule defaults operation
@@ -2700,6 +2776,8 @@ type DataPlaneAPI struct {
 	HTTPCheckReplaceAllHTTPCheckBackendHandler http_check.ReplaceAllHTTPCheckBackendHandler
 	// HTTPCheckReplaceAllHTTPCheckDefaultsHandler sets the operation handler for the replace all HTTP check defaults operation
 	HTTPCheckReplaceAllHTTPCheckDefaultsHandler http_check.ReplaceAllHTTPCheckDefaultsHandler
+	// HTTPCheckReplaceAllHTTPCheckHealthcheckHandler sets the operation handler for the replace all HTTP check healthcheck operation
+	HTTPCheckReplaceAllHTTPCheckHealthcheckHandler http_check.ReplaceAllHTTPCheckHealthcheckHandler
 	// HTTPErrorRuleReplaceAllHTTPErrorRuleBackendHandler sets the operation handler for the replace all HTTP error rule backend operation
 	HTTPErrorRuleReplaceAllHTTPErrorRuleBackendHandler http_error_rule.ReplaceAllHTTPErrorRuleBackendHandler
 	// HTTPErrorRuleReplaceAllHTTPErrorRuleDefaultsHandler sets the operation handler for the replace all HTTP error rule defaults operation
@@ -2738,6 +2816,8 @@ type DataPlaneAPI struct {
 	TCPCheckReplaceAllTCPCheckBackendHandler tcp_check.ReplaceAllTCPCheckBackendHandler
 	// TCPCheckReplaceAllTCPCheckDefaultsHandler sets the operation handler for the replace all TCP check defaults operation
 	TCPCheckReplaceAllTCPCheckDefaultsHandler tcp_check.ReplaceAllTCPCheckDefaultsHandler
+	// TCPCheckReplaceAllTCPCheckHealthcheckHandler sets the operation handler for the replace all TCP check healthcheck operation
+	TCPCheckReplaceAllTCPCheckHealthcheckHandler tcp_check.ReplaceAllTCPCheckHealthcheckHandler
 	// TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler sets the operation handler for the replace all TCP request rule backend operation
 	TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler tcp_request_rule.ReplaceAllTCPRequestRuleBackendHandler
 	// TCPRequestRuleReplaceAllTCPRequestRuleDefaultsHandler sets the operation handler for the replace all TCP request rule defaults operation
@@ -2800,6 +2880,8 @@ type DataPlaneAPI struct {
 	HTTPCheckReplaceHTTPCheckBackendHandler http_check.ReplaceHTTPCheckBackendHandler
 	// HTTPCheckReplaceHTTPCheckDefaultsHandler sets the operation handler for the replace HTTP check defaults operation
 	HTTPCheckReplaceHTTPCheckDefaultsHandler http_check.ReplaceHTTPCheckDefaultsHandler
+	// HTTPCheckReplaceHTTPCheckHealthcheckHandler sets the operation handler for the replace HTTP check healthcheck operation
+	HTTPCheckReplaceHTTPCheckHealthcheckHandler http_check.ReplaceHTTPCheckHealthcheckHandler
 	// HTTPErrorRuleReplaceHTTPErrorRuleBackendHandler sets the operation handler for the replace HTTP error rule backend operation
 	HTTPErrorRuleReplaceHTTPErrorRuleBackendHandler http_error_rule.ReplaceHTTPErrorRuleBackendHandler
 	// HTTPErrorRuleReplaceHTTPErrorRuleDefaultsHandler sets the operation handler for the replace HTTP error rule defaults operation
@@ -2820,6 +2902,8 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleReplaceHTTPResponseRuleDefaultsHandler http_response_rule.ReplaceHTTPResponseRuleDefaultsHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler sets the operation handler for the replace HTTP response rule frontend operation
 	HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler http_response_rule.ReplaceHTTPResponseRuleFrontendHandler
+	// HealthCheckReplaceHealthCheckHandler sets the operation handler for the replace health check operation
+	HealthCheckReplaceHealthCheckHandler health_check.ReplaceHealthCheckHandler
 	// LogForwardReplaceLogForwardHandler sets the operation handler for the replace log forward operation
 	LogForwardReplaceLogForwardHandler log_forward.ReplaceLogForwardHandler
 	// LogTargetReplaceLogTargetBackendHandler sets the operation handler for the replace log target backend operation
@@ -2892,6 +2976,8 @@ type DataPlaneAPI struct {
 	TCPCheckReplaceTCPCheckBackendHandler tcp_check.ReplaceTCPCheckBackendHandler
 	// TCPCheckReplaceTCPCheckDefaultsHandler sets the operation handler for the replace TCP check defaults operation
 	TCPCheckReplaceTCPCheckDefaultsHandler tcp_check.ReplaceTCPCheckDefaultsHandler
+	// TCPCheckReplaceTCPCheckHealthcheckHandler sets the operation handler for the replace TCP check healthcheck operation
+	TCPCheckReplaceTCPCheckHealthcheckHandler tcp_check.ReplaceTCPCheckHealthcheckHandler
 	// TCPRequestRuleReplaceTCPRequestRuleBackendHandler sets the operation handler for the replace TCP request rule backend operation
 	TCPRequestRuleReplaceTCPRequestRuleBackendHandler tcp_request_rule.ReplaceTCPRequestRuleBackendHandler
 	// TCPRequestRuleReplaceTCPRequestRuleDefaultsHandler sets the operation handler for the replace TCP request rule defaults operation
@@ -3161,6 +3247,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPCheckCreateHTTPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "http_check.CreateHTTPCheckDefaultsHandler")
 	}
+	if o.HTTPCheckCreateHTTPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "http_check.CreateHTTPCheckHealthcheckHandler")
+	}
 	if o.HTTPErrorRuleCreateHTTPErrorRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.CreateHTTPErrorRuleBackendHandler")
 	}
@@ -3190,6 +3279,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleFrontendHandler")
+	}
+	if o.HealthCheckCreateHealthCheckHandler == nil {
+		unregistered = append(unregistered, "health_check.CreateHealthCheckHandler")
 	}
 	if o.LogForwardCreateLogForwardHandler == nil {
 		unregistered = append(unregistered, "log_forward.CreateLogForwardHandler")
@@ -3301,6 +3393,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPCheckCreateTCPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "tcp_check.CreateTCPCheckDefaultsHandler")
+	}
+	if o.TCPCheckCreateTCPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.CreateTCPCheckHealthcheckHandler")
 	}
 	if o.TCPRequestRuleCreateTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleBackendHandler")
@@ -3431,6 +3526,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPCheckDeleteHTTPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "http_check.DeleteHTTPCheckDefaultsHandler")
 	}
+	if o.HTTPCheckDeleteHTTPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "http_check.DeleteHTTPCheckHealthcheckHandler")
+	}
 	if o.HTTPErrorRuleDeleteHTTPErrorRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.DeleteHTTPErrorRuleBackendHandler")
 	}
@@ -3460,6 +3558,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleFrontendHandler")
+	}
+	if o.HealthCheckDeleteHealthCheckHandler == nil {
+		unregistered = append(unregistered, "health_check.DeleteHealthCheckHandler")
 	}
 	if o.LogForwardDeleteLogForwardHandler == nil {
 		unregistered = append(unregistered, "log_forward.DeleteLogForwardHandler")
@@ -3580,6 +3681,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPCheckDeleteTCPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "tcp_check.DeleteTCPCheckDefaultsHandler")
+	}
+	if o.TCPCheckDeleteTCPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.DeleteTCPCheckHealthcheckHandler")
 	}
 	if o.TCPRequestRuleDeleteTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleBackendHandler")
@@ -3716,6 +3820,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPCheckGetAllHTTPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "http_check.GetAllHTTPCheckDefaultsHandler")
 	}
+	if o.HTTPCheckGetAllHTTPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "http_check.GetAllHTTPCheckHealthcheckHandler")
+	}
 	if o.HTTPErrorRuleGetAllHTTPErrorRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.GetAllHTTPErrorRuleBackendHandler")
 	}
@@ -3820,6 +3927,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPCheckGetAllTCPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "tcp_check.GetAllTCPCheckDefaultsHandler")
+	}
+	if o.TCPCheckGetAllTCPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.GetAllTCPCheckHealthcheckHandler")
 	}
 	if o.TCPRequestRuleGetAllTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetAllTCPRequestRuleBackendHandler")
@@ -3965,6 +4075,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPCheckGetHTTPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "http_check.GetHTTPCheckDefaultsHandler")
 	}
+	if o.HTTPCheckGetHTTPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "http_check.GetHTTPCheckHealthcheckHandler")
+	}
 	if o.HTTPErrorRuleGetHTTPErrorRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.GetHTTPErrorRuleBackendHandler")
 	}
@@ -4006,6 +4119,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HealthGetHealthHandler == nil {
 		unregistered = append(unregistered, "health.GetHealthHandler")
+	}
+	if o.HealthCheckGetHealthCheckHandler == nil {
+		unregistered = append(unregistered, "health_check.GetHealthCheckHandler")
+	}
+	if o.HealthCheckGetHealthChecksHandler == nil {
+		unregistered = append(unregistered, "health_check.GetHealthChecksHandler")
 	}
 	if o.InformationGetInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetInfoHandler")
@@ -4217,6 +4336,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPCheckGetTCPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "tcp_check.GetTCPCheckDefaultsHandler")
 	}
+	if o.TCPCheckGetTCPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.GetTCPCheckHealthcheckHandler")
+	}
 	if o.TCPRequestRuleGetTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleBackendHandler")
 	}
@@ -4319,6 +4441,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPCheckReplaceAllHTTPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "http_check.ReplaceAllHTTPCheckDefaultsHandler")
 	}
+	if o.HTTPCheckReplaceAllHTTPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "http_check.ReplaceAllHTTPCheckHealthcheckHandler")
+	}
 	if o.HTTPErrorRuleReplaceAllHTTPErrorRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.ReplaceAllHTTPErrorRuleBackendHandler")
 	}
@@ -4375,6 +4500,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPCheckReplaceAllTCPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "tcp_check.ReplaceAllTCPCheckDefaultsHandler")
+	}
+	if o.TCPCheckReplaceAllTCPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.ReplaceAllTCPCheckHealthcheckHandler")
 	}
 	if o.TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceAllTCPRequestRuleBackendHandler")
@@ -4469,6 +4597,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPCheckReplaceHTTPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "http_check.ReplaceHTTPCheckDefaultsHandler")
 	}
+	if o.HTTPCheckReplaceHTTPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "http_check.ReplaceHTTPCheckHealthcheckHandler")
+	}
 	if o.HTTPErrorRuleReplaceHTTPErrorRuleBackendHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.ReplaceHTTPErrorRuleBackendHandler")
 	}
@@ -4498,6 +4629,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleFrontendHandler")
+	}
+	if o.HealthCheckReplaceHealthCheckHandler == nil {
+		unregistered = append(unregistered, "health_check.ReplaceHealthCheckHandler")
 	}
 	if o.LogForwardReplaceLogForwardHandler == nil {
 		unregistered = append(unregistered, "log_forward.ReplaceLogForwardHandler")
@@ -4606,6 +4740,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPCheckReplaceTCPCheckDefaultsHandler == nil {
 		unregistered = append(unregistered, "tcp_check.ReplaceTCPCheckDefaultsHandler")
+	}
+	if o.TCPCheckReplaceTCPCheckHealthcheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.ReplaceTCPCheckHealthcheckHandler")
 	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleBackendHandler")
@@ -4953,6 +5090,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}"] = http_check.NewCreateHTTPCheckHealthcheck(o.context, o.HTTPCheckCreateHTTPCheckHealthcheckHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends/{parent_name}/http_error_rules/{index}"] = http_error_rule.NewCreateHTTPErrorRuleBackend(o.context, o.HTTPErrorRuleCreateHTTPErrorRuleBackendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4990,6 +5131,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/frontends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewCreateHTTPResponseRuleFrontend(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/healthchecks"] = health_check.NewCreateHealthCheck(o.context, o.HealthCheckCreateHealthCheckHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -5138,6 +5283,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_checks/{index}"] = tcp_check.NewCreateTCPCheckDefaults(o.context, o.TCPCheckCreateTCPCheckDefaultsHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}"] = tcp_check.NewCreateTCPCheckHealthcheck(o.context, o.TCPCheckCreateTCPCheckHealthcheckHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -5313,6 +5462,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}"] = http_check.NewDeleteHTTPCheckHealthcheck(o.context, o.HTTPCheckDeleteHTTPCheckHealthcheckHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/http_error_rules/{index}"] = http_error_rule.NewDeleteHTTPErrorRuleBackend(o.context, o.HTTPErrorRuleDeleteHTTPErrorRuleBackendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -5350,6 +5503,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewDeleteHTTPResponseRuleFrontend(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/healthchecks/{name}"] = health_check.NewDeleteHealthCheck(o.context, o.HealthCheckDeleteHealthCheckHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5510,6 +5667,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_checks/{index}"] = tcp_check.NewDeleteTCPCheckDefaults(o.context, o.TCPCheckDeleteTCPCheckDefaultsHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}"] = tcp_check.NewDeleteTCPCheckHealthcheck(o.context, o.TCPCheckDeleteTCPCheckHealthcheckHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5693,6 +5854,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/healthchecks/{parent_name}/http_checks"] = http_check.NewGetAllHTTPCheckHealthcheck(o.context, o.HTTPCheckGetAllHTTPCheckHealthcheckHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/http_error_rules"] = http_error_rule.NewGetAllHTTPErrorRuleBackend(o.context, o.HTTPErrorRuleGetAllHTTPErrorRuleBackendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5830,6 +5995,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_checks"] = tcp_check.NewGetAllTCPCheckDefaults(o.context, o.TCPCheckGetAllTCPCheckDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks"] = tcp_check.NewGetAllTCPCheckHealthcheck(o.context, o.TCPCheckGetAllTCPCheckHealthcheckHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -6025,6 +6194,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}"] = http_check.NewGetHTTPCheckHealthcheck(o.context, o.HTTPCheckGetHTTPCheckHealthcheckHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/http_error_rules/{index}"] = http_error_rule.NewGetHTTPErrorRuleBackend(o.context, o.HTTPErrorRuleGetHTTPErrorRuleBackendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -6078,6 +6251,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/health"] = health.NewGetHealth(o.context, o.HealthGetHealthHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/healthchecks/{name}"] = health_check.NewGetHealthCheck(o.context, o.HealthCheckGetHealthCheckHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/healthchecks"] = health_check.NewGetHealthChecks(o.context, o.HealthCheckGetHealthChecksHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -6361,6 +6542,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}"] = tcp_check.NewGetTCPCheckHealthcheck(o.context, o.TCPCheckGetTCPCheckHealthcheckHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/tcp_request_rules/{index}"] = tcp_request_rule.NewGetTCPRequestRuleBackend(o.context, o.TCPRequestRuleGetTCPRequestRuleBackendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -6497,6 +6682,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/healthchecks/{parent_name}/http_checks"] = http_check.NewReplaceAllHTTPCheckHealthcheck(o.context, o.HTTPCheckReplaceAllHTTPCheckHealthcheckHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/http_error_rules"] = http_error_rule.NewReplaceAllHTTPErrorRuleBackend(o.context, o.HTTPErrorRuleReplaceAllHTTPErrorRuleBackendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -6570,6 +6759,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_checks"] = tcp_check.NewReplaceAllTCPCheckDefaults(o.context, o.TCPCheckReplaceAllTCPCheckDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks"] = tcp_check.NewReplaceAllTCPCheckHealthcheck(o.context, o.TCPCheckReplaceAllTCPCheckHealthcheckHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6697,6 +6890,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}"] = http_check.NewReplaceHTTPCheckHealthcheck(o.context, o.HTTPCheckReplaceHTTPCheckHealthcheckHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/http_error_rules/{index}"] = http_error_rule.NewReplaceHTTPErrorRuleBackend(o.context, o.HTTPErrorRuleReplaceHTTPErrorRuleBackendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -6734,6 +6931,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRuleFrontend(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/healthchecks/{name}"] = health_check.NewReplaceHealthCheck(o.context, o.HealthCheckReplaceHealthCheckHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6878,6 +7079,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/tcp_checks/{index}"] = tcp_check.NewReplaceTCPCheckDefaults(o.context, o.TCPCheckReplaceTCPCheckDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}"] = tcp_check.NewReplaceTCPCheckHealthcheck(o.context, o.TCPCheckReplaceTCPCheckHealthcheckHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

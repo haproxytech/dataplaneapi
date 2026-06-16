@@ -21,33 +21,39 @@ import (
 )
 
 type (
-	CreateTCPCheckBackendHandlerImpl  CreateTCPCheckHandlerImpl
-	CreateTCPCheckDefaultsHandlerImpl CreateTCPCheckHandlerImpl
+	CreateTCPCheckBackendHandlerImpl     CreateTCPCheckHandlerImpl
+	CreateTCPCheckDefaultsHandlerImpl    CreateTCPCheckHandlerImpl
+	CreateTCPCheckHealthcheckHandlerImpl CreateTCPCheckHandlerImpl
 )
 
 type (
-	GetTCPCheckBackendHandlerImpl  GetTCPCheckHandlerImpl
-	GetTCPCheckDefaultsHandlerImpl GetTCPCheckHandlerImpl
+	GetTCPCheckBackendHandlerImpl     GetTCPCheckHandlerImpl
+	GetTCPCheckDefaultsHandlerImpl    GetTCPCheckHandlerImpl
+	GetTCPCheckHealthcheckHandlerImpl GetTCPCheckHandlerImpl
 )
 
 type (
-	GetAllTCPCheckBackendHandlerImpl  GetAllTCPCheckHandlerImpl
-	GetAllTCPCheckDefaultsHandlerImpl GetAllTCPCheckHandlerImpl
+	GetAllTCPCheckBackendHandlerImpl     GetAllTCPCheckHandlerImpl
+	GetAllTCPCheckDefaultsHandlerImpl    GetAllTCPCheckHandlerImpl
+	GetAllTCPCheckHealthcheckHandlerImpl GetAllTCPCheckHandlerImpl
 )
 
 type (
-	DeleteTCPCheckBackendHandlerImpl  DeleteTCPCheckHandlerImpl
-	DeleteTCPCheckDefaultsHandlerImpl DeleteTCPCheckHandlerImpl
+	DeleteTCPCheckBackendHandlerImpl     DeleteTCPCheckHandlerImpl
+	DeleteTCPCheckDefaultsHandlerImpl    DeleteTCPCheckHandlerImpl
+	DeleteTCPCheckHealthcheckHandlerImpl DeleteTCPCheckHandlerImpl
 )
 
 type (
-	ReplaceTCPCheckBackendHandlerImpl  ReplaceTCPCheckHandlerImpl
-	ReplaceTCPCheckDefaultsHandlerImpl ReplaceTCPCheckHandlerImpl
+	ReplaceTCPCheckBackendHandlerImpl     ReplaceTCPCheckHandlerImpl
+	ReplaceTCPCheckDefaultsHandlerImpl    ReplaceTCPCheckHandlerImpl
+	ReplaceTCPCheckHealthcheckHandlerImpl ReplaceTCPCheckHandlerImpl
 )
 
 type (
-	ReplaceAllTCPCheckBackendHandlerImpl  ReplaceAllTCPCheckHandlerImpl
-	ReplaceAllTCPCheckDefaultsHandlerImpl ReplaceAllTCPCheckHandlerImpl
+	ReplaceAllTCPCheckBackendHandlerImpl     ReplaceAllTCPCheckHandlerImpl
+	ReplaceAllTCPCheckDefaultsHandlerImpl    ReplaceAllTCPCheckHandlerImpl
+	ReplaceAllTCPCheckHealthcheckHandlerImpl ReplaceAllTCPCheckHandlerImpl
 )
 
 func (h *CreateTCPCheckBackendHandlerImpl) Handle(params tcp_check.CreateTCPCheckBackendParams, principal any) middleware.Responder {
@@ -61,6 +67,12 @@ func (h *CreateTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.CreateTCPChe
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
+func (h *CreateTCPCheckHealthcheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckHealthcheckParams, principal any) middleware.Responder {
+	g := CreateTCPCheckHandlerImpl(*h)
+	pg := tcp_check.CreateTCPCheckBackendParams(params)
+	return g.Handle(cnconstants.HealthcheckParentType, pg, principal)
+}
+
 func (h *GetTCPCheckBackendHandlerImpl) Handle(params tcp_check.GetTCPCheckBackendParams, principal any) middleware.Responder {
 	g := GetTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -70,6 +82,12 @@ func (h *GetTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.GetTCPCheckDefa
 	g := GetTCPCheckHandlerImpl(*h)
 	pg := tcp_check.GetTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
+func (h *GetTCPCheckHealthcheckHandlerImpl) Handle(params tcp_check.GetTCPCheckHealthcheckParams, principal any) middleware.Responder {
+	g := GetTCPCheckHandlerImpl(*h)
+	pg := tcp_check.GetTCPCheckBackendParams(params)
+	return g.Handle(cnconstants.HealthcheckParentType, pg, principal)
 }
 
 func (h *GetAllTCPCheckBackendHandlerImpl) Handle(params tcp_check.GetAllTCPCheckBackendParams, principal any) middleware.Responder {
@@ -83,6 +101,12 @@ func (h *GetAllTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.GetAllTCPChe
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
+func (h *GetAllTCPCheckHealthcheckHandlerImpl) Handle(params tcp_check.GetAllTCPCheckHealthcheckParams, principal any) middleware.Responder {
+	g := GetAllTCPCheckHandlerImpl(*h)
+	pg := tcp_check.GetAllTCPCheckBackendParams(params)
+	return g.Handle(cnconstants.HealthcheckParentType, pg, principal)
+}
+
 func (h *DeleteTCPCheckBackendHandlerImpl) Handle(params tcp_check.DeleteTCPCheckBackendParams, principal any) middleware.Responder {
 	g := DeleteTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -92,6 +116,12 @@ func (h *DeleteTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.DeleteTCPChe
 	g := DeleteTCPCheckHandlerImpl(*h)
 	pg := tcp_check.DeleteTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
+func (h *DeleteTCPCheckHealthcheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckHealthcheckParams, principal any) middleware.Responder {
+	g := DeleteTCPCheckHandlerImpl(*h)
+	pg := tcp_check.DeleteTCPCheckBackendParams(params)
+	return g.Handle(cnconstants.HealthcheckParentType, pg, principal)
 }
 
 func (h *ReplaceTCPCheckBackendHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckBackendParams, principal any) middleware.Responder {
@@ -105,6 +135,12 @@ func (h *ReplaceTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.ReplaceTCPC
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
 }
 
+func (h *ReplaceTCPCheckHealthcheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckHealthcheckParams, principal any) middleware.Responder {
+	g := ReplaceTCPCheckHandlerImpl(*h)
+	pg := tcp_check.ReplaceTCPCheckBackendParams(params)
+	return g.Handle(cnconstants.HealthcheckParentType, pg, principal)
+}
+
 func (h *ReplaceAllTCPCheckBackendHandlerImpl) Handle(params tcp_check.ReplaceAllTCPCheckBackendParams, principal any) middleware.Responder {
 	g := ReplaceAllTCPCheckHandlerImpl(*h)
 	return g.Handle(cnconstants.BackendParentType, params, principal)
@@ -114,4 +150,10 @@ func (h *ReplaceAllTCPCheckDefaultsHandlerImpl) Handle(params tcp_check.ReplaceA
 	g := ReplaceAllTCPCheckHandlerImpl(*h)
 	pg := tcp_check.ReplaceAllTCPCheckBackendParams(params)
 	return g.Handle(cnconstants.DefaultsParentType, pg, principal)
+}
+
+func (h *ReplaceAllTCPCheckHealthcheckHandlerImpl) Handle(params tcp_check.ReplaceAllTCPCheckHealthcheckParams, principal any) middleware.Responder {
+	g := ReplaceAllTCPCheckHandlerImpl(*h)
+	pg := tcp_check.ReplaceAllTCPCheckBackendParams(params)
+	return g.Handle(cnconstants.HealthcheckParentType, pg, principal)
 }
