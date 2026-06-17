@@ -908,6 +908,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.ClusterEditClusterHandler = &handlers.EditClusterHandlerImpl{Config: cfg}
 	api.ClusterInitiateCertificateRefreshHandler = &handlers.ClusterInitiateCertificateRefreshHandlerImpl{Config: cfg}
 
+	// setup healthcheck handlers
+	api.HealthCheckCreateHealthCheckHandler = &handlers.CreateHealthCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HealthCheckDeleteHealthCheckHandler = &handlers.DeleteHealthCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HealthCheckGetHealthCheckHandler = &handlers.GetHealthCheckHandlerImpl{Client: client}
+	api.HealthCheckGetHealthChecksHandler = &handlers.GetHealthChecksHandlerImpl{Client: client}
+	api.HealthCheckReplaceHealthCheckHandler = &handlers.ReplaceHealthCheckHandlerImpl{Client: client, ReloadAgent: ra}
+
 	clusterSync := dataplaneapi_config.ClusterSync{ReloadAgent: ra, Context: ctx}
 	go clusterSync.Monitor(cfg, client)
 
