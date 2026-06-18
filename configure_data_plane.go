@@ -457,6 +457,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.HTTPCheckDeleteHTTPCheckDefaultsHandler = &handlers.DeleteHTTPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPCheckReplaceAllHTTPCheckDefaultsHandler = &handlers.ReplaceAllHTTPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 
+	api.HTTPCheckGetHTTPCheckHealthcheckHandler = &handlers.GetHTTPCheckHealthcheckHandlerImpl{Client: client}
+	api.HTTPCheckGetAllHTTPCheckHealthcheckHandler = &handlers.GetAllHTTPCheckHealthcheckHandlerImpl{Client: client}
+	api.HTTPCheckCreateHTTPCheckHealthcheckHandler = &handlers.CreateHTTPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceHTTPCheckHealthcheckHandler = &handlers.ReplaceHTTPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckDeleteHTTPCheckHealthcheckHandler = &handlers.DeleteHTTPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceAllHTTPCheckHealthcheckHandler = &handlers.ReplaceAllHTTPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup http request rule handlers
 	api.HTTPRequestRuleCreateHTTPRequestRuleBackendHandler = &handlers.CreateHTTPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPRequestRuleDeleteHTTPRequestRuleBackendHandler = &handlers.DeleteHTTPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
@@ -553,6 +560,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.TCPCheckGetAllTCPCheckBackendHandler = &handlers.GetAllTCPCheckBackendHandlerImpl{Client: client}
 	api.TCPCheckReplaceTCPCheckBackendHandler = &handlers.ReplaceTCPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
 	api.TCPCheckReplaceAllTCPCheckBackendHandler = &handlers.ReplaceAllTCPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.TCPCheckCreateTCPCheckHealthcheckHandler = &handlers.CreateTCPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckDeleteTCPCheckHealthcheckHandler = &handlers.DeleteTCPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckGetTCPCheckHealthcheckHandler = &handlers.GetTCPCheckHealthcheckHandlerImpl{Client: client}
+	api.TCPCheckGetAllTCPCheckHealthcheckHandler = &handlers.GetAllTCPCheckHealthcheckHandlerImpl{Client: client}
+	api.TCPCheckReplaceTCPCheckHealthcheckHandler = &handlers.ReplaceTCPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckReplaceAllTCPCheckHealthcheckHandler = &handlers.ReplaceAllTCPCheckHealthcheckHandlerImpl{Client: client, ReloadAgent: ra}
 
 	api.TCPCheckCreateTCPCheckDefaultsHandler = &handlers.CreateTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 	api.TCPCheckDeleteTCPCheckDefaultsHandler = &handlers.DeleteTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
