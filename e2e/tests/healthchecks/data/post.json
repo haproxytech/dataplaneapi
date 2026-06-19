@@ -1,0 +1,9 @@
+{
+	"httpchk_params": {
+		"method": "PUT",
+		"uri": "*",
+		"version": "HTTP/1.1"
+	},
+	"name": "test_healthcheck",
+	"type": "httpchk"
+}

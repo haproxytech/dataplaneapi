@@ -1,0 +1,9 @@
+{
+	"mysql_check_params": {
+    "client_version": "pre-41",
+		"username": "haproxy"
+	},
+	"name": "test_healthcheck_2",
+	"type": "mysql-check"
+}
+

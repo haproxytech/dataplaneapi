@@ -1,0 +1,7 @@
+{
+	"pgsql_check_params": {
+		"username": "haproxy"
+	},
+	"name": "test_healthcheck",
+	"type": "pgsql-check"
+}
