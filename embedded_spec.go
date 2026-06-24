@@ -28371,19 +28371,6 @@ func init() {
           },
           "x-display-name": "HTTP low interactive delays"
         },
-        "http-use-htx": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          }
-        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
@@ -28419,19 +28406,6 @@ func init() {
               "value": "http"
             }
           }
-        },
-        "http_proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP proxy mode"
         },
         "http_request_timeout": {
           "type": "integer",
@@ -29469,6 +29443,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
@@ -30746,14 +30725,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -32397,19 +32368,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -91068,19 +91026,6 @@ func init() {
           },
           "x-display-name": "HTTP low interactive delays"
         },
-        "http-use-htx": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          }
-        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
@@ -91117,19 +91062,6 @@ func init() {
               "value": "http"
             }
           }
-        },
-        "http_proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP proxy mode"
         },
         "http_request_timeout": {
           "type": "integer",
@@ -92151,6 +92083,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
@@ -93395,14 +93332,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -95025,19 +94954,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
