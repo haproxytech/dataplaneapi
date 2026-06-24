@@ -26,7 +26,7 @@ import (
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	sc "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
-	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 
 	// configuration
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/acl"
@@ -123,7 +123,7 @@ import (
 // Options holds all dependencies needed to build the router.
 type Options struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent haproxy.IReloadAgent
+	ReloadAgent reload_agent.IReloadAgent
 
 	// Cluster management
 	Config *dataplaneapi_config.Configuration

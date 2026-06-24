@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-package haproxy
+package reload_agent
 
 import (
 	"context"

@@ -24,13 +24,13 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 // RegisterRouter registers all userlist and user routes onto r using spec-based request validation
 // and a shared error handler.
-func RegisterRouter(r chi.Router, client client_native.HAProxyClient, ra haproxy.IReloadAgent) error {
+func RegisterRouter(r chi.Router, client client_native.HAProxyClient, ra reload_agent.IReloadAgent) error {
 	spec, err := GetSpec()
 	if err != nil {
 		return err
@@ -46,7 +46,7 @@ func RegisterRouter(r chi.Router, client client_native.HAProxyClient, ra haproxy
 // HandlerImpl implements ServerInterface for HAProxy userlist and user configuration.
 type HandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent haproxy.IReloadAgent
+	ReloadAgent reload_agent.IReloadAgent
 }
 
 func (h *HandlerImpl) GetUserlists(w http.ResponseWriter, r *http.Request, params GetUserlistsParams) {

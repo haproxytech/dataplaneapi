@@ -22,12 +22,12 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
-	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 // RegisterRouter registers all peers routes onto r using spec-based request validation
 // and a shared error handler.
-func RegisterRouter(r chi.Router, client client_native.HAProxyClient, ra haproxy.IReloadAgent) error {
+func RegisterRouter(r chi.Router, client client_native.HAProxyClient, ra reload_agent.IReloadAgent) error {
 	spec, err := GetSpec()
 	if err != nil {
 		return err
@@ -43,7 +43,7 @@ func RegisterRouter(r chi.Router, client client_native.HAProxyClient, ra haproxy
 // HandlerImpl implements ServerInterface for HAProxy peers configuration.
 type HandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent haproxy.IReloadAgent
+	ReloadAgent reload_agent.IReloadAgent
 }
 
 // --- Peer Entry handlers ---

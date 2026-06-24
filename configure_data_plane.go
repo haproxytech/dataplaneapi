@@ -36,6 +36,7 @@ import (
 	"github.com/haproxytech/client-native/v6/spoe"
 	"github.com/haproxytech/client-native/v6/storage"
 	"github.com/haproxytech/dataplaneapi/log"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 	"github.com/rs/cors"
 
 	"github.com/haproxytech/dataplaneapi/adapters"
@@ -43,7 +44,6 @@ import (
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/handlers"
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/resilient"
 	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
@@ -309,22 +309,29 @@ func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) 
 	return setupGlobalMiddleware(chiRouter, adpts...), serverShutdown
 }
 
-func configureReloadAgent(haproxyOptions dataplaneapi_config.HAProxyConfiguration, client client_native.HAProxyClient, ctx context.Context) *haproxy.ReloadAgent {
+func configureReloadAgent(haproxyOptions dataplaneapi_config.HAProxyConfiguration, client client_native.HAProxyClient, ctx context.Context) *reload_agent.ReloadAgent {
 	// Initialize reload agent
-	raParams := haproxy.ReloadAgentParams{
-		Delay:           haproxyOptions.ReloadDelay,
-		ReloadCmd:       haproxyOptions.ReloadCmd,
-		UseMasterSocket: canUseMasterSocketReload(&haproxyOptions, client),
-		RestartCmd:      haproxyOptions.RestartCmd,
-		StatusCmd:       haproxyOptions.StatusCmd,
-		ConfigFile:      haproxyOptions.ConfigFile,
-		BackupDir:       haproxyOptions.BackupsDir,
-		Retention:       haproxyOptions.ReloadRetention,
-		Client:          client,
-		Ctx:             ctx,
+	msReload := canUseMasterSocketReload(&haproxyOptions, client)
+	raParams := reload_agent.ReloadAgentParams{
+		Delay:      haproxyOptions.ReloadDelay,
+		ReloadCmd:  haproxyOptions.ReloadCmd,
+		UseRuntime: msReload,
+		RestartCmd: haproxyOptions.RestartCmd,
+		StatusCmd:  haproxyOptions.StatusCmd,
+		ConfigFile: haproxyOptions.ConfigFile,
+		BackupDir:  haproxyOptions.BackupsDir,
+		Retention:  haproxyOptions.ReloadRetention,
+		Ctx:        ctx,
+	}
+	if msReload {
+		rt, err := client.Runtime()
+		if err != nil {
+			log.Fatalf("Cannot initialize reload agent: %v", err)
+		}
+		raParams.Runtime = rt
 	}
 
-	ra, e := haproxy.NewReloadAgent(raParams)
+	ra, e := reload_agent.NewReloadAgent(raParams)
 	if e != nil {
 		log.Fatalf("Cannot initialize reload agent: %v", e)
 	}
@@ -522,7 +529,7 @@ func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions 
 	client.ReplaceConfiguration(confClient)
 }
 
-func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users, reloadAgent *haproxy.ReloadAgent) error {
+func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users, reloadAgent *reload_agent.ReloadAgent) error {
 	cb := func() {
 		// reload configuration from config file.
 		reloadConfigurationFile(client, haproxyOptions, users)

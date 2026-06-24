@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-package haproxy
+package reload_agent
 
 import (
 	"bytes"
@@ -30,10 +30,8 @@ import (
 	"time"
 
 	"github.com/google/renameio"
-	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/misc"
 	"github.com/haproxytech/client-native/v6/models"
-	"github.com/haproxytech/client-native/v6/runtime"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 
@@ -52,6 +50,10 @@ type IReloadAgent interface {
 	GetReload(id string) *models.Reload
 }
 
+type Runtime interface {
+	Reload() (string, error)
+}
+
 type reloadCache struct {
 	failedReloads map[string]*models.Reload
 	lastSuccess   *models.Reload
@@ -64,37 +66,37 @@ type reloadCache struct {
 }
 
 type ReloadAgentParams struct {
-	Client          client_native.HAProxyClient
-	Ctx             context.Context
-	ReloadCmd       string
-	RestartCmd      string
-	StatusCmd       string
-	ConfigFile      string
-	BackupDir       string
-	Delay           int
-	Retention       int
-	UseMasterSocket bool
+	Runtime    Runtime
+	Ctx        context.Context
+	ReloadCmd  string
+	RestartCmd string
+	StatusCmd  string
+	ConfigFile string
+	BackupDir  string
+	Delay      int
+	Retention  int
+	UseRuntime bool
 }
 
 // ReloadAgent handles all reloads, scheduled or forced
 type ReloadAgent struct {
-	runtime         runtime.Runtime
-	done            <-chan struct{}
-	reloadCmd       string
-	restartCmd      string
-	statusCmd       string
-	configFile      string
-	lkgConfigFile   string
-	cache           reloadCache
-	delay           int
-	useMasterSocket bool
+	runtime       Runtime
+	done          <-chan struct{}
+	reloadCmd     string
+	restartCmd    string
+	statusCmd     string
+	configFile    string
+	lkgConfigFile string
+	cache         reloadCache
+	delay         int
+	useRuntime    bool
 }
 
 func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	ra := &ReloadAgent{}
 
 	ra.reloadCmd = params.ReloadCmd
-	ra.useMasterSocket = params.UseMasterSocket
+	ra.useRuntime = params.UseRuntime
 	ra.restartCmd = params.RestartCmd
 	ra.statusCmd = params.StatusCmd
 	ra.configFile = params.ConfigFile
@@ -103,14 +105,7 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 		params.Ctx = context.Background()
 	}
 	ra.done = params.Ctx.Done()
-
-	if ra.useMasterSocket {
-		rt, err := params.Client.Runtime()
-		if err != nil {
-			return nil, err
-		}
-		ra.runtime = rt
-	}
+	ra.runtime = params.Runtime
 
 	params.Delay *= 1000 // delay is defined in seconds - internally in miliseconds
 	d := os.Getenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE")
@@ -200,7 +195,7 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	var err error
 	t := time.Now()
 
-	if ra.useMasterSocket {
+	if ra.useRuntime {
 		output, err = ra.runtime.Reload()
 	} else {
 		output, err = execCmd(ra.reloadCmd)

@@ -29,8 +29,8 @@ import (
 	"github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/client-native/v6/models"
 
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 const (
@@ -104,7 +104,7 @@ func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 	return servers
 }
 
-func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client configuration.Configuration, reloadAgent haproxy.IReloadAgent) (*awsInstance, error) {
+func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client configuration.Configuration, reloadAgent reload_agent.IReloadAgent) (*awsInstance, error) {
 	timeout, err := time.ParseDuration(fmt.Sprintf("%ds", *params.RetryTimeout))
 	if err != nil {
 		return nil, err
