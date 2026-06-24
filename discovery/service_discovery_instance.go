@@ -21,8 +21,8 @@ import (
 
 	"github.com/haproxytech/client-native/v6/configuration"
 
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 // Using a simple mutex to avoid race conditions when multiple Service Discovery instances are trying to commit
@@ -55,14 +55,14 @@ type discoveryInstanceParams struct {
 // ServiceDiscoveryInstance manages and updates all services of a single service discovery.
 type ServiceDiscoveryInstance struct {
 	client        configuration.Configuration
-	reloadAgent   haproxy.IReloadAgent
+	reloadAgent   reload_agent.IReloadAgent
 	services      map[string]*confService
 	transactionID string
 	params        discoveryInstanceParams
 }
 
 // NewServiceDiscoveryInstance creates a new ServiceDiscoveryInstance.
-func NewServiceDiscoveryInstance(client configuration.Configuration, reloadAgent haproxy.IReloadAgent, params discoveryInstanceParams) *ServiceDiscoveryInstance {
+func NewServiceDiscoveryInstance(client configuration.Configuration, reloadAgent reload_agent.IReloadAgent, params discoveryInstanceParams) *ServiceDiscoveryInstance {
 	return &ServiceDiscoveryInstance{
 		client:      client,
 		reloadAgent: reloadAgent,

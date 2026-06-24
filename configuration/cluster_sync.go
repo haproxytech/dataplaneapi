@@ -41,8 +41,8 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/log"
 
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 const DataplaneAPIType = "community"
@@ -69,7 +69,7 @@ type ClusterSync struct {
 	certFetch   chan struct{}
 	cli         client_native.HAProxyClient
 	Context     context.Context
-	ReloadAgent haproxy.IReloadAgent
+	ReloadAgent reload_agent.IReloadAgent
 }
 
 var expectedResponseCodes = map[string]int{

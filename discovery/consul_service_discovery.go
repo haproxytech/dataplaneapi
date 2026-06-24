@@ -23,13 +23,13 @@ import (
 
 	"github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/client-native/v6/models"
-	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 type consulServiceDiscovery struct {
 	consulServices Store
 	client         configuration.Configuration
-	reloadAgent    haproxy.IReloadAgent
+	reloadAgent    reload_agent.IReloadAgent
 	context        context.Context
 }
 

@@ -20,7 +20,7 @@ import (
 	"errors"
 
 	"github.com/haproxytech/client-native/v6/configuration"
-	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 // ServiceDiscoveryParams configuration for a specific service discovery
@@ -49,7 +49,7 @@ type ServiceDiscoveries interface {
 // ServiceDiscoveriesParams contain the parameters for the service discovery initialization
 type ServiceDiscoveriesParams struct {
 	Client      configuration.Configuration
-	ReloadAgent haproxy.IReloadAgent
+	ReloadAgent reload_agent.IReloadAgent
 	Context     context.Context
 }
 

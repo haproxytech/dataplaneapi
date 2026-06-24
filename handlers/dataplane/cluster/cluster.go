@@ -29,13 +29,13 @@ import (
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 	"github.com/haproxytech/dataplaneapi/storagetype"
 )
 
 // RegisterRouter registers all cluster routes onto r.
-func RegisterRouter(r chi.Router, client client_native.HAProxyClient, cfg *dataplaneapi_config.Configuration, users *dataplaneapi_config.Users, ra haproxy.IReloadAgent) error {
+func RegisterRouter(r chi.Router, client client_native.HAProxyClient, cfg *dataplaneapi_config.Configuration, users *dataplaneapi_config.Users, ra reload_agent.IReloadAgent) error {
 	spec, err := GetSpec()
 	if err != nil {
 		return err
@@ -53,7 +53,7 @@ type HandlerImpl struct {
 	Client      client_native.HAProxyClient
 	Config      *dataplaneapi_config.Configuration
 	Users       *dataplaneapi_config.Users
-	ReloadAgent haproxy.IReloadAgent
+	ReloadAgent reload_agent.IReloadAgent
 }
 
 func (h *HandlerImpl) GetCluster(w http.ResponseWriter, r *http.Request) {

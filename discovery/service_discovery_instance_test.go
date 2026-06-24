@@ -35,9 +35,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/client-native/v6/models"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 	"github.com/stretchr/testify/assert"
-
-	"github.com/haproxytech/dataplaneapi/haproxy"
 )
 
 var (
@@ -83,7 +82,7 @@ func TestAWS(t *testing.T) {
 	err = confClient.Init(confParams)
 	assert.Nil(t, err)
 
-	var ra haproxy.IReloadAgent
+	var ra reload_agent.IReloadAgent
 
 	ra, err = haproxy.NewReloadAgent(haproxy.ReloadAgentParams{
 		Delay:      1,

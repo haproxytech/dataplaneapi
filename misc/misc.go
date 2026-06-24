@@ -34,9 +34,9 @@ import (
 	"github.com/haproxytech/client-native/v6/models"
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/rate"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 const (
@@ -89,7 +89,7 @@ func HandleError(err error) *models.Error {
 			httpCode = ErrHTTPBadRequest
 		}
 		return &models.Error{Code: &httpCode, Message: &msg}
-	case *haproxy.ReloadError:
+	case *reload_agent.ReloadError:
 		httpCode := ErrHTTPBadRequest
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}
