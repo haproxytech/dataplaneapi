@@ -229,3 +229,5 @@ allowed:
   - rebase
   - XXXX
   - oapi
+  - codegen
+  - templated
