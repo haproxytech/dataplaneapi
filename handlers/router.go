@@ -44,6 +44,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/frontend"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/global"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/groups"
+	"github.com/haproxytech/dataplaneapi/handlers/configuration/health_check"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/http/http_after_response_rule"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/http/http_check"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/http/http_error_rule"
@@ -179,6 +180,7 @@ func NewRouter(opts Options) (http.Handler, error) {
 		func() error { return frontend.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return global.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return groups.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
+		func() error { return health_check.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return http_after_response_rule.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return http_check.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return http_error_rule.RegisterRouter(r, opts.Client, opts.ReloadAgent) },

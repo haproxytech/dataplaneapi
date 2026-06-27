@@ -99,6 +99,32 @@ func (h *HandlerImpl) ReplaceTCPCheckDefaults(w http.ResponseWriter, r *http.Req
 	h.replaceTCPCheck(w, r, "defaults", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
 }
 
+// --- Healthcheck parent ---
+
+func (h *HandlerImpl) GetAllTCPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params GetAllTCPCheckHealthcheckParams) {
+	h.getAllTCPCheck(w, r, "healthcheck", parentName, params.TransactionId)
+}
+
+func (h *HandlerImpl) ReplaceAllTCPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceAllTCPCheckHealthcheckParams) {
+	h.replaceAllTCPCheck(w, r, "healthcheck", parentName, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
+func (h *HandlerImpl) DeleteTCPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params DeleteTCPCheckHealthcheckParams) {
+	h.deleteTCPCheck(w, r, "healthcheck", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
+func (h *HandlerImpl) GetTCPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params GetTCPCheckHealthcheckParams) {
+	h.getTCPCheck(w, r, "healthcheck", parentName, index, params.TransactionId)
+}
+
+func (h *HandlerImpl) CreateTCPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params CreateTCPCheckHealthcheckParams) {
+	h.createTCPCheck(w, r, "healthcheck", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
+func (h *HandlerImpl) ReplaceTCPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params ReplaceTCPCheckHealthcheckParams) {
+	h.replaceTCPCheck(w, r, "healthcheck", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
 // --- Shared internal methods ---
 
 func (h *HandlerImpl) getAllTCPCheck(w http.ResponseWriter, r *http.Request, parentType, parentName, transactionID string) {

@@ -659,15 +659,6 @@ components:
             mode:
               value: http
           x-display-name: HTTP low interactive delays
-        http-use-htx:
-          enum:
-            - enabled
-            - disabled
-          pattern: ^[^\s]+$
-          type: string
-          x-dependency:
-            mode:
-              value: http
         http_connection_mode:
           enum:
             - httpclose
@@ -694,15 +685,6 @@ components:
           x-dependency:
             mode:
               value: http
-        http_proxy:
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-dependency:
-            mode:
-              value: http
-          x-display-name: HTTP proxy mode
         http_request_timeout:
           minimum: 0
           nullable: true
@@ -1442,6 +1424,10 @@ components:
           example: none
           type: string
           x-display-name: Format
+        shards:
+          pattern: ^(by-thread|by-group|[0-9]+)$
+          type: string
+          x-display-name: Shards
         sigalgs:
           type: string
           x-dependency:
@@ -2403,12 +2389,6 @@ components:
             - disabled
           type: string
           x-display-name: Drop HTTP Response Trailers
-        http-use-htx:
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-display-name: HTTP Use HTX
         http_connection_mode:
           enum:
             - httpclose
@@ -3665,15 +3645,6 @@ components:
             - disabled
           type: string
           x-display-name: Drop HTTP Response Trailers
-        http-use-htx:
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-dependency:
-            mode:
-              value: http
-          x-display-name: HTTP Use HTX
         http_connection_mode:
           enum:
             - httpclose
@@ -4440,6 +4411,66 @@ components:
       x-go-type: models.Health
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
+    health_check:
+      type: object
+      x-go-type: models.HealthCheck
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    health_checks:
+      items:
+        $ref: '#/components/schemas/health_check'
+      type: array
+      x-go-type: models.Healthchecks
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    healthcheck:
+      allOf:
+        - $ref: '#/components/schemas/healthcheck_base'
+        - properties:
+            http_check_list:
+              $ref: '#/components/schemas/http_checks'
+            tcp_check_list:
+              $ref: '#/components/schemas/tcp_checks'
+          type: object
+      description: HealthCheck with all it's children resources
+      type: object
+      x-go-name: HealthCheck
+    healthcheck_base:
+      description: HealthCheck with all it's children resources
+      properties:
+        httpchk_params:
+          $ref: '#/components/schemas/httpchk_params'
+        mysql_check_params:
+          $ref: '#/components/schemas/mysql_check_params'
+        name:
+          pattern: ^[A-Za-z0-9-_.:]+$
+          type: string
+        pgsql_check_params:
+          $ref: '#/components/schemas/pgsql_check_params'
+        smtpchk_params:
+          $ref: '#/components/schemas/smtpchk_params'
+        type:
+          enum:
+            - httpchk
+            - ldap-check
+            - mysql-check
+            - pgsql-check
+            - redis-check
+            - smtpchk
+            - spop-check
+            - ssl-hello-chk
+            - tcp-check
+          type: string
+      required:
+        - name
+      type: object
+      x-go-name: HealthCheckBase
+    healthchecks:
+      description: HAProxy healthchecks array
+      items:
+        $ref: '#/components/schemas/healthcheck'
+      title: HealthChecks
+      type: array
     http_after_response_rule:
       additionalProperties: false
       description: HAProxy HTTP after response rule configuration (corresponds to http-after-response directives)
@@ -28673,6 +28704,887 @@ paths:
       summary: Replace a group
       tags:
         - Group
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/healthchecks:
+    get:
+      description: Returns an array of all configured health checks.
+      operationId: getHealthChecks
+      parameters:
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Indicates if the action affects the specified child resources as well
+          in: query
+          name: full_section
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health_checks'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of health checks
+      tags:
+        - HealthCheck
+    post:
+      description: Adds a new health check to the configuration file.
+      operationId: createHealthCheck
+      parameters:
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+        - description: Indicates if the action affects the specified child resources as well
+          in: query
+          name: full_section
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/health_check'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health_check'
+          description: Health check created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health_check'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a health check
+      tags:
+        - HealthCheck
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/healthchecks/{name}:
+    delete:
+      description: Deletes a health check from the configuration by its name.
+      operationId: deleteHealthCheck
+      parameters:
+        - description: Health check name
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Health check deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a health check
+      tags:
+        - HealthCheck
+    get:
+      description: Returns one health check configuration by its name.
+      operationId: getHealthCheck
+      parameters:
+        - description: Health check name
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Indicates if the action affects the specified child resources as well
+          in: query
+          name: full_section
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health_check'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return a health check
+      tags:
+        - HealthCheck
+    put:
+      description: Replaces a health check configuration by its name.
+      operationId: replaceHealthCheck
+      parameters:
+        - description: Health check name
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+        - description: Indicates if the action affects the specified child resources as well
+          in: query
+          name: full_section
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/health_check'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health_check'
+          description: Health check replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health_check'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a health check
+      tags:
+        - HealthCheck
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/healthchecks/{parent_name}/http_checks:
+    get:
+      description: Returns all HTTP Checks that are configured in specified Healthcheck.
+      operationId: getAllHTTPCheckHealthcheck
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_checks'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all HTTP Checks
+      tags:
+        - HTTPCheck
+    put:
+      description: Replaces a whole list of HTTP Checks with the list given in parameter for the specified Healthcheck.
+      operationId: replaceAllHTTPCheckHealthcheck
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_checks'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_checks'
+          description: All HTTP Checks replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_checks'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace an HTTP Check list
+      tags:
+        - HTTPCheck
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}:
+    delete:
+      description: Deletes a HTTP Check configuration by its index from the specified Healthcheck.
+      operationId: deleteHTTPCheckHealthcheck
+      parameters:
+        - description: HTTP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: HTTP Check deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a HTTP Check
+      tags:
+        - HTTPCheck
+    get:
+      description: Returns one HTTP Check configuration by its index in the specified Healthcheck.
+      operationId: getHTTPCheckHealthcheck
+      parameters:
+        - description: HTTP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_check'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one HTTP Check
+      tags:
+        - HTTPCheck
+    post:
+      description: Adds a new HTTP Check of the specified type in the specified Healthcheck.
+      operationId: createHTTPCheckHealthcheck
+      parameters:
+        - description: HTTP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_check'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_check'
+          description: HTTP Check created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_check'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new HTTP Check
+      tags:
+        - HTTPCheck
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a HTTP Check configuration by its index in the specified Healthcheck.
+      operationId: replaceHTTPCheckHealthcheck
+      parameters:
+        - description: HTTP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_check'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_check'
+          description: HTTP Check replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_check'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a HTTP Check
+      tags:
+        - HTTPCheck
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks:
+    get:
+      description: Returns all TCP Checks that are configured in specified Healthcheck.
+      operationId: getAllTCPCheckHealthcheck
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_checks'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all TCP Checks
+      tags:
+        - TCPCheck
+    put:
+      description: Replaces a whole list of TCP Checks with the list given in parameter for the specified Healthcheck.
+      operationId: replaceAllTCPCheckHealthcheck
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tcp_checks'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_checks'
+          description: All TCP Checks replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_checks'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a TCP Check list
+      tags:
+        - TCPCheck
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/healthchecks/{parent_name}/tcp_checks/{index}:
+    delete:
+      description: Deletes a TCP Check configuration by its index from the specified Healthcheck.
+      operationId: deleteTCPCheckHealthcheck
+      parameters:
+        - description: TCP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: TCP Check deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a TCP Check
+      tags:
+        - TCPCheck
+    get:
+      description: Returns one TCP Check configuration by its index in the specified Healthcheck.
+      operationId: getTCPCheckHealthcheck
+      parameters:
+        - description: TCP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_check'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one TCP Check
+      tags:
+        - TCPCheck
+    post:
+      description: Adds a new TCP Check of the specified type in the specified Healthcheck.
+      operationId: createTCPCheckHealthcheck
+      parameters:
+        - description: TCP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tcp_check'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_check'
+          description: TCP Check created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_check'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new TCP Check
+      tags:
+        - TCPCheck
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a TCP Check configuration by its index in the specified Healthcheck.
+      operationId: replaceTCPCheckHealthcheck
+      parameters:
+        - description: TCP Check Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tcp_check'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_check'
+          description: TCP Check replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tcp_check'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a TCP Check
+      tags:
+        - TCPCheck
       x-codegen-request-body-name: data
   /services/haproxy/configuration/http_errors_sections:
     get:

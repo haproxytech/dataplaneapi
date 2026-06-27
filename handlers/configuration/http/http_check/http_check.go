@@ -99,6 +99,32 @@ func (h *HandlerImpl) ReplaceHTTPCheckDefaults(w http.ResponseWriter, r *http.Re
 	h.replaceHTTPCheck(w, r, "defaults", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
 }
 
+// --- Healthcheck ---
+
+func (h *HandlerImpl) GetAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params GetAllHTTPCheckHealthcheckParams) {
+	h.getAllHTTPCheck(w, r, "healthcheck", parentName, params.TransactionId)
+}
+
+func (h *HandlerImpl) ReplaceAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceAllHTTPCheckHealthcheckParams) {
+	h.replaceAllHTTPCheck(w, r, "healthcheck", parentName, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
+func (h *HandlerImpl) DeleteHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params DeleteHTTPCheckHealthcheckParams) {
+	h.deleteHTTPCheck(w, r, "healthcheck", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
+func (h *HandlerImpl) GetHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params GetHTTPCheckHealthcheckParams) {
+	h.getHTTPCheck(w, r, "healthcheck", parentName, index, params.TransactionId)
+}
+
+func (h *HandlerImpl) CreateHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params CreateHTTPCheckHealthcheckParams) {
+	h.createHTTPCheck(w, r, "healthcheck", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
+func (h *HandlerImpl) ReplaceHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params ReplaceHTTPCheckHealthcheckParams) {
+	h.replaceHTTPCheck(w, r, "healthcheck", parentName, index, params.TransactionId, int64(params.Version), params.ForceReload)
+}
+
 // --- Shared implementations ---
 
 func (h *HandlerImpl) getAllHTTPCheck(w http.ResponseWriter, r *http.Request, parentType, parentName, txID string) {

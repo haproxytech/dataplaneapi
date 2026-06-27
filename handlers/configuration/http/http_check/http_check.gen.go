@@ -146,6 +146,66 @@ type ReplaceHTTPCheckDefaultsParams struct {
 	ForceReload bool `form:"force_reload,omitempty" json:"force_reload,omitempty,omitzero"`
 }
 
+// GetAllHTTPCheckHealthcheckParams defines parameters for GetAllHTTPCheckHealthcheck.
+type GetAllHTTPCheckHealthcheckParams struct {
+	// TransactionId ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	TransactionId string `form:"transaction_id,omitempty" json:"transaction_id,omitempty,omitzero"`
+}
+
+// ReplaceAllHTTPCheckHealthcheckParams defines parameters for ReplaceAllHTTPCheckHealthcheck.
+type ReplaceAllHTTPCheckHealthcheckParams struct {
+	// TransactionId ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	TransactionId string `form:"transaction_id,omitempty" json:"transaction_id,omitempty,omitzero"`
+
+	// Version Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+	Version int `form:"version,omitempty" json:"version,omitempty,omitzero"`
+
+	// ForceReload If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	ForceReload bool `form:"force_reload,omitempty" json:"force_reload,omitempty,omitzero"`
+}
+
+// DeleteHTTPCheckHealthcheckParams defines parameters for DeleteHTTPCheckHealthcheck.
+type DeleteHTTPCheckHealthcheckParams struct {
+	// TransactionId ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	TransactionId string `form:"transaction_id,omitempty" json:"transaction_id,omitempty,omitzero"`
+
+	// Version Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+	Version int `form:"version,omitempty" json:"version,omitempty,omitzero"`
+
+	// ForceReload If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	ForceReload bool `form:"force_reload,omitempty" json:"force_reload,omitempty,omitzero"`
+}
+
+// GetHTTPCheckHealthcheckParams defines parameters for GetHTTPCheckHealthcheck.
+type GetHTTPCheckHealthcheckParams struct {
+	// TransactionId ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	TransactionId string `form:"transaction_id,omitempty" json:"transaction_id,omitempty,omitzero"`
+}
+
+// CreateHTTPCheckHealthcheckParams defines parameters for CreateHTTPCheckHealthcheck.
+type CreateHTTPCheckHealthcheckParams struct {
+	// TransactionId ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	TransactionId string `form:"transaction_id,omitempty" json:"transaction_id,omitempty,omitzero"`
+
+	// Version Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+	Version int `form:"version,omitempty" json:"version,omitempty,omitzero"`
+
+	// ForceReload If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	ForceReload bool `form:"force_reload,omitempty" json:"force_reload,omitempty,omitzero"`
+}
+
+// ReplaceHTTPCheckHealthcheckParams defines parameters for ReplaceHTTPCheckHealthcheck.
+type ReplaceHTTPCheckHealthcheckParams struct {
+	// TransactionId ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	TransactionId string `form:"transaction_id,omitempty" json:"transaction_id,omitempty,omitzero"`
+
+	// Version Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+	Version int `form:"version,omitempty" json:"version,omitempty,omitzero"`
+
+	// ForceReload If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	ForceReload bool `form:"force_reload,omitempty" json:"force_reload,omitempty,omitzero"`
+}
+
 // ReplaceAllHTTPCheckBackendJSONRequestBody defines body for ReplaceAllHTTPCheckBackend for application/json ContentType.
 type ReplaceAllHTTPCheckBackendJSONRequestBody = HttpChecks
 
@@ -163,6 +223,15 @@ type CreateHTTPCheckDefaultsJSONRequestBody = HttpCheck
 
 // ReplaceHTTPCheckDefaultsJSONRequestBody defines body for ReplaceHTTPCheckDefaults for application/json ContentType.
 type ReplaceHTTPCheckDefaultsJSONRequestBody = HttpCheck
+
+// ReplaceAllHTTPCheckHealthcheckJSONRequestBody defines body for ReplaceAllHTTPCheckHealthcheck for application/json ContentType.
+type ReplaceAllHTTPCheckHealthcheckJSONRequestBody = HttpChecks
+
+// CreateHTTPCheckHealthcheckJSONRequestBody defines body for CreateHTTPCheckHealthcheck for application/json ContentType.
+type CreateHTTPCheckHealthcheckJSONRequestBody = HttpCheck
+
+// ReplaceHTTPCheckHealthcheckJSONRequestBody defines body for ReplaceHTTPCheckHealthcheck for application/json ContentType.
+type ReplaceHTTPCheckHealthcheckJSONRequestBody = HttpCheck
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -202,6 +271,24 @@ type ServerInterface interface {
 	// Replace a HTTP Check
 	// (PUT /services/haproxy/configuration/defaults/{parent_name}/http_checks/{index})
 	ReplaceHTTPCheckDefaults(w http.ResponseWriter, r *http.Request, parentName string, index int, params ReplaceHTTPCheckDefaultsParams)
+	// Return an array of all HTTP Checks
+	// (GET /services/haproxy/configuration/healthchecks/{parent_name}/http_checks)
+	GetAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params GetAllHTTPCheckHealthcheckParams)
+	// Replace an HTTP Check list
+	// (PUT /services/haproxy/configuration/healthchecks/{parent_name}/http_checks)
+	ReplaceAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceAllHTTPCheckHealthcheckParams)
+	// Delete a HTTP Check
+	// (DELETE /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+	DeleteHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params DeleteHTTPCheckHealthcheckParams)
+	// Return one HTTP Check
+	// (GET /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+	GetHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params GetHTTPCheckHealthcheckParams)
+	// Add a new HTTP Check
+	// (POST /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+	CreateHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params CreateHTTPCheckHealthcheckParams)
+	// Replace a HTTP Check
+	// (PUT /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+	ReplaceHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params ReplaceHTTPCheckHealthcheckParams)
 }
 
 // Unimplemented server implementation that returns http.StatusNotImplemented for each endpoint.
@@ -277,6 +364,42 @@ func (_ Unimplemented) CreateHTTPCheckDefaults(w http.ResponseWriter, r *http.Re
 // Replace a HTTP Check
 // (PUT /services/haproxy/configuration/defaults/{parent_name}/http_checks/{index})
 func (_ Unimplemented) ReplaceHTTPCheckDefaults(w http.ResponseWriter, r *http.Request, parentName string, index int, params ReplaceHTTPCheckDefaultsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Return an array of all HTTP Checks
+// (GET /services/haproxy/configuration/healthchecks/{parent_name}/http_checks)
+func (_ Unimplemented) GetAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params GetAllHTTPCheckHealthcheckParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace an HTTP Check list
+// (PUT /services/haproxy/configuration/healthchecks/{parent_name}/http_checks)
+func (_ Unimplemented) ReplaceAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceAllHTTPCheckHealthcheckParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Delete a HTTP Check
+// (DELETE /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+func (_ Unimplemented) DeleteHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params DeleteHTTPCheckHealthcheckParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Return one HTTP Check
+// (GET /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+func (_ Unimplemented) GetHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params GetHTTPCheckHealthcheckParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Add a new HTTP Check
+// (POST /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+func (_ Unimplemented) CreateHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params CreateHTTPCheckHealthcheckParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace a HTTP Check
+// (PUT /services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index})
+func (_ Unimplemented) ReplaceHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request, parentName string, index int, params ReplaceHTTPCheckHealthcheckParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -1073,6 +1196,398 @@ func (siw *ServerInterfaceWrapper) ReplaceHTTPCheckDefaults(w http.ResponseWrite
 	handler.ServeHTTP(w, r)
 }
 
+// GetAllHTTPCheckHealthcheck operation middleware
+func (siw *ServerInterfaceWrapper) GetAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAllHTTPCheckHealthcheckParams
+
+	// ------------- Optional query parameter "transaction_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "transaction_id", r.URL.Query(), &params.TransactionId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "transaction_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "transaction_id", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAllHTTPCheckHealthcheck(w, r, parentName, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceAllHTTPCheckHealthcheck operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceAllHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReplaceAllHTTPCheckHealthcheckParams
+
+	// ------------- Optional query parameter "transaction_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "transaction_id", r.URL.Query(), &params.TransactionId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "transaction_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "transaction_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "version" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "version", r.URL.Query(), &params.Version, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "version"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "version", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "force_reload" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "force_reload", r.URL.Query(), &params.ForceReload, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "force_reload"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "force_reload", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceAllHTTPCheckHealthcheck(w, r, parentName, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteHTTPCheckHealthcheck operation middleware
+func (siw *ServerInterfaceWrapper) DeleteHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "index" -------------
+	var index int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "index", chi.URLParam(r, "index"), &index, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "index", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteHTTPCheckHealthcheckParams
+
+	// ------------- Optional query parameter "transaction_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "transaction_id", r.URL.Query(), &params.TransactionId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "transaction_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "transaction_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "version" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "version", r.URL.Query(), &params.Version, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "version"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "version", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "force_reload" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "force_reload", r.URL.Query(), &params.ForceReload, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "force_reload"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "force_reload", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteHTTPCheckHealthcheck(w, r, parentName, index, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetHTTPCheckHealthcheck operation middleware
+func (siw *ServerInterfaceWrapper) GetHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "index" -------------
+	var index int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "index", chi.URLParam(r, "index"), &index, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "index", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetHTTPCheckHealthcheckParams
+
+	// ------------- Optional query parameter "transaction_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "transaction_id", r.URL.Query(), &params.TransactionId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "transaction_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "transaction_id", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetHTTPCheckHealthcheck(w, r, parentName, index, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateHTTPCheckHealthcheck operation middleware
+func (siw *ServerInterfaceWrapper) CreateHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "index" -------------
+	var index int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "index", chi.URLParam(r, "index"), &index, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "index", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateHTTPCheckHealthcheckParams
+
+	// ------------- Optional query parameter "transaction_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "transaction_id", r.URL.Query(), &params.TransactionId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "transaction_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "transaction_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "version" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "version", r.URL.Query(), &params.Version, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "version"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "version", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "force_reload" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "force_reload", r.URL.Query(), &params.ForceReload, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "force_reload"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "force_reload", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateHTTPCheckHealthcheck(w, r, parentName, index, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceHTTPCheckHealthcheck operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceHTTPCheckHealthcheck(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "index" -------------
+	var index int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "index", chi.URLParam(r, "index"), &index, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "index", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReplaceHTTPCheckHealthcheckParams
+
+	// ------------- Optional query parameter "transaction_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "transaction_id", r.URL.Query(), &params.TransactionId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "transaction_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "transaction_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "version" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "version", r.URL.Query(), &params.Version, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "version"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "version", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "force_reload" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "force_reload", r.URL.Query(), &params.ForceReload, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "force_reload"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "force_reload", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceHTTPCheckHealthcheck(w, r, parentName, index, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 type UnescapedCookieParamError struct {
 	ParamName string
 	Err       error
@@ -1222,6 +1737,24 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	r.Group(func(r chi.Router) {
 		r.Put(options.BaseURL+"/services/haproxy/configuration/defaults/{parent_name}/http_checks/{index}", wrapper.ReplaceHTTPCheckDefaults)
 	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/haproxy/configuration/healthchecks/{parent_name}/http_checks", wrapper.GetAllHTTPCheckHealthcheck)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/services/haproxy/configuration/healthchecks/{parent_name}/http_checks", wrapper.ReplaceAllHTTPCheckHealthcheck)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}", wrapper.DeleteHTTPCheckHealthcheck)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}", wrapper.GetHTTPCheckHealthcheck)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}", wrapper.CreateHTTPCheckHealthcheck)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/services/haproxy/configuration/healthchecks/{parent_name}/http_checks/{index}", wrapper.ReplaceHTTPCheckHealthcheck)
+	})
 
 	return r
 }
@@ -1231,32 +1764,34 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 // const string: with thousands of chunks the chained `+` fold is several
 // times slower for the Go compiler than parsing a slice literal.
 var swaggerSpec = []string{
-	"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",
-	"Pa5ls9Ap7dF4/JbObmf/BAAA//8=",
+	"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",
 }
 
 // decodeSpec returns the embedded OpenAPI spec as raw JSON bytes,

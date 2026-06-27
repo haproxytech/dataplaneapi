@@ -38,6 +38,7 @@ func Parents(childType string) []Parent {
 		return []Parent{
 			{PathParentType: "backends", ParentType: "Backend"},
 			{PathParentType: "defaults", ParentType: "Defaults"},
+			{PathParentType: "healthchecks", ParentType: "Healthcheck"},
 		}
 	case HTTPErrorRuleChildType:
 		return []Parent{
@@ -61,6 +62,7 @@ func Parents(childType string) []Parent {
 		return []Parent{
 			{PathParentType: "backends", ParentType: "Backend"},
 			{PathParentType: "defaults", ParentType: "Defaults"},
+			{PathParentType: "healthchecks", ParentType: "Healthcheck"},
 		}
 	case TCPRequestRuleChildType:
 		return []Parent{
