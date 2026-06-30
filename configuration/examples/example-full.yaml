@@ -117,16 +117,3 @@ log_targets:
   syslog_facility: local0
   log_types:
   - access
-# Deprecated: use log_targets instead
-log:
-  log_to: "stdout" # string
-  log_file: "/var/log/dataplaneapi/dataplaneapi.log" # string
-  log_level: "warning" # string
-  log_format: "text" # string
-  apache_common_log_format: "%h" # string
-  syslog:
-    syslog_address: null # string 2
-    syslog_protocol: "tcp" # string 2
-    syslog_tag: "dataplaneapi" # string 2
-    syslog_level: "debug" # string 2
-    syslog_facility: "local0" # string 2
