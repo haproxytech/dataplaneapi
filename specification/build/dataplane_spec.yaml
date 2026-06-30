@@ -1,6 +1,6 @@
 info:
   title: HAProxy Data Plane API
-  version: "3.0"
+  version: "3.4"
 openapi: 3.0.1
 security:
   - basic_auth: []
@@ -1637,75 +1637,6 @@ components:
       x-go-type: models.Captures
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
-    cluster_settings:
-      description: Settings related to a cluster.
-      properties:
-        bootstrap_key:
-          type: string
-        cluster:
-          properties:
-            address:
-              pattern: ^[^\s]+$
-              readOnly: true
-              type: string
-            api_base_path:
-              readOnly: true
-              type: string
-            cluster_id:
-              type: string
-            description:
-              readOnly: true
-              type: string
-            log_targets:
-              items:
-                properties:
-                  address:
-                    type: string
-                  log_format:
-                    type: string
-                  port:
-                    maximum: 65535
-                    minimum: 1
-                    type: integer
-                  protocol:
-                    enum:
-                      - tcp
-                      - udp
-                    type: string
-                required:
-                  - address
-                  - port
-                  - protocol
-                type: object
-                x-go-name: ClusterLogTarget
-              type: array
-              x-go-name: ClusterLogTargets
-              x-omitempty: true
-            name:
-              readOnly: true
-              type: string
-            port:
-              maximum: 65535
-              minimum: 1
-              nullable: true
-              readOnly: true
-              type: integer
-          title: Cluster controller information
-          type: object
-        mode:
-          enum:
-            - single
-            - cluster
-          type: string
-        status:
-          enum:
-            - active
-            - unreachable
-            - waiting_approval
-          readOnly: true
-          type: string
-      title: Cluster Settings
-      type: object
     compression:
       properties:
         algo-req:
@@ -8171,45 +8102,6 @@ components:
           nullable: true
           type: integer
       type: object
-    program:
-      description: HAProxy program configuration
-      example:
-        command: spoa-mirror --runtime 0 --mirror-url http://test.local
-        group: mygroupname
-        name: mirror
-        start-on-reload: enabled
-        user: myusername
-      properties:
-        command:
-          description: The command to be run, with flags and options.
-          type: string
-        group:
-          description: The group to run the command as, if different than the HAProxy group.
-          type: string
-        metadata:
-          additionalProperties:
-            type: object
-        name:
-          pattern: ^[A-Za-z0-9-_.:]+$
-          type: string
-        start-on-reload:
-          description: HAProxy stops and recreates child programs at reload.
-          enum:
-            - enabled
-            - disabled
-          type: string
-        user:
-          description: The user to run the command as, if different than the HAProxy user.
-          type: string
-      required:
-        - name
-        - command
-      title: Program
-      type: object
-    programs:
-      items:
-        $ref: '#/components/schemas/program'
-      type: array
     quic_initial_rule:
       additionalProperties: false
       description: QUIC Initial configuration

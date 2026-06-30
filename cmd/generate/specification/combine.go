@@ -28,7 +28,7 @@ func buildCombinedSpec(specDir string) error {
 
 	combined := &openapi3.T{
 		OpenAPI: "3.0.1",
-		Info:    &openapi3.Info{Title: "HAProxy Data Plane API", Version: "3.0"},
+		Info:    &openapi3.Info{Title: "HAProxy Data Plane API", Version: "3.4"},
 		Servers: openapi3.Servers{{URL: "/v3"}},
 		Paths:   openapi3.NewPathsWithCapacity(256),
 		Components: &openapi3.Components{
