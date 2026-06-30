@@ -1,7 +1,0 @@
-{
-  "name": "test",
-  "command": "echo true",
-  "start-on-reload": "disabled",
-  "user": "haproxy",
-  "group": "haproxy"
-}

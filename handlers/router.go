@@ -58,7 +58,6 @@ import (
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/log_targets_global"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/mailers"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/peers"
-	"github.com/haproxytech/dataplaneapi/handlers/configuration/program"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/quic/quic_initial_rule"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/raw"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/resolver"
@@ -195,7 +194,6 @@ func NewRouter(opts Options) (http.Handler, error) {
 		func() error { return log_targets_global.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return mailers.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return peers.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
-		func() error { return program.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return quic_initial_rule.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return raw.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return resolver.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
