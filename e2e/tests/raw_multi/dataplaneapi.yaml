@@ -23,7 +23,10 @@ haproxy:
     restart_cmd: kill -s 12 1
     validate_files_before:
     - /etc/haproxy/global.def
-log:
-  log_to: file
-  log_file: /var/log/dataplaneapi.log
-  log_level: debug
+log_targets:
+  - log_to: file
+    log_file: /var/log/dataplaneapi.log
+    log_level: debug
+    log_types:
+      - app
+      - access

@@ -18,7 +18,10 @@ haproxy:
   reload:
     reload_cmd: kill -s 12 1
     restart_cmd: kill -s 12 1
-log:
-  log_to: file
-  log_file: /var/log/dataplaneapi.log
-  log_level: debug
+log_targets:
+  - log_to: file
+    log_file: /var/log/dataplaneapi.log
+    log_level: debug
+    log_types:
+      - app
+      - access
