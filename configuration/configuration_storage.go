@@ -136,23 +136,6 @@ type configKeepalived struct {
 	BackupsNumber  *int    `yaml:"backups_number"`
 }
 
-type storagetypeyslog struct {
-	SyslogAddr     *string `yaml:"syslog_address,omitempty"`
-	SyslogProto    *string `yaml:"syslog_protocol,omitempty"`
-	SyslogTag      *string `yaml:"syslog_tag,omitempty"`
-	SyslogLevel    *string `yaml:"syslog_level,omitempty"`
-	SyslogFacility *string `yaml:"syslog_facility,omitempty"`
-}
-
-type configTypeLog struct {
-	LogTo     *string           `yaml:"log_to,omitempty"`
-	LogFile   *string           `yaml:"log_file,omitempty"`
-	LogLevel  *string           `yaml:"log_level,omitempty"`
-	LogFormat *string           `yaml:"log_format,omitempty"`
-	ACLFormat *string           `yaml:"apache_common_log_format,omitempty"`
-	Syslog    *storagetypeyslog `yaml:"syslog,omitempty"`
-}
-
 type StorageDataplaneAPIConfiguration struct {
 	Version                    *int                        `yaml:"config_version,omitempty"`
 	Name                       *string                     `yaml:"name,omitempty"`
@@ -163,7 +146,6 @@ type StorageDataplaneAPIConfiguration struct {
 	Haproxy                    *configTypeHaproxy          `yaml:"haproxy,omitempty"`
 	DeprecatedCluster          *storagetype.Cluster        `yaml:"cluster,omitempty"`
 	DeprecatedServiceDiscovery *storagetypeerviceDiscovery `yaml:"service_discovery,omitempty"`
-	Log                        *configTypeLog              `yaml:"log,omitempty"`
 	LogTargets                 *dpapilog.Targets           `yaml:"log_targets,omitempty"`
 }
 
@@ -302,36 +284,6 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Advertised != nil && cfgStorage.Dataplaneapi.Advertised.APIPort != nil && !misc.HasOSArg("", "api-port", "") {
 		cfg.APIOptions.APIPort = *cfgStorage.Dataplaneapi.Advertised.APIPort
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogAddr != nil && !misc.HasOSArg("", "syslog-address", "") {
-		cfg.Syslog.SyslogAddr = *cfgStorage.Log.Syslog.SyslogAddr
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogProto != nil && !misc.HasOSArg("", "syslog-protocol", "") {
-		cfg.Syslog.SyslogProto = *cfgStorage.Log.Syslog.SyslogProto
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogTag != nil && !misc.HasOSArg("", "syslog-tag", "") {
-		cfg.Syslog.SyslogTag = *cfgStorage.Log.Syslog.SyslogTag
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogLevel != nil && !misc.HasOSArg("", "syslog-level", "") {
-		cfg.Syslog.SyslogLevel = *cfgStorage.Log.Syslog.SyslogLevel
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogFacility != nil && !misc.HasOSArg("", "syslog-facility", "") {
-		cfg.Syslog.SyslogFacility = *cfgStorage.Log.Syslog.SyslogFacility
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.LogTo != nil && !misc.HasOSArg("", "log-to", "") {
-		cfg.Logging.LogTo = *cfgStorage.Log.LogTo
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.LogFile != nil && !misc.HasOSArg("", "log-file", "") {
-		cfg.Logging.LogFile = *cfgStorage.Log.LogFile
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.LogLevel != nil && !misc.HasOSArg("", "log-level", "") {
-		cfg.Logging.LogLevel = *cfgStorage.Log.LogLevel
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.LogFormat != nil && !misc.HasOSArg("", "log-format", "") {
-		cfg.Logging.LogFormat = *cfgStorage.Log.LogFormat
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.ACLFormat != nil && !misc.HasOSArg("", "apache-common-log-format", "") {
-		cfg.Logging.ACLFormat = *cfgStorage.Log.ACLFormat
 	}
 	if cfgStorage.LogTargets != nil {
 		cfg.LogTargets = *cfgStorage.LogTargets

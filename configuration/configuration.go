@@ -164,8 +164,6 @@ type Configuration struct {
 	reloadSignal            chan os.Signal
 	shutdownSignal          chan os.Signal
 	MapSync                 *MapSync             `yaml:"-"`
-	Syslog                  log.SyslogOptions    `yaml:"-"`
-	Logging                 log.LoggingOptions   `yaml:"-"`
 	RuntimeData             RuntimeData          `yaml:"-"`
 	ServiceDiscovery        ServiceDiscovery     `yaml:"-"`
 	Users                   []User               `yaml:"-"`

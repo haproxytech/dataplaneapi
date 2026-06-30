@@ -23,19 +23,15 @@ const (
 )
 
 var (
-	appLogger       *Logger
-	accessLogger    *Logger
-	config          Targets
-	oldConfig       LoggingOptions
-	oldSyslogConfig SyslogOptions
-	clusterConfig   []*models.ClusterLogTarget
-	node            string
+	appLogger     *Logger
+	accessLogger  *Logger
+	config        Targets
+	clusterConfig []*models.ClusterLogTarget
+	node          string
 )
 
-func InitWithConfiguration(targets Targets, old LoggingOptions, oldSyslog SyslogOptions, clusterTargets []*models.ClusterLogTarget, nodeID string) error {
+func InitWithConfiguration(targets Targets, clusterTargets []*models.ClusterLogTarget, nodeID string) error {
 	config = targets
-	oldConfig = old
-	oldSyslogConfig = oldSyslog
 	clusterConfig = clusterTargets
 	node = nodeID
 	appLogger = nil
@@ -65,19 +61,12 @@ func Init() error {
 			}
 		}
 	} else {
-		// Deprecated: if no log targets are set in the configuration file, use old way
+		// No log targets configured: default to stdout for both app and access logs.
 		target := Target{
-			LogTo:          oldConfig.LogTo,
-			LogLevel:       oldConfig.LogLevel,
-			LogFile:        oldConfig.LogFile,
-			LogFormat:      oldConfig.LogFormat,
-			LogTypes:       []string{"access", "app"},
-			ACLFormat:      oldConfig.ACLFormat,
-			SyslogAddr:     oldSyslogConfig.SyslogAddr,
-			SyslogProto:    oldSyslogConfig.SyslogProto,
-			SyslogTag:      oldSyslogConfig.SyslogTag,
-			SyslogLevel:    oldSyslogConfig.SyslogLevel,
-			SyslogFacility: oldSyslogConfig.SyslogFacility,
+			LogTo:     "stdout",
+			LogLevel:  "warning",
+			LogFormat: "text",
+			LogTypes:  []string{"access", "app"},
 		}
 		configureAccessLogger(target)
 		configureAppLogger(target)

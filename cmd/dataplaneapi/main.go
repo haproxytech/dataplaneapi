@@ -188,7 +188,7 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 	}
 
 	clusterLogTargets := parseClusterLogTargets(cfg)
-	if err = log.InitWithConfiguration(cfg.LogTargets, cfg.Logging, cfg.Syslog, clusterLogTargets, cfg.Cluster.ID.Load()); err != nil {
+	if err = log.InitWithConfiguration(cfg.LogTargets, clusterLogTargets, cfg.Cluster.ID.Load()); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}

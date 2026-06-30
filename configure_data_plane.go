@@ -80,16 +80,6 @@ func GetCommandLineOptionsGroups() []cmdutils.CommandLineOptionsGroup {
 			LongDescription:  "Options for configuring haproxy locations.",
 			Options:          &cfg.HAProxy,
 		},
-		{
-			ShortDescription: "Logging options",
-			LongDescription:  "Options for configuring logging.",
-			Options:          &cfg.Logging,
-		},
-		{
-			ShortDescription: "Syslog options",
-			LongDescription:  "Options for configuring syslog logging.",
-			Options:          &cfg.Syslog,
-		},
 	}
 }
 
