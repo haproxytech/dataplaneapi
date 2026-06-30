@@ -57,12 +57,12 @@ func (h *HandlerImpl) GetHAProxyConfiguration(w http.ResponseWriter, r *http.Req
 		respond.Error(w, err)
 		return
 	}
-	_, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData(params.TransactionId, int64(params.Version))
+	_, _, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData(params.TransactionId, int64(params.Version))
 	if err != nil {
 		respond.Error(w, err)
 		return
 	}
-	writePlainText(w, http.StatusOK, clusterVersion, md5Hash, data)
+	writePlainText(w, http.StatusOK, md5Hash, data)
 }
 
 func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Request, params PostHAProxyConfigurationParams) {
@@ -88,14 +88,14 @@ func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	_, clusterVersion, md5Hash, result, err := cfg.GetRawConfigurationWithClusterData("", 0)
+	_, _, md5Hash, result, err := cfg.GetRawConfigurationWithClusterData("", 0)
 	if err != nil {
 		respond.Error(w, err)
 		return
 	}
 
 	if params.OnlyValidate {
-		writePlainText(w, http.StatusAccepted, clusterVersion, md5Hash, result)
+		writePlainText(w, http.StatusAccepted, md5Hash, result)
 		return
 	}
 
@@ -106,7 +106,7 @@ func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Re
 				return
 			}
 		}
-		writePlainText(w, http.StatusCreated, clusterVersion, md5Hash, result)
+		writePlainText(w, http.StatusCreated, md5Hash, result)
 		return
 	}
 
@@ -126,7 +126,7 @@ func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Re
 			respond.Error(w, err)
 			return
 		}
-		writePlainText(w, http.StatusCreated, clusterVersion, md5Hash, result)
+		writePlainText(w, http.StatusCreated, md5Hash, result)
 		return
 	}
 
@@ -137,14 +137,11 @@ func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Re
 		rID = h.ReloadAgent.Reload()
 	}
 	w.Header().Set(respond.ReloadIDHeader, rID)
-	writePlainText(w, http.StatusAccepted, clusterVersion, md5Hash, result)
+	writePlainText(w, http.StatusAccepted, md5Hash, result)
 }
 
-func writePlainText(w http.ResponseWriter, status int, clusterVersion int64, md5Hash, data string) {
+func writePlainText(w http.ResponseWriter, status int, md5Hash, data string) {
 	w.Header().Set("Content-Type", "text/plain")
-	if clusterVersion != 0 {
-		w.Header().Set("Cluster-Version", strconv.FormatInt(clusterVersion, 10))
-	}
 	if md5Hash != "" {
 		w.Header().Set("Configuration-Checksum", md5Hash)
 	}

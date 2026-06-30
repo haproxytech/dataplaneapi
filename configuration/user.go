@@ -80,26 +80,20 @@ func (u *Users) setUser(data common.ParserData, file string) error {
 func (u *Users) Init() error {
 	configuration := Get()
 	u.users = []types.User{}
-	mode := configuration.Mode.Load()
-	allUsers := configuration.GetUsers() // single + cluster mode
+	allUsers := configuration.GetUsers()
 	if len(allUsers) > 0 {
 		for _, storageUser := range allUsers {
-			if mode != ModeCluster || strings.HasPrefix(storageUser.Name, storagetype.DapiClusterUserPrefix) {
-				user := types.User{
-					Name: storageUser.Name,
-				}
-				if storageUser.Password != nil {
-					user.Password = *storageUser.Password
-				}
-				if storageUser.Insecure != nil {
-					user.IsInsecure = *storageUser.Insecure
-				}
-				u.users = append(u.users, user)
+			user := types.User{
+				Name: storageUser.Name,
 			}
+			if storageUser.Password != nil {
+				user.Password = *storageUser.Password
+			}
+			if storageUser.Insecure != nil {
+				user.IsInsecure = *storageUser.Insecure
+			}
+			u.users = append(u.users, user)
 		}
-		return nil
-	}
-	if mode == ModeCluster {
 		return nil
 	}
 	if configuration.HAProxy.UserListFile != "" {

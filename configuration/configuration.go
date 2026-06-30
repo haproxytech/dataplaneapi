@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -44,7 +43,6 @@ type HAProxyConfiguration struct {
 	ReloadCmd            string        `short:"r" long:"reload-cmd" description:"Reload command" group:"reload"`
 	RestartCmd           string        `short:"s" long:"restart-cmd" description:"Restart command" group:"reload"`
 	StatusCmd            string        `long:"status-cmd" description:"Status command" group:"reload"`
-	NodeIDFile           string        `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster" group:"haproxy"`
 	PIDFile              string        `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi" example:"/tmp/dataplane.pid"`
 	ReloadStrategy       string        `long:"reload-strategy" description:"Either systemd, s6 or custom" default:"custom" group:"reload"`
 	TransactionDir       string        `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy" group:"transaction"`
@@ -60,7 +58,6 @@ type HAProxyConfiguration struct {
 	MasterRuntime        string        `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket" group:"haproxy"`
 	SSLCertsDir          string        `long:"ssl-certs-dir" description:"Path to SSL certificates directory" default:"/etc/haproxy/ssl" group:"resources"`
 	GeneralStorageDir    string        `long:"general-storage-dir" description:"Path to general storage directory" default:"/etc/haproxy/general" group:"resources"`
-	ClusterTLSCertDir    string        `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file" group:"cluster"`
 	DataplaneStorageDir  string        `long:"dataplane-storage-dir" description:"Path to dataplane internal storage directory" default:"/etc/haproxy/dataplane" group:"resources"`
 	PreferredTimeSuffix  string        `long:"time-suffix" description:"Preferred time unit to use when writing time values in configuration (nearest, none, ms, s, m, h, d)" default:"nearest" group:"haproxy"`
 	UpdateMapFilesPeriod int64         `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10" group:"resources"`
@@ -90,43 +87,6 @@ type APIConfiguration struct {
 	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" yaml:"port" example:"80" save:"true"`
 }
 
-type ClusterConfiguration struct {
-	APIRegisterPath    AtomicString               `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
-	APIBasePath        AtomicString               `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
-	ActiveBootstrapKey AtomicString               `yaml:"active_bootstrap_key,omitempty" group:"cluster" save:"true"`
-	Token              AtomicString               `yaml:"token,omitempty" group:"cluster" save:"true"`
-	ID                 AtomicString               `yaml:"id,omitempty" group:"cluster" save:"true"`
-	Port               AtomicInt                  `yaml:"port,omitempty" group:"cluster" save:"true"`
-	BootstrapKey       AtomicString               `yaml:"bootstrap_key,omitempty" group:"cluster" save:"true"`
-	APINodesPath       AtomicString               `yaml:"api_nodes_path,omitempty" group:"cluster" save:"true"`
-	URL                AtomicString               `yaml:"url,omitempty" group:"cluster" save:"true"`
-	StorageDir         AtomicString               `yaml:"storage_dir,omitempty" group:"cluster" save:"true"`
-	CertificateDir     AtomicString               `yaml:"cert_path,omitempty" group:"cluster" save:"true"`
-	CertificateFetched AtomicBool                 `yaml:"cert_fetched,omitempty" group:"cluster" save:"true" example:"false"`
-	Name               AtomicString               `yaml:"name,omitempty" group:"cluster" save:"true"`
-	Description        AtomicString               `yaml:"description,omitempty" group:"cluster" save:"true"`
-	ClusterID          AtomicString               `yaml:"cluster_id,omitempty" group:"cluster" save:"true"`
-	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
-}
-
-func (c *ClusterConfiguration) Clear() {
-	c.ID.Store("")
-	c.ActiveBootstrapKey.Store("")
-	c.Token.Store("")
-	c.Port.Store(0)
-	c.APIBasePath.Store("")
-	c.APINodesPath.Store("")
-	c.APIRegisterPath.Store("")
-	c.CertificateFetched.Store(false)
-	c.Name.Store("")
-	c.Description.Store("")
-	c.ClusterID.Store("")
-	c.ClusterLogTargets = nil
-	c.URL.Store("")
-	c.StorageDir.Store("")
-	c.CertificateDir.Store("")
-}
-
 type RuntimeData struct {
 	Host        string
 	APIBasePath string
@@ -134,11 +94,9 @@ type RuntimeData struct {
 }
 
 type NotifyConfiguration struct {
-	BootstrapKeyChanged *ChanNotify `yaml:"-"`
-	ServerStarted       *ChanNotify `yaml:"-"`
-	CertificateRefresh  *ChanNotify `yaml:"-"`
-	Reload              *ChanNotify `yaml:"-"`
-	Shutdown            *ChanNotify `yaml:"-"`
+	ServerStarted *ChanNotify `yaml:"-"`
+	Reload        *ChanNotify `yaml:"-"`
+	Shutdown      *ChanNotify `yaml:"-"`
 }
 
 type ServiceDiscovery struct {
@@ -148,19 +106,14 @@ type ServiceDiscovery struct {
 	awsMu      sync.Mutex
 }
 
-//nolint:staticcheck
 type Configuration struct {
-	Cluster                 ClusterConfiguration       `yaml:"-"`
 	Notify                  NotifyConfiguration        `yaml:"-"`
-	Mode                    AtomicString               `yaml:"mode" default:"single"`
 	storage                 Storage                    `yaml:"-"`
 	clusterModeStorage      storage.ClusterModeStorage `yaml:"-"`
 	sdConsulStorage         storage.SDConsulStorage    `yaml:"-"`
 	sdAWSRegionStorage      storage.SDAWStorage        `yaml:"-"`
 	Name                    AtomicString               `yaml:"name" example:"famous_condor"`
 	Cmdline                 AtomicString               `yaml:"-"`
-	Status                  AtomicString               `yaml:"status,omitempty"`
-	DeprecatedBootstrapKey  AtomicString               `yaml:"bootstrap_key,omitempty" deprecated:"true"`
 	reloadSignal            chan os.Signal
 	shutdownSignal          chan os.Signal
 	MapSync                 *MapSync             `yaml:"-"`
@@ -180,9 +133,7 @@ var cfgInitOnce sync.Once
 func Get() *Configuration {
 	cfgInitOnce.Do(func() {
 		cfg = &Configuration{}
-		cfg.Notify.BootstrapKeyChanged = NewChanNotify()
 		cfg.Notify.ServerStarted = NewChanNotify()
-		cfg.Notify.CertificateRefresh = NewChanNotify()
 		cfg.Notify.Reload = NewChanNotify()
 		cfg.Notify.Shutdown = NewChanNotify()
 		cfg.MapSync = NewMapSync()
@@ -210,10 +161,9 @@ func (c *Configuration) GetClusterModeStorage() storage.ClusterModeStorage {
 }
 
 func (c *Configuration) GetUsers() storagetype.Users {
-	// SingleModeUsers + ClusterModeUsers
-	// ClusterMode users
+	// Users persisted in the dataplane storage file...
 	users := c.clusterModeStorage.GetUsers()
-	// SingleMode users
+	// ...merged with users defined in the configuration file.
 	for _, user := range c.Users {
 		found := false
 		for _, cmUser := range users {
@@ -236,9 +186,7 @@ func (c *Configuration) GetUsers() storagetype.Users {
 }
 
 func (c *Configuration) UnSubscribeAll() {
-	c.Notify.BootstrapKeyChanged.UnSubscribeAll()
 	c.Notify.ServerStarted.UnSubscribeAll()
-	c.Notify.CertificateRefresh.UnSubscribeAll()
 	c.Notify.Reload.UnSubscribeAll()
 	c.Notify.Shutdown.UnSubscribeAll()
 }
@@ -293,7 +241,7 @@ func (c *Configuration) LoadDataplaneStorageConfig() ([]string, error) {
 	var deprecationInfoMsg []string
 
 	//--------------------
-	// Load from dataplane storage cluster.json: users, cluster, service_discovery
+	// Load from dataplane storage cluster.json: users
 	// It has to be after copyToConfiguration as it needs the dataplaneapi_storage_path
 	//--------------------
 	if err = c.loadClusterModeData(); err != nil {
@@ -314,12 +262,6 @@ func (c *Configuration) LoadDataplaneStorageConfig() ([]string, error) {
 		return deprecationInfoMsg, err
 	}
 
-	if c.clusterModeStorage.IsClusterMode() {
-		c.Mode.Store(ModeCluster)
-	} else {
-		c.Mode.Store(ModeSingle)
-	}
-	log.Debugf("Mode: %s", c.Mode.Load())
 	return deprecationInfoMsg, err
 }
 
@@ -350,34 +292,11 @@ func (c *Configuration) Save() error {
 		cfg := c.storage.Get()
 		cfg.LogTargets = nil
 	}
-	// clean storage data if we are not in cluster mode or preparing to go into that mode
-	if c.Mode.Load() != ModeCluster && c.Cluster.BootstrapKey.Load() == "" {
-		storage := c.storage.Get()
-		storage.DeprecatedCluster = nil
-	}
-
-	// dataplane storage
-	if err := c.SaveClusterModeData(); err != nil {
-		return err
-	}
 	if err := c.SaveSDConsuls(); err != nil {
 		return err
 	}
 
 	return c.storage.Save()
-}
-
-func (c *Configuration) GetClusterCertDir() string {
-	dir := c.Cluster.CertificateDir.Load()
-	if dir == "" {
-		dir = c.HAProxy.ClusterTLSCertDir
-	}
-	if dir == "" {
-		// use same dir as dataplane config file
-		url := c.HAProxy.DataplaneConfig
-		dir = filepath.Dir(url)
-	}
-	return dir
 }
 
 func (c *Configuration) SaveConsuls(consuls []*models.Consul) error {

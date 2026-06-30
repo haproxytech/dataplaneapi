@@ -69,7 +69,6 @@ type configTypeHaproxy struct {
 	ConfigFile       *string           `yaml:"config_file,omitempty"`
 	HAProxy          *string           `yaml:"haproxy_bin,omitempty"`
 	MasterRuntime    *string           `yaml:"master_runtime,omitempty"`
-	NodeIDFile       *string           `yaml:"fid,omitempty"`
 	MasterWorkerMode *bool             `yaml:"master_worker_mode,omitempty"`
 	Reload           *configTypeReload `yaml:"reload,omitempty"`
 	DelayedStartMax  *string           `yaml:"delayed_start_max,omitempty"`
@@ -139,12 +138,8 @@ type configKeepalived struct {
 type StorageDataplaneAPIConfiguration struct {
 	Version                    *int                        `yaml:"config_version,omitempty"`
 	Name                       *string                     `yaml:"name,omitempty"`
-	DeprecatedMode             *string                     `yaml:"mode,omitempty"`
-	DeprecatedBootstrapKey     *string                     `yaml:"bootstrap_key,omitempty"`
-	DeprecatedStatus           *string                     `yaml:"status,omitempty"`
 	Dataplaneapi               *configTypeDataplaneapi     `yaml:"dataplaneapi,omitempty"`
 	Haproxy                    *configTypeHaproxy          `yaml:"haproxy,omitempty"`
-	DeprecatedCluster          *storagetype.Cluster        `yaml:"cluster,omitempty"`
 	DeprecatedServiceDiscovery *storagetypeerviceDiscovery `yaml:"service_discovery,omitempty"`
 	LogTargets                 *dpapilog.Targets           `yaml:"log_targets,omitempty"`
 }
@@ -153,9 +148,6 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	cfgStorage := cfg.storage.Get()
 	if cfgStorage.Name != nil {
 		cfg.Name.Store(*cfgStorage.Name)
-	}
-	if cfgStorage.DeprecatedBootstrapKey != nil {
-		cfg.DeprecatedBootstrapKey.Store(*cfgStorage.DeprecatedBootstrapKey)
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.ShowSystemInfo != nil && !misc.HasOSArg("i", "show-system-info", "") {
 		cfg.HAProxy.ShowSystemInfo = *cfgStorage.Dataplaneapi.ShowSystemInfo
@@ -200,9 +192,6 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.MasterRuntime != nil && !misc.HasOSArg("m", "master-runtime", "") {
 		cfg.HAProxy.MasterRuntime = *cfgStorage.Haproxy.MasterRuntime
-	}
-	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.NodeIDFile != nil && !misc.HasOSArg("", "fid", "") {
-		cfg.HAProxy.NodeIDFile = *cfgStorage.Haproxy.NodeIDFile
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.MasterWorkerMode != nil && !misc.HasOSArg("", "master-worker-mode", "") {
 		cfg.HAProxy.MasterWorkerMode = *cfgStorage.Haproxy.MasterWorkerMode
@@ -338,25 +327,6 @@ func copyConfigurationToStorage(cfg *Configuration) {
 }
 
 func (cfgStorage *StorageDataplaneAPIConfiguration) emptyDeprecatedSections() {
-	cfgStorage.DeprecatedBootstrapKey = nil
-	// Remove Cluster Users from dapi configuration file
-	if cfgStorage.Dataplaneapi != nil {
-		for i := 0; i < len(cfgStorage.Dataplaneapi.Users); {
-			if cfgStorage.Dataplaneapi.Users[i].IsClusterUser() {
-				if len(cfgStorage.Dataplaneapi.Users) > i {
-					cfgStorage.Dataplaneapi.Users = append(cfgStorage.Dataplaneapi.Users[:i], cfgStorage.Dataplaneapi.Users[i+1:]...)
-					continue
-				}
-			}
-			i++
-		}
-	}
-	// Remove Cluster
-	cfgStorage.DeprecatedCluster = nil
-	// Remove Status
-	cfgStorage.DeprecatedStatus = nil
-	// Remove Mode
-	cfgStorage.DeprecatedMode = nil
 	// Remove ServiceDiscovery Consuls and AWS Regions
 	cfgStorage.DeprecatedServiceDiscovery = nil
 }

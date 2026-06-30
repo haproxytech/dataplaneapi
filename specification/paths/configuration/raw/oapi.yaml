@@ -29,10 +29,6 @@ paths:
         '200':
           description: Successful operation
           headers:
-            Cluster-Version:
-              description: Cluster configuration version
-              schema:
-                type: string
             Configuration-Checksum:
               description: Configuration file md5 checksum
               schema:
@@ -104,10 +100,6 @@ paths:
         '202':
           description: Configuration change accepted and reload requested
           headers:
-            Cluster-Version:
-              description: Cluster configuration version
-              schema:
-                type: string
             Configuration-Checksum:
               description: Configuration file md5 checksum
               schema:
@@ -127,10 +119,6 @@ paths:
         '201':
           description: New HAProxy configuration pushed
           headers:
-            Cluster-Version:
-              description: Cluster configuration version
-              schema:
-                type: string
             Configuration-Checksum:
               description: Configuration file md5 checksum
               schema:

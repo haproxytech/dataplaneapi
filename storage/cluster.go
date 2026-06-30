@@ -11,29 +11,13 @@ const (
 	ClusterModeDataFileName = "cluster.json"
 )
 
+// ClusterModeStorage persists dataplane-managed users in the dataplane storage
+// file (historically cluster.json).
 type ClusterModeStorage interface {
-	Cluster
 	Users
 
 	Load() error
 	Store() error
-	// IsClusterMode returns true if the storage is in cluster mode, false otherwise.
-	// i.e. if ClusterModeData are not empty
-	IsClusterMode() bool
-}
-
-type Cluster interface {
-	// GetCluster does not load the data from the storage. Use Load() to load the data if needed.
-	GetCluster() *storagetype.Cluster
-	// GetStatus does not load the data from the storage. Use Load() to load the data if needed.
-	GetStatus() *string
-
-	// SetClusterAndStore adds a new cluster to the storage and stores in the storage file.
-	SetClusterAndStore(cluster *storagetype.Cluster) error
-	// SetStatusAndStore sets a new status to the storage and stores in the storage file.
-	SetStatusAndStore(status *string) error
-	// UnsetClusterAndStore removes a cluster from the storage and stores in the storage file.
-	UnsetClusterAndStore() error
 }
 
 type Users interface {
@@ -55,7 +39,7 @@ type clusterModeStorageImpl struct {
 	mu              sync.RWMutex
 }
 
-// NewClusterModeStorage creates a new clusterStorageImpl with initial configuration from a file path.
+// NewClusterModeStorage creates a new clusterModeStorageImpl with initial configuration from a file path.
 func NewClusterModeStorage(path string) (ClusterModeStorage, error) {
 	fs := &fileStorage[storagetype.ClusterModeData]{path}
 	if err := fs.initFile(); err != nil {
@@ -71,27 +55,15 @@ func NewClusterModeStorage(path string) (ClusterModeStorage, error) {
 	}, nil
 }
 
-func (cs *clusterModeStorageImpl) GetCluster() *storagetype.Cluster {
-	cs.mu.RLock()
-	defer cs.mu.RUnlock()
-	return cs.ClusterModeData.Cluster
-}
-
-func (cs *clusterModeStorageImpl) GetStatus() *string {
-	cs.mu.RLock()
-	defer cs.mu.RUnlock()
-	return cs.ClusterModeData.Status
-}
-
 func (cs *clusterModeStorageImpl) Load() error {
 	cs.mu.Lock()
 	defer cs.mu.Unlock()
 
-	cluster, err := cs.load()
+	data, err := cs.load()
 	if err != nil {
 		return err
 	}
-	cs.ClusterModeData = cluster
+	cs.ClusterModeData = data
 
 	return nil
 }
@@ -104,58 +76,6 @@ func (cs *clusterModeStorageImpl) Store() error {
 		return err
 	}
 	return nil
-}
-
-func (cs *clusterModeStorageImpl) IsClusterMode() bool {
-	cs.mu.RLock()
-	defer cs.mu.RUnlock()
-	return cs.ClusterModeData.IsClusterMode()
-}
-
-func (cs *clusterModeStorageImpl) SetClusterAndStore(cluster *storagetype.Cluster) error {
-	cs.mu.Lock()
-	defer cs.mu.Unlock()
-
-	oldCluster := cs.ClusterModeData.Cluster
-	cs.ClusterModeData.Cluster = cluster
-
-	// In case something went wrong while storing, set back the old value
-	if err := cs.store(); err != nil {
-		cs.ClusterModeData.Cluster = oldCluster
-		return err
-	}
-	return nil
-}
-
-func (cs *clusterModeStorageImpl) SetStatusAndStore(status *string) error {
-	cs.mu.Lock()
-	defer cs.mu.Unlock()
-
-	oldStatus := cs.ClusterModeData.Status
-	cs.ClusterModeData.Status = status
-
-	// In case something went wrong while storing, set back the old value
-	if err := cs.store(); err != nil {
-		cs.ClusterModeData.Status = oldStatus
-		return err
-	}
-	return nil
-}
-
-func (cs *clusterModeStorageImpl) UnsetClusterAndStore() error {
-	cs.mu.Lock()
-	defer cs.mu.Unlock()
-
-	oldCluster := cs.ClusterModeData.Cluster
-	cs.ClusterModeData.Cluster = nil
-
-	// In case something went wrong while storing, set back the old value
-	if err := cs.store(); err != nil {
-		cs.ClusterModeData.Cluster = oldCluster
-		return err
-	}
-
-	return cs.store()
 }
 
 func (cs *clusterModeStorageImpl) GetUsers() storagetype.Users {
@@ -240,10 +160,6 @@ func (cs *clusterModeStorageImpl) removeUsers(users storagetype.Users) {
 	for _, user := range users {
 		cs.removeUser(user)
 	}
-}
-
-func (cs *clusterModeStorageImpl) setUsers(users *storagetype.Users) {
-	cs.ClusterModeData.Users = *users
 }
 
 func (cs *clusterModeStorageImpl) store() error {

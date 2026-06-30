@@ -147,7 +147,6 @@ func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) 
 	users := dataplaneapi_config.GetUsersStore()
 	// this is not part of GetUsersStore(),
 	// in case of reload we need to reread users
-	// mode might have changed from single to cluster one
 	if err := users.Init(); err != nil {
 		log.Fatalf("Error initiating users: %s", err.Error())
 	}
@@ -171,10 +170,6 @@ func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) 
 	if haproxyOptions.UpdateMapFiles {
 		go cfg.MapSync.SyncAll(client)
 	}
-
-	// Cluster sync
-	clusterSync := dataplaneapi_config.ClusterSync{ReloadAgent: ra, Context: ctx}
-	go clusterSync.Monitor(cfg, client)
 
 	// Service discovery setup — create the shared ServiceDiscoveries object and
 	// populate it with any persisted Consul/AWS instances from the config file.
@@ -221,8 +216,6 @@ func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) 
 	opts := handlers.Options{
 		Client:                client,
 		ReloadAgent:           ra,
-		Config:                cfg,
-		Users:                 users,
 		ConsulDiscovery:       discovery,
 		ConsulPersistCallback: cfg.SaveConsuls,
 		AWSDiscovery:          discovery,

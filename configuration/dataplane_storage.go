@@ -19,120 +19,19 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/storage"
-	"github.com/haproxytech/dataplaneapi/storagetype"
 )
 
-// loadClusterModeData loads data from storage/dataplane (and not from dapi config file)
+// loadClusterModeData loads dataplane-managed users from the dataplane storage
+// file (and not from the dapi config file).
 func (c *Configuration) loadClusterModeData() error {
-	// ClusterModeData
 	clusterModeStorage, cmErr := storage.NewClusterModeStorage(path.Join(c.HAProxy.DataplaneStorageDir, storage.ClusterModeDataFileName))
 	if cmErr != nil {
-		return fmt.Errorf("cluster mode storage error: %w", cmErr)
+		return fmt.Errorf("dataplane storage error: %w", cmErr)
 	}
 	c.clusterModeStorage = clusterModeStorage
 
-	if err := c.clusterModeStorage.Load(); err != nil {
-		return err
-	}
-	if c.clusterModeStorage.GetStatus() != nil {
-		c.Status.Store(*c.clusterModeStorage.GetStatus())
-	}
-
-	c.copyClusterToConfiguration(c.clusterModeStorage.GetCluster())
-
-	return nil
-}
-
-func (c *Configuration) SaveClusterModeData() error {
-	cfgCluster := c.Cluster
-	dPort := cfgCluster.Port.Load()
-	cfgCertificateFetched := cfgCluster.CertificateFetched.Load()
-
-	dapiStorageCluster := storagetype.Cluster{
-		APINodesPath:       new(cfgCluster.APINodesPath.Load()),
-		Token:              new(cfgCluster.Token.Load()),
-		ClusterTLSCertDir:  &c.HAProxy.ClusterTLSCertDir,
-		ActiveBootstrapKey: new(cfgCluster.ActiveBootstrapKey.Load()),
-		APIRegisterPath:    new(cfgCluster.APIRegisterPath.Load()),
-		URL:                new(cfgCluster.URL.Load()),
-		Port:               &dPort,
-		StorageDir:         new(cfgCluster.StorageDir.Load()),
-		BootstrapKey:       new(cfgCluster.BootstrapKey.Load()),
-		ID:                 new(cfgCluster.ID.Load()),
-		APIBasePath:        new(cfgCluster.APIBasePath.Load()),
-		CertificateDir:     new(cfgCluster.CertificateDir.Load()),
-		CertificateFetched: &cfgCertificateFetched,
-		Name:               new(cfgCluster.Name.Load()),
-		Description:        new(cfgCluster.Description.Load()),
-		ClusterID:          new(cfgCluster.ClusterID.Load()),
-		ClusterLogTargets:  cfgCluster.ClusterLogTargets,
-	}
-	cfgStatus := c.Status.Load()
-	c.clusterModeStorage.SetStatusAndStore(&cfgStatus)
-	if err := c.clusterModeStorage.SetClusterAndStore(&dapiStorageCluster); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (c *Configuration) copyClusterToConfiguration(dapiStorageCluster *storagetype.Cluster) {
-	if dapiStorageCluster == nil {
-		return
-	}
-	if dapiStorageCluster.ClusterTLSCertDir != nil && !misc.HasOSArg("", "cluster-tls-dir", "") {
-		c.HAProxy.ClusterTLSCertDir = *dapiStorageCluster.ClusterTLSCertDir
-	}
-	if dapiStorageCluster.ID != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.ID.Store(*dapiStorageCluster.ID)
-	}
-	if dapiStorageCluster.BootstrapKey != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.BootstrapKey.Store(*dapiStorageCluster.BootstrapKey)
-	}
-	if dapiStorageCluster.ActiveBootstrapKey != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.ActiveBootstrapKey.Store(*dapiStorageCluster.ActiveBootstrapKey)
-	}
-	if dapiStorageCluster.Token != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.Token.Store(*dapiStorageCluster.Token)
-	}
-	if dapiStorageCluster.URL != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.URL.Store(*dapiStorageCluster.URL)
-	}
-	if dapiStorageCluster.Port != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.Port.Store(*dapiStorageCluster.Port)
-	}
-	if dapiStorageCluster.APIBasePath != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.APIBasePath.Store(*dapiStorageCluster.APIBasePath)
-	}
-	if dapiStorageCluster.APINodesPath != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.APINodesPath.Store(*dapiStorageCluster.APINodesPath)
-	}
-	if dapiStorageCluster.APIRegisterPath != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.APIRegisterPath.Store(*dapiStorageCluster.APIRegisterPath)
-	}
-	if dapiStorageCluster.StorageDir != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.StorageDir.Store(*dapiStorageCluster.StorageDir)
-	}
-	if dapiStorageCluster.CertificateDir != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.CertificateDir.Store(*dapiStorageCluster.CertificateDir)
-	}
-	if dapiStorageCluster.CertificateFetched != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.CertificateFetched.Store(*dapiStorageCluster.CertificateFetched)
-	}
-	if dapiStorageCluster.Name != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.Name.Store(*dapiStorageCluster.Name)
-	}
-	if dapiStorageCluster.Description != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.Description.Store(*dapiStorageCluster.Description)
-	}
-	if dapiStorageCluster.ClusterID != nil && !misc.HasOSArg("", "", "") {
-		c.Cluster.ClusterID.Store(*dapiStorageCluster.ClusterID)
-	}
-	if len(dapiStorageCluster.ClusterLogTargets) > 0 {
-		c.Cluster.ClusterLogTargets = dapiStorageCluster.ClusterLogTargets
-	}
+	return c.clusterModeStorage.Load()
 }
 
 func (c *Configuration) loadSDConsuls() error {

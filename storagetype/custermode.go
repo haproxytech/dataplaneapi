@@ -15,16 +15,8 @@
 
 package storagetype
 
+// ClusterModeData is the on-disk content of the dataplane storage file
+// (historically cluster.json); it now only holds dataplane-managed users.
 type ClusterModeData struct {
-	Users   Users    `json:"users,omitempty"`
-	Status  *string  `json:"status,omitempty" yaml:"status,omitempty"`
-	Cluster *Cluster `json:"cluster,omitempty"`
-}
-
-// IsClusterMode returns true if the storage is in cluster mode (i.e ClusterModeStorage is not empty)
-func (cs ClusterModeData) IsClusterMode() bool {
-	if cs.Cluster == nil {
-		return false
-	}
-	return !cs.Cluster.IsEmpty()
+	Users Users `json:"users,omitempty"`
 }

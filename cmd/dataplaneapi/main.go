@@ -19,13 +19,9 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path"
-	"path/filepath"
 	"syscall"
 
 	_ "github.com/KimMachineGun/automemlimit"
-	"github.com/haproxytech/client-native/v6/models"
-	"github.com/haproxytech/client-native/v6/storage"
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"
@@ -158,37 +154,7 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 
 	configuration.HandlePIDFile(cfg.HAProxy)
 
-	if cfg.Mode.Load() == configuration.ModeCluster {
-		if cfg.Cluster.CertificateFetched.Load() {
-			log.Info("HAProxy Data Plane API in cluster mode")
-			server.TLSCertificate = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", cfg.Name.Load())))
-			server.TLSCertificateKey = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", cfg.Name.Load())))
-			server.EnabledListeners = []string{"https"}
-			if server.TLSPort == 0 {
-				server.TLSPort = server.Port
-			}
-			// override storage dir location
-			storageDir := cfg.Cluster.StorageDir.Load()
-			if storageDir != "" {
-				cfg.HAProxy.MapsDir = path.Join(storageDir, string(storage.MapsType))
-				cfg.HAProxy.SSLCertsDir = path.Join(storageDir, string(storage.SSLType))
-				cfg.HAProxy.GeneralStorageDir = path.Join(storageDir, string(storage.GeneralType))
-				cfg.HAProxy.DataplaneStorageDir = filepath.Clean(path.Join(storageDir, "dataplane"))
-				cfg.HAProxy.SpoeDir = path.Join(storageDir, string(storage.SpoeType))
-				cfg.HAProxy.SpoeTransactionDir = path.Join(storageDir, string(storage.SpoeTransactionsType))
-				cfg.HAProxy.BackupsDir = path.Join(storageDir, string(storage.BackupsType))
-				cfg.HAProxy.TransactionDir = path.Join(storageDir, string(storage.TransactionsType))
-				// dataplane internal
-				cfg.HAProxy.ClusterTLSCertDir = path.Join(storageDir, "certs-cluster")
-				cfg.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
-			}
-		} else if cfg.Cluster.ActiveBootstrapKey.Load() != "" {
-			cfg.Notify.BootstrapKeyChanged.NotifyWithRetry()
-		}
-	}
-
-	clusterLogTargets := parseClusterLogTargets(cfg)
-	if err = log.InitWithConfiguration(cfg.LogTargets, clusterLogTargets, cfg.Cluster.ID.Load()); err != nil {
+	if err = log.InitWithConfiguration(cfg.LogTargets); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -251,11 +217,4 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 	defer server.Shutdown() //nolint:errcheck
 
 	return reload
-}
-
-func parseClusterLogTargets(cfg *configuration.Configuration) []*models.ClusterLogTarget {
-	if cfg.Mode.Load() == "cluster" && cfg.Cluster.ClusterLogTargets != nil && len(cfg.Cluster.ClusterLogTargets) > 0 {
-		return cfg.Cluster.ClusterLogTargets
-	}
-	return []*models.ClusterLogTarget{}
 }

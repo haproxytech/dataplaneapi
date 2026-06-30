@@ -27,14 +27,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/GehirnInc/crypt"
-	"github.com/haproxytech/client-native/v6/config-parser/types"
 	"github.com/haproxytech/client-native/v6/configuration"
 	client_errors "github.com/haproxytech/client-native/v6/errors"
 	"github.com/haproxytech/client-native/v6/models"
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/rate"
 	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
@@ -293,32 +290,6 @@ func IsNetworkErr(err error) bool {
 		return true
 	}
 	return false
-}
-
-func CreateClusterUser() (types.User, string, error) {
-	// create a new user for connecting to cluster
-	name, err := RandomString(8)
-	if err != nil {
-		return types.User{}, "", err
-	}
-	pwd, err := RandomString(24)
-	if err != nil {
-		return types.User{}, "", err
-	}
-
-	cryptAlg := crypt.New(crypt.SHA512)
-	hash, err := cryptAlg.Generate([]byte(pwd), nil)
-	if err != nil {
-		return types.User{}, "", err
-	}
-	name = "dpapi-c-" + name
-	log.Infof("Creating user %s for cluster connection", name)
-	user := types.User{
-		Name:       name,
-		IsInsecure: false,
-		Password:   hash,
-	}
-	return user, pwd, nil
 }
 
 // ConvertStruct tries to convert a struct from one type to another.

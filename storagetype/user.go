@@ -15,14 +15,6 @@
 
 package storagetype
 
-import (
-	"strings"
-)
-
-const (
-	DapiClusterUserPrefix = "dpapi-c-"
-)
-
 type (
 	Users []User
 	User  struct {
@@ -31,7 +23,3 @@ type (
 		Password *string `json:"password,omitempty" yaml:"password,omitempty"`
 	}
 )
-
-func (u User) IsClusterUser() bool {
-	return strings.HasPrefix(u.Name, DapiClusterUserPrefix)
-}

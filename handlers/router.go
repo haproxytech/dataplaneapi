@@ -23,7 +23,6 @@ import (
 	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/models"
 
-	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	sc "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
 	"github.com/haproxytech/dataplaneapi/reload_agent"
@@ -76,7 +75,6 @@ import (
 	config_version "github.com/haproxytech/dataplaneapi/handlers/configuration/version"
 
 	// dataplane
-	"github.com/haproxytech/dataplaneapi/handlers/dataplane/cluster"
 	"github.com/haproxytech/dataplaneapi/handlers/dataplane/discovery"
 	"github.com/haproxytech/dataplaneapi/handlers/dataplane/health"
 	"github.com/haproxytech/dataplaneapi/handlers/dataplane/info"
@@ -125,10 +123,6 @@ import (
 type Options struct {
 	Client      client_native.HAProxyClient
 	ReloadAgent reload_agent.IReloadAgent
-
-	// Cluster management
-	Config *dataplaneapi_config.Configuration
-	Users  *dataplaneapi_config.Users
 
 	// Service discovery
 	ConsulDiscovery       sc.ServiceDiscoveries
@@ -236,9 +230,6 @@ func NewRouter(opts Options) (http.Handler, error) {
 		func() error { return spoe_version.RegisterRouter(r, opts.Client) },
 
 		// — dataplane —
-		func() error {
-			return cluster.RegisterRouter(r, opts.Client, opts.Config, opts.Users, opts.ReloadAgent)
-		},
 		func() error { return discovery.RegisterRouter(r, opts.SwaggerJSON) },
 		func() error { return health.RegisterRouter(r, opts.ReloadAgent) },
 		func() error { return info.RegisterRouter(r, opts.Version, opts.BuildTime, opts.SystemInfo) },

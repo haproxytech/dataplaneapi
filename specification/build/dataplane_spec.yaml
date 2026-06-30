@@ -1706,9 +1706,6 @@ components:
           type: string
       title: Cluster Settings
       type: object
-      x-go-type: models.ClusterSettings
-      x-go-type-import:
-        path: github.com/haproxytech/client-native/v6/models
     compression:
       properties:
         algo-req:
@@ -12878,139 +12875,6 @@ paths:
       summary: Return list of root endpoints
       tags:
         - Discovery
-  /cluster:
-    delete:
-      description: Delete cluster settings and move the node back to single mode
-      operationId: deleteCluster
-      parameters:
-        - description: In case of moving to single mode do we keep or clean configuration
-          in: query
-          name: configuration
-          schema:
-            enum:
-              - keep
-            type: string
-        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
-          in: query
-          name: version
-          schema:
-            type: integer
-      responses:
-        "204":
-          description: Cluster settings deleted and node moved to single mode
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Delete cluster settings
-      tags:
-        - Cluster
-    get:
-      description: Returns cluster data
-      operationId: getCluster
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/cluster_settings'
-          description: Success
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Return cluster data
-      tags:
-        - Cluster
-    post:
-      description: Post cluster settings
-      operationId: postCluster
-      parameters:
-        - description: In case of moving to single mode do we keep or clean configuration
-          in: query
-          name: configuration
-          schema:
-            enum:
-              - keep
-            type: string
-        - description: Force the advertised address when joining a cluster
-          in: query
-          name: advertised_address
-          schema:
-            type: string
-        - description: Force the advertised port when joining a cluster
-          in: query
-          name: advertised_port
-          schema:
-            maximum: 65535
-            minimum: 1
-            type: integer
-        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
-          in: query
-          name: version
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/cluster_settings'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/cluster_settings'
-          description: Cluster settings changed
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Post cluster settings
-      tags:
-        - Cluster
-      x-codegen-request-body-name: data
-    put:
-      description: Edit cluster settings
-      operationId: editCluster
-      parameters:
-        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
-          in: query
-          name: version
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/cluster_settings'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/cluster_settings'
-          description: Cluster settings changed
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Edit cluster settings
-      tags:
-        - Cluster
-      x-codegen-request-body-name: data
-  /cluster/certificate:
-    post:
-      description: Initiates a certificate refresh
-      operationId: initiateCertificateRefresh
-      responses:
-        "200":
-          description: refresh activated
-        "403":
-          description: refresh not possible
-        default:
-          $ref: '#/components/responses/DefaultError'
-      summary: Initiates a certificate refresh
-      tags:
-        - Cluster
   /health:
     get:
       description: Return managed services health
@@ -33369,10 +33233,6 @@ paths:
                 type: string
           description: Successful operation
           headers:
-            Cluster-Version:
-              description: Cluster configuration version
-              schema:
-                type: string
             Configuration-Checksum:
               description: Configuration file md5 checksum
               schema:
@@ -33438,10 +33298,6 @@ paths:
                 type: string
           description: New HAProxy configuration pushed
           headers:
-            Cluster-Version:
-              description: Cluster configuration version
-              schema:
-                type: string
             Configuration-Checksum:
               description: Configuration file md5 checksum
               schema:
@@ -33457,10 +33313,6 @@ paths:
                 type: string
           description: Configuration change accepted and reload requested
           headers:
-            Cluster-Version:
-              description: Cluster configuration version
-              schema:
-                type: string
             Configuration-Checksum:
               description: Configuration file md5 checksum
               schema:
