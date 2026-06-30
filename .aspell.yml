@@ -231,3 +231,8 @@ allowed:
   - oapi
   - codegen
   - templated
+  - dir
+  - fid
+  - stdout
+  - structs
+  - InitWithConfiguration
