@@ -123,16 +123,21 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 		os.Exit(1)
 	}
 
-	if cfg.HAProxy.UID != 0 {
-		if err = syscall.Setuid(cfg.HAProxy.UID); err != nil {
-			fmt.Println("set uid:", err)
+	if cfg.HAProxy.GID != 0 {
+		// Drop all supplementary groups first.
+		if err = syscall.Setgroups(nil); err != nil {
+			fmt.Println("set groups:", err)
+			os.Exit(1)
+		}
+		if err = syscall.Setgid(cfg.HAProxy.GID); err != nil {
+			fmt.Println("set gid:", err)
 			os.Exit(1)
 		}
 	}
 
-	if cfg.HAProxy.GID != 0 {
-		if err = syscall.Setgid(cfg.HAProxy.GID); err != nil {
-			fmt.Println("set gid:", err)
+	if cfg.HAProxy.UID != 0 {
+		if err = syscall.Setuid(cfg.HAProxy.UID); err != nil {
+			fmt.Println("set uid:", err)
 			os.Exit(1)
 		}
 	}

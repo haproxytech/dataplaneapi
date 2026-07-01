@@ -180,6 +180,9 @@ allowed:
   - scrollbar
   - scss
   - searchselect
+  - setgid
+  - setgroups
+  - setuid
   - shm
   - sig
   - sni
