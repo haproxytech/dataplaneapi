@@ -15,7 +15,7 @@ import (
 	"github.com/libdns/gandi"
 	"github.com/libdns/godaddy"
 	"github.com/libdns/googleclouddns"
-	"github.com/libdns/hetzner"
+	"github.com/libdns/hetzner/v2"
 	"github.com/libdns/infomaniak"
 	"github.com/libdns/inwx"
 	"github.com/libdns/ionos"
