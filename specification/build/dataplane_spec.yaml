@@ -224,6 +224,12 @@ components:
         name:
           description: ACME provider's name
           type: string
+        profile:
+          description: |
+            Request a specific certificate profile from the CA by including a 'profile'
+            field in the newOrder request (draft-ietf-acme-profiles). Profile names
+            are CA-specific short identifiers (e.g. 'classic', 'shortlived').
+          type: string
         reuse_key:
           description: Try to reuse the private key instead of generating a new one.
           enum:
@@ -566,6 +572,8 @@ components:
           type: array
           x-go-name: ForcePersistList
           x-omitempty: true
+        forwarded:
+          $ref: '#/components/schemas/forwarded'
         forwardfor:
           $ref: '#/components/schemas/forwardfor'
         from:
@@ -621,15 +629,6 @@ components:
             mode:
               value: http
           x-display-name: HTTP low interactive delays
-        http-use-htx:
-          enum:
-            - enabled
-            - disabled
-          pattern: ^[^\s]+$
-          type: string
-          x-dependency:
-            mode:
-              value: http
         http_connection_mode:
           enum:
             - httpclose
@@ -656,15 +655,6 @@ components:
           x-dependency:
             mode:
               value: http
-        http_proxy:
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-dependency:
-            mode:
-              value: http
-          x-display-name: HTTP proxy mode
         http_request_timeout:
           minimum: 0
           nullable: true
@@ -1402,6 +1392,10 @@ components:
           example: none
           type: string
           x-display-name: Format
+        shards:
+          pattern: ^(by-thread|by-group|[0-9]+)$
+          type: string
+          x-display-name: Shards
         sigalgs:
           type: string
           x-dependency:
@@ -2307,6 +2301,8 @@ components:
           pattern: ^[^\s]+$
           type: string
           x-display-name: External Check Path
+        forwarded:
+          $ref: '#/components/schemas/forwarded'
         forwardfor:
           $ref: '#/components/schemas/forwardfor'
         from:
@@ -2356,12 +2352,6 @@ components:
             - disabled
           type: string
           x-display-name: Drop HTTP Response Trailers
-        http-use-htx:
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-display-name: HTTP Use HTX
         http_connection_mode:
           enum:
             - httpclose
@@ -3321,6 +3311,53 @@ components:
       x-go-type: models.Filters
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
+    forwarded:
+      description: Controls insertion of the HTTP Forwarded header field.
+      properties:
+        by:
+          description: Adds the by parameter using the local address.
+          type: boolean
+        by_expr:
+          description: Adds the by parameter using the specified log-format expression.
+          type: string
+        by_port:
+          description: Adds the by parameter port using the local port.
+          type: boolean
+        by_port_expr:
+          description: Adds the by parameter port using the specified log-format expression.
+          type: string
+        enabled:
+          description: Enables or disables insertion of the HTTP Forwarded header field.
+          enum:
+            - enabled
+            - disabled
+          type: string
+        for:
+          description: Adds the for parameter using the client address.
+          type: boolean
+          x-go-name: For
+        for_expr:
+          description: Adds the for parameter using the specified log-format expression.
+          type: string
+        for_port:
+          description: Adds the for parameter port using the client port.
+          type: boolean
+        for_port_expr:
+          description: Adds the for parameter port using the specified log-format expression.
+          type: string
+        host:
+          description: Adds the host parameter using the request authority.
+          type: boolean
+        host_expr:
+          description: Adds the host parameter using the specified log-format expression.
+          type: string
+        proto:
+          description: Adds the proto parameter using the incoming request protocol.
+          type: boolean
+      required:
+        - enabled
+      type: object
+      x-display-name: Forwarded
     forwardfor:
       properties:
         enabled:
@@ -3508,6 +3545,8 @@ components:
           $ref: '#/components/schemas/errorloc'
         errorloc303:
           $ref: '#/components/schemas/errorloc'
+        forwarded:
+          $ref: '#/components/schemas/forwarded'
         forwardfor:
           $ref: '#/components/schemas/forwardfor'
         from:
@@ -3534,15 +3573,6 @@ components:
             - disabled
           type: string
           x-display-name: Drop HTTP Response Trailers
-        http-use-htx:
-          enum:
-            - enabled
-            - disabled
-          type: string
-          x-dependency:
-            mode:
-              value: http
-          x-display-name: HTTP Use HTX
         http_connection_mode:
           enum:
             - httpclose

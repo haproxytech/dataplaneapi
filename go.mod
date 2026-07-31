@@ -19,13 +19,14 @@ require (
 	github.com/go-chi/chi/v5 v5.3.1
 	github.com/go-openapi/errors v0.22.8
 	github.com/go-openapi/runtime v0.33.0
+	github.com/go-openapi/runtime/server-middleware v0.33.0
 	github.com/go-openapi/strfmt v0.27.0
 	github.com/go-openapi/swag/cmdutils v0.28.0
 	github.com/go-openapi/swag/netutils v0.28.0
 	github.com/google/go-cmp v0.7.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
-	github.com/haproxytech/client-native/v6 v6.3.8
+	github.com/haproxytech/client-native/v6 v6.3.10
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12
@@ -106,7 +107,6 @@ require (
 	github.com/go-openapi/jsonpointer v1.0.0 // indirect
 	github.com/go-openapi/jsonreference v1.0.0 // indirect
 	github.com/go-openapi/loads v0.25.0 // indirect
-	github.com/go-openapi/runtime/server-middleware v0.33.0 // indirect
 	github.com/go-openapi/spec v0.22.9 // indirect
 	github.com/go-openapi/swag v0.28.0 // indirect
 	github.com/go-openapi/swag/conv v0.28.0 // indirect

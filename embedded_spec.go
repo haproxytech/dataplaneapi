@@ -26662,6 +26662,10 @@ func init() {
           "type": "string",
           "x-nullable": false
         },
+        "profile": {
+          "description": "Request a specific certificate profile from the CA by including a 'profile'\nfield in the newOrder request (draft-ietf-acme-profiles). Profile names\nare CA-specific short identifiers (e.g. 'classic', 'shortlived').\n",
+          "type": "string"
+        },
         "reuse_key": {
           "description": "Try to reuse the private key instead of generating a new one.",
           "type": "string",
@@ -27111,6 +27115,15 @@ func init() {
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -27193,19 +27206,6 @@ func init() {
           },
           "x-display-name": "HTTP low interactive delays"
         },
-        "http-use-htx": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          }
-        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
@@ -27241,19 +27241,6 @@ func init() {
               "value": "http"
             }
           }
-        },
-        "http_proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP proxy mode"
         },
         "http_request_timeout": {
           "type": "integer",
@@ -28288,6 +28275,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
@@ -29491,6 +29483,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
         },
+        "forwarded": {
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
@@ -29556,14 +29552,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -30801,6 +30789,69 @@ func init() {
         "$ref": "#/definitions/filter"
       }
     },
+    "forwarded": {
+      "description": "Controls insertion of the HTTP Forwarded header field.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "by": {
+          "description": "Adds the by parameter using the local address.",
+          "type": "boolean"
+        },
+        "by_expr": {
+          "description": "Adds the by parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "by_port": {
+          "description": "Adds the by parameter port using the local port.",
+          "type": "boolean"
+        },
+        "by_port_expr": {
+          "description": "Adds the by parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enables or disables insertion of the HTTP Forwarded header field.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "for": {
+          "description": "Adds the for parameter using the client address.",
+          "type": "boolean",
+          "x-go-name": "For"
+        },
+        "for_expr": {
+          "description": "Adds the for parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "for_port": {
+          "description": "Adds the for parameter port using the client port.",
+          "type": "boolean"
+        },
+        "for_port_expr": {
+          "description": "Adds the for parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "host": {
+          "description": "Adds the host parameter using the request authority.",
+          "type": "boolean"
+        },
+        "host_expr": {
+          "description": "Adds the host parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "proto": {
+          "description": "Adds the proto parameter using the incoming request protocol.",
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "Forwarded"
+    },
     "forwardfor": {
       "type": "object",
       "required": [
@@ -31063,6 +31114,15 @@ func init() {
         "errorloc303": {
           "$ref": "#/definitions/errorloc"
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -31102,19 +31162,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -86924,6 +86971,10 @@ func init() {
           "type": "string",
           "x-nullable": false
         },
+        "profile": {
+          "description": "Request a specific certificate profile from the CA by including a 'profile'\nfield in the newOrder request (draft-ietf-acme-profiles). Profile names\nare CA-specific short identifiers (e.g. 'classic', 'shortlived').\n",
+          "type": "string"
+        },
         "reuse_key": {
           "description": "Try to reuse the private key instead of generating a new one.",
           "type": "string",
@@ -87350,6 +87401,15 @@ func init() {
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -87432,19 +87492,6 @@ func init() {
           },
           "x-display-name": "HTTP low interactive delays"
         },
-        "http-use-htx": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          }
-        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
@@ -87481,19 +87528,6 @@ func init() {
               "value": "http"
             }
           }
-        },
-        "http_proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP proxy mode"
         },
         "http_request_timeout": {
           "type": "integer",
@@ -88512,6 +88546,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
@@ -89682,6 +89721,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
         },
+        "forwarded": {
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
@@ -89747,14 +89790,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -90969,6 +91004,69 @@ func init() {
         "$ref": "#/definitions/filter"
       }
     },
+    "forwarded": {
+      "description": "Controls insertion of the HTTP Forwarded header field.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "by": {
+          "description": "Adds the by parameter using the local address.",
+          "type": "boolean"
+        },
+        "by_expr": {
+          "description": "Adds the by parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "by_port": {
+          "description": "Adds the by parameter port using the local port.",
+          "type": "boolean"
+        },
+        "by_port_expr": {
+          "description": "Adds the by parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enables or disables insertion of the HTTP Forwarded header field.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "for": {
+          "description": "Adds the for parameter using the client address.",
+          "type": "boolean",
+          "x-go-name": "For"
+        },
+        "for_expr": {
+          "description": "Adds the for parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "for_port": {
+          "description": "Adds the for parameter port using the client port.",
+          "type": "boolean"
+        },
+        "for_port_expr": {
+          "description": "Adds the for parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "host": {
+          "description": "Adds the host parameter using the request authority.",
+          "type": "boolean"
+        },
+        "host_expr": {
+          "description": "Adds the host parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "proto": {
+          "description": "Adds the proto parameter using the incoming request protocol.",
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "Forwarded"
+    },
     "forwardfor": {
       "type": "object",
       "required": [
@@ -91233,6 +91331,15 @@ func init() {
         "errorloc303": {
           "$ref": "#/definitions/errorloc"
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -91272,19 +91379,6 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Drop HTTP Response Trailers"
-        },
-        "http-use-htx": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
