@@ -27,7 +27,7 @@ require (
 	github.com/google/go-cmp v0.7.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
-	github.com/haproxytech/client-native/v6 v6.2.14
+	github.com/haproxytech/client-native/v6 v6.2.17
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12
@@ -123,6 +123,7 @@ require (
 	github.com/googleapis/gax-go/v2 v2.23.0 // indirect
 	github.com/haproxytech/client-native/v5 v5.1.28 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
+	github.com/haproxytech/go-method-gen v0.1.4 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.8 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
@@ -168,4 +169,5 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/ini.v1 v1.67.3 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	mvdan.cc/gofumpt v0.11.0 // indirect
 )

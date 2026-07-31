@@ -27111,6 +27111,15 @@ func init() {
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -28270,6 +28279,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
@@ -29459,6 +29473,10 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
+        },
+        "forwarded": {
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
         },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
@@ -30766,6 +30784,69 @@ func init() {
         "$ref": "#/definitions/filter"
       }
     },
+    "forwarded": {
+      "description": "Controls insertion of the HTTP Forwarded header field.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "by": {
+          "description": "Adds the by parameter using the local address.",
+          "type": "boolean"
+        },
+        "by_expr": {
+          "description": "Adds the by parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "by_port": {
+          "description": "Adds the by parameter port using the local port.",
+          "type": "boolean"
+        },
+        "by_port_expr": {
+          "description": "Adds the by parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enables or disables insertion of the HTTP Forwarded header field.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "for": {
+          "description": "Adds the for parameter using the client address.",
+          "type": "boolean",
+          "x-go-name": "For"
+        },
+        "for_expr": {
+          "description": "Adds the for parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "for_port": {
+          "description": "Adds the for parameter port using the client port.",
+          "type": "boolean"
+        },
+        "for_port_expr": {
+          "description": "Adds the for parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "host": {
+          "description": "Adds the host parameter using the request authority.",
+          "type": "boolean"
+        },
+        "host_expr": {
+          "description": "Adds the host parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "proto": {
+          "description": "Adds the proto parameter using the incoming request protocol.",
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "Forwarded"
+    },
     "forwardfor": {
       "type": "object",
       "required": [
@@ -31021,6 +31102,15 @@ func init() {
         "errorloc303": {
           "$ref": "#/definitions/errorloc"
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -31212,7 +31302,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -31959,7 +32049,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -35309,7 +35399,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -35497,7 +35587,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -36333,7 +36423,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -42575,7 +42665,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
@@ -87146,6 +87236,15 @@ func init() {
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -88290,6 +88389,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
@@ -89446,6 +89550,10 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
+        },
+        "forwarded": {
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
         },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
@@ -90730,6 +90838,69 @@ func init() {
         "$ref": "#/definitions/filter"
       }
     },
+    "forwarded": {
+      "description": "Controls insertion of the HTTP Forwarded header field.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "by": {
+          "description": "Adds the by parameter using the local address.",
+          "type": "boolean"
+        },
+        "by_expr": {
+          "description": "Adds the by parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "by_port": {
+          "description": "Adds the by parameter port using the local port.",
+          "type": "boolean"
+        },
+        "by_port_expr": {
+          "description": "Adds the by parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enables or disables insertion of the HTTP Forwarded header field.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "for": {
+          "description": "Adds the for parameter using the client address.",
+          "type": "boolean",
+          "x-go-name": "For"
+        },
+        "for_expr": {
+          "description": "Adds the for parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "for_port": {
+          "description": "Adds the for parameter port using the client port.",
+          "type": "boolean"
+        },
+        "for_port_expr": {
+          "description": "Adds the for parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "host": {
+          "description": "Adds the host parameter using the request authority.",
+          "type": "boolean"
+        },
+        "host_expr": {
+          "description": "Adds the host parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "proto": {
+          "description": "Adds the proto parameter using the incoming request protocol.",
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "Forwarded"
+    },
     "forwardfor": {
       "type": "object",
       "required": [
@@ -90987,6 +91158,15 @@ func init() {
         "errorloc303": {
           "$ref": "#/definitions/errorloc"
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -91180,7 +91360,7 @@ func init() {
         },
         "log_tag": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$"
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$"
         },
         "logasap": {
           "type": "string",
@@ -91819,7 +91999,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "users": {
@@ -95146,7 +95326,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_${}]+$",
+          "pattern": "^[A-Za-z0-9-_${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -95335,7 +95515,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -96171,7 +96351,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         },
         "port": {
@@ -102306,7 +102486,7 @@ func init() {
         },
         "username": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:${}]+$",
+          "pattern": "^[A-Za-z0-9-_.:${}\"]+$",
           "x-nullable": false
         }
       }
