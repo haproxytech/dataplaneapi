@@ -27865,6 +27865,15 @@ func init() {
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -30143,6 +30152,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
         },
+        "forwarded": {
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
@@ -31542,6 +31555,69 @@ func init() {
       "x-go-name": "ForceBeSwitches",
       "x-omitempty": true
     },
+    "forwarded": {
+      "description": "Controls insertion of the HTTP Forwarded header field.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "by": {
+          "description": "Adds the by parameter using the local address.",
+          "type": "boolean"
+        },
+        "by_expr": {
+          "description": "Adds the by parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "by_port": {
+          "description": "Adds the by parameter port using the local port.",
+          "type": "boolean"
+        },
+        "by_port_expr": {
+          "description": "Adds the by parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enables or disables insertion of the HTTP Forwarded header field.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "for": {
+          "description": "Adds the for parameter using the client address.",
+          "type": "boolean",
+          "x-go-name": "For"
+        },
+        "for_expr": {
+          "description": "Adds the for parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "for_port": {
+          "description": "Adds the for parameter port using the client port.",
+          "type": "boolean"
+        },
+        "for_port_expr": {
+          "description": "Adds the for parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "host": {
+          "description": "Adds the host parameter using the request authority.",
+          "type": "boolean"
+        },
+        "host_expr": {
+          "description": "Adds the host parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "proto": {
+          "description": "Adds the proto parameter using the incoming request protocol.",
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "Forwarded"
+    },
     "forwardfor": {
       "type": "object",
       "required": [
@@ -31811,6 +31887,15 @@ func init() {
         },
         "errorloc303": {
           "$ref": "#/definitions/errorloc"
+        },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
         },
         "forwardfor": {
           "x-dependency": {
@@ -89655,6 +89740,15 @@ func init() {
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
         },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -91911,6 +92005,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
         },
+        "forwarded": {
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
+        },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
@@ -93287,6 +93385,69 @@ func init() {
       "x-go-name": "ForceBeSwitches",
       "x-omitempty": true
     },
+    "forwarded": {
+      "description": "Controls insertion of the HTTP Forwarded header field.",
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "by": {
+          "description": "Adds the by parameter using the local address.",
+          "type": "boolean"
+        },
+        "by_expr": {
+          "description": "Adds the by parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "by_port": {
+          "description": "Adds the by parameter port using the local port.",
+          "type": "boolean"
+        },
+        "by_port_expr": {
+          "description": "Adds the by parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enables or disables insertion of the HTTP Forwarded header field.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "for": {
+          "description": "Adds the for parameter using the client address.",
+          "type": "boolean",
+          "x-go-name": "For"
+        },
+        "for_expr": {
+          "description": "Adds the for parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "for_port": {
+          "description": "Adds the for parameter port using the client port.",
+          "type": "boolean"
+        },
+        "for_port_expr": {
+          "description": "Adds the for parameter port using the specified log-format expression.",
+          "type": "string"
+        },
+        "host": {
+          "description": "Adds the host parameter using the request authority.",
+          "type": "boolean"
+        },
+        "host_expr": {
+          "description": "Adds the host parameter using the specified log-format expression.",
+          "type": "string"
+        },
+        "proto": {
+          "description": "Adds the proto parameter using the incoming request protocol.",
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "Forwarded"
+    },
     "forwardfor": {
       "type": "object",
       "required": [
@@ -93558,6 +93719,15 @@ func init() {
         },
         "errorloc303": {
           "$ref": "#/definitions/errorloc"
+        },
+        "forwarded": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-omitempty": true,
+          "$ref": "#/definitions/forwarded"
         },
         "forwardfor": {
           "x-dependency": {
