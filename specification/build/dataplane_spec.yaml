@@ -604,6 +604,8 @@ components:
           type: array
           x-go-name: ForcePersistList
           x-omitempty: true
+        forwarded:
+          $ref: '#/components/schemas/forwarded'
         forwardfor:
           $ref: '#/components/schemas/forwardfor'
         from:
@@ -2268,6 +2270,8 @@ components:
           pattern: ^[^\s]+$
           type: string
           x-display-name: External Check Path
+        forwarded:
+          $ref: '#/components/schemas/forwarded'
         forwardfor:
           $ref: '#/components/schemas/forwardfor'
         from:
@@ -3356,6 +3360,53 @@ components:
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
       x-omitempty: true
+    forwarded:
+      description: Controls insertion of the HTTP Forwarded header field.
+      properties:
+        by:
+          description: Adds the by parameter using the local address.
+          type: boolean
+        by_expr:
+          description: Adds the by parameter using the specified log-format expression.
+          type: string
+        by_port:
+          description: Adds the by parameter port using the local port.
+          type: boolean
+        by_port_expr:
+          description: Adds the by parameter port using the specified log-format expression.
+          type: string
+        enabled:
+          description: Enables or disables insertion of the HTTP Forwarded header field.
+          enum:
+            - enabled
+            - disabled
+          type: string
+        for:
+          description: Adds the for parameter using the client address.
+          type: boolean
+          x-go-name: For
+        for_expr:
+          description: Adds the for parameter using the specified log-format expression.
+          type: string
+        for_port:
+          description: Adds the for parameter port using the client port.
+          type: boolean
+        for_port_expr:
+          description: Adds the for parameter port using the specified log-format expression.
+          type: string
+        host:
+          description: Adds the host parameter using the request authority.
+          type: boolean
+        host_expr:
+          description: Adds the host parameter using the specified log-format expression.
+          type: string
+        proto:
+          description: Adds the proto parameter using the incoming request protocol.
+          type: boolean
+      required:
+        - enabled
+      type: object
+      x-display-name: Forwarded
     forwardfor:
       properties:
         enabled:
@@ -3547,6 +3598,8 @@ components:
           $ref: '#/components/schemas/errorloc'
         errorloc303:
           $ref: '#/components/schemas/errorloc'
+        forwarded:
+          $ref: '#/components/schemas/forwarded'
         forwardfor:
           $ref: '#/components/schemas/forwardfor'
         from:
