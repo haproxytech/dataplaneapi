@@ -17722,6 +17722,11 @@ func init() {
           "x-display-name": "Format",
           "example": "none"
         },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
+        },
         "sigalgs": {
           "type": "string",
           "x-dependency": {
@@ -57142,6 +57147,11 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "shards": {
+          "type": "string",
+          "pattern": "^(by-thread|by-group|[0-9]+)$",
+          "x-display-name": "Shards"
         },
         "sigalgs": {
           "type": "string",
