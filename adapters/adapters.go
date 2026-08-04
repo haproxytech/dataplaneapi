@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"strings"
 
-	openapi_middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/server-middleware/docui"
 	clientnative "github.com/haproxytech/client-native/v6"
 	cn_configuration "github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/client-native/v6/models"
@@ -230,8 +230,8 @@ func MaxBodySizeMiddleware(maxSize int64) Adapter {
 // behavior of the previous go-swagger server. All other requests pass through.
 func SpecDocsMiddleware(swaggerJSON []byte, basePath, title string) Adapter {
 	return func(h http.Handler) http.Handler {
-		return openapi_middleware.Spec("", swaggerJSON,
-			openapi_middleware.Redoc(openapi_middleware.RedocOpts{BasePath: basePath, Title: title}, h))
+		return docui.ServeSpec(swaggerJSON,
+			docui.Redoc(h, docui.WithUIBasePath(basePath), docui.WithUITitle(title)))
 	}
 }
 
