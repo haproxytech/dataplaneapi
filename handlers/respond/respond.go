@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"reflect"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
@@ -202,13 +203,175 @@ func DecodeBody[T interface {
 // structs that have no Validate method; client-native models embedded in such
 // a body should still be validated individually (see Unprocessable).
 func DecodeJSON(r *http.Request, w http.ResponseWriter, out any) bool {
-	dec := json.NewDecoder(r.Body)
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		BadRequest(w, err.Error())
+		return false
+	}
+
+	if err := strictUnknownFieldsCheck(body, out); err != nil {
+		log.Warningf("STRICT JSON UNKNOWN FIELD ERROR: %v", err)
+		BadRequest(w, err.Error())
+		return false
+	}
+
+	dec := json.NewDecoder(bytes.NewReader(body))
 	dec.UseNumber()
 	if err := dec.Decode(out); err != nil {
 		BadRequest(w, err.Error())
 		return false
 	}
+
 	return true
+}
+
+func strictUnknownFieldsCheck(body []byte, target any) error {
+	if len(bytes.TrimSpace(body)) == 0 {
+		return nil
+	}
+
+	// Raw/plain config endpoint decodes body into string.
+	// Do not apply JSON strict check to string targets.
+	if _, ok := target.(*string); ok {
+		return nil
+	}
+
+	var raw any
+
+	dec := json.NewDecoder(bytes.NewReader(body))
+	dec.UseNumber()
+
+	if err := dec.Decode(&raw); err != nil {
+		return err
+	}
+
+	return checkUnknownFields(raw, reflect.TypeOf(target), "")
+}
+
+func checkUnknownFields(raw any, targetType reflect.Type, path string) error {
+	if targetType == nil {
+		return nil
+	}
+
+	for targetType.Kind() == reflect.Pointer {
+		targetType = targetType.Elem()
+	}
+
+	switch rawValue := raw.(type) {
+	case map[string]any:
+		switch targetType.Kind() {
+		case reflect.Struct:
+			allowed := jsonFieldNames(targetType)
+
+			for key, value := range rawValue {
+				fieldType, ok := allowed[key]
+				if !ok {
+					if path == "" {
+						return fmt.Errorf("unknown field %q", key)
+					}
+
+					return fmt.Errorf("unknown field %q at %s", key, path)
+				}
+
+				childPath := key
+				if path != "" {
+					childPath = path + "." + key
+				}
+
+				if err := checkUnknownFields(value, fieldType, childPath); err != nil {
+					return err
+				}
+			}
+
+		case reflect.Map:
+			elemType := targetType.Elem()
+
+			for key, value := range rawValue {
+				childPath := key
+				if path != "" {
+					childPath = path + "." + key
+				}
+
+				if err := checkUnknownFields(value, elemType, childPath); err != nil {
+					return err
+				}
+			}
+		}
+
+	case []any:
+		elemType := targetType
+
+		for elemType.Kind() == reflect.Pointer {
+			elemType = elemType.Elem()
+		}
+
+		if elemType.Kind() == reflect.Slice || elemType.Kind() == reflect.Array {
+			elemType = elemType.Elem()
+		}
+
+		for index, item := range rawValue {
+			childPath := fmt.Sprintf("%s[%d]", path, index)
+
+			if err := checkUnknownFields(item, elemType, childPath); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func jsonFieldNames(t reflect.Type) map[string]reflect.Type {
+	fields := make(map[string]reflect.Type)
+
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+	}
+
+	if t.Kind() != reflect.Struct {
+		return fields
+	}
+
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+
+		// Skip unexported non-embedded fields.
+		if field.PkgPath != "" && !field.Anonymous {
+			continue
+		}
+
+		fieldType := field.Type
+		for fieldType.Kind() == reflect.Pointer {
+			fieldType = fieldType.Elem()
+		}
+
+		tag := field.Tag.Get("json")
+		name := strings.Split(tag, ",")[0]
+
+		if tag == "-" {
+			continue
+		}
+
+		// Embedded struct without explicit json name:
+		// type Resolver struct { ResolverBase }
+		// Need to flatten ResolverBase fields into parent object.
+		if field.Anonymous && (name == "" || name == field.Name) {
+			if fieldType.Kind() == reflect.Struct {
+				for embeddedName, embeddedType := range jsonFieldNames(fieldType) {
+					fields[embeddedName] = embeddedType
+				}
+				continue
+			}
+		}
+
+		if name == "" {
+			name = field.Name
+		}
+
+		fields[name] = field.Type
+	}
+
+	return fields
 }
 
 // Unprocessable writes a 422 Unprocessable Entity response with a cleaned
