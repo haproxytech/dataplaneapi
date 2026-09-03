@@ -120,8 +120,7 @@ func RuntimeError(w http.ResponseWriter, err error) {
 // maps to 413, matching the validator's handling of buffered bodies. Any
 // other parse failure is a plain 400.
 func MultipartError(w http.ResponseWriter, err error) {
-	var maxBytesErr *http.MaxBytesError
-	if errors.As(err, &maxBytesErr) {
+	if maxBytesErr, ok := errors.AsType[*http.MaxBytesError](err); ok {
 		code := int64(http.StatusRequestEntityTooLarge)
 		msg := fmt.Sprintf("request body exceeds the maximum allowed size of %d bytes", maxBytesErr.Limit)
 		JSON(w, http.StatusRequestEntityTooLarge, &models.Error{Code: &code, Message: &msg})

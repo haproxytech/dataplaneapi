@@ -236,9 +236,9 @@ var swaggerSpec = []string{
 	"lalao+HUSNZzzOavsz4lBJyeIeJoxsY9VZmBuUtGZkkkF48hu50zv8Adv6bxeNN2iRuAtSltRNBch+0+",
 	"HJ2GleJYshSntTQojk5PRCrWio1+yiFobVs0stWQw8FkOnkFScSJxcoc0lwrdCNPtlHSGfK2e8+QPRkn",
 	"pKi1Y2FLMfIMKycQd+ztfVLEVsRrtDvNdn863dmtH8HvucqfvFLoHMSJ2LEfSraiy17+H4gm800jabHS",
-	"a0uss7VYLGcO8nMYNboMCR4sTLbURfdkdazBn+oiHEv2j1Un+oJkgxz72fl27phHh0AdBqKpEzCyCbaM",
-	"44TfvCYsIGfyuNnOWsmMFJZ9vbgoloddGh77m4//9yDZanuXv90yjzim9LVYqRXsczg93LF1Vn+/v2jO",
-	"B91yvztDCqT56BJPNeSQzQ+gu+x+BAAA//8=",
+	"a0uss7VYLGcO8nMYhuAyJHiwMNlSF92T1bEGf6qLcCzZP1ad6AuSDXLsZ+fbuWMeHQJ1GIimTsDIBiGH",
+	"OE74zWvCAnImj5vtrJXMSGHZ14uLYnnYpeGxv/n4fw+SrbZ3+dst84hjSl+LlVrBPofTwx1bZ/X3+4vm",
+	"fNAt97szpECajy7xVEMO2fwAusvuxwA=",
 }
 
 // decodeSpec returns the embedded OpenAPI spec as raw JSON bytes,
