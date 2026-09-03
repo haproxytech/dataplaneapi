@@ -30666,6 +30666,30 @@ func init() {
           },
           "x-size": true
         },
+        "lua_args": {
+          "description": "Optional arguments passed to the Lua filter constructor.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-dependency": {
+            "type": {
+              "value": "lua"
+            }
+          },
+          "x-omitempty": true
+        },
+        "lua_name": {
+          "description": "Name of the Lua filter as registered by core.register_filter(), used in the 'filter lua.\u003cname\u003e' directive.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
         "metadata": {
           "additionalProperties": {
             "type": "object"
@@ -30764,7 +30788,8 @@ func init() {
             "compression",
             "fcgi-app",
             "spoe",
-            "trace"
+            "trace",
+            "lua"
           ],
           "x-nullable": false
         }
@@ -90720,6 +90745,30 @@ func init() {
           },
           "x-size": true
         },
+        "lua_args": {
+          "description": "Optional arguments passed to the Lua filter constructor.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-dependency": {
+            "type": {
+              "value": "lua"
+            }
+          },
+          "x-omitempty": true
+        },
+        "lua_name": {
+          "description": "Name of the Lua filter as registered by core.register_filter(), used in the 'filter lua.\u003cname\u003e' directive.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
         "metadata": {
           "additionalProperties": {
             "type": "object"
@@ -90818,7 +90867,8 @@ func init() {
             "compression",
             "fcgi-app",
             "spoe",
-            "trace"
+            "trace",
+            "lua"
           ],
           "x-nullable": false
         }
