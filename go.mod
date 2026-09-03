@@ -13,15 +13,15 @@ require (
 	github.com/docker/go-units v0.5.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20260215035315-f0c533e9ce9b
 	github.com/fsnotify/fsnotify v1.10.1
-	github.com/getkin/kin-openapi v0.146.0
+	github.com/getkin/kin-openapi v0.149.0
 	github.com/go-openapi/errors v0.22.8
-	github.com/go-openapi/loads v0.25.0
-	github.com/go-openapi/runtime v0.33.0
-	github.com/go-openapi/spec v0.22.9
-	github.com/go-openapi/strfmt v0.27.0
-	github.com/go-openapi/swag v0.28.0
-	github.com/go-openapi/swag/cmdutils v0.28.0
-	github.com/go-openapi/validate v0.26.3
+	github.com/go-openapi/loads v0.25.2
+	github.com/go-openapi/runtime v0.33.1
+	github.com/go-openapi/spec v1.0.0
+	github.com/go-openapi/strfmt v0.27.1
+	github.com/go-openapi/swag v0.29.1
+	github.com/go-openapi/swag/cmdutils v0.29.1
+	github.com/go-openapi/validate v0.26.5
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
 	github.com/haproxytech/client-native/v5 v5.1.28
@@ -34,8 +34,8 @@ require (
 	github.com/rs/cors v1.11.1
 	github.com/rubyist/circuitbreaker v2.2.1+incompatible
 	github.com/shirou/gopsutil v3.21.11+incompatible
-	github.com/sirupsen/logrus v1.10.0
-	github.com/stretchr/testify v1.11.1
+	github.com/sirupsen/logrus v1.10.2
+	github.com/stretchr/testify v1.12.1
 	golang.org/x/net v0.58.0
 	golang.org/x/sys v0.47.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -54,25 +54,24 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.48.0 // indirect
 	github.com/aws/smithy-go v1.28.1 // indirect
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
-	github.com/go-openapi/analysis v0.26.0 // indirect
+	github.com/go-openapi/analysis v0.26.2 // indirect
 	github.com/go-openapi/jsonpointer v1.0.0 // indirect
-	github.com/go-openapi/jsonreference v1.0.0 // indirect
-	github.com/go-openapi/runtime/server-middleware v0.33.0 // indirect
-	github.com/go-openapi/swag/conv v0.28.0 // indirect
-	github.com/go-openapi/swag/fileutils v0.28.0 // indirect
-	github.com/go-openapi/swag/jsonutils v0.28.0 // indirect
-	github.com/go-openapi/swag/loading v0.28.0 // indirect
-	github.com/go-openapi/swag/mangling v0.28.0 // indirect
-	github.com/go-openapi/swag/netutils v0.28.0 // indirect
-	github.com/go-openapi/swag/pools v0.28.0 // indirect
-	github.com/go-openapi/swag/stringutils v0.28.0 // indirect
-	github.com/go-openapi/swag/typeutils v0.28.0 // indirect
-	github.com/go-openapi/swag/yamlutils v0.28.0 // indirect
+	github.com/go-openapi/jsonreference v1.0.1 // indirect
+	github.com/go-openapi/runtime/server-middleware v0.33.1 // indirect
+	github.com/go-openapi/swag/conv v0.29.1 // indirect
+	github.com/go-openapi/swag/fileutils v0.29.1 // indirect
+	github.com/go-openapi/swag/jsonutils v0.29.1 // indirect
+	github.com/go-openapi/swag/loading v0.29.1 // indirect
+	github.com/go-openapi/swag/mangling v0.29.1 // indirect
+	github.com/go-openapi/swag/netutils v0.29.1 // indirect
+	github.com/go-openapi/swag/pools v0.29.1 // indirect
+	github.com/go-openapi/swag/stringutils v0.29.1 // indirect
+	github.com/go-openapi/swag/typeutils v0.29.1 // indirect
+	github.com/go-openapi/swag/yamlutils v0.29.1 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
-	github.com/gofrs/flock v0.13.0 // indirect
+	github.com/gofrs/flock v0.13.1 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
@@ -86,7 +85,6 @@ require (
 	github.com/oklog/ulid/v2 v2.1.2 // indirect
 	github.com/peterbourgon/g2s v0.0.0-20170223122336-d4e7ad98afea // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.16.0 // indirect
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.3 // indirect
 	github.com/tklauser/go-sysconf v0.4.0 // indirect
@@ -95,5 +93,4 @@ require (
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/sync v0.22.0 // indirect
 	golang.org/x/text v0.41.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
