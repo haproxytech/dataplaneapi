@@ -229,20 +229,17 @@ const prefixInvalidCT = "header Content-Type has unexpected value"
 // return 422 to preserve parity with the old go-swagger behaviour; parameter
 // errors return the suggested statusCode.
 func normalizeValidationError(err error, statusCode int) (int, string) {
-	var maxBytesErr *http.MaxBytesError
-	if errors.As(err, &maxBytesErr) {
+	if maxBytesErr, ok := errors.AsType[*http.MaxBytesError](err); ok {
 		// The body hit the MaxBodySizeMiddleware cap while the validator was
 		// buffering it.
 		return http.StatusRequestEntityTooLarge,
 			fmt.Sprintf("request body exceeds the maximum allowed size of %d bytes", maxBytesErr.Limit)
 	}
-	var reqErr *openapi3filter.RequestError
-	if errors.As(err, &reqErr) {
+	if reqErr, ok := errors.AsType[*openapi3filter.RequestError](err); ok {
 		if strings.HasPrefix(reqErr.Reason, prefixInvalidCT) {
 			return http.StatusUnsupportedMediaType, reqErr.Reason
 		}
-		var schemaErr *openapi3.SchemaError
-		if errors.As(reqErr.Err, &schemaErr) {
+		if schemaErr, ok := errors.AsType[*openapi3.SchemaError](reqErr.Err); ok {
 			if reqErr.Parameter != nil {
 				return statusCode, fmt.Sprintf("%s in %s: %s", reqErr.Parameter.Name, reqErr.Parameter.In, schemaErr.Reason)
 			}

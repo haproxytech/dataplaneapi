@@ -222,7 +222,7 @@ func serverTemplateCompareObjects(data, ondisk any) []string {
 			diff = append(diff, fName)
 			continue
 		}
-		if dKind == reflect.Ptr {
+		if dKind == reflect.Pointer {
 			dField = dField.Elem()
 			oField = oField.Elem()
 			dKind = dField.Kind()

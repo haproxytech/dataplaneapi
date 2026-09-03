@@ -101,7 +101,7 @@ type Server struct {
 	serverShutdown func()
 	hasListeners   bool
 	shutdown       chan struct{}
-	shuttingDown   int32
+	shuttingDown   atomic.Int32
 	interrupted    bool
 	interrupt      chan os.Signal
 }
@@ -223,9 +223,6 @@ func (s *Server) Serve() (err error) {
 
 		// Inspired by https://blog.bracebin.com/achieving-perfect-ssl-labs-score-with-go
 		httpsServer.TLSConfig = &tls.Config{
-			// Causes servers to use Go's default ciphersuite preferences,
-			// which are tuned to avoid attacks. Does nothing on clients.
-			PreferServerCipherSuites: true,
 			// Only use curves which have assembly implementations
 			// https://github.com/golang/go/tree/master/src/crypto/elliptic
 			CurvePreferences: []tls.CurveID{tls.CurveP256},
@@ -381,7 +378,7 @@ func (s *Server) Listen() error {
 
 // Shutdown server and clean up resources
 func (s *Server) Shutdown() error {
-	if atomic.CompareAndSwapInt32(&s.shuttingDown, 0, 1) {
+	if s.shuttingDown.CompareAndSwap(0, 1) {
 		close(s.shutdown)
 	}
 	return nil
