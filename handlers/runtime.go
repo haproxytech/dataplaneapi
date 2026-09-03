@@ -196,7 +196,7 @@ func compareObjects(data, ondisk any) []string {
 			continue
 		}
 
-		if dataKind == reflect.Ptr {
+		if dataKind == reflect.Pointer {
 			dataField = dataField.Elem()
 			ondiskField = ondiskField.Elem()
 
