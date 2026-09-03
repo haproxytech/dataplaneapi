@@ -3191,6 +3191,23 @@ components:
                 - bwlim-in
                 - bwlim-out
           x-size: true
+        lua_args:
+          description: Optional arguments passed to the Lua filter constructor.
+          items:
+            type: string
+          type: array
+          x-dependency:
+            type:
+              value: lua
+          x-omitempty: true
+        lua_name:
+          description: Name of the Lua filter as registered by core.register_filter(), used in the 'filter lua.<name>' directive.
+          pattern: ^[^\s]+$
+          type: string
+          x-dependency:
+            type:
+              required: true
+              value: lua
         metadata:
           additionalProperties:
             type: object
@@ -3274,6 +3291,7 @@ components:
             - fcgi-app
             - spoe
             - trace
+            - lua
           type: string
       required:
         - type
