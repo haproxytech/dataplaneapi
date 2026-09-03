@@ -237,9 +237,9 @@ var swaggerSpec = []string{
 	"CxMRJIWuw1/j6+DJzjlxdq24Rja+vmQDduM1yQrZ+OyKdbXrFJZBKLupUfNaQgbHw9HwN0giWOxc6tAu",
 	"pEDXkaW2DRf6Fi3mSM9FfYPkrXaMKxXzRkkw76SeMyqRrYMwZ8T/SEOIDO0TuMzjuKKxUmvysVAd99Zs",
 	"PhqN9jYknnT7jbf/jxcCnSu8Yj0mRKs471+K3cOm7/+KRGn6quJ22ZeVcc3iE2Gm2K4wJEB87iC7hbC3",
-	"rh9MQ5TXO5muZN683U7d52L3Sybz3Vq63c8oM8srpDgwb79O2mdCTXbJLs8hiB6y9tUkoHkVdC/zqItP",
-	"XlrMISPrcXNu1pwIbXC7u72bTOxkoid+NDoW8Rd/+f3wIKyOTlfNBKa/HkLybNROP0B3u8juZHSyZ8n1",
-	"39wfK+qu4y/LODiiXXSC8VZBBuniGJpp8yUAAP//",
+	"rh9MQ5TXO5muZN683U7d52L3Sybz3Vq63c8oM8srpDgwb79O2mdCTXbJLs8hiB6y9tUkoHmFkIHMoy4+",
+	"eWkxh4ysx825WXMitMHt7vZuMrGTiZ740ehYxF/85ffDg7A6Ol01E5j+egjJs1E7/QDd7SK7k9HJniXX",
+	"f3N/rKi7jr8s4+CIdtEJxlsFGaSLY2imzZcBAA==",
 }
 
 // decodeSpec returns the embedded OpenAPI spec as raw JSON bytes,
