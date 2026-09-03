@@ -25309,6 +25309,30 @@ func init() {
           },
           "x-size": true
         },
+        "lua_args": {
+          "description": "Optional arguments passed to the Lua filter constructor.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-dependency": {
+            "type": {
+              "value": "lua"
+            }
+          },
+          "x-omitempty": true
+        },
+        "lua_name": {
+          "description": "Name of the Lua filter as registered by core.register_filter(), used in the 'filter lua.\u003cname\u003e' directive.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
         "min_size": {
           "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
           "type": "integer",
@@ -25402,7 +25426,8 @@ func init() {
             "compression",
             "fcgi-app",
             "spoe",
-            "trace"
+            "trace",
+            "lua"
           ],
           "x-nullable": false
         }
@@ -75877,6 +75902,30 @@ func init() {
           },
           "x-size": true
         },
+        "lua_args": {
+          "description": "Optional arguments passed to the Lua filter constructor.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-dependency": {
+            "type": {
+              "value": "lua"
+            }
+          },
+          "x-omitempty": true
+        },
+        "lua_name": {
+          "description": "Name of the Lua filter as registered by core.register_filter(), used in the 'filter lua.\u003cname\u003e' directive.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
         "min_size": {
           "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
           "type": "integer",
@@ -75970,7 +76019,8 @@ func init() {
             "compression",
             "fcgi-app",
             "spoe",
-            "trace"
+            "trace",
+            "lua"
           ],
           "x-nullable": false
         }
