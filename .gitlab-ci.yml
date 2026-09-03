@@ -17,7 +17,7 @@ pipelines-check:
   stage: bots
   needs: []
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [""]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
@@ -42,7 +42,7 @@ mr-backport-question:
   stage: bots
   needs: []
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [ "" ]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
@@ -89,7 +89,7 @@ golangci-lint:
   stage: lint
   needs: [pipelines-check]
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [""]
   tags:
     - go
@@ -119,7 +119,7 @@ gofumpt:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [""]
   tags:
     - go
@@ -164,7 +164,7 @@ check-dependencies:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [""]
   tags:
     - go
@@ -206,7 +206,7 @@ check-committer:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [ "" ]
   tags:
     - go
@@ -297,7 +297,7 @@ build:
   stage: build
   needs: []
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [""]
   tags:
     - go
@@ -325,7 +325,7 @@ test:
   stage: test
   needs: [pipelines-check]
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [ "" ]
   tags:
     - go
@@ -382,7 +382,7 @@ govulncheck:
   stage: checks
   needs: []
   image:
-    name: $CI_REGISTRY_GO/golang:latest-alpine
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION-alpine
     entrypoint: [ "" ]
   rules:
     - if: $CI_PIPELINE_SOURCE == 'schedule' && $SCHEDULE_TYPE == 'daily'
