@@ -82,6 +82,8 @@ func (s *DNS01Solver) Present(ctx context.Context, domain, zone, keyAuth string)
 	} else {
 		zone = rooted(zone)
 	}
+	// libdns expects record names relative to the zone.
+	rec.Name = libdns.RelativeName(rec.Name, zone)
 
 	results, err := s.provider.SetRecords(ctx, zone, []libdns.Record{rec})
 	if err != nil {
@@ -160,6 +162,8 @@ func (s *DNS01Solver) CleanUp(ctx context.Context, domain, zone, keyAuth string)
 	} else {
 		zone = rooted(zone)
 	}
+	// libdns expects record names relative to the zone.
+	rr.Name = libdns.RelativeName(rr.Name, zone)
 
 	_, err := s.provider.DeleteRecords(ctx, zone, []libdns.Record{rr})
 	if err != nil {
