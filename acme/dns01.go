@@ -82,6 +82,8 @@ func (s *DNS01Solver) Present(ctx context.Context, domain, zone, keyAuth string)
 	} else {
 		zone = rooted(zone)
 	}
+	// libdns expects record names relative to the zone.
+	rec.Name = libdns.RelativeName(rec.Name, zone)
 
 	// Append rather than Set: SetRecords replaces every record with the same
 	// name and type, which breaks certificates covering both a domain and its
@@ -169,6 +171,8 @@ func (s *DNS01Solver) CleanUp(ctx context.Context, domain, zone, keyAuth string)
 	} else {
 		zone = rooted(zone)
 	}
+	// libdns expects record names relative to the zone.
+	rr.Name = libdns.RelativeName(rr.Name, zone)
 
 	_, err := s.provider.DeleteRecords(ctx, zone, []libdns.Record{rr})
 	if err != nil {
