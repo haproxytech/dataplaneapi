@@ -85,7 +85,16 @@ func (s *DNS01Solver) Present(ctx context.Context, domain, zone, keyAuth string)
 	// libdns expects record names relative to the zone.
 	rec.Name = libdns.RelativeName(rec.Name, zone)
 
-	results, err := s.provider.SetRecords(ctx, zone, []libdns.Record{rec})
+	// Append rather than Set: SetRecords replaces every record with the same
+	// name and type, which breaks certificates covering both a domain and its
+	// wildcard, since both challenges share the same _acme-challenge name.
+	var results []libdns.Record
+	var err error
+	if appender, ok := s.provider.(libdns.RecordAppender); ok {
+		results, err = appender.AppendRecords(ctx, zone, []libdns.Record{rec})
+	} else {
+		results, err = s.provider.SetRecords(ctx, zone, []libdns.Record{rec})
+	}
 	if err != nil {
 		return fmt.Errorf("adding temporary record for zone %q: %w", zone, err)
 	}
