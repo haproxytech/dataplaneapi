@@ -10,7 +10,7 @@ SWAGGER_VERSION=${shell curl -s https://raw.githubusercontent.com/haproxytech/cl
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
 GOLANGCI_LINT_VERSION=2.13.2
-CHECK_COMMIT=5.5.0
+CHECK_COMMIT=5.8.1
 
 all: update clean build
 

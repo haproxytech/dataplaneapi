@@ -89,7 +89,7 @@ gofumpt:
 commit-policy:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/commit-check:5.5.0
+    name: $CI_REGISTRY_GO/commit-check:5.8.1
     entrypoint: [""]
   tags:
     - go
