@@ -99,9 +99,11 @@ func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) 
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
 		mWorker = true
-		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
-		if misc.IsUnixSocketAddr(masterRuntime) {
-			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
+		masterCLI := os.Getenv("HAPROXY_MASTER_CLI")
+		if masterRuntime, ok := misc.MasterSocketFromEnv(masterCLI); ok {
+			haproxyOptions.MasterRuntime = masterRuntime
+		} else if masterCLI != "" {
+			log.Warningf("No usable UNIX socket in HAPROXY_MASTER_CLI (%s), keeping the configured master runtime", masterCLI)
 		}
 	}
 
