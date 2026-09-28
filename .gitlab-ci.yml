@@ -145,7 +145,7 @@ commit-policy:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   image:
-    name: $CI_REGISTRY_GO/commit-check:latest
+    name: $CI_REGISTRY_GO/commit-check:5.8.1
     entrypoint: [""]
   tags:
     - go
