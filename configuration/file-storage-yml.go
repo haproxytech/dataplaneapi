@@ -62,7 +62,8 @@ func (s *StorageYML) SaveAs(filename string) error {
 		return err
 	}
 
-	return renameio.WriteFile(filename, data, 0o644)
+	// holds the API users
+	return renameio.WriteFile(filename, data, 0o600)
 }
 
 func (s *StorageYML) Save() error {
