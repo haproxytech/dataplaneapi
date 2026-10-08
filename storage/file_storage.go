@@ -43,7 +43,8 @@ func (f *fileStorage[T]) Store(data T) error {
 		return err
 	}
 
-	if err = renameio.WriteFile(f.filePath, jsonData, 0o644); err != nil {
+	// may hold the cluster token and service discovery credentials
+	if err = renameio.WriteFile(f.filePath, jsonData, 0o600); err != nil {
 		return err
 	}
 	return nil
@@ -55,10 +56,11 @@ func (f *fileStorage[T]) initFile() error {
 	}
 	if _, err := os.Stat(f.filePath); err != nil {
 		if os.IsNotExist(err) {
-			if _, errCreate := os.Create(f.filePath); errCreate != nil {
+			file, errCreate := os.OpenFile(f.filePath, os.O_CREATE|os.O_WRONLY, 0o600)
+			if errCreate != nil {
 				return errCreate
 			}
-			return os.Chmod(f.filePath, 0o644)
+			return file.Close()
 		}
 		return err
 	}
