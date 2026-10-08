@@ -35,6 +35,9 @@ func serve(comm *Commands, conn net.Conn) {
 	log.Debugf("-- command socket got: %s", data)
 
 	cmd := strings.Fields(string(data))
+	if len(cmd) == 0 {
+		return
+	}
 	c, ok := comm.Get(cmd[0])
 	if cmd[0] == "exit" {
 		return
