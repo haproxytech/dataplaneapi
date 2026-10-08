@@ -207,6 +207,14 @@ func BasicAuthMiddleware(skip bool) Adapter {
 	}
 }
 
+// CrossOriginProtectionMiddleware rejects cross-origin non-safe requests from
+// browsers (CSRF): basic-auth credentials cached by a browser are sent on
+// cross-site form posts. Non-browser clients send no Sec-Fetch-Site/Origin and
+// are not affected.
+func CrossOriginProtectionMiddleware() Adapter {
+	return http.NewCrossOriginProtection().Handler
+}
+
 // MaxBodySizeMiddleware caps every request body at maxSize bytes with
 // http.MaxBytesReader. The spec validator buffers the full body in memory
 // before handlers run, so without a cap a single oversized upload can exhaust
