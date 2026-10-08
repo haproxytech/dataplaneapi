@@ -181,3 +181,11 @@ func fetchConfgVersion(client configuration.Configuration, transactionID string)
 	}
 	return "", err
 }
+
+// CrossOriginProtectionMiddleware rejects cross-origin non-safe requests from
+// browsers (CSRF): basic-auth credentials cached by a browser are sent on
+// cross-site form posts. Non-browser clients send no Sec-Fetch-Site/Origin and
+// are not affected.
+func CrossOriginProtectionMiddleware() Adapter {
+	return http.NewCrossOriginProtection().Handler
+}
