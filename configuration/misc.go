@@ -95,7 +95,7 @@ func InitStorageNoticeFile(storageDir string) error {
 	_, _ = fmt.Fprintf(&content, "# NOTE: This storage folder contains files managed by HAProxy Fusion Control Plane:\n")
 	_, _ = fmt.Fprintf(&content, "#       manual edits may cause issues and misconfigurations.\n")
 
-	return renameio.WriteFile(path.Join(storageDir, "NOTICE"), []byte(content.String()), os.ModePerm)
+	return renameio.WriteFile(path.Join(storageDir, "NOTICE"), []byte(content.String()), 0o644)
 }
 
 func CheckIfStorageDirIsOK(storageDir string, config *Configuration) error {
