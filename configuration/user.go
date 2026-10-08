@@ -16,6 +16,7 @@
 package configuration
 
 import (
+	"crypto/subtle"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -36,7 +37,10 @@ import (
 	"github.com/haproxytech/dataplaneapi/storagetype"
 )
 
-const mockPass = "$2a$10$e.I1x5KPNu7xy9u0zSzJaOcr5it8kR1Awnaf3boOtYno9y4DolER."
+// mockPass is checked for unknown users so that failing logins cost the same
+// crypt work whether the user exists or not (no user enumeration by timing).
+// It must use a scheme checkPassword verifies: SHA-512 crypt, 5000 rounds.
+const mockPass = "$6$dpapimocksalt$FSE7SwigtSN4i6osmN/I33cU2morawJ5dN9MTzCvyG29Ri7J4uc5tmxFmYCLMz8uH19sKNHo4A4k4dWF2SVky0"
 
 var usersStore *Users
 
@@ -189,7 +193,7 @@ func AuthenticateUser(user string, pass string) (any, error) {
 	}
 
 	if u != nil && u.IsInsecure {
-		if pass != userPass {
+		if subtle.ConstantTimeCompare([]byte(pass), []byte(userPass)) != 1 {
 			unatuhorized = true
 		}
 	} else {
