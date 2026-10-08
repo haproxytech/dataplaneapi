@@ -180,7 +180,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		log.Warning(err)
 		return err
 	}
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o600)
 	if err != nil {
 		log.Warning(err)
 		return err
@@ -265,7 +265,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				log.Warning(err)
 				break
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o600)
 			if err != nil {
 				log.Warning(err)
 				break
