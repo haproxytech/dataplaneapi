@@ -185,14 +185,17 @@ func fetchConfgVersion(client cn_configuration.Configuration, transactionID stri
 	return "", err
 }
 
-// BasicAuthMiddleware enforces HTTP Basic authentication on every request.
-// When skip is true (mTLS with a CA certificate is active) all requests pass through.
-func BasicAuthMiddleware(skip bool) Adapter {
+// BasicAuthMiddleware enforces HTTP Basic authentication on every request,
+// except requests that arrived over TLS with a client certificate verified
+// against the configured CA (mTLS). The HTTP and Unix listeners share this
+// handler and never set r.TLS, so they always require credentials.
+func BasicAuthMiddleware() Adapter {
 	return func(h http.Handler) http.Handler {
-		if skip {
-			return h
-		}
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.TLS != nil && len(r.TLS.VerifiedChains) > 0 {
+				h.ServeHTTP(w, r)
+				return
+			}
 			user, pass, ok := r.BasicAuth()
 			if !ok {
 				writeUnauthorized(w, "missing or invalid authorization")

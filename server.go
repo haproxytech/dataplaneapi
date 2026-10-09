@@ -58,8 +58,7 @@ func NewServer() *Server {
 
 // ConfigureAPI configures the API and handlers.
 func (s *Server) ConfigureAPI() {
-	skipBasicAuth := len(s.TLSCACertificate) > 0 && s.TLSPort > 0
-	handler, shutdown := configureAPI(skipBasicAuth, int64(s.MaxBodySize))
+	handler, shutdown := configureAPI(int64(s.MaxBodySize))
 	s.handler = handler
 	s.serverShutdown = shutdown
 }
