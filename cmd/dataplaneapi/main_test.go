@@ -1,0 +1,83 @@
+// Copyright 2026 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+package main
+
+import (
+	"crypto/tls"
+	"crypto/x509"
+	"errors"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/go-openapi/runtime/security"
+)
+
+func TestBasicAuthenticator(t *testing.T) {
+	verified := &tls.ConnectionState{VerifiedChains: [][]*x509.Certificate{{&x509.Certificate{}}}}
+
+	tests := []struct {
+		name          string
+		tls           *tls.ConnectionState
+		user, pass    string
+		wantApplies   bool
+		wantPrincipal bool
+		wantErr       bool
+		wantCalls     int
+	}{
+		{name: "plain HTTP, no credentials"},
+		{name: "plain HTTP, wrong credentials", user: "admin", pass: "wrong", wantApplies: true, wantErr: true, wantCalls: 1},
+		{name: "plain HTTP, valid credentials", user: "admin", pass: "secret", wantApplies: true, wantPrincipal: true, wantCalls: 1},
+		{name: "mTLS verified client certificate, no credentials", tls: verified, wantApplies: true, wantPrincipal: true},
+		{name: "TLS without verified client certificate, no credentials", tls: &tls.ConnectionState{}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			calls := 0
+			auth := basicAuthenticator(func(user, pass string) (any, error) {
+				calls++
+				if user == "admin" && pass == "secret" {
+					return "admin", nil
+				}
+				return nil, errors.New("invalid credentials")
+			})
+
+			req := httptest.NewRequest(http.MethodGet, "/v3/info", nil)
+			req.TLS = tt.tls
+			if tt.user != "" {
+				req.SetBasicAuth(tt.user, tt.pass)
+			}
+
+			applies, principal, err := auth.Authenticate(&security.ScopedAuthRequest{Request: req})
+			if applies != tt.wantApplies {
+				t.Errorf("applies = %v, want %v", applies, tt.wantApplies)
+			}
+			if (principal != nil) != tt.wantPrincipal {
+				t.Errorf("principal = %v, want non-nil %v", principal, tt.wantPrincipal)
+			}
+			if tt.wantPrincipal && tt.tls == nil && principal != "admin" {
+				t.Errorf("principal = %v, want %q", principal, "admin")
+			}
+			if (err != nil) != tt.wantErr {
+				t.Errorf("err = %v, want error %v", err, tt.wantErr)
+			}
+			if calls != tt.wantCalls {
+				t.Errorf("authentication calls = %d, want %d", calls, tt.wantCalls)
+			}
+		})
+	}
+}
