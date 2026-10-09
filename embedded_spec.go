@@ -23407,6 +23407,177 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/profiling": {
+      "get": {
+        "description": "Returns the HAProxy profiling status, as reported by \"show profiling status\".",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Return HAProxy profiling status",
+        "operationId": "getProfiling",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/profiling"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Enables or disables profiling. Only the fields present in the body are applied; the response is the resulting status. Setting tasks or memory to \"on\" also discards the profiling data collected so far, even when that mode was already active.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Change HAProxy profiling settings",
+        "operationId": "setProfiling",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/profiling"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/profiling"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/profiling/memory": {
+      "get": {
+        "description": "Returns the raw text output of \"show profiling memory\".",
+        "produces": [
+          "text/plain"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Dump memory usage profiling",
+        "operationId": "getProfilingMemory",
+        "parameters": [
+          {
+            "enum": [
+              "usage",
+              "address",
+              "time",
+              "context"
+            ],
+            "type": "string",
+            "default": "usage",
+            "description": "Sort order of the dump. usage is HAProxy's default order, address sorts by function address, time sorts by total time, context sorts by calling context.",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Aggregate output by callee",
+            "name": "aggregate",
+            "in": "query"
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Maximum number of lines to output",
+            "name": "max_lines",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/profiling/tasks": {
+      "get": {
+        "description": "Returns the raw text output of \"show profiling tasks\".",
+        "produces": [
+          "text/plain"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Dump per-task CPU profiling",
+        "operationId": "getProfilingTasks",
+        "parameters": [
+          {
+            "enum": [
+              "usage",
+              "address",
+              "time",
+              "context"
+            ],
+            "type": "string",
+            "default": "usage",
+            "description": "Sort order of the dump. usage is HAProxy's default order, address sorts by function address, time sorts by total time, context sorts by calling context.",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Aggregate output by callee",
+            "name": "aggregate",
+            "in": "query"
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Maximum number of lines to output",
+            "name": "max_lines",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/ssl_ca_files": {
       "get": {
         "description": "Returns all SSL CA files using the runtime socket.",
@@ -27589,10 +27760,6 @@ func init() {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
             },
-            "filter_sequence_list": {
-              "x-go-name": "FilterSequenceList",
-              "$ref": "#/definitions/filter_sequences"
-            },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
               "$ref": "#/definitions/http_after_response_rules"
@@ -28737,6 +28904,7 @@ func init() {
           }
         },
         "crt_list": {
+          "description": "All of the certificate list files delimited by ':' as mentioned as a crt-list on the bind line.",
           "type": "string",
           "x-dependency": {
             "ssl": {
@@ -31490,46 +31658,6 @@ func init() {
         "type": "trace"
       }
     },
-    "filter_sequence": {
-      "description": "Specifies in which order filters declared on the proxy should be executed\nfor the request or response path. Corresponds to the HAProxy filter-sequence directive.\n",
-      "type": "object",
-      "title": "Filter Sequence",
-      "required": [
-        "direction",
-        "filters"
-      ],
-      "properties": {
-        "direction": {
-          "type": "string",
-          "enum": [
-            "request",
-            "response"
-          ],
-          "x-display-name": "Direction"
-        },
-        "filters": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-display-name": "Filters"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "type": "object"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "filter_sequences": {
-      "description": "HAProxy filter sequences array (corresponds to filter-sequence directive)",
-      "type": "array",
-      "title": "Filter Sequences Array",
-      "items": {
-        "$ref": "#/definitions/filter_sequence"
-      }
-    },
     "filters": {
       "description": "HAProxy filters array (corresponds to filter directive)",
       "type": "array",
@@ -31699,10 +31827,6 @@ func init() {
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
-            },
-            "filter_sequence_list": {
-              "x-go-name": "FilterSequenceList",
-              "$ref": "#/definitions/filter_sequences"
             },
             "force_be_switch_list": {
               "x-go-name": "ForceBeSwitchList",
@@ -32978,7 +33102,7 @@ func init() {
           "type": "object",
           "properties": {
             "http_check_list": {
-              "x-go-name": "HTTPCheckRuleList",
+              "x-go-name": "HTTPCheckList",
               "$ref": "#/definitions/http_checks"
             },
             "tcp_check_list": {
@@ -37640,6 +37764,10 @@ func init() {
           "description": "Maximum amount of RAM in megabytes per process usable by the zlib",
           "type": "integer"
         },
+        "no_memory_trimming": {
+          "description": "Disables memory trimming (malloc_trim) on memory shortage or reload",
+          "type": "boolean"
+        },
         "noepoll": {
           "description": "Disable the use of the \"epoll\" event polling system on Linux",
           "type": "boolean"
@@ -38009,6 +38137,37 @@ func init() {
         "zlib_mem_usage": {
           "type": "integer",
           "x-nullable": true
+        }
+      }
+    },
+    "profiling": {
+      "description": "HAProxy runtime profiling state, as reported by \"show profiling status\".",
+      "type": "object",
+      "title": "Profiling",
+      "properties": {
+        "memory": {
+          "description": "Memory usage profiling mode (\"set profiling memory {on|off}\"). Reported as \"off\" when HAProxy was built without USE_MEMORY_PROFILING.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "tasks": {
+          "description": "Per-task CPU profiling mode (\"set profiling tasks {on|auto|off}\").",
+          "type": "string",
+          "enum": [
+            "on",
+            "off",
+            "auto"
+          ]
+        },
+        "tasks_active": {
+          "description": "Whether per-task CPU profiling is currently collecting data. True for \"on\", and for \"auto\" once HAProxy has automatically enabled it.",
+          "type": "boolean",
+          "x-nullable": false,
+          "x-omitempty": false,
+          "readOnly": true
         }
       }
     },
@@ -41053,6 +41212,11 @@ func init() {
         "issuers_chain_path": {
           "type": "string"
         },
+        "load_extra_del_ext": {
+          "description": "Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)",
+          "type": "boolean",
+          "x-display-name": "SSL Load Extra Del Ext"
+        },
         "load_extra_files": {
           "type": "string",
           "x-display-name": "SSL Load Extra Files"
@@ -43725,11 +43889,6 @@ func init() {
     "tune_quic_options": {
       "type": "object",
       "properties": {
-        "frontend_conn_tx_buffers_limit": {
-          "type": "integer",
-          "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
-          "x-nullable": true
-        },
         "frontend_max_idle_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -44278,6 +44437,9 @@ func init() {
     },
     {
       "name": "PeerEntry"
+    },
+    {
+      "name": "Profiling"
     },
     {
       "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
@@ -82332,6 +82494,204 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/profiling": {
+      "get": {
+        "description": "Returns the HAProxy profiling status, as reported by \"show profiling status\".",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Return HAProxy profiling status",
+        "operationId": "getProfiling",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/profiling"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Enables or disables profiling. Only the fields present in the body are applied; the response is the resulting status. Setting tasks or memory to \"on\" also discards the profiling data collected so far, even when that mode was already active.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Change HAProxy profiling settings",
+        "operationId": "setProfiling",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/profiling"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/profiling"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/profiling/memory": {
+      "get": {
+        "description": "Returns the raw text output of \"show profiling memory\".",
+        "produces": [
+          "text/plain"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Dump memory usage profiling",
+        "operationId": "getProfilingMemory",
+        "parameters": [
+          {
+            "enum": [
+              "usage",
+              "address",
+              "time",
+              "context"
+            ],
+            "type": "string",
+            "default": "usage",
+            "description": "Sort order of the dump. usage is HAProxy's default order, address sorts by function address, time sorts by total time, context sorts by calling context.",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Aggregate output by callee",
+            "name": "aggregate",
+            "in": "query"
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Maximum number of lines to output",
+            "name": "max_lines",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/profiling/tasks": {
+      "get": {
+        "description": "Returns the raw text output of \"show profiling tasks\".",
+        "produces": [
+          "text/plain"
+        ],
+        "tags": [
+          "Profiling"
+        ],
+        "summary": "Dump per-task CPU profiling",
+        "operationId": "getProfilingTasks",
+        "parameters": [
+          {
+            "enum": [
+              "usage",
+              "address",
+              "time",
+              "context"
+            ],
+            "type": "string",
+            "default": "usage",
+            "description": "Sort order of the dump. usage is HAProxy's default order, address sorts by function address, time sorts by total time, context sorts by calling context.",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Aggregate output by callee",
+            "name": "aggregate",
+            "in": "query"
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Maximum number of lines to output",
+            "name": "max_lines",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/ssl_ca_files": {
       "get": {
         "description": "Returns all SSL CA files using the runtime socket.",
@@ -89512,10 +89872,6 @@ func init() {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
             },
-            "filter_sequence_list": {
-              "x-go-name": "FilterSequenceList",
-              "$ref": "#/definitions/filter_sequences"
-            },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
               "$ref": "#/definitions/http_after_response_rules"
@@ -90620,6 +90976,7 @@ func init() {
           }
         },
         "crt_list": {
+          "description": "All of the certificate list files delimited by ':' as mentioned as a crt-list on the bind line.",
           "type": "string",
           "x-dependency": {
             "ssl": {
@@ -93345,46 +93702,6 @@ func init() {
         "type": "trace"
       }
     },
-    "filter_sequence": {
-      "description": "Specifies in which order filters declared on the proxy should be executed\nfor the request or response path. Corresponds to the HAProxy filter-sequence directive.\n",
-      "type": "object",
-      "title": "Filter Sequence",
-      "required": [
-        "direction",
-        "filters"
-      ],
-      "properties": {
-        "direction": {
-          "type": "string",
-          "enum": [
-            "request",
-            "response"
-          ],
-          "x-display-name": "Direction"
-        },
-        "filters": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-display-name": "Filters"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "type": "object"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "filter_sequences": {
-      "description": "HAProxy filter sequences array (corresponds to filter-sequence directive)",
-      "type": "array",
-      "title": "Filter Sequences Array",
-      "items": {
-        "$ref": "#/definitions/filter_sequence"
-      }
-    },
     "filters": {
       "description": "HAProxy filters array (corresponds to filter directive)",
       "type": "array",
@@ -93554,10 +93871,6 @@ func init() {
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
-            },
-            "filter_sequence_list": {
-              "x-go-name": "FilterSequenceList",
-              "$ref": "#/definitions/filter_sequences"
             },
             "force_be_switch_list": {
               "x-go-name": "ForceBeSwitchList",
@@ -94725,7 +95038,7 @@ func init() {
           "type": "object",
           "properties": {
             "http_check_list": {
-              "x-go-name": "HTTPCheckRuleList",
+              "x-go-name": "HTTPCheckList",
               "$ref": "#/definitions/http_checks"
             },
             "tcp_check_list": {
@@ -99366,6 +99679,10 @@ func init() {
           "description": "Maximum amount of RAM in megabytes per process usable by the zlib",
           "type": "integer"
         },
+        "no_memory_trimming": {
+          "description": "Disables memory trimming (malloc_trim) on memory shortage or reload",
+          "type": "boolean"
+        },
         "noepoll": {
           "description": "Disable the use of the \"epoll\" event polling system on Linux",
           "type": "boolean"
@@ -99735,6 +100052,37 @@ func init() {
         "zlib_mem_usage": {
           "type": "integer",
           "x-nullable": true
+        }
+      }
+    },
+    "profiling": {
+      "description": "HAProxy runtime profiling state, as reported by \"show profiling status\".",
+      "type": "object",
+      "title": "Profiling",
+      "properties": {
+        "memory": {
+          "description": "Memory usage profiling mode (\"set profiling memory {on|off}\"). Reported as \"off\" when HAProxy was built without USE_MEMORY_PROFILING.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "tasks": {
+          "description": "Per-task CPU profiling mode (\"set profiling tasks {on|auto|off}\").",
+          "type": "string",
+          "enum": [
+            "on",
+            "off",
+            "auto"
+          ]
+        },
+        "tasks_active": {
+          "description": "Whether per-task CPU profiling is currently collecting data. True for \"on\", and for \"auto\" once HAProxy has automatically enabled it.",
+          "type": "boolean",
+          "x-nullable": false,
+          "x-omitempty": false,
+          "readOnly": true
         }
       }
     },
@@ -102722,6 +103070,11 @@ func init() {
         "issuers_chain_path": {
           "type": "string"
         },
+        "load_extra_del_ext": {
+          "description": "Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)",
+          "type": "boolean",
+          "x-display-name": "SSL Load Extra Del Ext"
+        },
         "load_extra_files": {
           "type": "string",
           "x-display-name": "SSL Load Extra Files"
@@ -105344,11 +105697,6 @@ func init() {
     "tune_quic_options": {
       "type": "object",
       "properties": {
-        "frontend_conn_tx_buffers_limit": {
-          "type": "integer",
-          "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
-          "x-nullable": true
-        },
         "frontend_max_idle_timeout": {
           "type": "integer",
           "minimum": 0,
@@ -105900,6 +106248,9 @@ func init() {
     },
     {
       "name": "PeerEntry"
+    },
+    {
+      "name": "Profiling"
     },
     {
       "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",

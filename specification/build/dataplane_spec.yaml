@@ -402,8 +402,6 @@ components:
               $ref: '#/components/schemas/acls'
             filter_list:
               $ref: '#/components/schemas/filters'
-            filter_sequence_list:
-              $ref: '#/components/schemas/filter_sequences'
             http_after_response_rule_list:
               $ref: '#/components/schemas/http_after_response_rules'
             http_check_list:
@@ -1212,6 +1210,7 @@ components:
             ssl:
               value: true
         crt_list:
+          description: All of the certificate list files delimited by ':' as mentioned as a crt-list on the bind line.
           type: string
           x-dependency:
             ssl:
@@ -3300,37 +3299,6 @@ components:
       x-go-type: models.Filter
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
-    filter_sequence:
-      additionalProperties: false
-      description: |
-        Specifies in which order filters declared on the proxy should be executed
-        for the request or response path. Corresponds to the HAProxy filter-sequence directive.
-      properties:
-        direction:
-          enum:
-            - request
-            - response
-          type: string
-          x-display-name: Direction
-        filters:
-          items:
-            type: string
-          type: array
-          x-display-name: Filters
-        metadata:
-          additionalProperties:
-            type: object
-      required:
-        - direction
-        - filters
-      title: Filter Sequence
-      type: object
-    filter_sequences:
-      description: HAProxy filter sequences array (corresponds to filter-sequence directive)
-      items:
-        $ref: '#/components/schemas/filter_sequence'
-      title: Filter Sequences Array
-      type: array
     filters:
       description: HAProxy filters array (corresponds to filter directive)
       items:
@@ -3458,8 +3426,6 @@ components:
               $ref: '#/components/schemas/captures'
             filter_list:
               $ref: '#/components/schemas/filters'
-            filter_sequence_list:
-              $ref: '#/components/schemas/filter_sequences'
             force_be_switch_list:
               $ref: '#/components/schemas/force_be_switches'
             http_after_response_rule_list:
@@ -7893,6 +7859,9 @@ components:
         maxzlibmem:
           description: Maximum amount of RAM in megabytes per process usable by the zlib
           type: integer
+        no_memory_trimming:
+          description: Disables memory trimming (malloc_trim) on memory shortage or reload
+          type: boolean
         noepoll:
           description: Disable the use of the "epoll" event polling system on Linux
           type: boolean
@@ -8172,6 +8141,29 @@ components:
         zlib_mem_usage:
           nullable: true
           type: integer
+      type: object
+    profiling:
+      description: HAProxy runtime profiling state, as reported by "show profiling status".
+      properties:
+        memory:
+          description: Memory usage profiling mode ("set profiling memory {on|off}"). Reported as "off" when HAProxy was built without USE_MEMORY_PROFILING.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        tasks:
+          description: Per-task CPU profiling mode ("set profiling tasks {on|auto|off}").
+          enum:
+            - "on"
+            - "off"
+            - auto
+          type: string
+        tasks_active:
+          description: Whether per-task CPU profiling is currently collecting data. True for "on", and for "auto" once HAProxy has automatically enabled it.
+          readOnly: true
+          type: boolean
+          x-omitempty: false
+      title: Profiling
       type: object
     quic_initial_rule:
       additionalProperties: false
@@ -10547,6 +10539,10 @@ components:
           x-omitempty: true
         issuers_chain_path:
           type: string
+        load_extra_del_ext:
+          description: Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)
+          type: boolean
+          x-display-name: SSL Load Extra Del Ext
         load_extra_files:
           type: string
           x-display-name: SSL Load Extra Files
@@ -12561,10 +12557,6 @@ components:
       type: object
     tune_quic_options:
       properties:
-        frontend_conn_tx_buffers_limit:
-          nullable: true
-          type: integer
-          x-display-name: QUIC Frontend Connection TX Buffer Limit
         frontend_max_idle_timeout:
           minimum: 0
           nullable: true
