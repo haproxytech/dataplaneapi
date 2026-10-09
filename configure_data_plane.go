@@ -93,7 +93,7 @@ func GetCommandLineOptionsGroups() []cmdutils.CommandLineOptionsGroup {
 	}
 }
 
-func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) { //nolint:maintidx
+func configureAPI(maxBodySize int64) (http.Handler, func()) { //nolint:maintidx
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
 
@@ -267,7 +267,7 @@ func configureAPI(skipBasicAuth bool, maxBodySize int64) (http.Handler, func()) 
 	adpts = append(
 		adpts,
 		adapters.MaxBodySizeMiddleware(maxBodySize),
-		adapters.BasicAuthMiddleware(skipBasicAuth),
+		adapters.BasicAuthMiddleware(),
 		adapters.CrossOriginProtectionMiddleware(),
 		adapters.SpecDocsMiddleware(SwaggerJSON, "/v3", "HAProxy Data Plane API"),
 		cors.New(cors.Options{
