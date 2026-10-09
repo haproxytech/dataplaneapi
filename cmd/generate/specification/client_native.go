@@ -152,8 +152,8 @@ func rawSpecURL(modulePath, version string) (string, error) {
 // for a normal tag (e.g. v6.3.8) the version string itself is the ref.
 func gitRefFromVersion(version string) string {
 	if module.IsPseudoVersion(version) {
-		if i := strings.LastIndex(version, "-"); i >= 0 {
-			return version[i+1:]
+		if _, hash, ok := strings.CutLast(version, "-"); ok {
+			return hash
 		}
 	}
 	return version
