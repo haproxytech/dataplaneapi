@@ -202,8 +202,8 @@ func mergeComponents[V any](dst, src map[string]V, kind, source string) error {
 // "models.yaml#/components/responses/DefaultError" → "DefaultError"
 func componentBaseName(_ *openapi3.T, ref openapi3.ComponentRef) string {
 	s := ref.RefString()
-	if i := strings.LastIndex(s, "/"); i >= 0 {
-		return s[i+1:]
+	if _, name, ok := strings.CutLast(s, "/"); ok {
+		return name
 	}
 	return s
 }
