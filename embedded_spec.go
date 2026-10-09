@@ -27984,6 +27984,7 @@ func init() {
           }
         },
         "crt_list": {
+          "description": "All of the certificate list files delimited by ':' as mentioned as a crt-list on the bind line.",
           "type": "string",
           "x-dependency": {
             "ssl": {
@@ -36605,6 +36606,10 @@ func init() {
           "description": "Maximum amount of RAM in megabytes per process usable by the zlib",
           "type": "integer"
         },
+        "no_memory_trimming": {
+          "description": "Disables memory trimming (malloc_trim) on memory shortage or reload",
+          "type": "boolean"
+        },
         "noepoll": {
           "description": "Disable the use of the \"epoll\" event polling system on Linux",
           "type": "boolean"
@@ -40051,6 +40056,11 @@ func init() {
         },
         "issuers_chain_path": {
           "type": "string"
+        },
+        "load_extra_del_ext": {
+          "description": "Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)",
+          "type": "boolean",
+          "x-display-name": "SSL Load Extra Del Ext"
         },
         "load_extra_files": {
           "type": "string",
@@ -88278,6 +88288,7 @@ func init() {
           }
         },
         "crt_list": {
+          "description": "All of the certificate list files delimited by ':' as mentioned as a crt-list on the bind line.",
           "type": "string",
           "x-dependency": {
             "ssl": {
@@ -96716,6 +96727,10 @@ func init() {
           "description": "Maximum amount of RAM in megabytes per process usable by the zlib",
           "type": "integer"
         },
+        "no_memory_trimming": {
+          "description": "Disables memory trimming (malloc_trim) on memory shortage or reload",
+          "type": "boolean"
+        },
         "noepoll": {
           "description": "Disable the use of the \"epoll\" event polling system on Linux",
           "type": "boolean"
@@ -100105,6 +100120,11 @@ func init() {
         },
         "issuers_chain_path": {
           "type": "string"
+        },
+        "load_extra_del_ext": {
+          "description": "Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)",
+          "type": "boolean",
+          "x-display-name": "SSL Load Extra Del Ext"
         },
         "load_extra_files": {
           "type": "string",
