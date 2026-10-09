@@ -18,6 +18,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"path"
 	"syscall"
@@ -204,15 +205,7 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 
 	// Applies when the Authorization header is set with the Basic scheme
 	api.BasicAuthAuth = configuration.AuthenticateUser
-	api.BasicAuthenticator = func(authentication security.UserPassAuthentication) runtime.Authenticator {
-		// if mTLS is enabled with backing Certificate Authority, skipping basic authentication
-		if len(server.TLSCACertificate) > 0 && server.TLSPort > 0 {
-			return runtime.AuthenticatorFunc(func(i any) (bool, any, error) {
-				return true, "", nil
-			})
-		}
-		return security.BasicAuthRealm("", authentication)
-	}
+	api.BasicAuthenticator = basicAuthenticator
 
 	dataplaneapi.ContextHandler.Init()
 	go func() {
@@ -259,4 +252,20 @@ func parseClusterLogTargets(cfg *configuration.Configuration) []*models.ClusterL
 		return cfg.Cluster.ClusterLogTargets
 	}
 	return []*models.ClusterLogTarget{}
+}
+
+// basicAuthenticator enforces HTTP Basic authentication on every request,
+// except requests that arrived over TLS with a client certificate verified
+// against the configured CA (mTLS). The HTTP and Unix listeners share the
+// handler and never set r.TLS, so they always require credentials. The
+// verified leaf certificate is the principal: go-openapi treats a zero-value
+// principal as unauthenticated.
+func basicAuthenticator(authentication security.UserPassAuthentication) runtime.Authenticator {
+	basic := security.BasicAuthRealm("", authentication)
+	return security.HTTPAuthenticator(func(r *http.Request) (bool, any, error) {
+		if r.TLS != nil && len(r.TLS.VerifiedChains) > 0 {
+			return true, r.TLS.VerifiedChains[0][0], nil
+		}
+		return basic.Authenticate(r)
+	})
 }
