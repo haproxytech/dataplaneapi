@@ -16,27 +16,140 @@
 package adapters
 
 import (
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
+	"math/big"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
-func TestBasicAuthMiddlewareSkip(t *testing.T) {
-	called := false
-	h := BasicAuthMiddleware(true)(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		called = true
+// selfSignedCert returns one ECDSA P-256 certificate usable as CA, server and
+// client certificate, and a pool containing it.
+func selfSignedCert(t *testing.T) (tls.Certificate, *x509.CertPool) {
+	t.Helper()
+	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		t.Fatalf("generate key: %v", err)
+	}
+	tmpl := &x509.Certificate{
+		SerialNumber:          big.NewInt(1),
+		NotBefore:             time.Now().Add(-time.Hour),
+		NotAfter:              time.Now().Add(time.Hour),
+		IsCA:                  true,
+		BasicConstraintsValid: true,
+		IPAddresses:           []net.IP{net.IPv4(127, 0, 0, 1)},
+		KeyUsage:              x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
+		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth, x509.ExtKeyUsageClientAuth},
+	}
+	der, err := x509.CreateCertificate(rand.Reader, tmpl, tmpl, &key.PublicKey, key)
+	if err != nil {
+		t.Fatalf("create certificate: %v", err)
+	}
+	leaf, err := x509.ParseCertificate(der)
+	if err != nil {
+		t.Fatalf("parse certificate: %v", err)
+	}
+	pool := x509.NewCertPool()
+	pool.AddCert(leaf)
+	return tls.Certificate{Certificate: [][]byte{der}, PrivateKey: key, Leaf: leaf}, pool
+}
+
+// TestBasicAuthMiddlewareSharedHandlerListeners reproduces the report: one
+// handler is shared by a plain HTTP listener and an mTLS HTTPS listener, so
+// Basic auth may be skipped only for requests carrying a verified client cert.
+func TestBasicAuthMiddlewareSharedHandlerListeners(t *testing.T) {
+	cert, pool := selfSignedCert(t)
+	h := BasicAuthMiddleware()(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	}))
 
-	rec := httptest.NewRecorder()
-	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v3/info", nil))
+	plain := httptest.NewServer(h)
+	t.Cleanup(plain.Close)
+	mtls := httptest.NewUnstartedServer(h)
+	mtls.TLS = &tls.Config{Certificates: []tls.Certificate{cert}, ClientCAs: pool, ClientAuth: tls.RequireAndVerifyClientCert}
+	mtls.StartTLS()
+	t.Cleanup(mtls.Close)
+	mtlsClient := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{RootCAs: pool, Certificates: []tls.Certificate{cert}}}}
 
-	if !called {
-		t.Error("handler was not called with skip=true")
+	const path = "/v3/services/haproxy/configuration/raw"
+	tests := []struct {
+		name     string
+		url      string
+		client   *http.Client
+		withAuth bool
+		want     int
+	}{
+		{name: "plain HTTP, no credentials", url: plain.URL, client: plain.Client(), want: http.StatusUnauthorized},
+		{name: "plain HTTP, wrong credentials", url: plain.URL, client: plain.Client(), withAuth: true, want: http.StatusUnauthorized},
+		{name: "mTLS HTTPS with verified client certificate, no credentials", url: mtls.URL, client: mtlsClient, want: http.StatusOK},
 	}
-	if rec.Code != http.StatusOK {
-		t.Errorf("status = %d, want 200", rec.Code)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, tt.url+path, nil)
+			if err != nil {
+				t.Fatalf("new request: %v", err)
+			}
+			if tt.withAuth {
+				req.SetBasicAuth("nosuchuser", "nosuchpass")
+			}
+			resp, err := tt.client.Do(req)
+			if err != nil {
+				t.Fatalf("request: %v", err)
+			}
+			resp.Body.Close()
+			if resp.StatusCode != tt.want {
+				t.Errorf("status = %d, want %d", resp.StatusCode, tt.want)
+			}
+		})
+	}
+}
+
+func TestBasicAuthMiddlewareMTLS(t *testing.T) {
+	tests := []struct {
+		name       string
+		tls        *tls.ConnectionState
+		wantCalled bool
+		wantCode   int
+	}{
+		{
+			name:       "verified client certificate",
+			tls:        &tls.ConnectionState{VerifiedChains: [][]*x509.Certificate{{&x509.Certificate{}}}},
+			wantCalled: true,
+			wantCode:   http.StatusOK,
+		},
+		{
+			name:     "TLS without verified client certificate",
+			tls:      &tls.ConnectionState{},
+			wantCode: http.StatusUnauthorized,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			called := false
+			h := BasicAuthMiddleware()(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				called = true
+				w.WriteHeader(http.StatusOK)
+			}))
+
+			req := httptest.NewRequest(http.MethodGet, "/v3/info", nil)
+			req.TLS = tt.tls
+			rec := httptest.NewRecorder()
+			h.ServeHTTP(rec, req)
+
+			if called != tt.wantCalled {
+				t.Errorf("handler called = %v, want %v", called, tt.wantCalled)
+			}
+			if rec.Code != tt.wantCode {
+				t.Errorf("status = %d, want %d", rec.Code, tt.wantCode)
+			}
+		})
 	}
 }
 
@@ -53,7 +166,7 @@ func TestBasicAuthMiddlewareUnauthorized(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			called := false
-			h := BasicAuthMiddleware(false)(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			h := BasicAuthMiddleware()(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				called = true
 			}))
 
