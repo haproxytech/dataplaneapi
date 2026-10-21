@@ -39,6 +39,9 @@ func serve(comm *Commands, conn net.Conn) {
 		return
 	}
 	c, ok := comm.Get(cmd[0])
+	if len(cmd) < 1 {
+		cmd = []string{"help"}
+	}
 	if cmd[0] == "exit" {
 		return
 	}
