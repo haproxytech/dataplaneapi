@@ -63,6 +63,17 @@ components:
           description: Configuration file version
           schema:
             type: string
+    TooManyRequests:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+      description: Too many open transactions
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
   schemas:
     acl:
       additionalProperties: false
@@ -33332,16 +33343,7 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            text/plain:
-              schema:
-                type: string
-          description: Bad request
-          headers:
-            Configuration-Version:
-              description: Configuration file version
-              schema:
-                type: string
+          $ref: '#/components/responses/BadRequest'
         default:
           $ref: '#/components/responses/DefaultError'
       summary: Push new haproxy configuration
@@ -37611,16 +37613,7 @@ paths:
                 $ref: '#/components/schemas/spoe_transaction'
           description: Transaction started
         "429":
-          content:
-            application/json:
-              schema:
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
-                type: object
-          description: Too many open transactions
+          $ref: '#/components/responses/TooManyRequests'
         default:
           $ref: '#/components/responses/DefaultError'
       summary: Start a new transaction
@@ -37785,11 +37778,7 @@ paths:
                 $ref: '#/components/schemas/native_stats'
           description: Success
         "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/native_stats'
-          description: Internal Server Error
+          $ref: '#/components/responses/DefaultError'
         default:
           $ref: '#/components/responses/DefaultError'
       summary: Gets stats
@@ -38660,16 +38649,7 @@ paths:
               schema:
                 type: string
         "429":
-          content:
-            application/json:
-              schema:
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
-                type: object
-          description: Too many open transactions
+          $ref: '#/components/responses/TooManyRequests'
         default:
           $ref: '#/components/responses/DefaultError'
       summary: Start a new transaction

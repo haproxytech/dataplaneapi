@@ -48,10 +48,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/native_stats'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/native_stats'
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
         'default':
           $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
