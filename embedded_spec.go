@@ -11981,7 +11981,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -12232,7 +12232,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -14771,7 +14771,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -15741,7 +15741,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -16491,7 +16491,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -16745,7 +16745,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -17570,7 +17570,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -18376,7 +18376,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -18823,7 +18823,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -19648,7 +19648,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -20056,16 +20056,7 @@ func init() {
             }
           },
           "default": {
-            "description": "General Error",
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
+            "$ref": "#/responses/DefaultError"
           }
         }
       },
@@ -20171,28 +20162,10 @@ func init() {
             }
           },
           "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
+            "$ref": "#/responses/BadRequest"
           },
           "default": {
-            "description": "General Error",
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
+            "$ref": "#/responses/DefaultError"
           }
         }
       }
@@ -21381,7 +21354,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -21575,7 +21548,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -24955,22 +24928,7 @@ func init() {
             }
           },
           "429": {
-            "description": "Too many open transactions",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
-              }
-            }
+            "$ref": "#/responses/TooManyRequests"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -25200,10 +25158,7 @@ func init() {
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/native_stats"
-            }
+            "$ref": "#/responses/DefaultError"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -26265,22 +26220,7 @@ func init() {
             }
           },
           "429": {
-            "description": "Too many open transactions",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
-              }
-            }
+            "$ref": "#/responses/TooManyRequests"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -43044,6 +42984,18 @@ func init() {
     },
     "NotFound": {
       "description": "The specified resource was not found",
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "string",
+          "description": "Configuration file version"
+        }
+      }
+    },
+    "TooManyRequests": {
+      "description": "Too many open transactions",
       "schema": {
         "$ref": "#/definitions/error"
       },
@@ -62694,7 +62646,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -63104,7 +63056,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -67276,7 +67228,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -68826,7 +68778,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -70036,7 +69988,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -70458,7 +70410,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -71782,7 +71734,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -73033,7 +72985,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -73754,7 +73706,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -75118,7 +75070,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -75776,7 +75728,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             },
             "headers": {
               "Configuration-Version": {
@@ -75899,7 +75851,7 @@ func init() {
           "400": {
             "description": "Bad request",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             },
             "headers": {
               "Configuration-Version": {
@@ -75911,7 +75863,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             },
             "headers": {
               "Configuration-Version": {
@@ -77868,7 +77820,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -78166,7 +78118,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -83524,18 +83476,12 @@ func init() {
           "429": {
             "description": "Too many open transactions",
             "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
               }
             }
           },
@@ -83894,9 +83840,15 @@ func init() {
             }
           },
           "500": {
-            "description": "Internal Server Error",
+            "description": "General Error",
             "schema": {
-              "$ref": "#/definitions/native_stats"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -85561,18 +85513,12 @@ func init() {
           "429": {
             "description": "Too many open transactions",
             "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
               }
             }
           },
@@ -103059,6 +103005,18 @@ func init() {
     },
     "NotFound": {
       "description": "The specified resource was not found",
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "string",
+          "description": "Configuration file version"
+        }
+      }
+    },
+    "TooManyRequests": {
+      "description": "Too many open transactions",
       "schema": {
         "$ref": "#/definitions/error"
       },
