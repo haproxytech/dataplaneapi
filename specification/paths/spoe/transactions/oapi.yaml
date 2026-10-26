@@ -77,16 +77,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/spoe_transaction'
         '429':
-          description: Too many open transactions
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/TooManyRequests'
         'default':
           $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
   /services/haproxy/spoe/spoe_files/{parent_name}/transactions/{id}:

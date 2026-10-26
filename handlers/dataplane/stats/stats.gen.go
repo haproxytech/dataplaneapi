@@ -269,17 +269,17 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 // const string: with thousands of chunks the chained `+` fold is several
 // times slower for the Go compiler than parsing a slice literal.
 var swaggerSpec = []string{
-	"vFVBb9Q8EP0r1nzfASTvplDBIbeKotILVKrEpVqtXGeSuCS2sSerrqr8d+RxUnZZtqKo4rTe5Pm95+eZ",
-	"yQNo13tn0VKE8gECRu9sRP4TPWpTG63IOLvuXYVdXGvX986uH4Hz83Os1dDRxxBcSJu1s4SW0lJ5300s",
-	"xV10lrl1i71Kq/8D1lDCf8VPJ0V+G4tnOUCWHsdRQoVRB+PTLijhAi0G1YnsTUKLqsLAR/zgbG2aIbDA",
-	"4iuGaLK/fYY9mKhNh2IzYeXOUWjrEUqIFIxtkpNxnF+zmlVkNriOpCju4N3tHWoCCfeLxi2mh/lQy8+8",
-	"5Zp37AAWpvcucLpeUQslNIba4XapXV+0ygd3vyXUbaE7g5YWWbnYvC8yL7Cz56f7Z6bnoF/SbjJsbO3Y",
-	"gqEuyX06u0o7xbkiJa46ZVGcXV2KhZjzmi+pBBglOI9WeQMlnC5Plm9Ashm+iSJi2BiNcXZT8CUV2UhC",
-	"NEiHdXGBRMY2gsGiDq4X1KKYfC2BNXPVXFYZP1vzKqgeievw5lfeLxyuSNEJcqJBmiVcEK+cReHqJJda",
-	"rJLiVulvvEinwPAaUlRQwvcBwxYkWNWnuPiSdusV7dBDeQMzE0iYqBKMuWAlD8paHrGbZA7sHvHCP0/1",
-	"zjERrwLaI1pSGCu0isi3kCtUmCjUFMwRL5nyKTeplCv0aCu0epsATLGcYZl9HFdyf4K+PTl5sVm4Nzx+",
-	"M+WuB60xxmT23T+UvbSEwapOXHMI05BlGH8QjvE/5lT8/WeGh9jQ9ypsc3PFXAsggVSTGgtyu63yJGaH",
-	"ud+G0EEJxeYUxtX4YwA=",
+	"tJRdb9M8FMe/inWe5wIkty5McJG7iaGxG5g0iZupqjznJPGIX7CdatWU74583IyWkYmhcdU0Of7/fz5v",
+	"96Cc8c6iTRGqewgYvbMR6U/0qHSjlUza2Y1xNfZxo5wxzm4eAqf3Z9jIoU8fQ3AhH1bOJrQpP0rv+72K",
+	"uI3Okrbq0Mj89H/ABir4T/wkEeVrFM8iQLIex5FDjVEF7fMpqOAcLQbZs8LGoUNZY6ArfnC20e0QyGDx",
+	"FUPUhe9Y4SiMNbpHtt3H8oOrpJ1HqCCmoG2bScZx+kxuVia9xU1MMsWDeHdziyoBh7tF6xb7l+VSy890",
+	"5IpOHAQstPEuUHa9TB1U0OrUDTdL5YzopA/ubpdQdUL1Gm1aFGexfS+KLhDZ87P7Z9BTol8SNwNr2zhC",
+	"0KnPdp9OL/NJdiaTZJe9tMhOLy/Ygk35mopUAYwcnEcrvYYKTpar5RvgBEOVEBHDViuME42gIokCkiNa",
+	"TI/74hxT0rZlFMya4AxLHbI91xLIs3TNRV3iJzQvgzSYqA+vf9X9QsllOXUsOdZimixcYK+cReaabJdH",
+	"rObsRqpv9JBvgeE15FRBBd8HDDvgYKXJ6aIiHfYr2sFAdQ2TEnDYS+Uw0oI1f9TWfAY32zzCnWGhn6dm",
+	"Z87Ey4B2xoszbZmSEakKpUOZjkzuEzPDUiSfosmtXKNHW6NVuxxAEssprKiP45ofb9C3q9WL7cKj5fGb",
+	"LXc1KIUxZth3q9Wc2gOe+PvtTtb0/5+65A01GCPDrkxOLIUGDkm2eWqgzNK6rFmqQRmmIfRQgdiewLge",
+	"fwwA",
 }
 
 // decodeSpec returns the embedded OpenAPI spec as raw JSON bytes,

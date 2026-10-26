@@ -68,3 +68,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/error'
+    TooManyRequests:
+      description: Too many open transactions
+      headers:
+        Configuration-Version:
+          description: Configuration file version
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
