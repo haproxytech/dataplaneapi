@@ -68,16 +68,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/transaction'
         '429':
-          description: Too many open transactions
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/TooManyRequests'
         'default':
           $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
   /services/haproxy/transactions/{id}:

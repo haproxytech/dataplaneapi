@@ -146,6 +146,6 @@ paths:
         '200':
           description: refresh activated
         '403':
-          description: refresh not possible
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/Forbidden'
         'default':
           $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'

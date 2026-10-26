@@ -144,16 +144,7 @@ paths:
               schema:
                 type: string
         '400':
-          description: Bad request
-          headers:
-            Configuration-Version:
-              description: Configuration file version
-              schema:
-                type: string
-          content:
-            text/plain:
-              schema:
-                type: string
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
         'default':
           $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
       x-codegen-request-body-name: data
