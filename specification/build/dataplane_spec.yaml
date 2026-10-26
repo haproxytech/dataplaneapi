@@ -1926,8 +1926,16 @@ components:
         alias:
           description: Certificate alias
           type: string
+        bits:
+          description: Number of bits used with generate-dummy and the RSA key type (default 2048)
+          nullable: true
+          type: integer
+          x-omitempty: true
         certificate:
           description: Certificate filename
+          type: string
+        curves:
+          description: Curves used with generate-dummy and the ECDSA key type (default P-384)
           type: string
         domains:
           description: List of domains used to generate the certificate with ACME
@@ -1936,11 +1944,36 @@ components:
           type: array
           x-go-name: Domains
           x-omitempty: true
+        generate_dummy:
+          description: Generate a private key and self-signed certificate at configuration parsing time (default disabled)
+          enum:
+            - enabled
+            - disabled
+          type: string
+        ips:
+          description: List of IP addresses included as IP SANs in the ACME certificate
+          items:
+            type: string
+          type: array
+          x-go-name: IPs
+          x-omitempty: true
         issuer:
           description: OCSP issuer filename
           type: string
+        jwt:
+          description: Allow this certificate to be used for JWT validation or decryption (default disabled)
+          enum:
+            - enabled
+            - disabled
+          type: string
         key:
           description: Private key filename
+          type: string
+        keytype:
+          description: Private key type used with generate-dummy (default RSA)
+          enum:
+            - RSA
+            - ECDSA
           type: string
         metadata:
           additionalProperties:
@@ -4098,6 +4131,8 @@ components:
           type: boolean
         insecure_setuid_wanted:
           type: boolean
+        jwt_options:
+          $ref: '#/components/schemas/jwt_options'
         limited_quic:
           type: boolean
         localpeer:
@@ -6633,6 +6668,21 @@ components:
       x-go-type: models.Info
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
+    jwt_options:
+      properties:
+        allow_none_alg:
+          description: Allow unsigned JWTs using the none algorithm in the jwt_verify converter.
+          type: boolean
+          x-display-name: JWT Allow None Algorithm
+        decrypt_alg_list:
+          description: Colon-separated list of allowed JWT decryption algorithms; supports ALL and exclusions prefixed with !.
+          type: string
+          x-display-name: JWT Decrypt Algorithm List
+        decrypt_enc_list:
+          description: Colon-separated list of allowed JWT encryption algorithms; supports ALL and exclusions prefixed with !.
+          type: string
+          x-display-name: JWT Decrypt Encryption List
+      type: object
     log_forward:
       allOf:
         - $ref: '#/components/schemas/log_forward_base'
@@ -12444,6 +12494,7 @@ components:
           enum:
             - enabled
             - disabled
+            - full
           type: string
           x-display-name: Share Idle Connections
         idletimer:

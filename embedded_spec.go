@@ -11813,7 +11813,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -12064,7 +12064,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -12701,7 +12701,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -14857,7 +14857,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -15827,7 +15827,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -17462,7 +17462,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -17716,7 +17716,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -18541,7 +18541,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -19347,7 +19347,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -19794,7 +19794,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -20619,7 +20619,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -20779,16 +20779,7 @@ func init() {
             }
           },
           "default": {
-            "description": "General Error",
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
+            "$ref": "#/responses/DefaultError"
           }
         }
       },
@@ -20886,28 +20877,10 @@ func init() {
             }
           },
           "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
+            "$ref": "#/responses/BadRequest"
           },
           "default": {
-            "description": "General Error",
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
+            "$ref": "#/responses/DefaultError"
           }
         }
       }
@@ -22096,7 +22069,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -22290,7 +22263,7 @@ func init() {
             }
           },
           "404": {
-            "$ref": "#/responses/AlreadyExists"
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -23514,10 +23487,7 @@ func init() {
             }
           },
           "default": {
-            "description": "General Error",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/responses/DefaultError"
           }
         }
       }
@@ -23570,10 +23540,7 @@ func init() {
             }
           },
           "default": {
-            "description": "General Error",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/responses/DefaultError"
           }
         }
       }
@@ -25841,22 +25808,7 @@ func init() {
             }
           },
           "429": {
-            "description": "Too many open transactions",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
-              }
-            }
+            "$ref": "#/responses/TooManyRequests"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -26086,10 +26038,7 @@ func init() {
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/native_stats"
-            }
+            "$ref": "#/responses/DefaultError"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -27151,22 +27100,7 @@ func init() {
             }
           },
           "429": {
-            "description": "Too many open transactions",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
-              }
-            }
+            "$ref": "#/responses/TooManyRequests"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -29855,10 +29789,20 @@ func init() {
           "description": "Certificate alias",
           "type": "string"
         },
+        "bits": {
+          "description": "Number of bits used with generate-dummy and the RSA key type (default 2048)",
+          "type": "integer",
+          "x-nullable": true,
+          "x-omitempty": true
+        },
         "certificate": {
           "description": "Certificate filename",
           "type": "string",
           "x-nullable": false
+        },
+        "curves": {
+          "description": "Curves used with generate-dummy and the ECDSA key type (default P-384)",
+          "type": "string"
         },
         "domains": {
           "description": "List of domains used to generate the certificate with ACME",
@@ -29869,13 +29813,46 @@ func init() {
           "x-go-name": "Domains",
           "x-omitempty": true
         },
+        "generate_dummy": {
+          "description": "Generate a private key and self-signed certificate at configuration parsing time (default disabled)",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ips": {
+          "description": "List of IP addresses included as IP SANs in the ACME certificate",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "IPs",
+          "x-omitempty": true
+        },
         "issuer": {
           "description": "OCSP issuer filename",
           "type": "string"
         },
+        "jwt": {
+          "description": "Allow this certificate to be used for JWT validation or decryption (default disabled)",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "key": {
           "description": "Private key filename",
           "type": "string"
+        },
+        "keytype": {
+          "description": "Private key type used with generate-dummy (default RSA)",
+          "type": "string",
+          "enum": [
+            "RSA",
+            "ECDSA"
+          ]
         },
         "metadata": {
           "additionalProperties": {
@@ -32726,6 +32703,9 @@ func init() {
         },
         "insecure_setuid_wanted": {
           "type": "boolean"
+        },
+        "jwt_options": {
+          "$ref": "#/definitions/jwt_options"
         },
         "limited_quic": {
           "type": "boolean"
@@ -36155,6 +36135,26 @@ func init() {
           "os_string": "Linux 4.15.0-58-generic #64-Ubuntu SMP Tue Aug 6 11:12:41 UTC 2019",
           "time": 1566401525,
           "uptime": 87340
+        }
+      }
+    },
+    "jwt_options": {
+      "type": "object",
+      "properties": {
+        "allow_none_alg": {
+          "description": "Allow unsigned JWTs using the none algorithm in the jwt_verify converter.",
+          "type": "boolean",
+          "x-display-name": "JWT Allow None Algorithm"
+        },
+        "decrypt_alg_list": {
+          "description": "Colon-separated list of allowed JWT decryption algorithms; supports ALL and exclusions prefixed with !.",
+          "type": "string",
+          "x-display-name": "JWT Decrypt Algorithm List"
+        },
+        "decrypt_enc_list": {
+          "description": "Colon-separated list of allowed JWT encryption algorithms; supports ALL and exclusions prefixed with !.",
+          "type": "string",
+          "x-display-name": "JWT Decrypt Encryption List"
         }
       }
     },
@@ -43746,7 +43746,8 @@ func init() {
           "type": "string",
           "enum": [
             "enabled",
-            "disabled"
+            "disabled",
+            "full"
           ],
           "x-display-name": "Share Idle Connections"
         },
@@ -44310,6 +44311,18 @@ func init() {
     },
     "NotFound": {
       "description": "The specified resource was not found",
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "string",
+          "description": "Configuration file version"
+        }
+      }
+    },
+    "TooManyRequests": {
+      "description": "Too many open transactions",
       "schema": {
         "$ref": "#/definitions/error"
       },
@@ -63717,7 +63730,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -64127,7 +64140,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -65179,7 +65192,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -68721,7 +68734,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -70271,7 +70284,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -72931,7 +72944,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -73353,7 +73366,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -74677,7 +74690,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -75928,7 +75941,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -76649,7 +76662,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -78013,7 +78026,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -78280,7 +78293,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             },
             "headers": {
               "Configuration-Version": {
@@ -78395,7 +78408,7 @@ func init() {
           "400": {
             "description": "Bad request",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             },
             "headers": {
               "Configuration-Version": {
@@ -78407,7 +78420,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             },
             "headers": {
               "Configuration-Version": {
@@ -80364,7 +80377,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -80662,7 +80675,7 @@ func init() {
             }
           },
           "404": {
-            "description": "The specified resource already exists",
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -82630,7 +82643,13 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -82686,7 +82705,13 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -86218,18 +86243,12 @@ func init() {
           "429": {
             "description": "Too many open transactions",
             "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
               }
             }
           },
@@ -86588,9 +86607,15 @@ func init() {
             }
           },
           "500": {
-            "description": "Internal Server Error",
+            "description": "General Error",
             "schema": {
-              "$ref": "#/definitions/native_stats"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -88255,18 +88280,12 @@ func init() {
           "429": {
             "description": "Too many open transactions",
             "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "code": 429,
-                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
               }
             }
           },
@@ -91917,10 +91936,20 @@ func init() {
           "description": "Certificate alias",
           "type": "string"
         },
+        "bits": {
+          "description": "Number of bits used with generate-dummy and the RSA key type (default 2048)",
+          "type": "integer",
+          "x-nullable": true,
+          "x-omitempty": true
+        },
         "certificate": {
           "description": "Certificate filename",
           "type": "string",
           "x-nullable": false
+        },
+        "curves": {
+          "description": "Curves used with generate-dummy and the ECDSA key type (default P-384)",
+          "type": "string"
         },
         "domains": {
           "description": "List of domains used to generate the certificate with ACME",
@@ -91931,13 +91960,46 @@ func init() {
           "x-go-name": "Domains",
           "x-omitempty": true
         },
+        "generate_dummy": {
+          "description": "Generate a private key and self-signed certificate at configuration parsing time (default disabled)",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ips": {
+          "description": "List of IP addresses included as IP SANs in the ACME certificate",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "IPs",
+          "x-omitempty": true
+        },
         "issuer": {
           "description": "OCSP issuer filename",
           "type": "string"
         },
+        "jwt": {
+          "description": "Allow this certificate to be used for JWT validation or decryption (default disabled)",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "key": {
           "description": "Private key filename",
           "type": "string"
+        },
+        "keytype": {
+          "description": "Private key type used with generate-dummy (default RSA)",
+          "type": "string",
+          "enum": [
+            "RSA",
+            "ECDSA"
+          ]
         },
         "metadata": {
           "additionalProperties": {
@@ -94726,6 +94788,9 @@ func init() {
         },
         "insecure_setuid_wanted": {
           "type": "boolean"
+        },
+        "jwt_options": {
+          "$ref": "#/definitions/jwt_options"
         },
         "limited_quic": {
           "type": "boolean"
@@ -98094,6 +98159,26 @@ func init() {
           "os_string": "Linux 4.15.0-58-generic #64-Ubuntu SMP Tue Aug 6 11:12:41 UTC 2019",
           "time": 1566401525,
           "uptime": 87340
+        }
+      }
+    },
+    "jwt_options": {
+      "type": "object",
+      "properties": {
+        "allow_none_alg": {
+          "description": "Allow unsigned JWTs using the none algorithm in the jwt_verify converter.",
+          "type": "boolean",
+          "x-display-name": "JWT Allow None Algorithm"
+        },
+        "decrypt_alg_list": {
+          "description": "Colon-separated list of allowed JWT decryption algorithms; supports ALL and exclusions prefixed with !.",
+          "type": "string",
+          "x-display-name": "JWT Decrypt Algorithm List"
+        },
+        "decrypt_enc_list": {
+          "description": "Colon-separated list of allowed JWT encryption algorithms; supports ALL and exclusions prefixed with !.",
+          "type": "string",
+          "x-display-name": "JWT Decrypt Encryption List"
         }
       }
     },
@@ -105552,7 +105637,8 @@ func init() {
           "type": "string",
           "enum": [
             "enabled",
-            "disabled"
+            "disabled",
+            "full"
           ],
           "x-display-name": "Share Idle Connections"
         },
@@ -106121,6 +106207,18 @@ func init() {
     },
     "NotFound": {
       "description": "The specified resource was not found",
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "string",
+          "description": "Configuration file version"
+        }
+      }
+    },
+    "TooManyRequests": {
+      "description": "Too many open transactions",
       "schema": {
         "$ref": "#/definitions/error"
       },
