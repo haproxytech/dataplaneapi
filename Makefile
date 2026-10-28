@@ -1,10 +1,19 @@
 DATAPLANEAPI_PATH?=$(shell pwd)
+ifeq ($(wildcard .git),)
+GIT_REPO?=	unknown
+GIT_HEAD_COMMIT=unknown
+GIT_LAST_TAG=	unknown
+GIT_TAG_COMMIT=	unknown
+GIT_MODIFIED1=	unknown
+GIT_MODIFIED2=	unknown
+else
 GIT_REPO?=$(shell git config --get remote.origin.url)
 GIT_HEAD_COMMIT=$(shell git rev-parse --short HEAD)
 GIT_LAST_TAG=$(shell git describe --abbrev=0 --tags)
 GIT_TAG_COMMIT=$(shell git rev-parse --short ${GIT_LAST_TAG})
 GIT_MODIFIED1=$(shell git diff "${GIT_HEAD_COMMIT}" "${GIT_TAG_COMMIT}" --quiet || echo .dev)
 GIT_MODIFIED2=$(shell git diff --quiet || echo .dirty)
+endif
 GIT_MODIFIED=${GIT_MODIFIED1}${GIT_MODIFIED2}
 SWAGGER_VERSION=${shell curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $$2}'}
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
