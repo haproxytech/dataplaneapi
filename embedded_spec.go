@@ -27491,6 +27491,23 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "eab_key_id": {
+          "description": "Path where the EAB key id is stored",
+          "type": "string"
+        },
+        "eab_mac_alg": {
+          "description": "MAC algorithm used for EAB signing",
+          "type": "string",
+          "enum": [
+            "HS256",
+            "HS384",
+            "HS512"
+          ]
+        },
+        "eab_mac_key": {
+          "description": "Path where the EAB MAC key is stored",
+          "type": "string"
+        },
         "keytype": {
           "description": "Type of key to generate",
           "type": "string",
@@ -43874,6 +43891,12 @@ func init() {
         "stick_counters": {
           "type": "integer",
           "x-display-name": "Number of stick-counters",
+          "x-nullable": true
+        },
+        "streams_elasticity": {
+          "description": "Target ratio of streams per frontend connection relative to the maximum number of concurrent connections",
+          "type": "integer",
+          "x-display-name": "Streams Elasticity",
           "x-nullable": true
         },
         "takeover_other_tg_connections": {
@@ -89688,6 +89711,23 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "eab_key_id": {
+          "description": "Path where the EAB key id is stored",
+          "type": "string"
+        },
+        "eab_mac_alg": {
+          "description": "MAC algorithm used for EAB signing",
+          "type": "string",
+          "enum": [
+            "HS256",
+            "HS384",
+            "HS512"
+          ]
+        },
+        "eab_mac_key": {
+          "description": "Path where the EAB MAC key is stored",
+          "type": "string"
+        },
         "keytype": {
           "description": "Type of key to generate",
           "type": "string",
@@ -105767,6 +105807,13 @@ func init() {
         "stick_counters": {
           "type": "integer",
           "x-display-name": "Number of stick-counters",
+          "x-nullable": true
+        },
+        "streams_elasticity": {
+          "description": "Target ratio of streams per frontend connection relative to the maximum number of concurrent connections",
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Streams Elasticity",
           "x-nullable": true
         },
         "takeover_other_tg_connections": {

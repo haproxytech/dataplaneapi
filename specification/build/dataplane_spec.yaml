@@ -250,6 +250,19 @@ components:
           type: integer
           x-default-unit: s
           x-duration: true
+        eab_key_id:
+          description: Path where the EAB key id is stored
+          type: string
+        eab_mac_alg:
+          description: MAC algorithm used for EAB signing
+          enum:
+            - HS256
+            - HS384
+            - HS512
+          type: string
+        eab_mac_key:
+          description: Path where the EAB MAC key is stored
+          type: string
         keytype:
           description: Type of key to generate
           enum:
@@ -12609,6 +12622,12 @@ components:
           nullable: true
           type: integer
           x-display-name: Number of stick-counters
+        streams_elasticity:
+          description: Target ratio of streams per frontend connection relative to the maximum number of concurrent connections
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: Streams Elasticity
         takeover_other_tg_connections:
           enum:
             - none
