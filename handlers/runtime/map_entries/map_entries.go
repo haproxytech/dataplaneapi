@@ -15,10 +15,15 @@
 package map_entries
 
 import (
+	"errors"
 	"net/http"
+	"path/filepath"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	client_native "github.com/haproxytech/client-native/v6"
+	"github.com/haproxytech/client-native/v6/models"
+	"github.com/haproxytech/client-native/v6/storage"
 
 	config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
@@ -92,6 +97,90 @@ func (h *HandlerImpl) AddMapEntry(w http.ResponseWriter, r *http.Request, parent
 		}
 	}
 	respond.JSON(w, http.StatusCreated, &data)
+}
+
+func (h *HandlerImpl) ReplaceRuntimeMapEntries(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceRuntimeMapEntriesParams) {
+	var data ReplaceRuntimeMapEntriesJSONRequestBody
+	if !respond.DecodeBody(r, w, &data) {
+		return
+	}
+	contents, err := serializeMapEntries(data)
+	if err != nil {
+		respond.BadRequest(w, err.Error())
+		return
+	}
+
+	rt, err := h.Client.Runtime()
+	if err != nil {
+		respond.Error(w, err)
+		return
+	}
+
+	var storageName string
+	var st storage.Storage
+	if params.ForceSync {
+		m, err := rt.GetMap(parentName)
+		if err != nil {
+			respond.RuntimeError(w, err)
+			return
+		}
+		mapsDir, err := rt.GetMapsDir()
+		if err != nil {
+			respond.RuntimeError(w, err)
+			return
+		}
+		storageName, err = managedMapStorageName(m, mapsDir)
+		if err != nil {
+			respond.BadRequest(w, err.Error())
+			return
+		}
+		st, err = h.Client.MapStorage()
+		if err != nil {
+			respond.Error(w, err)
+			return
+		}
+	}
+
+	if err = rt.ReplaceMapPayload(parentName, data); err != nil {
+		respond.RuntimeError(w, err)
+		return
+	}
+
+	if params.ForceSync {
+		if _, err = st.Replace(storageName, contents); err != nil {
+			respond.RuntimeError(w, err)
+			return
+		}
+	}
+
+	respond.JSON(w, http.StatusOK, data)
+}
+
+func managedMapStorageName(m *models.Map, mapsDir string) (string, error) {
+	if m == nil || m.File == "" || mapsDir == "" {
+		return "", errors.New("cannot identify managed storage for runtime map")
+	}
+	relative, err := filepath.Rel(filepath.Clean(mapsDir), filepath.Clean(m.File))
+	if err != nil || relative == "." || filepath.IsAbs(relative) ||
+		relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) ||
+		filepath.Base(relative) != relative {
+		return "", errors.New("cannot force sync an unmanaged runtime map")
+	}
+	return relative, nil
+}
+
+func serializeMapEntries(entries models.MapEntries) (string, error) {
+	var contents strings.Builder
+	for _, entry := range entries {
+		if entry == nil {
+			return "", errors.New("map entry cannot be null")
+		}
+		contents.WriteString(entry.Key)
+		contents.WriteByte(' ')
+		contents.WriteString(entry.Value)
+		contents.WriteByte('\n')
+	}
+	return contents.String(), nil
 }
 
 func (h *HandlerImpl) DeleteRuntimeMapEntry(w http.ResponseWriter, r *http.Request, parentName string, id string, params DeleteRuntimeMapEntryParams) {

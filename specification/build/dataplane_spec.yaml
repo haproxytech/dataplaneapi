@@ -35514,6 +35514,46 @@ paths:
       tags:
         - Maps
       x-codegen-request-body-name: data
+    put:
+      description: Atomically replaces all entries in a runtime map.
+      operationId: replaceRuntimeMapEntries
+      parameters:
+        - description: Map file name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: If true, immediately syncs changes to disk
+          in: query
+          name: force_sync
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_entries'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_entries'
+          description: Runtime map entries replaced
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace all entries in a runtime map
+      tags:
+        - Maps
+      x-codegen-request-body-name: data
   /services/haproxy/runtime/maps/{parent_name}/entries/{id}:
     delete:
       description: Delete all the map entries from the map by its id.
