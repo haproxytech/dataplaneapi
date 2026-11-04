@@ -32,6 +32,12 @@ type AddMapEntryParams struct {
 	ForceSync bool `form:"force_sync,omitempty" json:"force_sync,omitempty,omitzero"`
 }
 
+// ReplaceRuntimeMapEntriesParams defines parameters for ReplaceRuntimeMapEntries.
+type ReplaceRuntimeMapEntriesParams struct {
+	// ForceSync If true, immediately syncs changes to disk
+	ForceSync bool `form:"force_sync,omitempty" json:"force_sync,omitempty,omitzero"`
+}
+
 // DeleteRuntimeMapEntryParams defines parameters for DeleteRuntimeMapEntry.
 type DeleteRuntimeMapEntryParams struct {
 	// ForceSync If true, immediately syncs changes to disk
@@ -53,6 +59,9 @@ type ReplaceRuntimeMapEntryParams struct {
 // AddMapEntryJSONRequestBody defines body for AddMapEntry for application/json ContentType.
 type AddMapEntryJSONRequestBody = MapEntry
 
+// ReplaceRuntimeMapEntriesJSONRequestBody defines body for ReplaceRuntimeMapEntries for application/json ContentType.
+type ReplaceRuntimeMapEntriesJSONRequestBody = MapEntries
+
 // ReplaceRuntimeMapEntryJSONRequestBody defines body for ReplaceRuntimeMapEntry for application/json ContentType.
 type ReplaceRuntimeMapEntryJSONRequestBody ReplaceRuntimeMapEntryJSONBody
 
@@ -64,6 +73,9 @@ type ServerInterface interface {
 	// Adds an entry into the map file
 	// (POST /services/haproxy/runtime/maps/{parent_name}/entries)
 	AddMapEntry(w http.ResponseWriter, r *http.Request, parentName string, params AddMapEntryParams)
+	// Replace all entries in a runtime map
+	// (PUT /services/haproxy/runtime/maps/{parent_name}/entries)
+	ReplaceRuntimeMapEntries(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceRuntimeMapEntriesParams)
 	// Deletes all the map entries from the map by its id
 	// (DELETE /services/haproxy/runtime/maps/{parent_name}/entries/{id})
 	DeleteRuntimeMapEntry(w http.ResponseWriter, r *http.Request, parentName string, id string, params DeleteRuntimeMapEntryParams)
@@ -88,6 +100,12 @@ func (_ Unimplemented) ShowRuntimeMap(w http.ResponseWriter, r *http.Request, pa
 // Adds an entry into the map file
 // (POST /services/haproxy/runtime/maps/{parent_name}/entries)
 func (_ Unimplemented) AddMapEntry(w http.ResponseWriter, r *http.Request, parentName string, params AddMapEntryParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace all entries in a runtime map
+// (PUT /services/haproxy/runtime/maps/{parent_name}/entries)
+func (_ Unimplemented) ReplaceRuntimeMapEntries(w http.ResponseWriter, r *http.Request, parentName string, params ReplaceRuntimeMapEntriesParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -177,6 +195,48 @@ func (siw *ServerInterfaceWrapper) AddMapEntry(w http.ResponseWriter, r *http.Re
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.AddMapEntry(w, r, parentName, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceRuntimeMapEntries operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceRuntimeMapEntries(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "parent_name" -------------
+	var parentName string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "parent_name", chi.URLParam(r, "parent_name"), &parentName, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: ""})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "parent_name", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReplaceRuntimeMapEntriesParams
+
+	// ------------- Optional query parameter "force_sync" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "force_sync", r.URL.Query(), &params.ForceSync, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "force_sync"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "force_sync", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceRuntimeMapEntries(w, r, parentName, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -443,6 +503,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/haproxy/runtime/maps/{parent_name}/entries", wrapper.AddMapEntry)
 	})
 	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/services/haproxy/runtime/maps/{parent_name}/entries", wrapper.ReplaceRuntimeMapEntries)
+	})
+	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/haproxy/runtime/maps/{parent_name}/entries/{id}", wrapper.DeleteRuntimeMapEntry)
 	})
 	r.Group(func(r chi.Router) {
@@ -460,25 +523,26 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 // const string: with thousands of chunks the chained `+` fold is several
 // times slower for the Go compiler than parsing a slice literal.
 var swaggerSpec = []string{
-	"7FhRT9w4EP4rlot00l2WbAuqdLknOLgeD5wQPd0LS1eDPdm4TWzXdrZEKP/9ZDtZdtmUFrSlgHhBwYln",
-	"Pk++75vJXlGmKq0kSmdpdkUNWq2kxfCP1chELhg4oeS0UhxLO2WqqpScLh7s1/dKg8Cbw0thYyimpEPp",
-	"/CVoXXZh0o9WyRCcFViBv9oymNOMvkqvoaTxrk3vBAGNUYa2bZtQjpYZof0umtF/CyRdJOTEoFW1YUgg",
-	"QiYYMSe0QOBoAvo/lczFrDYh8eg/NFZE3KuRVx4juSiRzLtnk6UjukYjzah1RsiZR9gmd6vuPvBT/Fyj",
-	"dY+stPvgCxqRPeYCHmAOdekOwzkeVwnfoUQDJYnYHnMR/1HuL1VL/jTk/QUskcqRPEB+0Lq2/e2QrQI9",
-	"RemMiLYqHFb2W5Xp9zS0TfoEYAw0NKGXo5kadWuxNtvHoA+7DEv3R6LSyoR3pMEVNKMz4Yr6YpupKi1A",
-	"G3XZOGRFykqB0o0kODHHdP42jWGpP8g1kuujqouPyNytUJqNA7kHWb4PcS+8TcL1gIXMVYAgXOnT/b13",
-	"4neSA3BATkqQSPZOjsiInNbSiQrJMWhy/Rp7qmXUc0BplKAFzejO9nj7NU0CtMCj1KKZC4a2x5aaGNCz",
-	"yKZXGgxKN5VQYZsuEXGGbp3zp+hqIy0BSQLfiMoJlCXp9hEhCZCZmKMkXRZSgQ7i2KYBZpTLEacZfV+o",
-	"L93hjkEHzAYqdEGGZzdTH3dxiEdKff1oFl9AQsNSRpeOQhPqG48wyGnmTI3LktTgHBq//8PZh8nETCZy",
-	"Uo/HOyz8xV//2Hrlr968vWon9Py3LZqsqfg8WZ2G3ozHG/O9ZUcYMLT3NWNobV6XZFFPz4Hd8e7XIi+g",
-	"pvdz9IAhtMgNZ1hpvEHGdVWBaRZUI0pGCvV0woUCHMw8TzwxLD1vE6qVHaDsHueBr8GliJBOEVfcRss9",
-	"zpdc6glxMrkJ7ygnIQ0RVYVcgMOyIbaRzBJWgJyhJU4RLuynHvvnGsOpO/C5MgynfsdKS1twIYfS4gLI",
-	"hVIlguzVEca+fcWbjQujibJYLWa7psjXPyrxOgkiuZhBcMijGMcblsrSkB/i/77h+KufaD9D8d9Q6prk",
-	"fU9miuMM5aij2+hC8WbUsZeDg5DiPi0wvRK8jWQv0eG6rxyE9dD9epR9F8yNqhaLFw0RzhLB150mhrhu",
-	"gc/Bczw8wYdxCf7gcH6uBa7Y0S7Nhor1CZt0DmWNJDKNP8NeHolu7yCWof5+60R6c06w6JyQsxjxl2H9",
-	"vUP3Ir6nNRM3LxPxV5g+OBHXg4rRJTBvfAWS6DxMmQiEe8k4RRBYQQSP33MV6HXtdFFe9PMyv6+IWBvP",
-	"E9f9iBDoNdz34q2BKiwV+awLcJ7c+KXmu+b/8cPN/1FGJmrigT4Anpm3hdLdxZPu+z3g86KZ9wZVm5Jm",
-	"NJ3v0Pa8/X8A",
+	"7FhfT+S2F/0qlhfpJ/2aIbMLWqnpExS65YEKsVVfGHZ0sW9mvJvYXtuZJUL57pXtZP4wARY65c+WFzQk",
+	"8b3HN+ec65srylSplUTpLM2uqEGrlbQY/rEamcgFAyeUHJeKY2HHTJWlkuP5g931vcIg8PrwUtgYiinp",
+	"UDr/E7Qu2jDpZ6tkCM6mWIL/tWUwpxl9ky6gpPGuTe8FAY1RhjZNk1COlhmh/Sqa0T+nSNpIyIlBqyrD",
+	"kECETDBiTugUgaMJ6H9VMheTyoTEg7/QWBFxr0ZeeYzkokAya59Nlrboao00o9YZISceYZPcr7r7wE/x",
+	"a4XWPbPS7oMvaET2nAt4gDlUhTsM+3heJfyAEg0UJGJ7zkX8Q7nfVCX5y5D3N7BEKkfyAPlR69p0t0O2",
+	"EvQYpTMi2qpwWNq7KtOtqWmTdAnAGKhpQi8HEzVor8XabB+DPmwzLN0fiFIrE96RBjelGZ0IN60utpkq",
+	"0ylooy5rh2yaskKgdAMJTswwnb1PY1jqN7JAstiquviMzN0Kpd44kAeQ5fsQd8LbJFwPWMhcBQjCFT7d",
+	"73snfiU5AAfkpACJZO/kiAzIaSWdKJEcgyaL19hRLaOeA0qjBC1oRne2h9tvaRKgBR6lFs1MMLQdttTE",
+	"gJ5FNr3SYFC6sYQSm3SJiBN065w/RVcZaQlIEvhGVE6gKEi7jghJgEzEDCVps5ASdBDHNg0wo1yOOM3o",
+	"x6n61m7uGHTAbKBEF2R4dj31cRuHeKTU149m8QUkNFzK6NJWaEJ94xEGOc2cqXBZkhqcQ+PXfzr7NBqZ",
+	"0UiOquFwh4W/+P9ftt74X+/eXzUjev7TFk3WVHyerJ6G3g2HG/O9ZUfoMbSPFWNobV4VZF5Pz4Hd4e5N",
+	"kedQ04c5esAQWuSGM6w03iDjqizB1HOqESUjhTo64VwBDiaeJ54Ylp43CdXK9lB2j/PA1+BSREiniJve",
+	"Rss9zpdc6gVxMrkO7ygnIQ0RZYlcgMOiJraWzBI2BTlBS5wiXNgvHfavFYZdt+BzZRiO/YqVljbnQg6F",
+	"xTmQC6UKBNmpIxz79hWvNy6MOspitZjNmiLf/luJ10kQycUMgkMexTjcsFSWDvkh/s8bjr86oj2F4u9Q",
+	"6prkfU9miuME5aCl2+BC8XrQspeDA78RXfXZglOlYFAUNTGoC2Bo1zvZUg9b94nTuGzRwRbN+dU0np9p",
+	"zLvpXbbxaI38dOmE1NGu5eIjecgPdmAIpbtVxQ/0kCZ50DE6vRK8idwv0OG6CR2E6wFx53Qd8tyocn7x",
+	"oibCWSL4ugvFEKsm9NLPLR6e4P24BH90OE/riCvetEuzvmJ9wTqdQVEhiUzjP6C8I9HtPcTSNyPcOtVe",
+	"nzUsOifkJEb8X7/+PqB7Fd/Lmqvr16n6Bqb3TtVVr2LaI7MXXXQepkwEwr1knCIIbEoEjz34+0/Qr/r5",
+	"zx/ntfE8ce2HyECv/r4Xb/VUYanIZ22A8+Ta194nGgZu/IYQZfQ6APzjAeAenvTQecDnRTPrDKoyBc1o",
+	"OtuhzXnz9wA=",
 }
 
 // decodeSpec returns the embedded OpenAPI spec as raw JSON bytes,
