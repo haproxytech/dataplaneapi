@@ -155,16 +155,56 @@ func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, er
 	return es, nil
 }
 
+// IsUnixSocketAddr reports whether addr designates a UNIX socket, either as a
+// bare filesystem path or prefixed with the "unix@" address family used by
+// HAProxy. Every other address family ("ipv4@", "sockpair@", "fd@", ...) and
+// host:port addresses are rejected, as is the empty string.
 func IsUnixSocketAddr(addr string) bool {
-	if strings.HasPrefix(addr, "ipv4@") || strings.HasPrefix(addr, "ipv6@") {
+	if addr == "" {
 		return false
 	}
 
-	// check if it has semicolon
-	if strings.Contains(addr, ":") {
-		return false
+	if family, _, found := strings.Cut(addr, "@"); found {
+		return family == "unix"
 	}
-	return true
+
+	// A bare address containing a colon is a host:port, not a socket path.
+	return !strings.Contains(addr, ":")
+}
+
+// MasterSocketFromEnv extracts the master CLI socket path from the raw value of
+// the HAPROXY_MASTER_CLI environment variable. HAProxy advertises its master
+// CLI sockets as a ";"-separated list, for example
+// "unix@/var/run/master.sock;sockpair@7", and the Data Plane API can only talk
+// to the UNIX ones.
+//
+// The first socket already bound on the filesystem wins. When none of the
+// candidates exists yet the first valid one is returned anyway, so that a
+// delayed runtime start can pick it up once HAProxy binds it. The second return
+// value is false when the value holds no usable UNIX socket at all, in which
+// case the caller must keep whatever master runtime it was configured with.
+func MasterSocketFromEnv(value string) (string, bool) {
+	var candidates []string
+
+	for addr := range strings.SplitSeq(value, ";") {
+		addr = strings.TrimSpace(addr)
+		if !IsUnixSocketAddr(addr) {
+			continue
+		}
+		socket := strings.TrimPrefix(addr, "unix@")
+		if socket == "" {
+			continue
+		}
+		if info, err := os.Stat(socket); err == nil && info.Mode()&os.ModeSocket != 0 {
+			return socket, true
+		}
+		candidates = append(candidates, socket)
+	}
+
+	if len(candidates) == 0 {
+		return "", false
+	}
+	return candidates[0], true
 }
 
 func ParseTimeout(tOut string) *int64 {
