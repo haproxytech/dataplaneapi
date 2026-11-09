@@ -1,4 +1,4 @@
-name: go build
+name: build and test
 on:
   pull_request:
     branches:
@@ -10,14 +10,64 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
-        id: go
-      - name: Get dependencies
-        run: |
-          go get -v -t -d ./...
+      - name: Verify dependencies
+        run: go mod verify
       - name: Build
+        run: make build
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: dataplaneapi
+          path: build/dataplaneapi
+          retention-days: 1
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+      - name: Test
+        run: make test
+  e2e:
+    name: HAProxy ${{ matrix.haproxy_version }} (${{ matrix.testpart }})
+    needs: build
+    strategy:
+      matrix:
+        haproxy_version: ["3.4"]
+        testpart: ["1/4", "2/4", "3/4", "4/4"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Install Bats
         run: |
-          go build -v .
+          git clone --depth 1 --branch v1.10.0 https://github.com/bats-core/bats-core.git "$RUNNER_TEMP/bats-core"
+          sudo "$RUNNER_TEMP/bats-core/install.sh" /usr/local
+      - name: Download binary
+        uses: actions/download-artifact@v4
+        with:
+          name: dataplaneapi
+          path: build
+      - name: Run E2E tests
+        run: |
+          chmod +x build/dataplaneapi
+          bash ./e2e/run.bash
+        env:
+          HAPROXY_VERSION: ${{ matrix.haproxy_version }}
+          TESTPART: ${{ matrix.testpart }}
+      - name: Upload failure logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-logs-${{ strategy.job-index }}
+          path: e2e/logs/

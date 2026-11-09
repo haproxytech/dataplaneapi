@@ -4,6 +4,30 @@ on:
     branches:
       - master
 jobs:
+  diff:
+    name: Generated code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+      - name: Install swagger
+        run: |
+          SWAGGER_VERSION=$(curl -fsSL https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep '^SWAGGER_VERSION=' | cut -d= -f2)
+          curl -fsSL "https://github.com/go-swagger/go-swagger/releases/download/${SWAGGER_VERSION}/swagger_linux_amd64" -o "$RUNNER_TEMP/swagger"
+          chmod +x "$RUNNER_TEMP/swagger"
+          printf '%s\n' "$RUNNER_TEMP" >> "$GITHUB_PATH"
+      - name: Generate code
+        run: |
+          make generate-native
+          make specification
+      - name: Check generated code
+        run: |
+          git diff --exit-code
+          test -z "$(git ls-files --others --exclude-standard)"
   gofumpt:
     name: gofumpt
     runs-on: ubuntu-latest
