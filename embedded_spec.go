@@ -29134,6 +29134,16 @@ func init() {
           "maximum": 4294967295,
           "x-nullable": true
         },
+        "counters": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "quick_exit": {
+          "type": "boolean"
+        },
         "quiet": {
           "type": "boolean"
         },
@@ -29326,6 +29336,12 @@ func init() {
           "x-display-name": "CLF Log"
         },
         "client_fin_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "client_hs_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
           "x-duration": true,
@@ -29726,6 +29742,11 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -29803,6 +29824,12 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
+        },
         "redispatch": {
           "$ref": "#/definitions/redispatch"
         },
@@ -29869,6 +29896,14 @@ func init() {
           ],
           "x-display-name": "Splice Response"
         },
+        "spop_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Spop Check"
+        },
         "srvtcpka": {
           "type": "string",
           "enum": [
@@ -29904,6 +29939,10 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -31010,6 +31049,12 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "client_hs_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -31337,6 +31382,11 @@ func init() {
           ],
           "x-display-name": "Log ASAP"
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -31375,6 +31425,12 @@ func init() {
         },
         "originalto": {
           "$ref": "#/definitions/originalto"
+        },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
         },
         "socket_stats": {
           "type": "string",
@@ -31419,6 +31475,15 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -31828,6 +31893,11 @@ func init() {
           },
           "x-display-name": "Log Send Hostname",
           "x-go-name": "GlobalLogSendHostname"
+        },
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Log Tag"
         },
         "lua_options": {
           "$ref": "#/definitions/lua_options"
@@ -35033,6 +35103,16 @@ func init() {
           "type": "boolean",
           "x-display-name": "Don't Parse Log"
         },
+        "host": {
+          "description": "How the host field is handled when forwarding logs",
+          "type": "string",
+          "enum": [
+            "append",
+            "fill",
+            "keep",
+            "replace"
+          ]
+        },
         "maxconn": {
           "type": "integer",
           "x-nullable": true
@@ -37053,7 +37133,8 @@ func init() {
             "reject",
             "accept",
             "send-retry",
-            "dgram-drop"
+            "dgram-drop",
+            "do-log"
           ],
           "x-nullable": false
         }
@@ -37280,6 +37361,10 @@ func init() {
         "name"
       ],
       "properties": {
+        "backing_file": {
+          "description": "Optional file used to persist the ring buffer",
+          "type": "string"
+        },
         "description": {
           "description": "The description is an optional description string of the ring",
           "type": "string"
@@ -39901,6 +39986,10 @@ func init() {
         },
         "issuers_chain_path": {
           "type": "string"
+        },
+        "key_base": {
+          "type": "string",
+          "x-display-name": "SSL Private Keys Base Directory"
         },
         "load_extra_files": {
           "type": "string",
@@ -42576,6 +42665,13 @@ func init() {
         "force_private_cache": {
           "type": "boolean",
           "x-display-name": "SSL Force Private Cache"
+        },
+        "hard_maxrecord": {
+          "type": "integer",
+          "maximum": 2147483647,
+          "x-display-name": "SSL Hard Maximum Size",
+          "x-nullable": true,
+          "x-size": false
         },
         "keylog": {
           "type": "string",
@@ -89232,6 +89328,16 @@ func init() {
           "minimum": 0,
           "x-nullable": true
         },
+        "counters": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "quick_exit": {
+          "type": "boolean"
+        },
         "quiet": {
           "type": "boolean"
         },
@@ -89425,6 +89531,13 @@ func init() {
           "x-display-name": "CLF Log"
         },
         "client_fin_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "client_hs_timeout": {
           "type": "integer",
           "minimum": 0,
           "x-default-unit": "ms",
@@ -89830,6 +89943,12 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -89908,6 +90027,13 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
+        },
         "redispatch": {
           "$ref": "#/definitions/redispatch"
         },
@@ -89976,6 +90102,14 @@ func init() {
           ],
           "x-display-name": "Splice Response"
         },
+        "spop_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Spop Check"
+        },
         "srvtcpka": {
           "type": "string",
           "enum": [
@@ -90012,6 +90146,10 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -91090,6 +91228,13 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "client_hs_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "minimum": 0,
@@ -91420,6 +91565,12 @@ func init() {
           ],
           "x-display-name": "Log ASAP"
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -91458,6 +91609,13 @@ func init() {
         },
         "originalto": {
           "$ref": "#/definitions/originalto"
+        },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
         },
         "socket_stats": {
           "type": "string",
@@ -91503,6 +91661,15 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -91863,6 +92030,11 @@ func init() {
           },
           "x-display-name": "Log Send Hostname",
           "x-go-name": "GlobalLogSendHostname"
+        },
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Log Tag"
         },
         "lua_options": {
           "$ref": "#/definitions/lua_options"
@@ -95011,6 +95183,16 @@ func init() {
           "type": "boolean",
           "x-display-name": "Don't Parse Log"
         },
+        "host": {
+          "description": "How the host field is handled when forwarding logs",
+          "type": "string",
+          "enum": [
+            "append",
+            "fill",
+            "keep",
+            "replace"
+          ]
+        },
         "maxconn": {
           "type": "integer",
           "x-nullable": true
@@ -97007,7 +97189,8 @@ func init() {
             "reject",
             "accept",
             "send-retry",
-            "dgram-drop"
+            "dgram-drop",
+            "do-log"
           ],
           "x-nullable": false
         }
@@ -97242,6 +97425,10 @@ func init() {
         "name"
       ],
       "properties": {
+        "backing_file": {
+          "description": "Optional file used to persist the ring buffer",
+          "type": "string"
+        },
         "description": {
           "description": "The description is an optional description string of the ring",
           "type": "string"
@@ -99796,6 +99983,10 @@ func init() {
         },
         "issuers_chain_path": {
           "type": "string"
+        },
+        "key_base": {
+          "type": "string",
+          "x-display-name": "SSL Private Keys Base Directory"
         },
         "load_extra_files": {
           "type": "string",
@@ -102421,6 +102612,14 @@ func init() {
         "force_private_cache": {
           "type": "boolean",
           "x-display-name": "SSL Force Private Cache"
+        },
+        "hard_maxrecord": {
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "x-display-name": "SSL Hard Maximum Size",
+          "x-nullable": true,
+          "x-size": false
         },
         "keylog": {
           "type": "string",
