@@ -250,6 +250,19 @@ components:
           type: integer
           x-default-unit: s
           x-duration: true
+        eab_key_id:
+          description: Path where the EAB key id is stored
+          type: string
+        eab_mac_alg:
+          description: MAC algorithm used for EAB signing
+          enum:
+            - HS256
+            - HS384
+            - HS512
+          type: string
+        eab_mac_key:
+          description: Path where the EAB MAC key is stored
+          type: string
         keytype:
           description: Type of key to generate
           enum:
@@ -2066,6 +2079,13 @@ components:
           minimum: 0
           nullable: true
           type: integer
+        counters:
+          enum:
+            - enabled
+            - disabled
+          type: string
+        quick_exit:
+          type: boolean
         quiet:
           type: boolean
         stress_level:
@@ -2198,6 +2218,12 @@ components:
           type: boolean
           x-display-name: CLF Log
         client_fin_timeout:
+          minimum: 0
+          nullable: true
+          type: integer
+          x-default-unit: ms
+          x-duration: true
+        client_hs_timeout:
           minimum: 0
           nullable: true
           type: integer
@@ -2495,6 +2521,11 @@ components:
           description: Maximum server queue size for maintaining keep-alive connections
           nullable: true
           type: integer
+        max_session_srv_conns:
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: Max Session Server Connections
         maxconn:
           nullable: true
           type: integer
@@ -2545,6 +2576,12 @@ components:
           type: integer
           x-default-unit: ms
           x-duration: true
+        rate_limit_sessions:
+          maximum: 4.294967295e+09
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: Rate Limit Sessions
         redispatch:
           $ref: '#/components/schemas/redispatch'
         retries:
@@ -2593,6 +2630,12 @@ components:
             - disabled
           type: string
           x-display-name: Splice Response
+        spop_check:
+          enum:
+            - enabled
+            - disabled
+          type: string
+          x-display-name: Spop Check
         srvtcpka:
           enum:
             - enabled
@@ -2623,6 +2666,9 @@ components:
           type: integer
           x-default-unit: ms
           x-duration: true
+        tcp_clflog:
+          type: boolean
+          x-display-name: TCP CLF Log
         tcp_smart_accept:
           enum:
             - enabled
@@ -3538,6 +3584,12 @@ components:
           type: integer
           x-default-unit: ms
           x-duration: true
+        client_hs_timeout:
+          minimum: 0
+          nullable: true
+          type: integer
+          x-default-unit: ms
+          x-duration: true
         client_timeout:
           minimum: 0
           nullable: true
@@ -3766,6 +3818,11 @@ components:
             - disabled
           type: string
           x-display-name: Log ASAP
+        max_session_srv_conns:
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: Max Session Server Connections
         maxconn:
           nullable: true
           type: integer
@@ -3793,6 +3850,12 @@ components:
           x-display-name: Nolinger
         originalto:
           $ref: '#/components/schemas/originalto'
+        rate_limit_sessions:
+          maximum: 4.294967295e+09
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: Rate Limit Sessions
         socket_stats:
           enum:
             - enabled
@@ -3827,6 +3890,12 @@ components:
           type: integer
           x-default-unit: ms
           x-duration: true
+        tcp_clflog:
+          type: boolean
+          x-dependency:
+            mode:
+              value: tcp
+          x-display-name: TCP CLF Log
         tcp_smart_accept:
           enum:
             - enabled
@@ -4165,6 +4234,10 @@ components:
           type: object
           x-display-name: Log Send Hostname
           x-go-name: GlobalLogSendHostname
+        log_tag:
+          pattern: ^[^\s]+$
+          type: string
+          x-display-name: Log Tag
         lua_options:
           $ref: '#/components/schemas/lua_options'
         master-worker:
@@ -6726,6 +6799,14 @@ components:
         dont-parse-log:
           type: boolean
           x-display-name: Don't Parse Log
+        host:
+          description: How the host field is handled when forwarding logs
+          enum:
+            - append
+            - fill
+            - keep
+            - replace
+          type: string
         maxconn:
           nullable: true
           type: integer
@@ -8248,6 +8329,12 @@ components:
             freeFormat: true
             operation: getACLs
             property: acl_name
+        log_profile:
+          type: string
+          x-dependency:
+            type:
+              value: do-log
+          x-display-name: Log Profile
         metadata:
           additionalProperties:
             type: object
@@ -8257,6 +8344,7 @@ components:
             - accept
             - send-retry
             - dgram-drop
+            - do-log
           type: string
       required:
         - type
@@ -8441,6 +8529,9 @@ components:
       additionalProperties: false
       description: HAProxy ring configuration
       properties:
+        backing_file:
+          description: Optional file used to persist the ring buffer
+          type: string
         description:
           description: The description is an optional description string of the ring
           type: string
@@ -10600,6 +10691,9 @@ components:
           x-omitempty: true
         issuers_chain_path:
           type: string
+        key_base:
+          type: string
+          x-display-name: SSL Private Keys Base Directory
         load_extra_del_ext:
           description: Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)
           type: boolean
@@ -12609,6 +12703,12 @@ components:
           nullable: true
           type: integer
           x-display-name: Number of stick-counters
+        streams_elasticity:
+          description: Target ratio of streams per frontend connection relative to the maximum number of concurrent connections
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: Streams Elasticity
         takeover_other_tg_connections:
           enum:
             - none
@@ -12692,6 +12792,13 @@ components:
         force_private_cache:
           type: boolean
           x-display-name: SSL Force Private Cache
+        hard_maxrecord:
+          maximum: 2.147483647e+09
+          minimum: 0
+          nullable: true
+          type: integer
+          x-display-name: SSL Hard Maximum Size
+          x-size: false
         keylog:
           enum:
             - enabled

@@ -23196,6 +23196,51 @@ func init() {
           }
         }
       },
+      "put": {
+        "description": "Atomically replaces all entries in a runtime map.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Replace all entries in a runtime map",
+        "operationId": "replaceRuntimeMapEntries",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "force_sync",
+            "in": "query"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runtime map entries replaced",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
       "post": {
         "description": "Adds an entry into the map file.",
         "tags": [
@@ -27491,6 +27536,23 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "eab_key_id": {
+          "description": "Path where the EAB key id is stored",
+          "type": "string"
+        },
+        "eab_mac_alg": {
+          "description": "MAC algorithm used for EAB signing",
+          "type": "string",
+          "enum": [
+            "HS256",
+            "HS384",
+            "HS512"
+          ]
+        },
+        "eab_mac_key": {
+          "description": "Path where the EAB MAC key is stored",
+          "type": "string"
+        },
         "keytype": {
           "description": "Type of key to generate",
           "type": "string",
@@ -29949,6 +30011,16 @@ func init() {
           "maximum": 4294967295,
           "x-nullable": true
         },
+        "counters": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "quick_exit": {
+          "type": "boolean"
+        },
         "quiet": {
           "type": "boolean"
         },
@@ -30149,6 +30221,12 @@ func init() {
           "x-display-name": "CLF Log"
         },
         "client_fin_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "client_hs_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
           "x-duration": true,
@@ -30541,6 +30619,11 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -30619,6 +30702,12 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
+        },
         "redispatch": {
           "$ref": "#/definitions/redispatch"
         },
@@ -30685,6 +30774,14 @@ func init() {
           ],
           "x-display-name": "Splice Response"
         },
+        "spop_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Spop Check"
+        },
         "srvtcpka": {
           "type": "string",
           "enum": [
@@ -30720,6 +30817,10 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -31897,6 +31998,12 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "client_hs_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -32211,6 +32318,11 @@ func init() {
           ],
           "x-display-name": "Log ASAP"
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -32249,6 +32361,12 @@ func init() {
         },
         "originalto": {
           "$ref": "#/definitions/originalto"
+        },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
         },
         "socket_stats": {
           "type": "string",
@@ -32293,6 +32411,15 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -32735,6 +32862,11 @@ func init() {
           },
           "x-display-name": "Log Send Hostname",
           "x-go-name": "GlobalLogSendHostname"
+        },
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Log Tag"
         },
         "lua_options": {
           "$ref": "#/definitions/lua_options"
@@ -36207,6 +36339,16 @@ func init() {
           "type": "boolean",
           "x-display-name": "Don't Parse Log"
         },
+        "host": {
+          "description": "How the host field is handled when forwarding logs",
+          "type": "string",
+          "enum": [
+            "append",
+            "fill",
+            "keep",
+            "replace"
+          ]
+        },
         "maxconn": {
           "type": "integer",
           "x-nullable": true
@@ -38201,6 +38343,15 @@ func init() {
             "property": "acl_name"
           }
         },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
+        },
         "metadata": {
           "additionalProperties": {
             "type": "object"
@@ -38212,7 +38363,8 @@ func init() {
             "reject",
             "accept",
             "send-retry",
-            "dgram-drop"
+            "dgram-drop",
+            "do-log"
           ],
           "x-nullable": false
         }
@@ -38439,6 +38591,10 @@ func init() {
         "name"
       ],
       "properties": {
+        "backing_file": {
+          "description": "Optional file used to persist the ring buffer",
+          "type": "string"
+        },
         "description": {
           "description": "The description is an optional description string of the ring",
           "type": "string"
@@ -41212,6 +41368,10 @@ func init() {
         "issuers_chain_path": {
           "type": "string"
         },
+        "key_base": {
+          "type": "string",
+          "x-display-name": "SSL Private Keys Base Directory"
+        },
         "load_extra_del_ext": {
           "description": "Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)",
           "type": "boolean",
@@ -43876,6 +44036,12 @@ func init() {
           "x-display-name": "Number of stick-counters",
           "x-nullable": true
         },
+        "streams_elasticity": {
+          "description": "Target ratio of streams per frontend connection relative to the maximum number of concurrent connections",
+          "type": "integer",
+          "x-display-name": "Streams Elasticity",
+          "x-nullable": true
+        },
         "takeover_other_tg_connections": {
           "type": "string",
           "enum": [
@@ -43980,6 +44146,13 @@ func init() {
         "force_private_cache": {
           "type": "boolean",
           "x-display-name": "SSL Force Private Cache"
+        },
+        "hard_maxrecord": {
+          "type": "integer",
+          "maximum": 2147483647,
+          "x-display-name": "SSL Hard Maximum Size",
+          "x-nullable": true,
+          "x-size": false
         },
         "keylog": {
           "type": "string",
@@ -82213,6 +82386,83 @@ func init() {
           }
         }
       },
+      "put": {
+        "description": "Atomically replaces all entries in a runtime map.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Replace all entries in a runtime map",
+        "operationId": "replaceRuntimeMapEntries",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "force_sync",
+            "in": "query"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runtime map entries replaced",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
       "post": {
         "description": "Adds an entry into the map file.",
         "tags": [
@@ -89688,6 +89938,23 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "eab_key_id": {
+          "description": "Path where the EAB key id is stored",
+          "type": "string"
+        },
+        "eab_mac_alg": {
+          "description": "MAC algorithm used for EAB signing",
+          "type": "string",
+          "enum": [
+            "HS256",
+            "HS384",
+            "HS512"
+          ]
+        },
+        "eab_mac_key": {
+          "description": "Path where the EAB MAC key is stored",
+          "type": "string"
+        },
         "keytype": {
           "description": "Type of key to generate",
           "type": "string",
@@ -92097,6 +92364,16 @@ func init() {
           "minimum": 0,
           "x-nullable": true
         },
+        "counters": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "quick_exit": {
+          "type": "boolean"
+        },
         "quiet": {
           "type": "boolean"
         },
@@ -92298,6 +92575,13 @@ func init() {
           "x-display-name": "CLF Log"
         },
         "client_fin_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "client_hs_timeout": {
           "type": "integer",
           "minimum": 0,
           "x-default-unit": "ms",
@@ -92695,6 +92979,12 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -92774,6 +93064,13 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
+        },
         "redispatch": {
           "$ref": "#/definitions/redispatch"
         },
@@ -92842,6 +93139,14 @@ func init() {
           ],
           "x-display-name": "Splice Response"
         },
+        "spop_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Spop Check"
+        },
         "srvtcpka": {
           "type": "string",
           "enum": [
@@ -92878,6 +93183,10 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -94027,6 +94336,13 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "client_hs_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "minimum": 0,
@@ -94344,6 +94660,12 @@ func init() {
           ],
           "x-display-name": "Log ASAP"
         },
+        "max_session_srv_conns": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Max Session Server Connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -94382,6 +94704,13 @@ func init() {
         },
         "originalto": {
           "$ref": "#/definitions/originalto"
+        },
+        "rate_limit_sessions": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "x-display-name": "Rate Limit Sessions",
+          "x-nullable": true
         },
         "socket_stats": {
           "type": "string",
@@ -94427,6 +94756,15 @@ func init() {
           "x-default-unit": "ms",
           "x-duration": true,
           "x-nullable": true
+        },
+        "tcp_clflog": {
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP CLF Log"
         },
         "tcp_smart_accept": {
           "type": "string",
@@ -94820,6 +95158,11 @@ func init() {
           },
           "x-display-name": "Log Send Hostname",
           "x-go-name": "GlobalLogSendHostname"
+        },
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Log Tag"
         },
         "lua_options": {
           "$ref": "#/definitions/lua_options"
@@ -98231,6 +98574,16 @@ func init() {
           "type": "boolean",
           "x-display-name": "Don't Parse Log"
         },
+        "host": {
+          "description": "How the host field is handled when forwarding logs",
+          "type": "string",
+          "enum": [
+            "append",
+            "fill",
+            "keep",
+            "replace"
+          ]
+        },
         "maxconn": {
           "type": "integer",
           "x-nullable": true
@@ -100201,6 +100554,15 @@ func init() {
             "property": "acl_name"
           }
         },
+        "log_profile": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "do-log"
+            }
+          },
+          "x-display-name": "Log Profile"
+        },
         "metadata": {
           "additionalProperties": {
             "type": "object"
@@ -100212,7 +100574,8 @@ func init() {
             "reject",
             "accept",
             "send-retry",
-            "dgram-drop"
+            "dgram-drop",
+            "do-log"
           ],
           "x-nullable": false
         }
@@ -100447,6 +100810,10 @@ func init() {
         "name"
       ],
       "properties": {
+        "backing_file": {
+          "description": "Optional file used to persist the ring buffer",
+          "type": "string"
+        },
         "description": {
           "description": "The description is an optional description string of the ring",
           "type": "string"
@@ -103155,6 +103522,10 @@ func init() {
         "issuers_chain_path": {
           "type": "string"
         },
+        "key_base": {
+          "type": "string",
+          "x-display-name": "SSL Private Keys Base Directory"
+        },
         "load_extra_del_ext": {
           "description": "Remove the certificate file extension before appending the extra file extension (foobar.crt loads foobar.key instead of foobar.crt.key)",
           "type": "boolean",
@@ -105769,6 +106140,13 @@ func init() {
           "x-display-name": "Number of stick-counters",
           "x-nullable": true
         },
+        "streams_elasticity": {
+          "description": "Target ratio of streams per frontend connection relative to the maximum number of concurrent connections",
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Streams Elasticity",
+          "x-nullable": true
+        },
         "takeover_other_tg_connections": {
           "type": "string",
           "enum": [
@@ -105875,6 +106253,14 @@ func init() {
         "force_private_cache": {
           "type": "boolean",
           "x-display-name": "SSL Force Private Cache"
+        },
+        "hard_maxrecord": {
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "x-display-name": "SSL Hard Maximum Size",
+          "x-nullable": true,
+          "x-size": false
         },
         "keylog": {
           "type": "string",
