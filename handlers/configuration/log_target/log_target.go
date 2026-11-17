@@ -21,6 +21,7 @@ import (
 	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/models"
 
+	cn "github.com/haproxytech/dataplaneapi/client-native"
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -218,15 +219,7 @@ func (h *HandlerImpl) replaceAllLogTargets(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	if transactionID == "" {
-		if forceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.JSON(w, http.StatusOK, data)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(version)), forceReload, http.StatusOK, data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, data)
@@ -247,15 +240,7 @@ func (h *HandlerImpl) deleteLogTarget(w http.ResponseWriter, r *http.Request, pa
 		return
 	}
 	if transactionID == "" {
-		if forceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.NoContent(w)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), nil)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(version)), forceReload, http.StatusNoContent, nil)
 		return
 	}
 	respond.Accepted(w, "", nil)
@@ -294,15 +279,7 @@ func (h *HandlerImpl) createLogTarget(w http.ResponseWriter, r *http.Request, pa
 		return
 	}
 	if transactionID == "" {
-		if forceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.JSON(w, http.StatusCreated, &data)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), &data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(version)), forceReload, http.StatusCreated, &data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, &data)
@@ -327,15 +304,7 @@ func (h *HandlerImpl) replaceLogTarget(w http.ResponseWriter, r *http.Request, p
 		return
 	}
 	if transactionID == "" {
-		if forceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.JSON(w, http.StatusOK, &data)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), &data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(version)), forceReload, http.StatusOK, &data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, &data)
