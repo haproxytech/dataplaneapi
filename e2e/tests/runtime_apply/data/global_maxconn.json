@@ -1,0 +1,8 @@
+{
+  "chroot": "/var/lib/haproxy",
+  "user": "haproxy",
+  "group": "haproxy",
+  "pidfile": "/var/run/haproxy.pid",
+  "performance_options": {"maxconn": 3500},
+  "runtime_apis": [{"address": "/var/lib/haproxy/stats", "level": "admin"}]
+}

@@ -20,6 +20,7 @@ load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
 load '../../libs/haproxy_version'
+load '../../libs/haproxy_worker'
 load '../../libs/version'
 
 load 'utils/_helpers'
@@ -33,36 +34,34 @@ load 'utils/_helpers'
 @test "servers: Add a new server to backend through runtime with deprecated backend param" {
   haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
 
-  pre_logs_count=$(dpa_docker_exec 'cat /var/log/dataplaneapi.log' | wc -l)
-
-  PARENT_NAME="test_backend"
-  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/servers" "data/post.json"
-	assert_equal "$SC" 201
-
-  # check that server has been added through runtime socket
-  post_logs_count=$(dpa_docker_exec 'sh /var/log/dataplaneapi.log' | wc -l)
-  new_logs_count=$(( $pre_logs_count - $post_logs_count ))
-  new_logs=$(dpa_docker_exec 'cat /var/log/dataplaneapi.log' | tail -n $new_logs_count)
-
-  echo "$new_logs" # this will help debugging if the test fails
-  assert echo -e "$new_logs" | grep -q "backend test_backend: server test_server added through runtime"
-}
-
-@test "servers: Add a new server to backend through runtime with parent_type/ parent_name" {
-  haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
-  pre_logs_count=$(dpa_docker_exec 'cat /var/log/dataplaneapi.log' | wc -l)
+  local pid; pid=$(haproxy_worker_pid)
 
   PARENT_NAME="test_backend"
   resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/servers" "data/post.json"
   assert_equal "$SC" 201
 
-  # check that server has been added through runtime socket
-  post_logs_count=$(dpa_docker_exec 'sh /var/log/dataplaneapi.log' | wc -l)
-  new_logs_count=$(( $pre_logs_count - $post_logs_count ))
-  new_logs=$(dpa_docker_exec 'cat /var/log/dataplaneapi.log' | tail -n $new_logs_count)
+  # the running HAProxy got the server without a reload
+  resource_get "$_RUNTIME_BACKEND_BASE_PATH/$PARENT_NAME/servers/test_server"
+  assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" '.address')" "10.1.0.1"
+  assert_equal "$(get_json_path "$BODY" '.port')" 8080
+  assert_equal "$(haproxy_worker_pid)" "$pid"
+}
 
-  echo "$new_logs" # this will help debugging if the test fails
-  assert echo -e "$new_logs" | grep -q "backend test_backend: server test_server added through runtime"
+@test "servers: Add a new server to backend through runtime with parent_type/ parent_name" {
+  haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
+  local pid; pid=$(haproxy_worker_pid)
+
+  PARENT_NAME="test_backend"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/servers" "data/post.json"
+  assert_equal "$SC" 201
+
+  # the running HAProxy got the server without a reload
+  resource_get "$_RUNTIME_BACKEND_BASE_PATH/$PARENT_NAME/servers/test_server"
+  assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" '.address')" "10.1.0.1"
+  assert_equal "$(get_json_path "$BODY" '.port')" 8080
+  assert_equal "$(haproxy_worker_pid)" "$pid"
 }
 
 @test "servers: Add a new server to peer" {

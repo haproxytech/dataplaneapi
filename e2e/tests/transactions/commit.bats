@@ -32,9 +32,9 @@ load 'utils/_helpers'
 	assert_equal "$SC" 201
 	local second_id; second_id=$(get_json_path "${BODY}" ".id")
 
-	# commit first one, must succeed
+	# commit first one, must succeed; it is empty, so there is nothing to reload
 	resource_put "$_TRANSACTIONS_BASE_PATH/$first_id" ""
- 	assert_equal "$SC" 202
+ 	assert_equal "$SC" 200
 
 	# try to commit second one, must be outdated
 	resource_put "$_TRANSACTIONS_BASE_PATH/$second_id" ""

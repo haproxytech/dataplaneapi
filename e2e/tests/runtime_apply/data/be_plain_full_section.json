@@ -1,0 +1,10 @@
+{
+  "name": "be_plain",
+  "from": "mydefaults",
+  "balance": {"algorithm": "roundrobin"},
+  "servers": {
+    "srv1": {"name": "srv1", "address": "10.0.1.1", "port": 8080, "weight": 10},
+    "srv2": {"name": "srv2", "address": "10.0.1.2", "port": 8080, "weight": 20},
+    "srv3": {"name": "srv3", "address": "10.0.1.3", "port": 8080, "weight": 35}
+  }
+}
