@@ -25,6 +25,10 @@ _RUNTIME_BACKEND_BASE_PATH="/services/haproxy/runtime/backends"
 _RUNTIME_INFO_PATH="/services/haproxy/runtime/info"
 _NATIVE_STATS_PATH="/services/haproxy/stats/native"
 
+# sed script dropping "from mydefaults" from section headers: mydefaults is the
+# defaults section written last, which a section without from inherits anyway
+_DROP_FROM_MYDEFAULTS='s/^\(\(frontend\|backend\) [^ ]*\) from mydefaults$/\1/'
+
 # dpa_request is dpa_curl that also reads the Reload-ID response header. The
 # endpoint carries its own query string (version or transaction_id). The data
 # file is relative to the test directory unless absolute.

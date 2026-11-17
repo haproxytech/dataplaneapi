@@ -82,3 +82,20 @@ _SRV2_WEIGHT_25='s/^\( *server srv2 10\.0\.1\.2:8080\) weight 20$/\1 weight 25/'
   assert_equal "$(runtime_server_field be_plain srv2 weight)" 20
   assert_equal "$(haproxy_worker_pid)" "$pid"
 }
+
+@test "runtime_apply: Post a raw configuration without the implicit from changing a server weight without a reload" {
+  local pid; pid=$(haproxy_worker_pid)
+  local cfg; cfg=$(raw_config_with "${_DROP_FROM_MYDEFAULTS};${_SRV2_WEIGHT_25}")
+  refute grep -q 'from mydefaults' "$cfg"
+  assert grep -q '^backend be_plain$' "$cfg"
+  assert grep -q '^backend be_chain from d_chain$' "$cfg"
+  assert grep -q 'server srv2 10.0.1.2:8080 weight 25' "$cfg"
+
+  get_version
+  dpa_request POST "$_RAW_BASE_PATH?version=$VERSION" "$cfg" text/plain
+  assert_equal "$SC" 201
+  assert_equal "$RELOAD_ID" ""
+
+  assert_equal "$(runtime_server_field be_plain srv2 weight)" 25
+  assert_equal "$(haproxy_worker_pid)" "$pid"
+}

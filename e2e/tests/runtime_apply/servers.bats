@@ -136,3 +136,36 @@ load 'utils/_helpers'
   assert_equal "$SC" 404
   assert_equal "$(haproxy_worker_pid)" "$pid"
 }
+
+@test "runtime_apply: Add a server inheriting the implicit defaults default-server without a reload" {
+  local pid; pid=$(haproxy_worker_pid)
+  # be_plain without from inherits mydefaults, the defaults section written last
+  local cfg; cfg=$(raw_config_with "${_DROP_FROM_MYDEFAULTS};/^defaults mydefaults$/a\  default-server check weight 17")
+  assert grep -q '^backend be_plain$' "$cfg"
+  assert grep -q '^  default-server check weight 17$' "$cfg"
+
+  get_version
+  dpa_request POST "$_RAW_BASE_PATH?version=$VERSION" "$cfg" text/plain
+  # a new default-server changes the existing servers: it may need a reload
+  if [[ "$SC" == 202 ]]; then
+    wait_reload_succeeded "$RELOAD_ID"
+    pid=$(wait_new_worker "$pid")
+  else
+    assert_equal "$SC" 201
+  fi
+  resource_get "$_BACKEND_BASE_PATH/be_plain"
+  assert_equal "$(get_json_path "$BODY" '.from // ""')" ""
+
+  get_version
+  dpa_request POST "$_BACKEND_BASE_PATH/be_plain/servers?version=$VERSION" data/new_server.json
+  assert_equal "$SC" 201
+  assert_equal "$RELOAD_ID" ""
+
+  resource_get "$_RUNTIME_BACKEND_BASE_PATH/be_plain/servers/srv_new"
+  assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" '.weight')" 17
+  # health check configured (0x2) and enabled (0x4)
+  local check_state; check_state=$(get_json_path "$BODY" '.check_state')
+  assert_equal "$(( check_state & 6 ))" 6
+  assert_equal "$(haproxy_worker_pid)" "$pid"
+}

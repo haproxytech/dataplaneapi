@@ -57,3 +57,33 @@ load 'utils/_helpers'
   assert_equal "$(runtime_server_field be_plain srv2 weight)" 25
   assert_equal "$(haproxy_worker_pid)" "$pid"
 }
+
+@test "runtime_apply: A runtime change made while a reload is taken over reaches HAProxy" {
+  local pid; pid=$(haproxy_worker_pid)
+
+  get_version
+  dpa_request PUT "$_BACKEND_BASE_PATH/be_plain?version=$VERSION" data/be_plain_leastconn.json
+  assert_equal "$SC" 202
+  local reload_id=$RELOAD_ID
+
+  # no wait, not even for get_version: the old worker may still answer the runtime API
+  dpa_request PUT "$_BACKEND_BASE_PATH/be_plain/servers/srv2?version=$(( VERSION + 1 ))" data/srv2_weight.json
+  assert [ "$SC" = 200 -o "$SC" = 202 ]
+
+  wait_reload_succeeded "$reload_id"
+  if [[ -n "$RELOAD_ID" ]]; then
+    wait_reload_succeeded "$RELOAD_ID"
+  fi
+  wait_new_worker "$pid"
+
+  resource_get "$_BACKEND_BASE_PATH/be_plain/servers/srv2"
+  assert_equal "$(get_json_path "$BODY" '.weight')" 25
+  # a second reload may still be taken over: allow it 3s, a lost change never shows up
+  local i weight
+  for i in $(seq 1 30); do
+    weight=$(runtime_server_field be_plain srv2 weight)
+    [[ "$weight" == 25 ]] && break
+    sleep 0.1
+  done
+  assert_equal "$weight" 25
+}

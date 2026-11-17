@@ -25,8 +25,14 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "raw: Post new configuration" {
+  get_version
+  local version=$VERSION
+  # the same configuration as setup put in place: committed without a reload
   resource_post_text "$_RAW_BASE_PATH" 'data/haproxy.cfg'
-  assert_equal "$SC" 202
+  assert_equal "$SC" 201
+
+  get_version
+  assert_equal "$VERSION" "$(( version + 1 ))"
 }
 
 @test "raw: Post new configuration incorrectly (bug 1219)" {
