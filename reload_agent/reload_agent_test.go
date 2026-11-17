@@ -73,3 +73,79 @@ func TestReloadAgentDoesntMissReloads(t *testing.T) {
 	secondReloadID = reloadID
 	assert.NotEqualValues(t, firstReloadID, secondReloadID)
 }
+
+func newSyncedTestAgent(t *testing.T, reloadCmd string) *ReloadAgent {
+	t.Helper()
+	t.Setenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE", "50")
+	ctx, cancel := context.WithCancel(t.Context())
+	t.Cleanup(cancel)
+	f, err := os.CreateTemp(t.TempDir(), "config.cfg")
+	require.NoError(t, err)
+	require.NoError(t, f.Close())
+
+	ra, err := NewReloadAgent(ReloadAgentParams{
+		ReloadCmd:  reloadCmd,
+		RestartCmd: "echo ok",
+		ConfigFile: f.Name(),
+		Retention:  1,
+		Ctx:        ctx,
+	})
+	require.NoError(t, err)
+	return ra
+}
+
+func TestSyncedFreshAgent(t *testing.T) {
+	ra := newSyncedTestAgent(t, "echo ok")
+	assert.True(t, ra.Synced(time.Now().Add(-time.Minute)))
+	assert.True(t, ra.Synced(time.Time{}))
+}
+
+func TestSyncedScheduledReload(t *testing.T) {
+	ra := newSyncedTestAgent(t, "echo ok")
+	before := time.Now()
+	ra.Reload()
+	assert.False(t, ra.Synced(time.Time{}))
+	assert.False(t, ra.Synced(before))
+
+	require.Eventually(t, func() bool { return ra.Synced(time.Time{}) }, 2*time.Second, 10*time.Millisecond)
+	assert.True(t, ra.Synced(before))
+	assert.False(t, ra.Synced(time.Now()))
+}
+
+func TestSyncedFailedReload(t *testing.T) {
+	ra := newSyncedTestAgent(t, "false")
+	created := time.Now()
+	require.Error(t, ra.ForceReload())
+	assert.False(t, ra.Synced(created))
+	assert.True(t, ra.Synced(time.Time{}))
+}
+
+func TestSyncedDoesNotBlockDuringReload(t *testing.T) {
+	ra := newSyncedTestAgent(t, "sleep 0.3")
+	before := time.Now()
+	done := make(chan error, 1)
+	go func() { done <- ra.ForceReload() }()
+	require.Eventually(t, ra.running.Load, time.Second, time.Millisecond)
+
+	start := time.Now()
+	assert.False(t, ra.Synced(time.Time{}))
+	assert.Less(t, time.Since(start), 50*time.Millisecond)
+	require.NoError(t, <-done)
+	assert.True(t, ra.Synced(before))
+	assert.False(t, ra.Synced(start))
+}
+
+func TestSyncedForceReloadWithoutSchedule(t *testing.T) {
+	ra := newSyncedTestAgent(t, "echo ok")
+	before := time.Now()
+	assert.False(t, ra.Synced(before))
+	require.NoError(t, ra.ForceReload())
+	assert.True(t, ra.Synced(before))
+}
+
+func TestSyncedRestart(t *testing.T) {
+	ra := newSyncedTestAgent(t, "echo ok")
+	before := time.Now()
+	require.NoError(t, ra.Restart())
+	assert.True(t, ra.Synced(before))
+}

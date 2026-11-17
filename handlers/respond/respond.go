@@ -29,6 +29,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -94,6 +95,24 @@ func Accepted(w http.ResponseWriter, reloadID string, payload any) {
 		w.Header().Set(ReloadIDHeader, reloadID)
 	}
 	JSON(w, http.StatusAccepted, payload)
+}
+
+// Committed answers a change that was committed without a transaction. When
+// HAProxy already runs it (needsReload false) it answers okStatus. Otherwise
+// it reloads now and answers okStatus when forceReload is set, or schedules a
+// reload and answers 202 with the Reload-ID header.
+func Committed(w http.ResponseWriter, ra reload_agent.IReloadAgent, needsReload, forceReload bool, okStatus int, payload any) {
+	if needsReload {
+		if !forceReload {
+			Accepted(w, ra.Reload(), payload)
+			return
+		}
+		if err := ra.ForceReload(); err != nil {
+			Error(w, err)
+			return
+		}
+	}
+	JSON(w, okStatus, payload)
 }
 
 // Error translates err to a models.Error via misc.HandleError and writes the appropriate status.

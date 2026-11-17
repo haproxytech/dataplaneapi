@@ -25,6 +25,8 @@ import (
 	"testing"
 
 	"github.com/go-chi/chi/v5"
+
+	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
 type errorBody struct {
@@ -167,5 +169,83 @@ func TestJSONEncodeFailure(t *testing.T) {
 	}
 	if e.Message == "" {
 		t.Error("body message is empty")
+	}
+}
+
+type fakeReloadAgent struct {
+	reload_agent.IReloadAgent
+	forceErr     error
+	reloads      int
+	forceReloads int
+}
+
+func (a *fakeReloadAgent) Reload() string {
+	a.reloads++
+	return "reload-1"
+}
+
+func (a *fakeReloadAgent) ForceReload() error {
+	a.forceReloads++
+	return a.forceErr
+}
+
+func TestCommitted(t *testing.T) {
+	payload := map[string]string{"name": "x"}
+	tests := []struct {
+		name                     string
+		needsReload, forceReload bool
+		wantStatus               int
+		wantReloads, wantForced  int
+		wantReloadID             string
+	}{
+		{"reload scheduled", true, false, http.StatusAccepted, 1, 0, "reload-1"},
+		{"reload forced", true, true, http.StatusCreated, 0, 1, ""},
+		{"no reload", false, false, http.StatusCreated, 0, 0, ""},
+		{"no reload forced", false, true, http.StatusCreated, 0, 0, ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ra := &fakeReloadAgent{}
+			rec := httptest.NewRecorder()
+			Committed(rec, ra, tt.needsReload, tt.forceReload, http.StatusCreated, payload)
+
+			if rec.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", rec.Code, tt.wantStatus)
+			}
+			if ra.reloads != tt.wantReloads || ra.forceReloads != tt.wantForced {
+				t.Errorf("Reload/ForceReload calls = %d/%d, want %d/%d", ra.reloads, ra.forceReloads, tt.wantReloads, tt.wantForced)
+			}
+			if id := rec.Header().Get(ReloadIDHeader); id != tt.wantReloadID {
+				t.Errorf("Reload-ID = %q, want %q", id, tt.wantReloadID)
+			}
+			if got := strings.TrimSpace(rec.Body.String()); got != `{"name":"x"}` {
+				t.Errorf("body = %q", got)
+			}
+		})
+	}
+}
+
+func TestCommittedForceReloadError(t *testing.T) {
+	ra := &fakeReloadAgent{forceErr: reload_agent.NewReloadError("reload failed")}
+	rec := httptest.NewRecorder()
+	Committed(rec, ra, true, true, http.StatusCreated, map[string]string{"name": "x"})
+
+	if rec.Code < http.StatusBadRequest {
+		t.Errorf("status = %d, want an error status", rec.Code)
+	}
+	if e := decodeErrorBody(t, rec); !strings.Contains(e.Message, "reload failed") {
+		t.Errorf("body message = %q, want it to contain %q", e.Message, "reload failed")
+	}
+}
+
+func TestCommittedNoContent(t *testing.T) {
+	rec := httptest.NewRecorder()
+	Committed(rec, &fakeReloadAgent{}, false, false, http.StatusNoContent, nil)
+
+	if rec.Code != http.StatusNoContent {
+		t.Errorf("status = %d, want 204", rec.Code)
+	}
+	if rec.Body.Len() != 0 || rec.Header().Get("Content-Type") != "" {
+		t.Errorf("body = %q, Content-Type = %q, want both empty", rec.Body.String(), rec.Header().Get("Content-Type"))
 	}
 }

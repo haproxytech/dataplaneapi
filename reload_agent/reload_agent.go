@@ -27,6 +27,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/google/renameio"
@@ -48,6 +49,10 @@ type IReloadAgent interface {
 	Status() (bool, error)
 	GetReloads() models.Reloads
 	GetReload(id string) *models.Reload
+	// Synced reports whether HAProxy runs the configuration file as it was at t:
+	// no reload is pending or in progress and the last successful reload (or
+	// restart) started at or after t.
+	Synced(t time.Time) bool
 }
 
 type Runtime interface {
@@ -90,10 +95,16 @@ type ReloadAgent struct {
 	cache         reloadCache
 	delay         int
 	useRuntime    bool
+	// running is set while a reload or restart is executing.
+	running atomic.Bool
+	// lastStart is the UnixNano start time of the last successful reload or restart.
+	lastStart atomic.Int64
 }
 
 func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	ra := &ReloadAgent{}
+	// HAProxy is assumed to run the configuration file when the agent starts.
+	ra.lastStart.Store(time.Now().UnixNano())
 
 	ra.reloadCmd = params.ReloadCmd
 	ra.useRuntime = params.UseRuntime
@@ -194,6 +205,8 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	var output string
 	var err error
 	t := time.Now()
+	ra.running.Store(true)
+	defer ra.running.Store(false)
 
 	if ra.useRuntime {
 		output, err = ra.runtime.Reload()
@@ -220,12 +233,39 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	log.WithFields(logFields, log.DebugLevel, "Reload successful")
 	// if success, replace last known good file
 	copyFile(ra.configFile, ra.lkgConfigFile) //nolint:errcheck
+	ra.lastStart.Store(t.UnixNano())
 	return output, nil
 }
 
 func (ra *ReloadAgent) restartHAProxy() error {
-	_, err := execCmd(ra.restartCmd)
-	return err
+	t := time.Now()
+	ra.running.Store(true)
+	defer ra.running.Store(false)
+	if _, err := execCmd(ra.restartCmd); err != nil {
+		return err
+	}
+	ra.lastStart.Store(t.UnixNano())
+	return nil
+}
+
+// Synced reports whether HAProxy runs the configuration file as it was at t:
+// no reload is pending or in progress and the last successful reload (or
+// restart) started at or after t. It never blocks.
+func (ra *ReloadAgent) Synced(t time.Time) bool {
+	if ra.running.Load() {
+		return false
+	}
+	// a held lock means a reload is being handled
+	if !ra.cache.mu.TryRLock() {
+		return false
+	}
+	next := ra.cache.next
+	ra.cache.mu.RUnlock()
+	if next != "" {
+		return false
+	}
+	// compare as times: UnixNano of the zero time is undefined
+	return !time.Unix(0, ra.lastStart.Load()).Before(t)
 }
 
 func execCmd(cmd string) (string, error) {
