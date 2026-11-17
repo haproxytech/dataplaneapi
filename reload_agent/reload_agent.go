@@ -50,8 +50,8 @@ type IReloadAgent interface {
 	GetReloads() models.Reloads
 	GetReload(id string) *models.Reload
 	// Synced reports whether HAProxy runs the configuration file as it was at t:
-	// no reload is pending or in progress and the last successful reload (or
-	// restart) started at or after t.
+	// no reload is pending or in progress, the last successful reload (or
+	// restart) started at or after t and a new worker has taken it over.
 	Synced(t time.Time) bool
 }
 
@@ -81,6 +81,10 @@ type ReloadAgentParams struct {
 	Delay      int
 	Retention  int
 	UseRuntime bool
+	// WorkerPID returns the PID of the HAProxy worker that answers the runtime
+	// API. When set, runtime apply waits for a reload to be taken over by a
+	// new worker.
+	WorkerPID func() (int64, error)
 }
 
 // ReloadAgent handles all reloads, scheduled or forced
@@ -95,10 +99,14 @@ type ReloadAgent struct {
 	cache         reloadCache
 	delay         int
 	useRuntime    bool
+	workerPID     func() (int64, error)
 	// running is set while a reload or restart is executing.
 	running atomic.Bool
 	// lastStart is the UnixNano start time of the last successful reload or restart.
 	lastStart atomic.Int64
+	// staleWorker is the PID of the worker that served before the last
+	// successful reload or restart, until another one answers (0: none).
+	staleWorker atomic.Int64
 }
 
 func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
@@ -111,6 +119,7 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	ra.restartCmd = params.RestartCmd
 	ra.statusCmd = params.StatusCmd
 	ra.configFile = params.ConfigFile
+	ra.workerPID = params.WorkerPID
 
 	if params.Ctx == nil {
 		params.Ctx = context.Background()
@@ -200,6 +209,7 @@ func (ra *ReloadAgent) handleReloads() {
 
 func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	logFields := map[string]any{logFieldReloadID: id}
+	stale := ra.currentWorker()
 	// try the reload
 	log.WithFields(logFields, log.DebugLevel, "Reload started")
 	var output string
@@ -233,24 +243,42 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	log.WithFields(logFields, log.DebugLevel, "Reload successful")
 	// if success, replace last known good file
 	copyFile(ra.configFile, ra.lkgConfigFile) //nolint:errcheck
+	ra.staleWorker.Store(stale)
 	ra.lastStart.Store(t.UnixNano())
 	return output, nil
 }
 
 func (ra *ReloadAgent) restartHAProxy() error {
+	stale := ra.currentWorker()
 	t := time.Now()
 	ra.running.Store(true)
 	defer ra.running.Store(false)
 	if _, err := execCmd(ra.restartCmd); err != nil {
 		return err
 	}
+	ra.staleWorker.Store(stale)
 	ra.lastStart.Store(t.UnixNano())
 	return nil
 }
 
+// currentWorker returns the PID of the worker answering the runtime API, or 0
+// when it is unknown.
+func (ra *ReloadAgent) currentWorker() int64 {
+	if ra.workerPID == nil {
+		return 0
+	}
+	pid, err := ra.workerPID()
+	if err != nil || pid <= 0 {
+		return 0
+	}
+	return pid
+}
+
 // Synced reports whether HAProxy runs the configuration file as it was at t:
-// no reload is pending or in progress and the last successful reload (or
-// restart) started at or after t. It never blocks.
+// no reload is pending or in progress, the last successful reload (or
+// restart) started at or after t and a new worker has taken it over. It does
+// not wait, but may query the runtime API once while a reload is being taken
+// over.
 func (ra *ReloadAgent) Synced(t time.Time) bool {
 	if ra.running.Load() {
 		return false
@@ -265,7 +293,19 @@ func (ra *ReloadAgent) Synced(t time.Time) bool {
 		return false
 	}
 	// compare as times: UnixNano of the zero time is undefined
-	return !time.Unix(0, ra.lastStart.Load()).Before(t)
+	if time.Unix(0, ra.lastStart.Load()).Before(t) {
+		return false
+	}
+	stale := ra.staleWorker.Load()
+	if stale == 0 {
+		return true
+	}
+	pid, err := ra.workerPID()
+	if err != nil || pid == stale {
+		return false
+	}
+	ra.staleWorker.CompareAndSwap(stale, 0)
+	return true
 }
 
 func execCmd(cmd string) (string, error) {

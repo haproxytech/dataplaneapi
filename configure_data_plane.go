@@ -20,6 +20,7 @@ package dataplaneapi
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"net/http"
 	"os"
 	"os/signal"
@@ -310,6 +311,20 @@ func configureReloadAgent(haproxyOptions dataplaneapi_config.HAProxyConfiguratio
 		BackupDir:  haproxyOptions.BackupsDir,
 		Retention:  haproxyOptions.ReloadRetention,
 		Ctx:        ctx,
+		WorkerPID: func() (int64, error) {
+			rt, err := client.Runtime()
+			if err != nil {
+				return 0, err
+			}
+			info, err := rt.GetInfo()
+			if err != nil {
+				return 0, err
+			}
+			if info.Info == nil || info.Info.Pid == nil {
+				return 0, errors.New("no worker PID in runtime info: " + info.Error)
+			}
+			return *info.Info.Pid, nil
+		},
 	}
 	if msReload {
 		rt, err := client.Runtime()
