@@ -102,6 +102,11 @@ func (h *HandlerImpl) ReplaceGlobal(w http.ResponseWriter, r *http.Request, para
 			respond.Error(w, err)
 			return
 		}
+		needsReload := cn.NeedsReload(int64(params.Version))
+		if !needsReload && !callbackNeeded {
+			respond.JSON(w, http.StatusOK, &data)
+			return
+		}
 		if params.ForceReload {
 			if callbackNeeded {
 				err = h.ReloadAgent.ForceReloadWithCallback(reconfigureFunc)

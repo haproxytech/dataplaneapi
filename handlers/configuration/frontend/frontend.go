@@ -16,14 +16,13 @@ package frontend
 
 import (
 	"net/http"
-	"reflect"
 
 	"github.com/go-chi/chi/v5"
 	client_native "github.com/haproxytech/client-native/v6"
 
+	cn "github.com/haproxytech/dataplaneapi/client-native"
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
-	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
 
@@ -91,15 +90,7 @@ func (h *HandlerImpl) CreateFrontend(w http.ResponseWriter, r *http.Request, par
 		return
 	}
 	if params.TransactionId == "" {
-		if params.ForceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.JSON(w, http.StatusCreated, &data)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), &data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(params.Version)), params.ForceReload, http.StatusCreated, &data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, &data)
@@ -120,15 +111,7 @@ func (h *HandlerImpl) DeleteFrontend(w http.ResponseWriter, r *http.Request, nam
 		return
 	}
 	if params.TransactionId == "" {
-		if params.ForceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.NoContent(w)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), nil)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(params.Version)), params.ForceReload, http.StatusNoContent, nil)
 		return
 	}
 	respond.Accepted(w, "", nil)
@@ -167,11 +150,6 @@ func (h *HandlerImpl) ReplaceFrontend(w http.ResponseWriter, r *http.Request, na
 		respond.Error(w, err)
 		return
 	}
-	_, ondisk, err := cfg.GetFrontend(name, params.TransactionId)
-	if err != nil {
-		respond.Error(w, err)
-		return
-	}
 	if params.FullSection {
 		err = cfg.EditStructuredFrontend(name, &data, params.TransactionId, int64(params.Version))
 	} else {
@@ -182,129 +160,8 @@ func (h *HandlerImpl) ReplaceFrontend(w http.ResponseWriter, r *http.Request, na
 		return
 	}
 	if params.TransactionId == "" {
-		needsReload := frontendChangeThroughRuntimeAPI(data, *ondisk, h.Client)
-		if needsReload {
-			if params.ForceReload {
-				if err = h.ReloadAgent.ForceReload(); err != nil {
-					respond.Error(w, err)
-					return
-				}
-				respond.JSON(w, http.StatusOK, &data)
-				return
-			}
-			respond.Accepted(w, h.ReloadAgent.Reload(), &data)
-			return
-		}
-		respond.JSON(w, http.StatusOK, &data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(params.Version)), params.ForceReload, http.StatusOK, &data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, &data)
-}
-
-// runtimeSupportedFrontendFields lists Frontend fields that can be changed without a reload.
-var runtimeSupportedFrontendFields = []string{"Maxconn"}
-
-// frontendChangeThroughRuntimeAPI attempts to apply frontend field changes via the HAProxy runtime API.
-// Returns true when a reload is still required (unsupported fields changed or runtime call failed).
-func frontendChangeThroughRuntimeAPI(data, ondisk Frontend, client client_native.HAProxyClient) (reload bool) {
-	defer func() {
-		if r := recover(); r != nil {
-			log.Warning("frontendChangeThroughRuntimeAPI panic:", r)
-			reload = true
-		}
-	}()
-
-	rt, err := client.Runtime()
-	if err != nil {
-		return true
-	}
-
-	diff := frontendCompareObjects(data, ondisk)
-	if len(diff) == 0 {
-		return false
-	}
-	if !frontendCompareChanged(diff, runtimeSupportedFrontendFields) {
-		return true
-	}
-
-	for _, field := range diff {
-		fieldValue := reflect.ValueOf(data).FieldByName(field)
-		if !fieldValue.IsValid() {
-			continue
-		}
-		switch field {
-		case "Maxconn":
-			maxConn := int(fieldValue.Elem().Int())
-			if err = rt.SetFrontendMaxConn(data.Name, maxConn); err != nil {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-func frontendCompareObjects(data, ondisk any) []string {
-	diff := []string{}
-	dataVal := reflect.ValueOf(data)
-	ondiskVal := reflect.ValueOf(ondisk)
-	for i := range dataVal.NumField() {
-		fName := dataVal.Type().Field(i).Name
-		dField := dataVal.FieldByName(fName)
-		oField := ondiskVal.FieldByName(fName)
-		dKind := dField.Kind()
-		oKind := oField.Kind()
-		if dKind != oKind {
-			diff = append(diff, fName)
-			continue
-		}
-		if dKind == reflect.Pointer {
-			dField = dField.Elem()
-			oField = oField.Elem()
-			dKind = dField.Kind()
-			oKind = oField.Kind()
-			if dKind != oKind {
-				diff = append(diff, fName)
-				continue
-			}
-		}
-		switch dKind {
-		case reflect.Float32, reflect.Float64:
-			if dField.Float() != oField.Float() {
-				diff = append(diff, fName)
-			}
-		case reflect.Bool:
-			if dField.Bool() != oField.Bool() {
-				diff = append(diff, fName)
-			}
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			if dField.Int() != oField.Int() {
-				diff = append(diff, fName)
-			}
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			if dField.Uint() != oField.Uint() {
-				diff = append(diff, fName)
-			}
-		case reflect.String:
-			if dField.String() != oField.String() {
-				diff = append(diff, fName)
-			}
-		case reflect.Struct:
-			diff = append(diff, frontendCompareObjects(dField.Interface(), oField.Interface())...)
-		}
-	}
-	return diff
-}
-
-func frontendCompareChanged(changed, changeable []string) bool {
-	if len(changed) > len(changeable) {
-		return false
-	}
-	set := make(map[string]bool, len(changed))
-	for _, f := range changed {
-		set[f] = true
-	}
-	for _, f := range changeable {
-		delete(set, f)
-	}
-	return len(set) == 0
 }

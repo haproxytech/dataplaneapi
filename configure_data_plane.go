@@ -167,6 +167,8 @@ func configureAPI(maxBodySize int64) (http.Handler, func()) { //nolint:maintidx
 			ra = configureReloadAgent(haproxyOptions, client, ctx)
 		}
 	}
+	// bound after the watcher fallback above, which may replace client and ra
+	cn.BindRuntimeApply(client, ra)
 
 	// Sync map physical file with runtime map entries
 	if haproxyOptions.UpdateMapFiles {

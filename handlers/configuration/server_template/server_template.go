@@ -16,15 +16,14 @@ package server_template
 
 import (
 	"net/http"
-	"reflect"
 
 	"github.com/go-chi/chi/v5"
 	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/models"
 
+	cn "github.com/haproxytech/dataplaneapi/client-native"
 	"github.com/haproxytech/dataplaneapi/handlers/middleware"
 	"github.com/haproxytech/dataplaneapi/handlers/respond"
-	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/reload_agent"
 )
@@ -88,15 +87,7 @@ func (h *HandlerImpl) CreateServerTemplate(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	if params.TransactionId == "" {
-		if params.ForceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.JSON(w, http.StatusCreated, &data)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), &data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(params.Version)), params.ForceReload, http.StatusCreated, &data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, &data)
@@ -117,15 +108,7 @@ func (h *HandlerImpl) DeleteServerTemplate(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	if params.TransactionId == "" {
-		if params.ForceReload {
-			if err = h.ReloadAgent.ForceReload(); err != nil {
-				respond.Error(w, err)
-				return
-			}
-			respond.NoContent(w)
-			return
-		}
-		respond.Accepted(w, h.ReloadAgent.Reload(), nil)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(params.Version)), params.ForceReload, http.StatusNoContent, nil)
 		return
 	}
 	respond.Accepted(w, "", nil)
@@ -159,103 +142,13 @@ func (h *HandlerImpl) ReplaceServerTemplate(w http.ResponseWriter, r *http.Reque
 		respond.Error(w, err)
 		return
 	}
-	_, ondisk, err := cfg.GetServerTemplate(prefix, parentName, params.TransactionId)
-	if err != nil {
-		respond.Error(w, err)
-		return
-	}
 	if err = cfg.EditServerTemplate(prefix, parentName, &data, params.TransactionId, int64(params.Version)); err != nil {
 		respond.Error(w, err)
 		return
 	}
 	if params.TransactionId == "" {
-		if serverTemplateNeedsReload(data, *ondisk, h.Client) {
-			if params.ForceReload {
-				if err = h.ReloadAgent.ForceReload(); err != nil {
-					respond.Error(w, err)
-					return
-				}
-				respond.JSON(w, http.StatusOK, &data)
-				return
-			}
-			respond.Accepted(w, h.ReloadAgent.Reload(), &data)
-			return
-		}
-		respond.JSON(w, http.StatusOK, &data)
+		respond.Committed(w, h.ReloadAgent, cn.NeedsReload(int64(params.Version)), params.ForceReload, http.StatusOK, &data)
 		return
 	}
 	respond.JSON(w, http.StatusAccepted, &data)
-}
-
-// serverTemplateNeedsReload reports whether replacing a server template requires a
-// reload. Server templates have no runtime-API-editable fields, so any change to an
-// existing template requires a reload; an identical body (no diff) does not. This
-// mirrors the pre-migration changeThroughRuntimeAPI behavior for the ServerTemplate type.
-func serverTemplateNeedsReload(data, ondisk models.ServerTemplate, client client_native.HAProxyClient) (reload bool) {
-	// reflect kinds and values are loosely checked as they are bound strictly in
-	// schema, but in case of any panic, we log and reload to ensure changes go through.
-	defer func() {
-		if r := recover(); r != nil {
-			log.Warning("serverTemplateNeedsReload panic:", r)
-			reload = true
-		}
-	}()
-	if _, err := client.Runtime(); err != nil {
-		return true
-	}
-	return len(serverTemplateCompareObjects(data, ondisk)) != 0
-}
-
-// serverTemplateCompareObjects returns the names of fields that differ between data and ondisk.
-func serverTemplateCompareObjects(data, ondisk any) []string {
-	diff := []string{}
-	dataVal := reflect.ValueOf(data)
-	ondiskVal := reflect.ValueOf(ondisk)
-	for i := range dataVal.NumField() {
-		fName := dataVal.Type().Field(i).Name
-		dField := dataVal.FieldByName(fName)
-		oField := ondiskVal.FieldByName(fName)
-
-		dKind := dField.Kind()
-		oKind := oField.Kind()
-		if dKind != oKind {
-			diff = append(diff, fName)
-			continue
-		}
-		if dKind == reflect.Pointer {
-			dField = dField.Elem()
-			oField = oField.Elem()
-			dKind = dField.Kind()
-			oKind = oField.Kind()
-			if dKind != oKind {
-				diff = append(diff, fName)
-				continue
-			}
-		}
-		switch dKind {
-		case reflect.Float32, reflect.Float64:
-			if dField.Float() != oField.Float() {
-				diff = append(diff, fName)
-			}
-		case reflect.Bool:
-			if dField.Bool() != oField.Bool() {
-				diff = append(diff, fName)
-			}
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			if dField.Int() != oField.Int() {
-				diff = append(diff, fName)
-			}
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			if dField.Uint() != oField.Uint() {
-				diff = append(diff, fName)
-			}
-		case reflect.String:
-			if dField.String() != oField.String() {
-				diff = append(diff, fName)
-			}
-		case reflect.Struct:
-			diff = append(diff, serverTemplateCompareObjects(dField.Interface(), oField.Interface())...)
-		}
-	}
-	return diff
 }

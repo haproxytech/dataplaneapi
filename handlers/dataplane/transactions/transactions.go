@@ -211,6 +211,11 @@ func (h *HandlerImpl) CommitTransaction(w http.ResponseWriter, r *http.Request, 
 		respond.Error(w, err)
 		return
 	}
+	needsReload := cn.NeedsReload(t.Version)
+	if !needsReload && !callbackNeeded {
+		respond.JSON(w, http.StatusOK, t)
+		return
+	}
 
 	if params.ForceReload {
 		if callbackNeeded {

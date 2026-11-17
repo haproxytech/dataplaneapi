@@ -34,6 +34,7 @@ var runtimeApplyState struct {
 	ra           reload_agent.IReloadAgent
 	needReloadAt time.Time
 	outcomes     map[int64]bool
+	paused       int
 	mu           sync.Mutex
 }
 
@@ -47,6 +48,22 @@ func BindRuntimeApply(client clientnative.HAProxyClient, ra reload_agent.IReload
 	runtimeApplyState.ra = ra
 }
 
+// PauseRuntimeApply makes commits need a reload until the returned function is
+// called. It is for requests that must not change the running HAProxy.
+func PauseRuntimeApply() (resume func()) {
+	runtimeApplyState.mu.Lock()
+	runtimeApplyState.paused++
+	runtimeApplyState.mu.Unlock()
+	var once sync.Once
+	return func() {
+		once.Do(func() {
+			runtimeApplyState.mu.Lock()
+			runtimeApplyState.paused--
+			runtimeApplyState.mu.Unlock()
+		})
+	}
+}
+
 // NeedsReload reports whether the commit made on top of the given
 // configuration version still needs a reload, and forgets it. A version it
 // knows nothing about needs one.
@@ -58,13 +75,14 @@ func NeedsReload(version int64) bool {
 	return !found || reload
 }
 
-// applyRuntime returns the runtime to apply a commit with, or nil when HAProxy
-// may not run the configuration file as it was before the commit.
+// applyRuntime returns the runtime to apply a commit with, or nil when runtime
+// apply is paused or HAProxy may not run the configuration file as it was
+// before the commit.
 func applyRuntime() runtime_api.Runtime {
 	runtimeApplyState.mu.Lock()
-	client, ra, needReloadAt := runtimeApplyState.client, runtimeApplyState.ra, runtimeApplyState.needReloadAt
+	client, ra, needReloadAt, paused := runtimeApplyState.client, runtimeApplyState.ra, runtimeApplyState.needReloadAt, runtimeApplyState.paused > 0
 	runtimeApplyState.mu.Unlock()
-	if client == nil || ra == nil || !ra.Synced(needReloadAt) {
+	if paused || client == nil || ra == nil || !ra.Synced(needReloadAt) {
 		return nil
 	}
 	rt, err := client.Runtime()

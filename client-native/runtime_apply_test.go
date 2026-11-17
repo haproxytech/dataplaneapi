@@ -57,6 +57,7 @@ func resetRuntimeApply(t *testing.T) {
 		runtimeApplyState.ra = nil
 		runtimeApplyState.needReloadAt = time.Time{}
 		runtimeApplyState.outcomes = nil
+		runtimeApplyState.paused = 0
 	})
 }
 
@@ -118,4 +119,42 @@ func TestCommitDoneBounded(t *testing.T) {
 	assert.Len(t, runtimeApplyState.outcomes, 1)
 	assert.True(t, NeedsReload(0))
 	assert.False(t, NeedsReload(maxOutcomes))
+}
+
+func TestPauseRuntimeApply(t *testing.T) {
+	resetRuntimeApply(t)
+	rt := &fakeRuntime{}
+	BindRuntimeApply(fakeClient{rt: rt}, &fakeAgent{synced: true})
+
+	resume := PauseRuntimeApply()
+	assert.True(t, applyRuntime() == nil)
+	resume()
+	assert.Same(t, rt, applyRuntime())
+}
+
+func TestPauseRuntimeApplyOverlapping(t *testing.T) {
+	resetRuntimeApply(t)
+	rt := &fakeRuntime{}
+	BindRuntimeApply(fakeClient{rt: rt}, &fakeAgent{synced: true})
+
+	resumeA := PauseRuntimeApply()
+	resumeB := PauseRuntimeApply()
+	resumeA()
+	assert.True(t, applyRuntime() == nil)
+	resumeB()
+	assert.Same(t, rt, applyRuntime())
+}
+
+func TestPauseRuntimeApplyResumeTwice(t *testing.T) {
+	resetRuntimeApply(t)
+	rt := &fakeRuntime{}
+	BindRuntimeApply(fakeClient{rt: rt}, &fakeAgent{synced: true})
+
+	resumeA := PauseRuntimeApply()
+	resumeB := PauseRuntimeApply()
+	resumeA()
+	resumeA()
+	assert.True(t, applyRuntime() == nil)
+	resumeB()
+	assert.Same(t, rt, applyRuntime())
 }

@@ -83,6 +83,9 @@ func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Re
 		respond.Error(w, err)
 		return
 	}
+	if params.SkipReload && !params.OnlyValidate {
+		defer cn.PauseRuntimeApply()()
+	}
 	if err = cfg.PostRawConfiguration(&data, int64(params.Version), params.SkipVersion, params.OnlyValidate); err != nil {
 		respond.Error(w, err)
 		return
@@ -113,6 +116,11 @@ func (h *HandlerImpl) PostHAProxyConfiguration(w http.ResponseWriter, r *http.Re
 	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client)
 	if err != nil {
 		respond.Error(w, err)
+		return
+	}
+	needsReload := params.SkipVersion || cn.NeedsReload(int64(params.Version))
+	if !needsReload && !callbackNeeded {
+		writePlainText(w, http.StatusCreated, md5Hash, result)
 		return
 	}
 
