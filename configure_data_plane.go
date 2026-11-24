@@ -144,7 +144,7 @@ func configureAPI(maxBodySize int64) (http.Handler, func()) { //nolint:maintidx
 
 	initDataplaneStorage(haproxyOptions.DataplaneStorageDir, client)
 
-	configureEventListener(clientCtx, client)
+	configureEventListener(clientCtx, client, &haproxyOptions)
 
 	users := dataplaneapi_config.GetUsersStore()
 	// this is not part of GetUsersStore(),
@@ -452,7 +452,7 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 	return client
 }
 
-func configureEventListener(ctx context.Context, client client_native.HAProxyClient) {
+func configureEventListener(ctx context.Context, client client_native.HAProxyClient, opts *dataplaneapi_config.HAProxyConfiguration) {
 	rt, err := client.Runtime()
 	if err != nil {
 		return
@@ -467,7 +467,7 @@ func configureEventListener(ctx context.Context, client client_native.HAProxyCli
 		}
 	} else {
 		// First start.
-		eventListener, err = cn.ListenHAProxyEvents(ctx, client)
+		eventListener, err = cn.ListenHAProxyEvents(ctx, client, opts.UnmanagedAcmeCerts)
 		if err != nil && err != cn.ErrNoMasterSocket && err != cn.ErrOldVersion {
 			log.Error("Failed to start HAProxy's event listener:", err.Error())
 		}
@@ -488,7 +488,7 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 					log.Infof("Unable to reload Data Plane API: %s", err.Error())
 				} else {
 					client.ReplaceRuntime(cn.ConfigureRuntimeClient(clientCtx, configuration, haproxyOptions))
-					configureEventListener(clientCtx, client)
+					configureEventListener(clientCtx, client, &haproxyOptions)
 					log.Info("Reloaded Data Plane API")
 				}
 			case syscall.SIGUSR2:
@@ -531,7 +531,7 @@ func startWatcher(ctx context.Context, client client_native.HAProxyClient, hapro
 		}
 
 		// Reconfigure the event listener if needed.
-		configureEventListener(ctx, client)
+		configureEventListener(ctx, client, &haproxyOptions)
 
 		// get the last configuration which has been updated by reloadConfigurationFile and increment version in config file.
 		configuration, err := client.Configuration()

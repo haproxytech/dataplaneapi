@@ -103,6 +103,7 @@ type configTypeTransaction struct {
 type configTypeResources struct {
 	MapsDir              *string `yaml:"maps_dir,omitempty"`
 	SSLCertsDir          *string `yaml:"ssl_certs_dir,omitempty"`
+	UnmanagedAcmeCerts   *bool   `yaml:"unmanaged_acme_certs,omitempty"`
 	GeneralStorageDir    *string `yaml:"general_storage_dir,omitempty"`
 	DataplaneStorageDir  *string `yaml:"dataplane_storage_dir,omitempty"`
 	UpdateMapFiles       *bool   `yaml:"update_map_files,omitempty"`
@@ -249,6 +250,9 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.SSLCertsDir != nil && !misc.HasOSArg("", "ssl-certs-dir", "") {
 		cfg.HAProxy.SSLCertsDir = *cfgStorage.Dataplaneapi.Resources.SSLCertsDir
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.UnmanagedAcmeCerts != nil && !misc.HasOSArg("", "unmanaged-acme-certs", "") {
+		cfg.HAProxy.UnmanagedAcmeCerts = *cfgStorage.Dataplaneapi.Resources.UnmanagedAcmeCerts
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.GeneralStorageDir != nil && !misc.HasOSArg("", "general-storage-dir", "") {
 		cfg.HAProxy.GeneralStorageDir = *cfgStorage.Dataplaneapi.Resources.GeneralStorageDir

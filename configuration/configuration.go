@@ -57,6 +57,7 @@ type HAProxyConfiguration struct {
 	Userlist             string        `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller" group:"userlist"`
 	MasterRuntime        string        `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket" group:"haproxy"`
 	SSLCertsDir          string        `long:"ssl-certs-dir" description:"Path to SSL certificates directory" default:"/etc/haproxy/ssl" group:"resources"`
+	UnmanagedAcmeCerts   bool          `long:"unmanaged-acme-certs" description:"Allow ACME certificates to be saved outside the directory set by --ssl-certs-dir" group:"resources"`
 	GeneralStorageDir    string        `long:"general-storage-dir" description:"Path to general storage directory" default:"/etc/haproxy/general" group:"resources"`
 	DataplaneStorageDir  string        `long:"dataplane-storage-dir" description:"Path to dataplane internal storage directory" default:"/etc/haproxy/dataplane" group:"resources"`
 	PreferredTimeSuffix  string        `long:"time-suffix" description:"Preferred time unit to use when writing time values in configuration (nearest, none, ms, s, m, h, d)" default:"nearest" group:"haproxy"`
