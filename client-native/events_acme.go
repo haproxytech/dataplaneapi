@@ -26,6 +26,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/renameio/maybe"
 	"github.com/haproxytech/client-native/v6/configuration"
 	"github.com/haproxytech/dataplaneapi/acme"
 	"github.com/haproxytech/dataplaneapi/log"
@@ -90,6 +91,16 @@ func (h *HAProxyEventListener) handleAcmeNewCertEvent(args string) {
 	pem, err := h.rt.DumpCertificate(crtName)
 	if err != nil {
 		log.Errorf("events: acme newcert %s: dump cert: %s", args, err.Error())
+		return
+	}
+
+	if h.unmanagedAcmeCerts && strings.HasPrefix(crt.StorageName, "/") {
+		// Save the certificate directly, to whatever location is set in HAProxy.
+		if errW := maybe.WriteFile(crt.StorageName, []byte(pem), 0o600); errW != nil {
+			log.Errorf("events: acme newcert %s: write: %s", args, errW.Error())
+			return
+		}
+		log.Debugf("events: OK: acme newcert %s => %s", args, crt.StorageName)
 		return
 	}
 

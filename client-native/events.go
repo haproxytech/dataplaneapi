@@ -47,6 +47,10 @@ type HAProxyEventListener struct {
 	done      chan struct{}
 	stop      atomic.Bool
 	lastEvent time.Time
+	// If true, ACME certificates will be saved directly to disk,
+	// without using the Storage layer. This allows to write certs
+	// to other locations than what dpapi is configured to.
+	unmanagedAcmeCerts bool
 }
 
 var (
@@ -54,7 +58,7 @@ var (
 	ErrOldVersion     = errors.New("this version of HAProxy does not support event sinks")
 )
 
-func ListenHAProxyEvents(ctx context.Context, client clientnative.HAProxyClient) (*HAProxyEventListener, error) {
+func ListenHAProxyEvents(ctx context.Context, client clientnative.HAProxyClient, unmanagedAcme bool) (*HAProxyEventListener, error) {
 	rt, err := client.Runtime()
 	if err != nil {
 		return nil, err
@@ -78,10 +82,11 @@ func ListenHAProxyEvents(ctx context.Context, client clientnative.HAProxyClient)
 	}
 
 	h := &HAProxyEventListener{
-		client:   client,
-		listener: el,
-		rt:       rt,
-		done:     make(chan struct{}),
+		client:             client,
+		listener:           el,
+		rt:                 rt,
+		done:               make(chan struct{}),
+		unmanagedAcmeCerts: unmanagedAcme,
 	}
 
 	go h.listen(ctx)
