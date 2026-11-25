@@ -1,0 +1,5 @@
+{
+  "name": "base",
+  "all": "off",
+  "reject_underscore_in_header_name": "on"
+}

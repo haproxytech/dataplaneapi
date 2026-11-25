@@ -1,0 +1,5 @@
+{
+  "name": "created",
+  "all": "on",
+  "reject_duplicate_host_header": "off"
+}
