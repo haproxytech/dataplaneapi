@@ -1331,6 +1331,957 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_configs": {
+      "get": {
+        "description": "Returns all Filter Configs that are configured in specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return an array of all Filter Configs",
+        "operationId": "getAllFilterConfigBackend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Configs with the list given in parameter",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config list",
+        "operationId": "replaceAllFilterConfigBackend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Config lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_configs/{index}": {
+      "get": {
+        "description": "Returns one Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return one Filter Config",
+        "operationId": "getFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config",
+        "operationId": "replaceFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Config replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Config of the specified class in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Add a new Filter Config",
+        "operationId": "createFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Config created",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Config configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Delete a Filter Config",
+        "operationId": "deleteFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Config deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_rules": {
+      "get": {
+        "description": "Returns all Filter Rules that are configured in specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return an array of all Filter Rules",
+        "operationId": "getAllFilterRuleBackend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Rules with the list given in parameter",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule list",
+        "operationId": "replaceAllFilterRuleBackend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_rules/{index}": {
+      "get": {
+        "description": "Returns one Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return one Filter Rule",
+        "operationId": "getFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule",
+        "operationId": "replaceFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Rule in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Add a new Filter Rule",
+        "operationId": "createFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Rule created",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Delete a Filter Rule",
+        "operationId": "deleteFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_sequences": {
+      "get": {
+        "description": "Returns all Filter Sequences that are configured in specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return an array of all Filter Sequences",
+        "operationId": "getAllFilterSequenceBackend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Sequences with the list given in parameter",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence list",
+        "operationId": "replaceAllFilterSequenceBackend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Sequence lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_sequences/{index}": {
+      "get": {
+        "description": "Returns one Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return one Filter Sequence",
+        "operationId": "getFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence",
+        "operationId": "replaceFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Sequence replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Sequence in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Add a new Filter Sequence",
+        "operationId": "createFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Sequence created",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Sequence configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Delete a Filter Sequence",
+        "operationId": "deleteFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Sequence deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/backends/{parent_name}/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -7047,6 +7998,957 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_configs": {
+      "get": {
+        "description": "Returns all Filter Configs that are configured in specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return an array of all Filter Configs",
+        "operationId": "getAllFilterConfigDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Configs with the list given in parameter",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config list",
+        "operationId": "replaceAllFilterConfigDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Config lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_configs/{index}": {
+      "get": {
+        "description": "Returns one Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return one Filter Config",
+        "operationId": "getFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config",
+        "operationId": "replaceFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Config replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Config of the specified class in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Add a new Filter Config",
+        "operationId": "createFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Config created",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Config configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Delete a Filter Config",
+        "operationId": "deleteFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Config deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_rules": {
+      "get": {
+        "description": "Returns all Filter Rules that are configured in specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return an array of all Filter Rules",
+        "operationId": "getAllFilterRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Rules with the list given in parameter",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule list",
+        "operationId": "replaceAllFilterRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_rules/{index}": {
+      "get": {
+        "description": "Returns one Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return one Filter Rule",
+        "operationId": "getFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule",
+        "operationId": "replaceFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Rule in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Add a new Filter Rule",
+        "operationId": "createFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Rule created",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Delete a Filter Rule",
+        "operationId": "deleteFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_sequences": {
+      "get": {
+        "description": "Returns all Filter Sequences that are configured in specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return an array of all Filter Sequences",
+        "operationId": "getAllFilterSequenceDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Sequences with the list given in parameter",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence list",
+        "operationId": "replaceAllFilterSequenceDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Sequence lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_sequences/{index}": {
+      "get": {
+        "description": "Returns one Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return one Filter Sequence",
+        "operationId": "getFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence",
+        "operationId": "replaceFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Sequence replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Sequence in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Add a new Filter Sequence",
+        "operationId": "createFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Sequence created",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Sequence configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Delete a Filter Sequence",
+        "operationId": "deleteFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Sequence deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules": {
       "get": {
         "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
@@ -12253,6 +14155,957 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_configs": {
+      "get": {
+        "description": "Returns all Filter Configs that are configured in specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return an array of all Filter Configs",
+        "operationId": "getAllFilterConfigFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Configs with the list given in parameter",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config list",
+        "operationId": "replaceAllFilterConfigFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Config lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_configs/{index}": {
+      "get": {
+        "description": "Returns one Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return one Filter Config",
+        "operationId": "getFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config",
+        "operationId": "replaceFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Config replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Config of the specified class in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Add a new Filter Config",
+        "operationId": "createFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Config created",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Config configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Delete a Filter Config",
+        "operationId": "deleteFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Config deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_rules": {
+      "get": {
+        "description": "Returns all Filter Rules that are configured in specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return an array of all Filter Rules",
+        "operationId": "getAllFilterRuleFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Rules with the list given in parameter",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule list",
+        "operationId": "replaceAllFilterRuleFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_rules/{index}": {
+      "get": {
+        "description": "Returns one Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return one Filter Rule",
+        "operationId": "getFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule",
+        "operationId": "replaceFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Rule in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Add a new Filter Rule",
+        "operationId": "createFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Rule created",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Delete a Filter Rule",
+        "operationId": "deleteFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_sequences": {
+      "get": {
+        "description": "Returns all Filter Sequences that are configured in specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return an array of all Filter Sequences",
+        "operationId": "getAllFilterSequenceFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Sequences with the list given in parameter",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence list",
+        "operationId": "replaceAllFilterSequenceFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Sequence lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_sequences/{index}": {
+      "get": {
+        "description": "Returns one Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return one Filter Sequence",
+        "operationId": "getFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence",
+        "operationId": "replaceFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Sequence replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Sequence in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Add a new Filter Sequence",
+        "operationId": "createFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Sequence created",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Sequence configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Delete a Filter Sequence",
+        "operationId": "deleteFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Sequence deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/frontends/{parent_name}/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -17070,6 +19923,245 @@ func init() {
           },
           "204": {
             "description": "http-error section deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_hardenings": {
+      "get": {
+        "description": "Returns an array of all the configured http_hardening sections in HAProxy",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Return all the HTTP Hardening profiles",
+        "operationId": "getHTTPHardenings",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_hardenings"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new http_hardening section",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Add a new HTTP Hardening profile",
+        "operationId": "createHTTPHardening",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Hardening profile created",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_hardenings/{name}": {
+      "get": {
+        "description": "Find an http_hardening section by its name",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Return an HTTP Hardening profile",
+        "operationId": "getHTTPHardening",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http_hardening name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies an http_hardening's configuration by its name",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Modify an HTTP Hardening profile",
+        "operationId": "editHTTPHardening",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http_hardening name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "http_hardening configuration updated",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an http_hardening section from the configuration",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Delete an HTTP Hardening profile",
+        "operationId": "deleteHTTPHardening",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http_hardening name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "http_hardening deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -27752,9 +30844,21 @@ func init() {
               "x-go-name": "AclList",
               "$ref": "#/definitions/acls"
             },
+            "filter_config_list": {
+              "x-go-name": "FilterConfigList",
+              "$ref": "#/definitions/filter_configs"
+            },
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_rule_list": {
+              "x-go-name": "FilterRuleList",
+              "$ref": "#/definitions/filter_rules"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -28995,6 +32099,11 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
         },
+        "http_hardening": {
+          "description": "Name of the http-hardening profile applied to connections accepted on this bind,\nor \"auto\" to use no explicit profile.\n",
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "id": {
           "type": "string",
           "x-display-name": "Socket ID"
@@ -29404,6 +32513,29 @@ func init() {
         "name"
       ],
       "properties": {
+        "early_hints": {
+          "type": "object",
+          "required": [
+            "mode"
+          ],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "on",
+                "off",
+                "only"
+              ]
+            },
+            "ratio": {
+              "type": "integer",
+              "maximum": 99,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          },
+          "x-nullable": true
+        },
         "max_age": {
           "type": "integer",
           "x-default-unit": "s",
@@ -30079,6 +33211,18 @@ func init() {
             "acl_list": {
               "x-go-name": "AclList",
               "$ref": "#/definitions/acls"
+            },
+            "filter_config_list": {
+              "x-go-name": "FilterConfigList",
+              "$ref": "#/definitions/filter_configs"
+            },
+            "filter_rule_list": {
+              "x-go-name": "FilterRuleList",
+              "$ref": "#/definitions/filter_rules"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -31694,6 +34838,14 @@ func init() {
             }
           }
         },
+        "trace_quiet": {
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          }
+        },
         "trace_rnd_forwarding": {
           "type": "boolean",
           "x-dependency": {
@@ -31734,6 +34886,405 @@ func init() {
         "trace_name": "name",
         "trace_rnd_parsing": true,
         "type": "trace"
+      }
+    },
+    "filter_config": {
+      "description": "HAProxy filter instance configuration",
+      "type": "object",
+      "title": "Filter Config",
+      "required": [
+        "class"
+      ],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": [
+            "trace",
+            "http-comp-req",
+            "http-comp-res",
+            "decomp-req",
+            "decomp-res",
+            "spoe",
+            "cache-store",
+            "fcgi",
+            "bwlim-in",
+            "bwlim-out",
+            "lua"
+          ],
+          "x-nullable": false
+        },
+        "default_limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          },
+          "x-size": true
+        },
+        "default_period": {
+          "description": "The default time period used to evaluate the bandwidth limitation rate.\nIt can be specified for per-stream bandwidth limitation filters only.\nIt follows the HAProxy time format and is expressed in milliseconds.",
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            },
+            "default_limit": {
+              "required": true
+            }
+          },
+          "x-duration": true
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Filter instance identifier. Required by trace, spoe, cache-store, fcgi,\nbandwidth limitation and lua classes. It is the cache name for cache-store,\nthe FCGI application name for fcgi and the registered Lua filter name for lua.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "trace",
+                "spoe",
+                "cache-store",
+                "fcgi",
+                "bwlim-in",
+                "bwlim-out",
+                "lua"
+              ]
+            }
+          }
+        },
+        "key": {
+          "description": "A sample expression rule.\nIt describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.\nIt must be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            },
+            "limit": {
+              "required": true
+            }
+          }
+        },
+        "limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          },
+          "x-size": true
+        },
+        "lua_args": {
+          "description": "Arguments passed to the filter registered as lua.\u003cid\u003e. Their meaning is\ndefined by the Lua script.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-dependency": {
+            "class": {
+              "value": "lua"
+            }
+          },
+          "x-omitempty": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "min_size": {
+          "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          },
+          "x-size": true
+        },
+        "spoe_config": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": "spoe"
+            }
+          }
+        },
+        "spoe_engine": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "class": {
+              "value": "spoe"
+            }
+          }
+        },
+        "table": {
+          "description": "An optional table to be used instead of the default one, which is the stick-table declared in the current proxy.\nIt can be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            },
+            "limit": {
+              "required": true
+            }
+          }
+        },
+        "trace_hexdump": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          }
+        },
+        "trace_max_fwd": {
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Max Forward",
+          "x-nullable": true
+        },
+        "trace_quiet": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          }
+        },
+        "trace_rnd_forwarding": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Forwarding"
+        },
+        "trace_rnd_parsing": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Parsing"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "class": "trace",
+        "id": "name",
+        "trace_rnd_parsing": true
+      }
+    },
+    "filter_configs": {
+      "description": "HAProxy filter configurations array (corresponds to filter-config directive)",
+      "type": "array",
+      "title": "Filter Configs Array",
+      "items": {
+        "$ref": "#/definitions/filter_config"
+      }
+    },
+    "filter_rule": {
+      "description": "Ordered filter enable or disable operation",
+      "type": "object",
+      "title": "Filter Rule",
+      "required": [
+        "type",
+        "filters"
+      ],
+      "properties": {
+        "filters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/filter_selector"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "enable",
+            "disable"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "filters": [
+          {
+            "class": "trace",
+            "id": "A"
+          },
+          {
+            "class": "trace"
+          }
+        ],
+        "type": "enable"
+      }
+    },
+    "filter_rules": {
+      "description": "HAProxy filter enable/disable rules array (corresponds to filter-enable and filter-disable directives)",
+      "type": "array",
+      "title": "Filter Rules Array",
+      "items": {
+        "$ref": "#/definitions/filter_rule"
+      }
+    },
+    "filter_selector": {
+      "description": "Filter class or class/instance reference",
+      "type": "object",
+      "title": "Filter Selector",
+      "required": [
+        "class"
+      ],
+      "properties": {
+        "class": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "x-nullable": false
+        },
+        "id": {
+          "description": "Filter instance identifier. Required by trace, spoe, cache-store, fcgi,\nbandwidth limitation and lua classes.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "trace",
+                "spoe",
+                "cache-store",
+                "fcgi",
+                "bwlim-in",
+                "bwlim-out",
+                "lua"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter_sequence": {
+      "description": "Ordered filter sequence rule line",
+      "type": "object",
+      "title": "Filter Sequence",
+      "required": [
+        "side",
+        "rules"
+      ],
+      "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/filter_sequence_rule"
+          }
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "global",
+            "request",
+            "response"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "rules": [
+          {
+            "direction": "before",
+            "instance": "trace/A",
+            "target": "trace/B"
+          }
+        ],
+        "side": "request"
+      }
+    },
+    "filter_sequence_rule": {
+      "type": "object",
+      "required": [
+        "instance",
+        "direction",
+        "target"
+      ],
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "before",
+            "after"
+          ],
+          "x-nullable": false
+        },
+        "instance": {
+          "$ref": "#/definitions/filter_selector"
+        },
+        "target": {
+          "$ref": "#/definitions/filter_selector"
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter_sequences": {
+      "description": "HAProxy filter sequence lines array (corresponds to filter-sequence directive)",
+      "type": "array",
+      "title": "Filter Sequences Array",
+      "items": {
+        "$ref": "#/definitions/filter_sequence"
       }
     },
     "filters": {
@@ -31902,9 +35453,21 @@ func init() {
               "x-go-name": "CaptureList",
               "$ref": "#/definitions/captures"
             },
+            "filter_config_list": {
+              "x-go-name": "FilterConfigList",
+              "$ref": "#/definitions/filter_configs"
+            },
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_rule_list": {
+              "x-go-name": "FilterRuleList",
+              "$ref": "#/definitions/filter_rules"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "force_be_switch_list": {
               "x-go-name": "ForceBeSwitchList",
@@ -32716,6 +36279,14 @@ func init() {
         },
         "fifty_one_degrees_options": {
           "$ref": "#/definitions/fifty_one_degrees_options"
+        },
+        "filter_api": {
+          "type": "string",
+          "enum": [
+            "default",
+            "downgrade-to-legacy"
+          ],
+          "x-display-name": "Filter API"
         },
         "force_cfg_parser_pause": {
           "description": "Pause the configuration parser to simulate long reloads",
@@ -34344,6 +37915,167 @@ func init() {
         "$ref": "#/definitions/http_errors_section"
       }
     },
+    "http_hardening": {
+      "description": "Defines a named HTTP hardening profile.",
+      "type": "object",
+      "title": "HTTP Hardening",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "all": {
+          "description": "Enables or disables every hardening check.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "all_delete": {
+          "description": "Enables or disables every delete check.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "all_reject": {
+          "description": "Enables or disables every reject check.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_all_trailer_fields": {
+          "description": "Deletes all trailer fields.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_underscore_in_header_name": {
+          "description": "Deletes header fields whose name contains an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_underscore_in_trailer_name": {
+          "description": "Deletes trailer fields whose name contains an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_unregistered_header_fields": {
+          "description": "Deletes unregistered header fields.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_unregistered_trailer_fields": {
+          "description": "Deletes unregistered trailer fields.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "from": {
+          "description": "Profile whose settings are copied when this profile is declared.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "name": {
+          "description": "Name of the HTTP hardening profile. The reserved name \"auto\" cannot be declared.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "reject_content_length_leading_zero": {
+          "description": "Rejects a Content-Length value with a leading zero.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_content_length_with_te": {
+          "description": "Rejects a message carrying both Content-Length and Transfer-Encoding.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_ctl_in_header_trailer": {
+          "description": "Rejects control characters in header or trailer values.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_duplicate_host_header": {
+          "description": "Rejects duplicate Host headers.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_header_trailer_folding": {
+          "description": "Rejects folded header or trailer lines.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_lowercase_method": {
+          "description": "Rejects methods containing lowercase characters.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_underscore_in_header_name": {
+          "description": "Rejects header names containing an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_underscore_in_trailer_name": {
+          "description": "Rejects trailer names containing an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        }
+      }
+    },
+    "http_hardenings": {
+      "description": "List of HTTP hardening profiles",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/http_hardening"
+      }
+    },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
       "type": "object",
@@ -34745,6 +38477,15 @@ func init() {
           },
           "x-display-name": "Nice Value",
           "x-nullable": false
+        },
+        "no_early_hints": {
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "cache-use"
+            }
+          },
+          "x-display-name": "No Early Hints"
         },
         "normalizer": {
           "type": "string",
@@ -39601,6 +43342,11 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "http_hardening": {
+          "description": "Name of the http-hardening profile applied to traffic exchanged with this server,\nor \"auto\" to use no explicit profile.\n",
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "idle_ping": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -39765,6 +43511,14 @@ func init() {
           "type": "string",
           "enum": [
             "shutdown-backup-sessions"
+          ]
+        },
+        "pha": {
+          "description": "TLS post-handshake authentication toward the backend. Omitted means unspecified;\nenabled emits \"pha\", disabled emits \"no-pha\".\n",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
           ]
         },
         "pool_conn_name": {
@@ -44569,6 +48323,15 @@ func init() {
       "name": "Filter"
     },
     {
+      "name": "FilterConfig"
+    },
+    {
+      "name": "FilterRule"
+    },
+    {
+      "name": "FilterSequence"
+    },
+    {
       "description": "Managing frontend configuration (advanced mode)",
       "name": "Frontend"
     },
@@ -44584,6 +48347,9 @@ func init() {
     },
     {
       "name": "HTTPErrors"
+    },
+    {
+      "name": "HTTPHardening"
     },
     {
       "name": "HTTPRequestRule"
@@ -46735,6 +50501,1566 @@ func init() {
           },
           "204": {
             "description": "ACL line deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_configs": {
+      "get": {
+        "description": "Returns all Filter Configs that are configured in specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return an array of all Filter Configs",
+        "operationId": "getAllFilterConfigBackend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Configs with the list given in parameter",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config list",
+        "operationId": "replaceAllFilterConfigBackend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Config lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_configs/{index}": {
+      "get": {
+        "description": "Returns one Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return one Filter Config",
+        "operationId": "getFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config",
+        "operationId": "replaceFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Config replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Config of the specified class in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Add a new Filter Config",
+        "operationId": "createFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Config created",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Config configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Delete a Filter Config",
+        "operationId": "deleteFilterConfigBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Config deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_rules": {
+      "get": {
+        "description": "Returns all Filter Rules that are configured in specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return an array of all Filter Rules",
+        "operationId": "getAllFilterRuleBackend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Rules with the list given in parameter",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule list",
+        "operationId": "replaceAllFilterRuleBackend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_rules/{index}": {
+      "get": {
+        "description": "Returns one Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return one Filter Rule",
+        "operationId": "getFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule",
+        "operationId": "replaceFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Rule in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Add a new Filter Rule",
+        "operationId": "createFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Rule created",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Delete a Filter Rule",
+        "operationId": "deleteFilterRuleBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_sequences": {
+      "get": {
+        "description": "Returns all Filter Sequences that are configured in specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return an array of all Filter Sequences",
+        "operationId": "getAllFilterSequenceBackend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Sequences with the list given in parameter",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence list",
+        "operationId": "replaceAllFilterSequenceBackend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Sequence lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/backends/{parent_name}/filter_sequences/{index}": {
+      "get": {
+        "description": "Returns one Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return one Filter Sequence",
+        "operationId": "getFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence",
+        "operationId": "replaceFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Sequence replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Sequence in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Add a new Filter Sequence",
+        "operationId": "createFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Sequence created",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Sequence configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Delete a Filter Sequence",
+        "operationId": "deleteFilterSequenceBackend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Sequence deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -56109,6 +61435,1566 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_configs": {
+      "get": {
+        "description": "Returns all Filter Configs that are configured in specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return an array of all Filter Configs",
+        "operationId": "getAllFilterConfigDefaults",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Configs with the list given in parameter",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config list",
+        "operationId": "replaceAllFilterConfigDefaults",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Config lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_configs/{index}": {
+      "get": {
+        "description": "Returns one Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return one Filter Config",
+        "operationId": "getFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config",
+        "operationId": "replaceFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Config replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Config of the specified class in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Add a new Filter Config",
+        "operationId": "createFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Config created",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Config configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Delete a Filter Config",
+        "operationId": "deleteFilterConfigDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Config deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_rules": {
+      "get": {
+        "description": "Returns all Filter Rules that are configured in specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return an array of all Filter Rules",
+        "operationId": "getAllFilterRuleDefaults",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Rules with the list given in parameter",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule list",
+        "operationId": "replaceAllFilterRuleDefaults",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_rules/{index}": {
+      "get": {
+        "description": "Returns one Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return one Filter Rule",
+        "operationId": "getFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule",
+        "operationId": "replaceFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Rule in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Add a new Filter Rule",
+        "operationId": "createFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Rule created",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Delete a Filter Rule",
+        "operationId": "deleteFilterRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_sequences": {
+      "get": {
+        "description": "Returns all Filter Sequences that are configured in specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return an array of all Filter Sequences",
+        "operationId": "getAllFilterSequenceDefaults",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Sequences with the list given in parameter",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence list",
+        "operationId": "replaceAllFilterSequenceDefaults",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Sequence lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/filter_sequences/{index}": {
+      "get": {
+        "description": "Returns one Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return one Filter Sequence",
+        "operationId": "getFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence",
+        "operationId": "replaceFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Sequence replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Sequence in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Add a new Filter Sequence",
+        "operationId": "createFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Sequence created",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Sequence configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Delete a Filter Sequence",
+        "operationId": "deleteFilterSequenceDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Sequence deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules": {
       "get": {
         "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
@@ -64643,6 +71529,1566 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_configs": {
+      "get": {
+        "description": "Returns all Filter Configs that are configured in specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return an array of all Filter Configs",
+        "operationId": "getAllFilterConfigFrontend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Configs with the list given in parameter",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config list",
+        "operationId": "replaceAllFilterConfigFrontend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Config lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_configs"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_configs/{index}": {
+      "get": {
+        "description": "Returns one Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Return one Filter Config",
+        "operationId": "getFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Config configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Replace a Filter Config",
+        "operationId": "replaceFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Config replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Config of the specified class in the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Add a new Filter Config",
+        "operationId": "createFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Config created",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_config"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Config configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterConfig"
+        ],
+        "summary": "Delete a Filter Config",
+        "operationId": "deleteFilterConfigFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Config Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Config deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_rules": {
+      "get": {
+        "description": "Returns all Filter Rules that are configured in specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return an array of all Filter Rules",
+        "operationId": "getAllFilterRuleFrontend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Rules with the list given in parameter",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule list",
+        "operationId": "replaceAllFilterRuleFrontend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Rule lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_rules/{index}": {
+      "get": {
+        "description": "Returns one Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Return one Filter Rule",
+        "operationId": "getFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Replace a Filter Rule",
+        "operationId": "replaceFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Rule in the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Add a new Filter Rule",
+        "operationId": "createFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Rule created",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterRule"
+        ],
+        "summary": "Delete a Filter Rule",
+        "operationId": "deleteFilterRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_sequences": {
+      "get": {
+        "description": "Returns all Filter Sequences that are configured in specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return an array of all Filter Sequences",
+        "operationId": "getAllFilterSequenceFrontend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of Filter Sequences with the list given in parameter",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence list",
+        "operationId": "replaceAllFilterSequenceFrontend",
+        "parameters": [
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All Filter Sequence lines replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequences"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/filter_sequences/{index}": {
+      "get": {
+        "description": "Returns one Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Return one Filter Sequence",
+        "operationId": "getFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Filter Sequence configuration by it's index in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Replace a Filter Sequence",
+        "operationId": "replaceFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter Sequence replaced",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Filter Sequence in the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Add a new Filter Sequence",
+        "operationId": "createFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Filter Sequence created",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter_sequence"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Filter Sequence configuration by it's index from the specified parent.",
+        "tags": [
+          "FilterSequence"
+        ],
+        "summary": "Delete a Filter Sequence",
+        "operationId": "deleteFilterSequenceFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Filter Sequence Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "pattern": "^[^\\r\\n\u003c\u003e*;$#\u0026{}\"]+$",
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Filter Sequence deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/frontends/{parent_name}/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -72477,6 +80923,388 @@ func init() {
           },
           "204": {
             "description": "http-error section deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_hardenings": {
+      "get": {
+        "description": "Returns an array of all the configured http_hardening sections in HAProxy",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Return all the HTTP Hardening profiles",
+        "operationId": "getHTTPHardenings",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_hardenings"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new http_hardening section",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Add a new HTTP Hardening profile",
+        "operationId": "createHTTPHardening",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Hardening profile created",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_hardenings/{name}": {
+      "get": {
+        "description": "Find an http_hardening section by its name",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Return an HTTP Hardening profile",
+        "operationId": "getHTTPHardening",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http_hardening name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies an http_hardening's configuration by its name",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Modify an HTTP Hardening profile",
+        "operationId": "editHTTPHardening",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http_hardening name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "http_hardening configuration updated",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_hardening"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an http_hardening section from the configuration",
+        "tags": [
+          "HTTPHardening"
+        ],
+        "summary": "Delete an HTTP Hardening profile",
+        "operationId": "deleteHTTPHardening",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http_hardening name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "http_hardening deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -88939,6 +97767,29 @@ func init() {
       },
       "x-go-name": "IgnorePersist"
     },
+    "CacheEarlyHints": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off",
+            "only"
+          ]
+        },
+        "ratio": {
+          "type": "integer",
+          "maximum": 99,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      },
+      "x-nullable": true
+    },
     "CookieAttrItems0": {
       "type": "object",
       "properties": {
@@ -90154,9 +99005,21 @@ func init() {
               "x-go-name": "AclList",
               "$ref": "#/definitions/acls"
             },
+            "filter_config_list": {
+              "x-go-name": "FilterConfigList",
+              "$ref": "#/definitions/filter_configs"
+            },
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_rule_list": {
+              "x-go-name": "FilterRuleList",
+              "$ref": "#/definitions/filter_rules"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -91357,6 +100220,11 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
         },
+        "http_hardening": {
+          "description": "Name of the http-hardening profile applied to connections accepted on this bind,\nor \"auto\" to use no explicit profile.\n",
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "id": {
           "type": "string",
           "x-display-name": "Socket ID"
@@ -91768,6 +100636,29 @@ func init() {
         "name"
       ],
       "properties": {
+        "early_hints": {
+          "type": "object",
+          "required": [
+            "mode"
+          ],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "on",
+                "off",
+                "only"
+              ]
+            },
+            "ratio": {
+              "type": "integer",
+              "maximum": 99,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          },
+          "x-nullable": true
+        },
         "max_age": {
           "type": "integer",
           "x-default-unit": "s",
@@ -92433,6 +101324,18 @@ func init() {
             "acl_list": {
               "x-go-name": "AclList",
               "$ref": "#/definitions/acls"
+            },
+            "filter_config_list": {
+              "x-go-name": "FilterConfigList",
+              "$ref": "#/definitions/filter_configs"
+            },
+            "filter_rule_list": {
+              "x-go-name": "FilterRuleList",
+              "$ref": "#/definitions/filter_rules"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "http_after_response_rule_list": {
               "x-go-name": "HTTPAfterResponseRuleList",
@@ -94031,6 +102934,14 @@ func init() {
             }
           }
         },
+        "trace_quiet": {
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          }
+        },
         "trace_rnd_forwarding": {
           "type": "boolean",
           "x-dependency": {
@@ -94071,6 +102982,405 @@ func init() {
         "trace_name": "name",
         "trace_rnd_parsing": true,
         "type": "trace"
+      }
+    },
+    "filter_config": {
+      "description": "HAProxy filter instance configuration",
+      "type": "object",
+      "title": "Filter Config",
+      "required": [
+        "class"
+      ],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": [
+            "trace",
+            "http-comp-req",
+            "http-comp-res",
+            "decomp-req",
+            "decomp-res",
+            "spoe",
+            "cache-store",
+            "fcgi",
+            "bwlim-in",
+            "bwlim-out",
+            "lua"
+          ],
+          "x-nullable": false
+        },
+        "default_limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          },
+          "x-size": true
+        },
+        "default_period": {
+          "description": "The default time period used to evaluate the bandwidth limitation rate.\nIt can be specified for per-stream bandwidth limitation filters only.\nIt follows the HAProxy time format and is expressed in milliseconds.",
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            },
+            "default_limit": {
+              "required": true
+            }
+          },
+          "x-duration": true
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Filter instance identifier. Required by trace, spoe, cache-store, fcgi,\nbandwidth limitation and lua classes. It is the cache name for cache-store,\nthe FCGI application name for fcgi and the registered Lua filter name for lua.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "trace",
+                "spoe",
+                "cache-store",
+                "fcgi",
+                "bwlim-in",
+                "bwlim-out",
+                "lua"
+              ]
+            }
+          }
+        },
+        "key": {
+          "description": "A sample expression rule.\nIt describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.\nIt must be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            },
+            "limit": {
+              "required": true
+            }
+          }
+        },
+        "limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          },
+          "x-size": true
+        },
+        "lua_args": {
+          "description": "Arguments passed to the filter registered as lua.\u003cid\u003e. Their meaning is\ndefined by the Lua script.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-dependency": {
+            "class": {
+              "value": "lua"
+            }
+          },
+          "x-omitempty": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "min_size": {
+          "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          },
+          "x-size": true
+        },
+        "spoe_config": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": "spoe"
+            }
+          }
+        },
+        "spoe_engine": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "class": {
+              "value": "spoe"
+            }
+          }
+        },
+        "table": {
+          "description": "An optional table to be used instead of the default one, which is the stick-table declared in the current proxy.\nIt can be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            },
+            "limit": {
+              "required": true
+            }
+          }
+        },
+        "trace_hexdump": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          }
+        },
+        "trace_max_fwd": {
+          "type": "integer",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Max Forward",
+          "x-nullable": true
+        },
+        "trace_quiet": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          }
+        },
+        "trace_rnd_forwarding": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Forwarding"
+        },
+        "trace_rnd_parsing": {
+          "type": "boolean",
+          "x-dependency": {
+            "class": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Parsing"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "class": "trace",
+        "id": "name",
+        "trace_rnd_parsing": true
+      }
+    },
+    "filter_configs": {
+      "description": "HAProxy filter configurations array (corresponds to filter-config directive)",
+      "type": "array",
+      "title": "Filter Configs Array",
+      "items": {
+        "$ref": "#/definitions/filter_config"
+      }
+    },
+    "filter_rule": {
+      "description": "Ordered filter enable or disable operation",
+      "type": "object",
+      "title": "Filter Rule",
+      "required": [
+        "type",
+        "filters"
+      ],
+      "properties": {
+        "filters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/filter_selector"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "enable",
+            "disable"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "filters": [
+          {
+            "class": "trace",
+            "id": "A"
+          },
+          {
+            "class": "trace"
+          }
+        ],
+        "type": "enable"
+      }
+    },
+    "filter_rules": {
+      "description": "HAProxy filter enable/disable rules array (corresponds to filter-enable and filter-disable directives)",
+      "type": "array",
+      "title": "Filter Rules Array",
+      "items": {
+        "$ref": "#/definitions/filter_rule"
+      }
+    },
+    "filter_selector": {
+      "description": "Filter class or class/instance reference",
+      "type": "object",
+      "title": "Filter Selector",
+      "required": [
+        "class"
+      ],
+      "properties": {
+        "class": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "x-nullable": false
+        },
+        "id": {
+          "description": "Filter instance identifier. Required by trace, spoe, cache-store, fcgi,\nbandwidth limitation and lua classes.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "x-dependency": {
+            "class": {
+              "required": true,
+              "value": [
+                "trace",
+                "spoe",
+                "cache-store",
+                "fcgi",
+                "bwlim-in",
+                "bwlim-out",
+                "lua"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter_sequence": {
+      "description": "Ordered filter sequence rule line",
+      "type": "object",
+      "title": "Filter Sequence",
+      "required": [
+        "side",
+        "rules"
+      ],
+      "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/filter_sequence_rule"
+          }
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "global",
+            "request",
+            "response"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "rules": [
+          {
+            "direction": "before",
+            "instance": "trace/A",
+            "target": "trace/B"
+          }
+        ],
+        "side": "request"
+      }
+    },
+    "filter_sequence_rule": {
+      "type": "object",
+      "required": [
+        "instance",
+        "direction",
+        "target"
+      ],
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "before",
+            "after"
+          ],
+          "x-nullable": false
+        },
+        "instance": {
+          "$ref": "#/definitions/filter_selector"
+        },
+        "target": {
+          "$ref": "#/definitions/filter_selector"
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter_sequences": {
+      "description": "HAProxy filter sequence lines array (corresponds to filter-sequence directive)",
+      "type": "array",
+      "title": "Filter Sequences Array",
+      "items": {
+        "$ref": "#/definitions/filter_sequence"
       }
     },
     "filters": {
@@ -94239,9 +103549,21 @@ func init() {
               "x-go-name": "CaptureList",
               "$ref": "#/definitions/captures"
             },
+            "filter_config_list": {
+              "x-go-name": "FilterConfigList",
+              "$ref": "#/definitions/filter_configs"
+            },
             "filter_list": {
               "x-go-name": "FilterList",
               "$ref": "#/definitions/filters"
+            },
+            "filter_rule_list": {
+              "x-go-name": "FilterRuleList",
+              "$ref": "#/definitions/filter_rules"
+            },
+            "filter_sequence_list": {
+              "x-go-name": "FilterSequenceList",
+              "$ref": "#/definitions/filter_sequences"
             },
             "force_be_switch_list": {
               "x-go-name": "ForceBeSwitchList",
@@ -95022,6 +104344,14 @@ func init() {
         },
         "fifty_one_degrees_options": {
           "$ref": "#/definitions/fifty_one_degrees_options"
+        },
+        "filter_api": {
+          "type": "string",
+          "enum": [
+            "default",
+            "downgrade-to-legacy"
+          ],
+          "x-display-name": "Filter API"
         },
         "force_cfg_parser_pause": {
           "description": "Pause the configuration parser to simulate long reloads",
@@ -96577,6 +105907,167 @@ func init() {
         "$ref": "#/definitions/http_errors_section"
       }
     },
+    "http_hardening": {
+      "description": "Defines a named HTTP hardening profile.",
+      "type": "object",
+      "title": "HTTP Hardening",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "all": {
+          "description": "Enables or disables every hardening check.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "all_delete": {
+          "description": "Enables or disables every delete check.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "all_reject": {
+          "description": "Enables or disables every reject check.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_all_trailer_fields": {
+          "description": "Deletes all trailer fields.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_underscore_in_header_name": {
+          "description": "Deletes header fields whose name contains an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_underscore_in_trailer_name": {
+          "description": "Deletes trailer fields whose name contains an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_unregistered_header_fields": {
+          "description": "Deletes unregistered header fields.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "delete_unregistered_trailer_fields": {
+          "description": "Deletes unregistered trailer fields.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "from": {
+          "description": "Profile whose settings are copied when this profile is declared.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "name": {
+          "description": "Name of the HTTP hardening profile. The reserved name \"auto\" cannot be declared.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "reject_content_length_leading_zero": {
+          "description": "Rejects a Content-Length value with a leading zero.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_content_length_with_te": {
+          "description": "Rejects a message carrying both Content-Length and Transfer-Encoding.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_ctl_in_header_trailer": {
+          "description": "Rejects control characters in header or trailer values.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_duplicate_host_header": {
+          "description": "Rejects duplicate Host headers.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_header_trailer_folding": {
+          "description": "Rejects folded header or trailer lines.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_lowercase_method": {
+          "description": "Rejects methods containing lowercase characters.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_underscore_in_header_name": {
+          "description": "Rejects header names containing an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "reject_underscore_in_trailer_name": {
+          "description": "Rejects trailer names containing an underscore.",
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ]
+        }
+      }
+    },
+    "http_hardenings": {
+      "description": "List of HTTP hardening profiles",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/http_hardening"
+      }
+    },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
       "type": "object",
@@ -96978,6 +106469,15 @@ func init() {
           },
           "x-display-name": "Nice Value",
           "x-nullable": false
+        },
+        "no_early_hints": {
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "cache-use"
+            }
+          },
+          "x-display-name": "No Early Hints"
         },
         "normalizer": {
           "type": "string",
@@ -101834,6 +111334,11 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "http_hardening": {
+          "description": "Name of the http-hardening profile applied to traffic exchanged with this server,\nor \"auto\" to use no explicit profile.\n",
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "idle_ping": {
           "type": "integer",
           "minimum": 0,
@@ -102000,6 +111505,14 @@ func init() {
           "type": "string",
           "enum": [
             "shutdown-backup-sessions"
+          ]
+        },
+        "pha": {
+          "description": "TLS post-handshake authentication toward the backend. Omitted means unspecified;\nenabled emits \"pha\", disabled emits \"no-pha\".\n",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
           ]
         },
         "pool_conn_name": {
@@ -106678,6 +116191,15 @@ func init() {
       "name": "Filter"
     },
     {
+      "name": "FilterConfig"
+    },
+    {
+      "name": "FilterRule"
+    },
+    {
+      "name": "FilterSequence"
+    },
+    {
       "description": "Managing frontend configuration (advanced mode)",
       "name": "Frontend"
     },
@@ -106693,6 +116215,9 @@ func init() {
     },
     {
       "name": "HTTPErrors"
+    },
+    {
+      "name": "HTTPHardening"
     },
     {
       "name": "HTTPRequestRule"

@@ -424,8 +424,14 @@ components:
         - properties:
             acl_list:
               $ref: '#/components/schemas/acls'
+            filter_config_list:
+              $ref: '#/components/schemas/filter_configs'
             filter_list:
               $ref: '#/components/schemas/filters'
+            filter_rule_list:
+              $ref: '#/components/schemas/filter_rules'
+            filter_sequence_list:
+              $ref: '#/components/schemas/filter_sequences'
             http_after_response_rule_list:
               $ref: '#/components/schemas/http_after_response_rules'
             http_check_list:
@@ -1301,6 +1307,12 @@ components:
         guid_prefix:
           pattern: ^[A-Za-z0-9-_.:]+$
           type: string
+        http_hardening:
+          description: |
+            Name of the http-hardening profile applied to connections accepted on this bind,
+            or "auto" to use no explicit profile.
+          pattern: ^[^\s]+$
+          type: string
         id:
           type: string
           x-display-name: Socket ID
@@ -1596,6 +1608,23 @@ components:
     cache:
       description: HAPRoxy Cache section
       properties:
+        early_hints:
+          nullable: true
+          properties:
+            mode:
+              enum:
+                - "on"
+                - "off"
+                - only
+              type: string
+            ratio:
+              maximum: 99
+              minimum: 1
+              nullable: true
+              type: integer
+          required:
+            - mode
+          type: object
         max_age:
           type: integer
           x-default-unit: s
@@ -2119,6 +2148,12 @@ components:
         - properties:
             acl_list:
               $ref: '#/components/schemas/acls'
+            filter_config_list:
+              $ref: '#/components/schemas/filter_configs'
+            filter_rule_list:
+              $ref: '#/components/schemas/filter_rules'
+            filter_sequence_list:
+              $ref: '#/components/schemas/filter_sequences'
             http_after_response_rule_list:
               $ref: '#/components/schemas/http_after_response_rules'
             http_check_list:
@@ -3357,6 +3392,11 @@ components:
           x-dependency:
             type:
               value: trace
+        trace_quiet:
+          type: boolean
+          x-dependency:
+            type:
+              value: trace
         trace_rnd_forwarding:
           type: boolean
           x-dependency:
@@ -3389,6 +3429,310 @@ components:
       x-go-type: models.Filter
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
+    filter_config:
+      additionalProperties: false
+      description: HAProxy filter instance configuration
+      example:
+        class: trace
+        id: name
+        trace_rnd_parsing: true
+      properties:
+        class:
+          enum:
+            - trace
+            - http-comp-req
+            - http-comp-res
+            - decomp-req
+            - decomp-res
+            - spoe
+            - cache-store
+            - fcgi
+            - bwlim-in
+            - bwlim-out
+            - lua
+          type: string
+        default_limit:
+          description: |-
+            The max number of bytes that can be forwarded over the period.
+            The value must be specified for per-stream and shared bandwidth limitation filters.
+            It follows the HAProxy size format and is expressed in bytes.
+          type: integer
+          x-dependency:
+            class:
+              required: true
+              value:
+                - bwlim-in
+                - bwlim-out
+          x-size: true
+        default_period:
+          description: |-
+            The default time period used to evaluate the bandwidth limitation rate.
+            It can be specified for per-stream bandwidth limitation filters only.
+            It follows the HAProxy time format and is expressed in milliseconds.
+          type: integer
+          x-default-unit: ms
+          x-dependency:
+            class:
+              required: true
+              value:
+                - bwlim-in
+                - bwlim-out
+            default_limit:
+              required: true
+          x-duration: true
+        enabled:
+          type: boolean
+        id:
+          description: |-
+            Filter instance identifier. Required by trace, spoe, cache-store, fcgi,
+            bandwidth limitation and lua classes. It is the cache name for cache-store,
+            the FCGI application name for fcgi and the registered Lua filter name for lua.
+          pattern: ^[A-Za-z0-9._-]+$
+          type: string
+          x-dependency:
+            class:
+              required: true
+              value:
+                - trace
+                - spoe
+                - cache-store
+                - fcgi
+                - bwlim-in
+                - bwlim-out
+                - lua
+        key:
+          description: |-
+            A sample expression rule.
+            It describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.
+            It must be specified for shared bandwidth limitation filters only.
+          type: string
+          x-dependency:
+            class:
+              required: true
+              value:
+                - bwlim-in
+                - bwlim-out
+            limit:
+              required: true
+        limit:
+          description: |-
+            The max number of bytes that can be forwarded over the period.
+            The value must be specified for per-stream and shared bandwidth limitation filters.
+            It follows the HAProxy size format and is expressed in bytes.
+          type: integer
+          x-dependency:
+            class:
+              required: true
+              value:
+                - bwlim-in
+                - bwlim-out
+          x-size: true
+        lua_args:
+          description: |-
+            Arguments passed to the filter registered as lua.<id>. Their meaning is
+            defined by the Lua script.
+          items:
+            type: string
+          type: array
+          x-dependency:
+            class:
+              value: lua
+          x-omitempty: true
+        metadata:
+          additionalProperties:
+            type: object
+        min_size:
+          description: |-
+            The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.
+            This value can be specified for per-stream and shared bandwidth limitation filters.
+            It follows the HAProxy size format and is expressed in bytes.
+          type: integer
+          x-dependency:
+            class:
+              required: true
+              value:
+                - bwlim-in
+                - bwlim-out
+          x-size: true
+        spoe_config:
+          pattern: ^[^\s]+$
+          type: string
+          x-dependency:
+            class:
+              required: true
+              value: spoe
+        spoe_engine:
+          pattern: ^[^\s]+$
+          type: string
+          x-dependency:
+            class:
+              value: spoe
+        table:
+          description: |-
+            An optional table to be used instead of the default one, which is the stick-table declared in the current proxy.
+            It can be specified for shared bandwidth limitation filters only.
+          type: string
+          x-dependency:
+            class:
+              required: true
+              value:
+                - bwlim-in
+                - bwlim-out
+            limit:
+              required: true
+        trace_hexdump:
+          type: boolean
+          x-dependency:
+            class:
+              value: trace
+        trace_max_fwd:
+          nullable: true
+          type: integer
+          x-dependency:
+            class:
+              value: trace
+          x-display-name: Trace Max Forward
+        trace_quiet:
+          type: boolean
+          x-dependency:
+            class:
+              value: trace
+        trace_rnd_forwarding:
+          type: boolean
+          x-dependency:
+            class:
+              value: trace
+          x-display-name: Trace Random Forwarding
+        trace_rnd_parsing:
+          type: boolean
+          x-dependency:
+            class:
+              value: trace
+          x-display-name: Trace Random Parsing
+      required:
+        - class
+      title: Filter Config
+      type: object
+    filter_configs:
+      description: HAProxy filter configurations array (corresponds to filter-config directive)
+      items:
+        $ref: '#/components/schemas/filter_config'
+      title: Filter Configs Array
+      type: array
+    filter_rule:
+      additionalProperties: false
+      description: Ordered filter enable or disable operation
+      example:
+        filters:
+          - class: trace
+            id: A
+          - class: trace
+        type: enable
+      properties:
+        filters:
+          items:
+            $ref: '#/components/schemas/filter_selector'
+          minItems: 1
+          type: array
+        metadata:
+          additionalProperties:
+            type: object
+        type:
+          enum:
+            - enable
+            - disable
+          type: string
+      required:
+        - type
+        - filters
+      title: Filter Rule
+      type: object
+    filter_rules:
+      description: HAProxy filter enable/disable rules array (corresponds to filter-enable and filter-disable directives)
+      items:
+        $ref: '#/components/schemas/filter_rule'
+      title: Filter Rules Array
+      type: array
+    filter_selector:
+      additionalProperties: false
+      description: Filter class or class/instance reference
+      properties:
+        class:
+          pattern: ^[A-Za-z0-9._-]+$
+          type: string
+        id:
+          description: |-
+            Filter instance identifier. Required by trace, spoe, cache-store, fcgi,
+            bandwidth limitation and lua classes.
+          pattern: ^[A-Za-z0-9._-]+$
+          type: string
+          x-dependency:
+            class:
+              required: true
+              value:
+                - trace
+                - spoe
+                - cache-store
+                - fcgi
+                - bwlim-in
+                - bwlim-out
+                - lua
+      required:
+        - class
+      title: Filter Selector
+      type: object
+    filter_sequence:
+      additionalProperties: false
+      description: Ordered filter sequence rule line
+      example:
+        rules:
+          - direction: before
+            instance: trace/A
+            target: trace/B
+        side: request
+      properties:
+        metadata:
+          additionalProperties:
+            type: object
+        rules:
+          items:
+            $ref: '#/components/schemas/filter_sequence_rule'
+          minItems: 1
+          type: array
+        side:
+          enum:
+            - global
+            - request
+            - response
+          type: string
+      required:
+        - side
+        - rules
+      title: Filter Sequence
+      type: object
+    filter_sequence_rule:
+      additionalProperties: false
+      properties:
+        direction:
+          enum:
+            - before
+            - after
+          type: string
+        instance:
+          $ref: '#/components/schemas/filter_selector'
+        target:
+          $ref: '#/components/schemas/filter_selector'
+      required:
+        - instance
+        - direction
+        - target
+      type: object
+    filter_sequences:
+      description: HAProxy filter sequence lines array (corresponds to filter-sequence directive)
+      items:
+        $ref: '#/components/schemas/filter_sequence'
+      title: Filter Sequences Array
+      type: array
     filters:
       description: HAProxy filters array (corresponds to filter directive)
       items:
@@ -3514,8 +3858,14 @@ components:
                 $ref: '#/components/schemas/bind'
             capture_list:
               $ref: '#/components/schemas/captures'
+            filter_config_list:
+              $ref: '#/components/schemas/filter_configs'
             filter_list:
               $ref: '#/components/schemas/filters'
+            filter_rule_list:
+              $ref: '#/components/schemas/filter_rules'
+            filter_sequence_list:
+              $ref: '#/components/schemas/filter_sequences'
             force_be_switch_list:
               $ref: '#/components/schemas/force_be_switches'
             http_after_response_rule_list:
@@ -4124,6 +4474,12 @@ components:
           x-display-name: External Check
         fifty_one_degrees_options:
           $ref: '#/components/schemas/fifty_one_degrees_options'
+        filter_api:
+          enum:
+            - default
+            - downgrade-to-legacy
+          type: string
+          x-display-name: Filter API
         force_cfg_parser_pause:
           description: Pause the configuration parser to simulate long reloads
           minimum: 0
@@ -5324,6 +5680,125 @@ components:
       x-go-type: models.HTTPErrorsSections
       x-go-type-import:
         path: github.com/haproxytech/client-native/v6/models
+    http_hardening:
+      description: Defines a named HTTP hardening profile.
+      properties:
+        all:
+          description: Enables or disables every hardening check.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        all_delete:
+          description: Enables or disables every delete check.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        all_reject:
+          description: Enables or disables every reject check.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        delete_all_trailer_fields:
+          description: Deletes all trailer fields.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        delete_underscore_in_header_name:
+          description: Deletes header fields whose name contains an underscore.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        delete_underscore_in_trailer_name:
+          description: Deletes trailer fields whose name contains an underscore.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        delete_unregistered_header_fields:
+          description: Deletes unregistered header fields.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        delete_unregistered_trailer_fields:
+          description: Deletes unregistered trailer fields.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        from:
+          description: Profile whose settings are copied when this profile is declared.
+          pattern: ^[A-Za-z0-9-_.:]+$
+          type: string
+        metadata:
+          additionalProperties:
+            type: object
+        name:
+          description: Name of the HTTP hardening profile. The reserved name "auto" cannot be declared.
+          pattern: ^[A-Za-z0-9-_.:]+$
+          type: string
+        reject_content_length_leading_zero:
+          description: Rejects a Content-Length value with a leading zero.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_content_length_with_te:
+          description: Rejects a message carrying both Content-Length and Transfer-Encoding.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_ctl_in_header_trailer:
+          description: Rejects control characters in header or trailer values.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_duplicate_host_header:
+          description: Rejects duplicate Host headers.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_header_trailer_folding:
+          description: Rejects folded header or trailer lines.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_lowercase_method:
+          description: Rejects methods containing lowercase characters.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_underscore_in_header_name:
+          description: Rejects header names containing an underscore.
+          enum:
+            - "on"
+            - "off"
+          type: string
+        reject_underscore_in_trailer_name:
+          description: Rejects trailer names containing an underscore.
+          enum:
+            - "on"
+            - "off"
+          type: string
+      required:
+        - name
+      title: HTTP Hardening
+      type: object
+    http_hardenings:
+      description: List of HTTP hardening profiles
+      items:
+        $ref: '#/components/schemas/http_hardening'
+      type: array
     http_request_rule:
       additionalProperties: false
       description: HAProxy HTTP request rule configuration (corresponds to http-request directives)
@@ -5617,6 +6092,12 @@ components:
               required: true
               value: set-nice
           x-display-name: Nice Value
+        no_early_hints:
+          type: boolean
+          x-dependency:
+            type:
+              value: cache-use
+          x-display-name: No Early Hints
         normalizer:
           enum:
             - fragment-encode
@@ -9305,6 +9786,12 @@ components:
           minimum: 1
           nullable: true
           type: integer
+        http_hardening:
+          description: |
+            Name of the http-hardening profile applied to traffic exchanged with this server,
+            or "auto" to use no explicit profile.
+          pattern: ^[^\s]+$
+          type: string
         idle_ping:
           minimum: 0
           nullable: true
@@ -9433,6 +9920,14 @@ components:
         on-marked-up:
           enum:
             - shutdown-backup-sessions
+          type: string
+        pha:
+          description: |
+            TLS post-handshake authentication toward the backend. Omitted means unspecified;
+            enabled emits "pha", disabled emits "no-pha".
+          enum:
+            - enabled
+            - disabled
           type: string
         pool_conn_name:
           pattern: ^[^\s]+$
