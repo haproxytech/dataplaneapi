@@ -1,0 +1,16 @@
+{
+  "side": "response",
+  "rules": [
+    {
+      "instance": {
+        "class": "trace",
+        "id": "B"
+      },
+      "direction": "after",
+      "target": {
+        "class": "trace",
+        "id": "A"
+      }
+    }
+  ]
+}

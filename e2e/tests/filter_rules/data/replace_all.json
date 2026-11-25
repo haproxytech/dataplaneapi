@@ -1,0 +1,20 @@
+[
+  {
+    "type": "enable",
+    "filters": [
+      {
+        "class": "trace",
+        "id": "B"
+      }
+    ]
+  },
+  {
+    "type": "disable",
+    "filters": [
+      {
+        "class": "trace",
+        "id": "A"
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "side": "global",
+  "rules": [
+    {
+      "instance": {
+        "class": "trace",
+        "id": "A"
+      },
+      "direction": "before",
+      "target": {
+        "class": "trace",
+        "id": "B"
+      }
+    }
+  ]
+}

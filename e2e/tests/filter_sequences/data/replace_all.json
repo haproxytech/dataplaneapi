@@ -1,0 +1,34 @@
+[
+  {
+    "side": "request",
+    "rules": [
+      {
+        "instance": {
+          "class": "trace",
+          "id": "A"
+        },
+        "direction": "before",
+        "target": {
+          "class": "trace",
+          "id": "B"
+        }
+      }
+    ]
+  },
+  {
+    "side": "response",
+    "rules": [
+      {
+        "instance": {
+          "class": "trace",
+          "id": "C"
+        },
+        "direction": "after",
+        "target": {
+          "class": "trace",
+          "id": "A"
+        }
+      }
+    ]
+  }
+]

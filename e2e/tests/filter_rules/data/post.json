@@ -1,0 +1,9 @@
+{
+  "type": "disable",
+  "filters": [
+    {
+      "class": "trace",
+      "id": "A"
+    }
+  ]
+}
