@@ -40,6 +40,9 @@ import (
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/dgram_bind"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/fcgi_app"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/filter"
+	"github.com/haproxytech/dataplaneapi/handlers/configuration/filter_config"
+	"github.com/haproxytech/dataplaneapi/handlers/configuration/filter_rule"
+	"github.com/haproxytech/dataplaneapi/handlers/configuration/filter_sequence"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/force_be_switch"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/frontend"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/global"
@@ -172,6 +175,9 @@ func NewRouter(opts Options) (http.Handler, error) {
 		func() error { return dgram_bind.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return fcgi_app.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return filter.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
+		func() error { return filter_config.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
+		func() error { return filter_rule.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
+		func() error { return filter_sequence.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return force_be_switch.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return frontend.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return global.RegisterRouter(r, opts.Client, opts.ReloadAgent) },

@@ -3613,12 +3613,18 @@ components:
         - class
       title: Filter Config
       type: object
+      x-go-type: models.FilterConfig
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     filter_configs:
       description: HAProxy filter configurations array (corresponds to filter-config directive)
       items:
         $ref: '#/components/schemas/filter_config'
       title: Filter Configs Array
       type: array
+      x-go-type: models.FilterConfigs
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     filter_rule:
       additionalProperties: false
       description: Ordered filter enable or disable operation
@@ -3647,12 +3653,18 @@ components:
         - filters
       title: Filter Rule
       type: object
+      x-go-type: models.FilterRule
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     filter_rules:
       description: HAProxy filter enable/disable rules array (corresponds to filter-enable and filter-disable directives)
       items:
         $ref: '#/components/schemas/filter_rule'
       title: Filter Rules Array
       type: array
+      x-go-type: models.FilterRules
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     filter_selector:
       additionalProperties: false
       description: Filter class or class/instance reference
@@ -3710,6 +3722,9 @@ components:
         - rules
       title: Filter Sequence
       type: object
+      x-go-type: models.FilterSequence
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     filter_sequence_rule:
       additionalProperties: false
       properties:
@@ -3733,6 +3748,9 @@ components:
         $ref: '#/components/schemas/filter_sequence'
       title: Filter Sequences Array
       type: array
+      x-go-type: models.FilterSequences
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     filters:
       description: HAProxy filters array (corresponds to filter directive)
       items:
@@ -14608,6 +14626,963 @@ paths:
       tags:
         - ACL
       x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/filter_configs:
+    get:
+      description: Returns all Filter Configs that are configured in specified Backend.
+      operationId: getAllFilterConfigBackend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Configs
+      tags:
+        - FilterConfig
+    put:
+      description: Replaces a whole list of Filter Configs with the list given in parameter
+      operationId: replaceAllFilterConfigBackend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_configs'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: All Filter Config lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Config list
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/filter_configs/{index}:
+    delete:
+      description: Deletes a Filter Config configuration by it's index from the specified Backend.
+      operationId: deleteFilterConfigBackend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Config deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Config
+      tags:
+        - FilterConfig
+    get:
+      description: Returns one Filter Config configuration by it's index in the specified Backend.
+      operationId: getFilterConfigBackend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Config
+      tags:
+        - FilterConfig
+    post:
+      description: Adds a new Filter Config of the specified class in the specified Backend.
+      operationId: createFilterConfigBackend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_config'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Filter Config created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Config
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Config configuration by it's index in the specified Backend.
+      operationId: replaceFilterConfigBackend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_config'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Filter Config replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Config
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/filter_rules:
+    get:
+      description: Returns all Filter Rules that are configured in specified Backend.
+      operationId: getAllFilterRuleBackend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Rules
+      tags:
+        - FilterRule
+    put:
+      description: Replaces a whole list of Filter Rules with the list given in parameter
+      operationId: replaceAllFilterRuleBackend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rules'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: All Filter Rule lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Rule list
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/filter_rules/{index}:
+    delete:
+      description: Deletes a Filter Rule configuration by it's index from the specified Backend.
+      operationId: deleteFilterRuleBackend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Rule deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Rule
+      tags:
+        - FilterRule
+    get:
+      description: Returns one Filter Rule configuration by it's index in the specified Backend.
+      operationId: getFilterRuleBackend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Rule
+      tags:
+        - FilterRule
+    post:
+      description: Adds a new Filter Rule in the specified Backend.
+      operationId: createFilterRuleBackend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Filter Rule created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Rule
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Rule configuration by it's index in the specified Backend.
+      operationId: replaceFilterRuleBackend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Filter Rule replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Rule
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/filter_sequences:
+    get:
+      description: Returns all Filter Sequences that are configured in specified Backend.
+      operationId: getAllFilterSequenceBackend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Sequences
+      tags:
+        - FilterSequence
+    put:
+      description: Replaces a whole list of Filter Sequences with the list given in parameter
+      operationId: replaceAllFilterSequenceBackend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequences'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: All Filter Sequence lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Sequence list
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/backends/{parent_name}/filter_sequences/{index}:
+    delete:
+      description: Deletes a Filter Sequence configuration by it's index from the specified Backend.
+      operationId: deleteFilterSequenceBackend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Sequence deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Sequence
+      tags:
+        - FilterSequence
+    get:
+      description: Returns one Filter Sequence configuration by it's index in the specified Backend.
+      operationId: getFilterSequenceBackend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Sequence
+      tags:
+        - FilterSequence
+    post:
+      description: Adds a new Filter Sequence in the specified Backend.
+      operationId: createFilterSequenceBackend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequence'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Filter Sequence created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Sequence
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Sequence configuration by it's index in the specified Backend.
+      operationId: replaceFilterSequenceBackend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequence'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Filter Sequence replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Sequence
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
   /services/haproxy/configuration/backends/{parent_name}/filters:
     get:
       description: Returns all Filters that are configured in specified Backend.
@@ -20295,6 +21270,963 @@ paths:
       tags:
         - ACL
       x-codegen-request-body-name: data
+  /services/haproxy/configuration/defaults/{parent_name}/filter_configs:
+    get:
+      description: Returns all Filter Configs that are configured in specified Defaults.
+      operationId: getAllFilterConfigDefaults
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Configs
+      tags:
+        - FilterConfig
+    put:
+      description: Replaces a whole list of Filter Configs with the list given in parameter
+      operationId: replaceAllFilterConfigDefaults
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_configs'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: All Filter Config lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Config list
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/defaults/{parent_name}/filter_configs/{index}:
+    delete:
+      description: Deletes a Filter Config configuration by it's index from the specified Defaults.
+      operationId: deleteFilterConfigDefaults
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Config deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Config
+      tags:
+        - FilterConfig
+    get:
+      description: Returns one Filter Config configuration by it's index in the specified Defaults.
+      operationId: getFilterConfigDefaults
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Config
+      tags:
+        - FilterConfig
+    post:
+      description: Adds a new Filter Config of the specified class in the specified Defaults.
+      operationId: createFilterConfigDefaults
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_config'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Filter Config created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Config
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Config configuration by it's index in the specified Defaults.
+      operationId: replaceFilterConfigDefaults
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_config'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Filter Config replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Config
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/defaults/{parent_name}/filter_rules:
+    get:
+      description: Returns all Filter Rules that are configured in specified Defaults.
+      operationId: getAllFilterRuleDefaults
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Rules
+      tags:
+        - FilterRule
+    put:
+      description: Replaces a whole list of Filter Rules with the list given in parameter
+      operationId: replaceAllFilterRuleDefaults
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rules'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: All Filter Rule lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Rule list
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/defaults/{parent_name}/filter_rules/{index}:
+    delete:
+      description: Deletes a Filter Rule configuration by it's index from the specified Defaults.
+      operationId: deleteFilterRuleDefaults
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Rule deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Rule
+      tags:
+        - FilterRule
+    get:
+      description: Returns one Filter Rule configuration by it's index in the specified Defaults.
+      operationId: getFilterRuleDefaults
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Rule
+      tags:
+        - FilterRule
+    post:
+      description: Adds a new Filter Rule in the specified Defaults.
+      operationId: createFilterRuleDefaults
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Filter Rule created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Rule
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Rule configuration by it's index in the specified Defaults.
+      operationId: replaceFilterRuleDefaults
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Filter Rule replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Rule
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/defaults/{parent_name}/filter_sequences:
+    get:
+      description: Returns all Filter Sequences that are configured in specified Defaults.
+      operationId: getAllFilterSequenceDefaults
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Sequences
+      tags:
+        - FilterSequence
+    put:
+      description: Replaces a whole list of Filter Sequences with the list given in parameter
+      operationId: replaceAllFilterSequenceDefaults
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequences'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: All Filter Sequence lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Sequence list
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/defaults/{parent_name}/filter_sequences/{index}:
+    delete:
+      description: Deletes a Filter Sequence configuration by it's index from the specified Defaults.
+      operationId: deleteFilterSequenceDefaults
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Sequence deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Sequence
+      tags:
+        - FilterSequence
+    get:
+      description: Returns one Filter Sequence configuration by it's index in the specified Defaults.
+      operationId: getFilterSequenceDefaults
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Sequence
+      tags:
+        - FilterSequence
+    post:
+      description: Adds a new Filter Sequence in the specified Defaults.
+      operationId: createFilterSequenceDefaults
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequence'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Filter Sequence created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Sequence
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Sequence configuration by it's index in the specified Defaults.
+      operationId: replaceFilterSequenceDefaults
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequence'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Filter Sequence replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Sequence
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
   /services/haproxy/configuration/defaults/{parent_name}/http_after_response_rules:
     get:
       description: Returns all HTTP After Response Rules that are configured in specified Defaults.
@@ -25510,6 +27442,963 @@ paths:
       summary: Replace a Declare Capture
       tags:
         - DeclareCapture
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/filter_configs:
+    get:
+      description: Returns all Filter Configs that are configured in specified Frontend.
+      operationId: getAllFilterConfigFrontend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Configs
+      tags:
+        - FilterConfig
+    put:
+      description: Replaces a whole list of Filter Configs with the list given in parameter
+      operationId: replaceAllFilterConfigFrontend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_configs'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: All Filter Config lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_configs'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Config list
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/filter_configs/{index}:
+    delete:
+      description: Deletes a Filter Config configuration by it's index from the specified Frontend.
+      operationId: deleteFilterConfigFrontend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Config deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Config
+      tags:
+        - FilterConfig
+    get:
+      description: Returns one Filter Config configuration by it's index in the specified Frontend.
+      operationId: getFilterConfigFrontend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Config
+      tags:
+        - FilterConfig
+    post:
+      description: Adds a new Filter Config of the specified class in the specified Frontend.
+      operationId: createFilterConfigFrontend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_config'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Filter Config created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Config
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Config configuration by it's index in the specified Frontend.
+      operationId: replaceFilterConfigFrontend
+      parameters:
+        - description: Filter Config Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_config'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Filter Config replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_config'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Config
+      tags:
+        - FilterConfig
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/filter_rules:
+    get:
+      description: Returns all Filter Rules that are configured in specified Frontend.
+      operationId: getAllFilterRuleFrontend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Rules
+      tags:
+        - FilterRule
+    put:
+      description: Replaces a whole list of Filter Rules with the list given in parameter
+      operationId: replaceAllFilterRuleFrontend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rules'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: All Filter Rule lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Rule list
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/filter_rules/{index}:
+    delete:
+      description: Deletes a Filter Rule configuration by it's index from the specified Frontend.
+      operationId: deleteFilterRuleFrontend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Rule deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Rule
+      tags:
+        - FilterRule
+    get:
+      description: Returns one Filter Rule configuration by it's index in the specified Frontend.
+      operationId: getFilterRuleFrontend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Rule
+      tags:
+        - FilterRule
+    post:
+      description: Adds a new Filter Rule in the specified Frontend.
+      operationId: createFilterRuleFrontend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Filter Rule created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Rule
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Rule configuration by it's index in the specified Frontend.
+      operationId: replaceFilterRuleFrontend
+      parameters:
+        - description: Filter Rule Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Filter Rule replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Rule
+      tags:
+        - FilterRule
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/filter_sequences:
+    get:
+      description: Returns all Filter Sequences that are configured in specified Frontend.
+      operationId: getAllFilterSequenceFrontend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an array of all Filter Sequences
+      tags:
+        - FilterSequence
+    put:
+      description: Replaces a whole list of Filter Sequences with the list given in parameter
+      operationId: replaceAllFilterSequenceFrontend
+      parameters:
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequences'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: All Filter Sequence lines replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequences'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Sequence list
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/frontends/{parent_name}/filter_sequences/{index}:
+    delete:
+      description: Deletes a Filter Sequence configuration by it's index from the specified Frontend.
+      operationId: deleteFilterSequenceFrontend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: Filter Sequence deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete a Filter Sequence
+      tags:
+        - FilterSequence
+    get:
+      description: Returns one Filter Sequence configuration by it's index in the specified Frontend.
+      operationId: getFilterSequenceFrontend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return one Filter Sequence
+      tags:
+        - FilterSequence
+    post:
+      description: Adds a new Filter Sequence in the specified Frontend.
+      operationId: createFilterSequenceFrontend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequence'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Filter Sequence created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new Filter Sequence
+      tags:
+        - FilterSequence
+      x-codegen-request-body-name: data
+    put:
+      description: Replaces a Filter Sequence configuration by it's index in the specified Frontend.
+      operationId: replaceFilterSequenceFrontend
+      parameters:
+        - description: Filter Sequence Index
+          in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+        - description: Parent name
+          in: path
+          name: parent_name
+          required: true
+          schema:
+            pattern: ^[^\r\n<>*;$#&{}"]+$
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_sequence'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Filter Sequence replaced
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_sequence'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Replace a Filter Sequence
+      tags:
+        - FilterSequence
       x-codegen-request-body-name: data
   /services/haproxy/configuration/frontends/{parent_name}/filters:
     get:

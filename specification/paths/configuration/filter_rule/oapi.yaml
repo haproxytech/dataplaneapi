@@ -1,0 +1,356 @@
+openapi: 3.0.1
+info:
+  title: HAProxy Data Plane API - Filter Rule
+  description: An API for managing HAProxy filter-rule lines.
+servers:
+  - url: /v3
+components:
+  schemas:
+    filter_rule:
+      type: object
+      x-go-type: models.FilterRule
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+    filter_rules:
+      type: array
+      items:
+        $ref: '#/components/schemas/filter_rule'
+      x-go-type: models.FilterRules
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
+paths:
+{{ range parents }}
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/filter_rules:
+    get:
+      summary: Return an array of all Filter Rules
+      description: Returns all Filter Rules that are configured in specified {{ .ParentType }}.
+      operationId: getAllFilterRule{{ .ParentType }}
+      tags:
+        - FilterRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    put:
+      summary: Replace a Filter Rule list
+      description: Replaces a whole list of Filter Rules with the list given in parameter
+      operationId: replaceAllFilterRule{{ .ParentType }}
+      tags:
+        - FilterRule
+      parameters:
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rules'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+        '200':
+          description: All Filter Rule lines replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rules'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/{{ .PathParentType }}/{parent_name}/filter_rules/{index}:
+    get:
+      summary: Return one Filter Rule
+      description: Returns one Filter Rule configuration by it's index in the specified {{ .ParentType }}.
+      operationId: getFilterRule{{ .ParentType }}
+      tags:
+        - FilterRule
+      parameters:
+        - name: index
+          in: path
+          description: Filter Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+    post:
+      summary: Add a new Filter Rule
+      description: Adds a new Filter Rule in the specified {{ .ParentType }}.
+      operationId: createFilterRule{{ .ParentType }}
+      tags:
+        - FilterRule
+      parameters:
+        - name: index
+          in: path
+          description: Filter Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+        '201':
+          description: Filter Rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+        '409':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/AlreadyExists'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    put:
+      summary: Replace a Filter Rule
+      description: Replaces a Filter Rule configuration by it's index in the specified {{ .ParentType }}.
+      operationId: replaceFilterRule{{ .ParentType }}
+      tags:
+        - FilterRule
+      parameters:
+        - name: index
+          in: path
+          description: Filter Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filter_rule'
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+        '200':
+          description: Filter Rule replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filter_rule'
+        '400':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+      x-codegen-request-body-name: data
+    delete:
+      summary: Delete a Filter Rule
+      description: Deletes a Filter Rule configuration by it's index from the specified {{ .ParentType }}.
+      operationId: deleteFilterRule{{ .ParentType }}
+      tags:
+        - FilterRule
+      parameters:
+        - name: index
+          in: path
+          description: Filter Rule Index
+          required: true
+          schema:
+            type: integer
+        - name: parent_name
+          in: path
+          description: Parent name
+          required: true
+          schema:
+            type: string
+            pattern: '^[^\r\n<>*;$#&{}"]+$'
+        - name: transaction_id
+          in: query
+          description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          required: false
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          required: false
+          schema:
+            type: integer
+        - name: force_reload
+          in: query
+          description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '202':
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        '204':
+          description: Filter Rule deleted
+        '404':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/NotFound'
+        'default':
+          $ref: '../../../models/common/responses/models.yaml#/components/responses/DefaultError'
+{{ end }}
