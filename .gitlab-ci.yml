@@ -413,9 +413,9 @@ govulncheck:
     reports:
       junit: junit-report.xml
 
-HAProxy_3.4:
+HAProxy_3.5:
   extends: .e2e
   parallel:
     matrix:
       - TESTPART: ["1/4", "2/4", "3/4", "4/4"]
-        HAPROXY_VERSION: "3.4"
+        HAPROXY_VERSION: "3.5"

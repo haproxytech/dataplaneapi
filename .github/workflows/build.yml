@@ -43,7 +43,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        haproxy_version: ["3.4"]
+        haproxy_version: ["3.5"]
         testpart: ["1/4", "2/4", "3/4", "4/4"]
     runs-on: ubuntu-latest
     steps:

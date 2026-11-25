@@ -6,7 +6,6 @@
     }
   ],
   "daemon": true,
-  "master-worker": true,
   "performance_options": {
     "maxconn": 5000
   },

@@ -15,6 +15,5 @@
     "maxconn": 5000
   },
   "daemon": true,
-  "master-worker": true,
   "pidfile": "/var/run/haproxy.pid"
 }
