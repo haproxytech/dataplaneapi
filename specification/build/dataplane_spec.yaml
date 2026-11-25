@@ -5794,11 +5794,17 @@ components:
         - name
       title: HTTP Hardening
       type: object
+      x-go-type: models.HTTPHardening
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     http_hardenings:
       description: List of HTTP hardening profiles
       items:
         $ref: '#/components/schemas/http_hardening'
       type: array
+      x-go-type: models.HTTPHardenings
+      x-go-type-import:
+        path: github.com/haproxytech/client-native/v6/models
     http_request_rule:
       additionalProperties: false
       description: HAProxy HTTP request rule configuration (corresponds to http-request directives)
@@ -30281,6 +30287,225 @@ paths:
       summary: Replace a HTTP errors section
       tags:
         - HTTPErrors
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/http_hardenings:
+    get:
+      description: Returns an array of all the configured http_hardening sections in HAProxy
+      operationId: getHTTPHardenings
+      parameters:
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_hardenings'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return all the HTTP Hardening profiles
+      tags:
+        - HTTPHardening
+    post:
+      description: Creates a new http_hardening section
+      operationId: createHTTPHardening
+      parameters:
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_hardening'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_hardening'
+          description: HTTP Hardening profile created
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_hardening'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/AlreadyExists'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Add a new HTTP Hardening profile
+      tags:
+        - HTTPHardening
+      x-codegen-request-body-name: data
+  /services/haproxy/configuration/http_hardenings/{name}:
+    delete:
+      description: Deletes an http_hardening section from the configuration
+      operationId: deleteHTTPHardening
+      parameters:
+        - description: http_hardening name
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "202":
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "204":
+          description: http_hardening deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Delete an HTTP Hardening profile
+      tags:
+        - HTTPHardening
+    get:
+      description: Find an http_hardening section by its name
+      operationId: getHTTPHardening
+      parameters:
+        - description: http_hardening name
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_hardening'
+          description: Successful operation
+          headers:
+            Configuration-Version:
+              description: Configuration file version
+              schema:
+                type: string
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Return an HTTP Hardening profile
+      tags:
+        - HTTPHardening
+    put:
+      description: Modifies an http_hardening's configuration by its name
+      operationId: editHTTPHardening
+      parameters:
+        - description: http_hardening name
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+          in: query
+          name: transaction_id
+          schema:
+            type: string
+        - description: Version used for checking configuration version. Cannot be used when transaction is specified, transaction has its own version.
+          in: query
+          name: version
+          schema:
+            type: integer
+        - description: If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+          in: query
+          name: force_reload
+          schema:
+            default: false
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http_hardening'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_hardening'
+          description: http_hardening configuration updated
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http_hardening'
+          description: Configuration change accepted and reload requested
+          headers:
+            Reload-ID:
+              description: ID of the requested reload
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      summary: Modify an HTTP Hardening profile
+      tags:
+        - HTTPHardening
       x-codegen-request-body-name: data
   /services/haproxy/configuration/log_forwards:
     get:

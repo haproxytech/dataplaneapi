@@ -51,6 +51,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/http/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/http/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/http_errors_section"
+	"github.com/haproxytech/dataplaneapi/handlers/configuration/http_hardening"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/log_forward"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/log_profile"
 	"github.com/haproxytech/dataplaneapi/handlers/configuration/log_target"
@@ -182,6 +183,7 @@ func NewRouter(opts Options) (http.Handler, error) {
 		func() error { return http_request_rule.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return http_response_rule.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return http_errors_section.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
+		func() error { return http_hardening.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return log_forward.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return log_profile.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
 		func() error { return log_target.RegisterRouter(r, opts.Client, opts.ReloadAgent) },
