@@ -96,7 +96,7 @@ require (
 	github.com/boombuler/barcode v1.1.1 // indirect
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/digitalocean/godo v1.246.0 // indirect
+	github.com/digitalocean/godo v1.247.0 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
