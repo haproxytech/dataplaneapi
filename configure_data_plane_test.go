@@ -24,7 +24,22 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
+
+	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 )
+
+func TestMasterSocketReloadIssue(t *testing.T) {
+	tests := map[string]dataplaneapi_config.HAProxyConfiguration{
+		"master_worker_mode is not enabled":                   {MasterRuntime: "/run/haproxy-master.sock"},
+		"master_runtime is not set":                           {MasterWorkerMode: true},
+		"master_runtime is not a UNIX socket: 127.0.0.1:9999": {MasterWorkerMode: true, MasterRuntime: "127.0.0.1:9999"},
+	}
+	for want, conf := range tests {
+		if got := masterSocketReloadIssue(&conf, nil); got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	}
+}
 
 func TestConvOpenAPIV2ToV3(t *testing.T) {
 	v2JSONString := string(SwaggerJSON)
