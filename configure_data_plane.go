@@ -1203,21 +1203,40 @@ func serverShutdown() {
 // Determine if we can reload HAProxy's configuration using the master socket 'reload' command.
 // This requires at least HAProxy 2.7 configured in master/worker mode, with a master socket.
 func canUseMasterSocketReload(conf *dataplaneapi_config.HAProxyConfiguration, client client_native.HAProxyClient) bool {
-	useMasterSocket := conf.MasterWorkerMode && conf.MasterRuntime != "" && misc.IsUnixSocketAddr(conf.MasterRuntime)
-	if !useMasterSocket {
-		return false
+	reason := masterSocketReloadIssue(conf, client)
+	if reason == "" {
+		return true
+	}
+	// A reload command only signals HAProxy: its exit status does not tell if the reload succeeded.
+	log.Warningf("Reloads do NOT use the HAProxy master socket (%s). Falling back to the reload command '%s', "+
+		"which only signals HAProxy: a failed reload will be reported as successful. "+
+		"Configure master_runtime and master_worker_mode to get reliable reloads.", reason, conf.ReloadCmd)
+	return false
+}
+
+// Returns why the master socket cannot be used for reloads, or an empty string when it can.
+func masterSocketReloadIssue(conf *dataplaneapi_config.HAProxyConfiguration, client client_native.HAProxyClient) string {
+	switch {
+	case !conf.MasterWorkerMode:
+		return "master_worker_mode is not enabled"
+	case conf.MasterRuntime == "":
+		return "master_runtime is not set"
+	case !misc.IsUnixSocketAddr(conf.MasterRuntime):
+		return "master_runtime is not a UNIX socket: " + conf.MasterRuntime
 	}
 
 	rt, err := client.Runtime()
 	if err != nil {
-		return false
+		return "runtime API is not available: " + err.Error()
 	}
 	currVersion, err := rt.GetVersion()
 	if err != nil {
-		return false
+		return "cannot get the HAProxy version: " + err.Error()
 	}
-
-	return cn_runtime.IsBiggerOrEqual(&cn_runtime.HAProxyVersion{Version: semver.New(2, 7, 0, "", "")}, &currVersion)
+	if !cn_runtime.IsBiggerOrEqual(&cn_runtime.HAProxyVersion{Version: semver.New(2, 7, 0, "", "")}, &currVersion) {
+		return "HAProxy is older than 2.7"
+	}
+	return ""
 }
 
 func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) client_native.HAProxyClient {
