@@ -33,7 +33,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/kr/pretty v0.3.1
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
-	github.com/libdns/azure v0.5.0
+	github.com/libdns/azure v0.6.0
 	github.com/libdns/cloudflare v0.2.2
 	github.com/libdns/cloudns v1.2.0
 	github.com/libdns/desec v1.1.1
@@ -93,7 +93,7 @@ require (
 	github.com/boombuler/barcode v1.1.1 // indirect
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/digitalocean/godo v1.246.0 // indirect
+	github.com/digitalocean/godo v1.247.0 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
