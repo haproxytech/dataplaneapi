@@ -222,9 +222,9 @@ func (s *Server) Serve() (err error) {
 
 		// Inspired by https://blog.bracebin.com/achieving-perfect-ssl-labs-score-with-go
 		httpsServer.TLSConfig = &tls.Config{
-			// Only use curves which have assembly implementations
-			// https://github.com/golang/go/tree/master/src/crypto/elliptic
-			CurvePreferences: []tls.CurveID{tls.CurveP256},
+			// CurvePreferences left nil: Go >= 1.24 defaults prefer the
+			// post-quantum hybrid X25519MLKEM768 and auto-adopt new groups
+			// as the toolchain updates.
 			// Use modern tls mode https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility
 			NextProtos: []string{"h2", "http/1.1"},
 			// https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet#Rule_-_Only_Support_Strong_Protocols
