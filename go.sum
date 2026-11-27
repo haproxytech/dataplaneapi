@@ -117,8 +117,8 @@ github.com/google/renameio v1.0.1 h1:Lh/jXZmvZxb0BBeSY5VKEfidcbcbenKjZFzM/q0fSeU
 github.com/google/renameio v1.0.1/go.mod h1:t/HQoYBZSsWSNK35C6CO/TpPLDVWvxOHboWUAweKUpk=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v5 v5.1.30 h1:M5e0l5PbeP0/dMoxmuUREDas5Thy8g6hIy4am90gZWM=
-github.com/haproxytech/client-native/v5 v5.1.30/go.mod h1:UeKr4ctAynAZYOGAwDqGeq8nhA8b1op4kI8StwqcO/w=
+github.com/haproxytech/client-native/v5 v5.1.31 h1:OiXaoPhFP67dz7rCYO+sRbBnaIt1U0MJOK2Lz90PkhQ=
+github.com/haproxytech/client-native/v5 v5.1.31/go.mod h1:xeu5lA79bQdgvll911DCWV6hOyqdZn5tNnAAs27eQV8=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/jessevdk/go-flags v1.6.1 h1:Cvu5U8UGrLay1rZfv/zP7iLpSHGUZ/Ou68T0iX1bBK4=
